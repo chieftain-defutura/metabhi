@@ -18,6 +18,9 @@ import { ProjectDiagram } from "styled-icons/fa-solid/ProjectDiagram";
 import useUpload from "../assets/useUpload";
 import { AllFileTypes } from "../assets/fileTypes";
 import NodeIssuesIcon from "./NodeIssuesIcon";
+import { Resizeable } from "../layout/Resizeable";
+import AssetsPanel from "../assets/AssetsPanel";
+
 const uploadOptions = {
   multiple: true,
   accepts: AllFileTypes
@@ -91,7 +94,7 @@ const TreeNodeContainer = styled.div`
 const TreeNodeSelectTarget = styled.div`
   display: flex;
   flex: 1;
-  padding: 2px 4px 2px 0;
+  // padding: 2px 4px 2px 0;
 `;
 
 const TreeNodeLabelContainer = styled.div`
@@ -146,11 +149,11 @@ function borderStyle({ isOver, canDrop, position }) {
 }
 
 const TreeNodeDropTarget = styled.div`
-  // height: 6px;
+  // height: 10px;
   box-sizing: content-box;
   ${borderStyle};
   margin-left: ${props => (props.depth > 0 ? props.depth * 8 + 20 : 0)}px;
-  border-bottom: 1px solid rgba(119, 119, 119, 0.2);
+  // border-bottom: 1px solid rgba(119, 119, 119, 0.2);
 `;
 
 const TreeNodeRenameInput = styled.input`
@@ -566,6 +569,7 @@ function* treeWalker(editor, expandedNodes) {
 export default function HierarchyPanel() {
   const editor = useContext(EditorContext);
   const onUpload = useUpload(uploadOptions);
+  const [hierarchyToggle, setHierarchyToggle] = useState("Hierarchy");
   const [renamingNode, setRenamingNode] = useState(null);
   const [expandedNodes, setExpandedNodes] = useState({});
   const [nodes, setNodes] = useState([]);
@@ -850,51 +854,76 @@ export default function HierarchyPanel() {
   }, [expandedNodes, updateNodeHierarchy]);
 
   return (
-    <Panel id="hierarchy-panel" title="Hierarchy" icon={ProjectDiagram}>
-      <PanelContainer>
-        {editor.scene && (
-          <AutoSizer>
-            {({ height, width }) => (
-              <FixedSizeList
-                height={height}
-                width={width}
-                itemSize={32}
-                itemCount={nodes.length}
-                itemData={{
-                  renamingNode,
-                  nodes,
-                  onKeyDown,
-                  onChangeName,
-                  onRenameSubmit,
-                  onMouseDown,
-                  onClick,
-                  onToggle,
-                  onUpload
-                }}
-                itemKey={getNodeKey}
-                outerRef={treeContainerDropTarget}
-                innerElementType="ul"
-              >
-                {MemoTreeNode}
-              </FixedSizeList>
-            )}
-          </AutoSizer>
+    <>
+      <Panel
+        id="hierarchy-panel"
+        title="Hierarchy"
+        icon={ProjectDiagram}
+        style={{ cursor: "pointer" }}
+        onClick={() => setHierarchyToggle("Hierarchy")}
+      >
+        {hierarchyToggle === "Hierarchy" && (
+          <>
+            <PanelContainer>
+              {editor.scene && (
+                <AutoSizer>
+                  {({ height, width }) => (
+                    <FixedSizeList
+                      height={height}
+                      width={width}
+                      itemSize={32}
+                      itemCount={nodes.length}
+                      itemData={{
+                        renamingNode,
+                        nodes,
+                        onKeyDown,
+                        onChangeName,
+                        onRenameSubmit,
+                        onMouseDown,
+                        onClick,
+                        onToggle,
+                        onUpload
+                      }}
+                      itemKey={getNodeKey}
+                      outerRef={treeContainerDropTarget}
+                      innerElementType="ul"
+                    >
+                      {MemoTreeNode}
+                    </FixedSizeList>
+                  )}
+                </AutoSizer>
+              )}
+            </PanelContainer>
+            <ContextMenu id="hierarchy-node-menu">
+              <MenuItem onClick={onRenameNode}>Rename</MenuItem>
+              <MenuItem onClick={onDuplicateNode}>
+                Duplicate
+                <div>{cmdOrCtrlString + "+ D"}</div>
+              </MenuItem>
+              <MenuItem onClick={onGroupNodes}>
+                Group
+                <div>{cmdOrCtrlString + "+ G"}</div>
+              </MenuItem>
+              <MenuItem onClick={onDeleteNode}>Delete</MenuItem>
+              <MenuItem onClick={onExpandAllNodes}>Expand All</MenuItem>
+              <MenuItem onClick={onCollapseAllNodes}>Collapse All</MenuItem>
+            </ContextMenu>
+          </>
         )}
-      </PanelContainer>
-      <ContextMenu id="hierarchy-node-menu">
-        <MenuItem onClick={onRenameNode}>Rename</MenuItem>
-        <MenuItem onClick={onDuplicateNode}>
-          Duplicate
-          <div>{cmdOrCtrlString + "+ D"}</div>
-        </MenuItem>
-        <MenuItem onClick={onGroupNodes}>
-          Group
-          <div>{cmdOrCtrlString + "+ G"}</div>
-        </MenuItem>
-        <MenuItem onClick={onDeleteNode}>Delete</MenuItem>
-        <MenuItem onClick={onExpandAllNodes}>Expand All</MenuItem>
-        <MenuItem onClick={onCollapseAllNodes}>Collapse All</MenuItem>
-      </ContextMenu>
-    </Panel>
+      </Panel>
+      <Panel
+        id="hierarchy-panel"
+        title="Element"
+        icon={ProjectDiagram}
+        onClick={() => setHierarchyToggle("Element")}
+        style={{ cursor: "pointer" }}
+      >
+        {hierarchyToggle === "Element" && (
+          <Resizeable axis="y">
+            <AssetsPanel />
+          </Resizeable>
+        )}
+      </Panel>
+    </>
   );
 }
