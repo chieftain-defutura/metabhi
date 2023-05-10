@@ -1,7 +1,6 @@
 const theme = {
   lato: "'Lato', sans-serif",
   zilla: "'Zilla Slab', sans-serif",
-  background: "#15171B",
   inputBackground: "#070809",
   border: "#5D646C",
   panel: "#282C31",
@@ -47,7 +46,8 @@ const theme = {
 
   darkClr: "#111111",
   lightDarkClr: "#252525",
-  grayClr: "#141414"
+  grayClr: "#141414",
+  background: "#141414"
 };
 
 theme.chartColors = [

@@ -916,6 +916,7 @@ class EditorContainer extends Component {
                     <Resizeable axis="x" initialSizes={[0.2, 0.6, 0.2]} onChange={this.onResize}>
                       <Resizeable axis="y" initialSizes={[0.5, 0.5]}>
                         <HierarchyPanelContainer />
+
                         {/* <Resizeable axis="y">
                           <AssetsPanel />
                         </Resizeable> */}

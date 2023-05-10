@@ -31,14 +31,14 @@ function collectNodeMenuProps({ node }) {
 }
 
 const PanelContainer = styled.div`
-  outline: none;
-  user-select: none;
-  width: 100%;
   position: relative;
   display: flex;
-  flex-direction: column;
-  color: ${props => props.theme.text2};
   flex: 1;
+  flex-direction: column;
+  outline: none;
+  width: 100%;
+  user-select: none;
+  color: ${props => props.theme.text2};
 `;
 
 const TreeDepthContainer = styled.li``;
@@ -861,69 +861,69 @@ export default function HierarchyPanel() {
         icon={ProjectDiagram}
         style={{ cursor: "pointer" }}
         onClick={() => setHierarchyToggle("Hierarchy")}
-      >
-        {hierarchyToggle === "Hierarchy" && (
-          <>
-            <PanelContainer>
-              {editor.scene && (
-                <AutoSizer>
-                  {({ height, width }) => (
-                    <FixedSizeList
-                      height={height}
-                      width={width}
-                      itemSize={32}
-                      itemCount={nodes.length}
-                      itemData={{
-                        renamingNode,
-                        nodes,
-                        onKeyDown,
-                        onChangeName,
-                        onRenameSubmit,
-                        onMouseDown,
-                        onClick,
-                        onToggle,
-                        onUpload
-                      }}
-                      itemKey={getNodeKey}
-                      outerRef={treeContainerDropTarget}
-                      innerElementType="ul"
-                    >
-                      {MemoTreeNode}
-                    </FixedSizeList>
-                  )}
-                </AutoSizer>
-              )}
-            </PanelContainer>
-            <ContextMenu id="hierarchy-node-menu">
-              <MenuItem onClick={onRenameNode}>Rename</MenuItem>
-              <MenuItem onClick={onDuplicateNode}>
-                Duplicate
-                <div>{cmdOrCtrlString + "+ D"}</div>
-              </MenuItem>
-              <MenuItem onClick={onGroupNodes}>
-                Group
-                <div>{cmdOrCtrlString + "+ G"}</div>
-              </MenuItem>
-              <MenuItem onClick={onDeleteNode}>Delete</MenuItem>
-              <MenuItem onClick={onExpandAllNodes}>Expand All</MenuItem>
-              <MenuItem onClick={onCollapseAllNodes}>Collapse All</MenuItem>
-            </ContextMenu>
-          </>
-        )}
-      </Panel>
+      />
+
       <Panel
         id="hierarchy-panel"
         title="Element"
         icon={ProjectDiagram}
         onClick={() => setHierarchyToggle("Element")}
         style={{ cursor: "pointer" }}
-      >
-        {hierarchyToggle === "Element" && (
-          <Resizeable axis="y">
-            <AssetsPanel />
-          </Resizeable>
-        )}
-      </Panel>
+      />
+
+      {hierarchyToggle === "Hierarchy" && (
+        <>
+          <PanelContainer>
+            {editor.scene && (
+              <AutoSizer>
+                {({ height, width }) => (
+                  <FixedSizeList
+                    height={height}
+                    width={width}
+                    itemSize={32}
+                    itemCount={nodes.length}
+                    itemData={{
+                      renamingNode,
+                      nodes,
+                      onKeyDown,
+                      onChangeName,
+                      onRenameSubmit,
+                      onMouseDown,
+                      onClick,
+                      onToggle,
+                      onUpload
+                    }}
+                    itemKey={getNodeKey}
+                    outerRef={treeContainerDropTarget}
+                    innerElementType="ul"
+                  >
+                    {MemoTreeNode}
+                  </FixedSizeList>
+                )}
+              </AutoSizer>
+            )}
+          </PanelContainer>
+          <ContextMenu id="hierarchy-node-menu">
+            <MenuItem onClick={onRenameNode}>Rename</MenuItem>
+            <MenuItem onClick={onDuplicateNode}>
+              Duplicate
+              <div>{cmdOrCtrlString + "+ D"}</div>
+            </MenuItem>
+            <MenuItem onClick={onGroupNodes}>
+              Group
+              <div>{cmdOrCtrlString + "+ G"}</div>
+            </MenuItem>
+            <MenuItem onClick={onDeleteNode}>Delete</MenuItem>
+            <MenuItem onClick={onExpandAllNodes}>Expand All</MenuItem>
+            <MenuItem onClick={onCollapseAllNodes}>Collapse All</MenuItem>
+          </ContextMenu>
+        </>
+      )}
+      {hierarchyToggle === "Element" && (
+        <Resizeable axis="y">
+          <AssetsPanel />
+        </Resizeable>
+      )}
     </>
   );
 }
