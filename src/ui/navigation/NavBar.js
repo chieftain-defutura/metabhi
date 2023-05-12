@@ -1,17 +1,21 @@
-import React, { Component } from "react";
+import React, { useState, useCallback } from "react";
 import configs from "../../configs";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { withAuth } from "../contexts/AuthContext";
 import styled from "styled-components";
+import { SearchInput } from "../projects/ProjectGrid";
+
+import Profile from "../../assets/profile.png";
+import Toggle from "../../assets/toggle.png";
+import Bell from "../../assets/bell.svg";
 
 const StyledNavBar = styled.header`
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 12px 20px;
   font-size: 1.4em;
-
+  border-bottom: 1px solid #252525;
   a {
     color: ${props => props.theme.text};
     text-decoration: none;
@@ -20,7 +24,8 @@ const StyledNavBar = styled.header`
 
 const IconContainer = styled.div`
   margin-right: 20px;
-
+  display: flex;
+  gap: 5px;
   a {
     display: block;
   }
@@ -51,62 +56,103 @@ const NavList = styled.ul`
 const RightContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+  gap: 24px;
 
   @media (max-width: 600px) {
     flex: 1;
   }
 `;
 
-class NavBar extends Component {
-  static propTypes = {
-    isAuthenticated: PropTypes.bool.isRequired
-  };
+const WalletConnect = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
 
-  render() {
-    return (
-      <StyledNavBar>
-        <IconContainer>
-          <Link to="/">
-            <img src={configs.icon()} alt={configs.name()} />
-          </Link>
-        </IconContainer>
-        <MiddleContainer>
-          <nav>
-            <NavList>
-              <li>
-                <Link to="/whats-new">What&apos;s New</Link>
-              </li>
-              {configs.isMoz() && (
-                <li>
-                  <a href="https://hubs.mozilla.com" rel="noopener noreferrer">
-                    Hubs
-                  </a>
-                </li>
-              )}
-            </NavList>
-          </nav>
-        </MiddleContainer>
-        <RightContainer>
-          <NavList>
-            {this.props.isAuthenticated ? (
-              <>
-                <li>
-                  <Link to="/projects">Projects</Link>
-                </li>
-                <li>
-                  <Link to="/logout">Logout</Link>
-                </li>
-              </>
-            ) : (
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-            )}
-          </NavList>
-        </RightContainer>
-      </StyledNavBar>
-    );
-  }
-}
+// class NavBar extends Component {
+//   static propTypes = {
+//     isAuthenticated: PropTypes.bool.isRequired
+//   };
 
-export default withAuth(NavBar);
+//   render() {
+//     return (
+//       <StyledNavBar>
+//         <IconContainer>
+//           <Link to="/">
+//             <img src={configs.icon()} alt={configs.name()} />
+//           </Link>
+//           <h1>What's New</h1>
+//         </IconContainer>
+//         <SearchInput placeholder="Search scenes..." value={params.q} onChange={onChangeQuery} />
+
+//         <RightContainer>
+//           <img alt="" src={Toggle} />
+//           <img alt="" src={Bell} />
+//           <img alt="" src={Profile} />
+//           <WalletConnect> Connect Wallet</WalletConnect>
+//         </RightContainer>
+//       </StyledNavBar>
+//     );
+//   }
+// }
+
+// export default withAuth(NavBar);
+
+const NavBar = () => {
+  const queryParams = new URLSearchParams(location.search);
+  const [params, setParams] = useState({
+    source: "scene_listings",
+    filter: queryParams.get("filter") || "featured-remixable",
+    q: queryParams.get("q") || ""
+  });
+
+  const updateParams = useCallback(
+    nextParams => {
+      const search = new URLSearchParams();
+
+      for (const name in nextParams) {
+        if (name === "source" || !nextParams[name]) {
+          continue;
+        }
+
+        search.set(name, nextParams[name]);
+      }
+
+      history.push(`/projects/create?${search}`);
+
+      setParams(nextParams);
+    },
+    [history]
+  );
+
+  const onChangeQuery = useCallback(
+    value => {
+      updateParams({
+        source: "scene_listings",
+        filter: "remixable",
+        q: value
+      });
+    },
+    [updateParams]
+  );
+
+  return (
+    <StyledNavBar>
+      <IconContainer>
+        <Link to="/">
+          <img src={configs.icon()} alt={configs.name()} />
+        </Link>
+        <h1>What's New</h1>
+      </IconContainer>
+      <SearchInput placeholder="Search scenes..." value={params.q} onChange={onChangeQuery} />
+
+      <RightContainer>
+        <img alt="" src={Toggle} />
+        <img alt="" src={Bell} />
+        <img alt="" src={Profile} />
+        <WalletConnect> Connect Wallet</WalletConnect>
+      </RightContainer>
+    </StyledNavBar>
+  );
+};
+
+export default NavBar;
