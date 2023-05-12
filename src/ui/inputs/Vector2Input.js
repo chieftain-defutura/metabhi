@@ -19,8 +19,7 @@ export const Vector2InputContainer = styled.div`
 export const Vector2Scrubber = styled(Scrubber)`
   display: flex;
   align-items: center;
-  padding: 0 8px;
-  color: ${props => props.theme.text2};
+  color: ${props => props.theme.text};
 `;
 
 const UniformButtonContainer = styled.div`
@@ -114,11 +113,11 @@ export default class Vector2Input extends Component {
           </UniformButtonContainer>
         )}
         <Vector2Scrubber {...rest} tag="div" value={vx} onChange={this.onChangeX}>
-          X:
+          X
         </Vector2Scrubber>
         <NumericInput {...rest} value={vx} onChange={this.onChangeX} />
         <Vector2Scrubber {...rest} tag="div" value={vy} onChange={this.onChangeY}>
-          Y:
+          Y
         </Vector2Scrubber>
         <NumericInput {...rest} value={vy} onChange={this.onChangeY} />
       </Vector2InputContainer>

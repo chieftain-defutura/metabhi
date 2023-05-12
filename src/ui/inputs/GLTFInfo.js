@@ -11,8 +11,9 @@ import { bytesToSize } from "../utils";
 const ChartContainer = styled.div`
   margin: 4px 0;
   padding: 4px;
-  background-color: ${props => props.theme.panel2};
+  background-color: ${props => props.theme.black};
   border-radius: 4px;
+  width:90%;
 `;
 
 export function GLTFFileChart({ node }) {
@@ -83,7 +84,7 @@ export function GLTFFileChart({ node }) {
           ))}
           <Label fill={theme.text} value={`Total: ${bytesToSize(totalSize)}`} offset={0} position="center" />
         </Pie>
-        <Legend layout="vertical" align="right" verticalAlign="middle" iconType="rect" formatter={legendFormatter} />
+        {/* <Legend layout="vertical" align="right" verticalAlign="middle" iconType="rect" formatter={legendFormatter} /> */}
       </PieChart>
     </ChartContainer>
   );
@@ -103,9 +104,10 @@ const Thumbnail = styled.img`
 const ImageItemContainer = styled.li`
   display: flex;
   margin: 4px 0;
-  padding: 4px;
-  background-color: ${props => props.theme.panel2};
+  padding: 12px;
+  background-color: ${props => props.theme.black};
   border-radius: 4px;
+  width:90%;
 
   & > :first-child {
     margin-right: 8px;
@@ -162,16 +164,15 @@ const MeshItemContainer = styled.li`
   display: flex;
   flex-direction: column;
   margin: 4px 0;
-  padding: 8px;
-  background-color: ${props => props.theme.panel2};
+  padding: 12px;
+  background-color: ${props => props.theme.black};
   border-radius: 4px;
-
+  width:90%;
   h3 {
     font-size: 14px;
     margin-bottom: 4px;
   }
 `;
-
 function GLTFMeshItem({ item }) {
   return (
     <MeshItemContainer>
@@ -209,10 +210,19 @@ GLTFMeshList.propTypes = {
 };
 
 const StatsContainer = styled.ul`
-  margin: 4px 0;
-  padding: 8px;
-  background-color: ${props => props.theme.panel2};
+  margin: 8px 0;
+  background-color: ${props => props.theme.lightDarkClr};
   border-radius: 4px;
+  padding:12px 24px;
+  display:flex;
+  gap:30px;
+  width:90%;
+
+  // align-items:center;
+
+  li {
+    padding-bottom:8px;
+  }
 `;
 
 export function GLTFStats({ node }) {
@@ -220,6 +230,7 @@ export function GLTFStats({ node }) {
 
   return (
     <StatsContainer>
+      <div>
       <li>
         <b>Nodes:</b> {stats.nodes}
       </li>
@@ -229,6 +240,8 @@ export function GLTFStats({ node }) {
       <li>
         <b>Materials:</b> {stats.materials}
       </li>
+      </div>
+      <div>
       <li>
         <b>Textures:</b> {stats.textures}
       </li>
@@ -238,6 +251,7 @@ export function GLTFStats({ node }) {
       <li>
         <b>Vertices:</b> {stats.vertices}
       </li>
+      </div>
     </StatsContainer>
   );
 }
@@ -262,7 +276,6 @@ const IssueItemContainer = styled.li`
   padding: 8px;
   background-color: ${props => props.theme.panel2};
   border-radius: 4px;
-
   h3 {
     font-size: 14px;
   }

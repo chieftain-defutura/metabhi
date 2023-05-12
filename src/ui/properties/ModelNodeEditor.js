@@ -8,6 +8,7 @@ import ModelInput from "../inputs/ModelInput";
 import { Cube } from "styled-icons/fa-solid/Cube";
 import { GLTFInfo } from "../inputs/GLTFInfo";
 import AttributionNodeEditor from "./AttributionNodeEditor";
+import { ToggleButton } from "../Toggle";
 
 export default class ModelNodeEditor extends Component {
   static propTypes = {
@@ -83,6 +84,7 @@ export default class ModelNodeEditor extends Component {
         </InputGroup>
         <InputGroup name="Collidable">
           <BooleanInput value={node.collidable} onChange={this.onChangeCollidable} />
+         
         </InputGroup>
         <InputGroup name="Walkable">
           <BooleanInput value={node.walkable} onChange={this.onChangeWalkable} />

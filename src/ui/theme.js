@@ -1,7 +1,6 @@
 const theme = {
   lato: "'Lato', sans-serif",
   zilla: "'Zilla Slab', sans-serif",
-  background: "#15171B",
   inputBackground: "#070809",
   border: "#5D646C",
   panel: "#282C31",
@@ -10,7 +9,6 @@ const theme = {
   selectedText: "#fff",
   hover: "#4B5562",
   hover2: "#636F80",
-  text: "#FFFFFF",
   text2: "#9FA4B5",
   dropdown: "#000000",
   red: "#F44336",
@@ -47,7 +45,14 @@ const theme = {
 
   darkClr: "#111111",
   lightDarkClr: "#252525",
-  grayClr: "#141414"
+  grayClr: "#141414",
+  background: "#141414",
+  text: "#FFFFFF",
+  gray:"#777777",
+  background: "#0A0A0A",
+  black:"#222222"
+
+
 };
 
 theme.chartColors = [

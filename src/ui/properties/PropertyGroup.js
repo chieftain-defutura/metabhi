@@ -9,6 +9,8 @@ const StyledPropertyGroup = styled.div`
   width: 100%;
   padding: 12px 0;
   border-bottom: 1px solid ${props => props.theme.border};
+  // overflow:scroll;
+
 `;
 
 const PropertyGroupHeader = styled.div`
@@ -16,42 +18,62 @@ const PropertyGroupHeader = styled.div`
   flex-direction: row;
   align-items: left;
   font-weight: bold;
-  color: ${props => props.theme.text2};
+  font-size:12px;
+  color: ${props => props.theme.text};
   padding: 0 8px 8px;
-  :last-child {
-    margin-left: auto;
-  }
+  // :last-child {
+  //   margin-left: auto;
+  // }
 `;
 
 const PropertyGroupDescription = styled.div`
-  background-color: ${props => props.theme.panel};
-  color: ${props => props.theme.text2};
+  // background-color: ${props => props.theme.panel};
+  color: ${props => props.theme.text};
+  font-size:12px;
   white-space: pre-wrap;
   padding: 0 8px 8px;
 `;
+const PropertyContent = styled.div`
+padding:17px 12px;
+bottom:0;
 
+`
 const PropertyGroupContent = styled.div`
   display: flex;
   flex-direction: column;
+  padding-bottom:12px;
 `;
+const StyledPropertyGroupSection= styled.div`
+// display: flex;
+// // flex-direction: column;
+// flex-shrink: 0;
+// width: 100%;
+// padding: 12px 0;
+// border-bottom: 1px solid ${props => props.theme.border};
+`
 
 function PropertyGroup(props) {
   const { name, description, children, ...rest } = props;
 
   return (
     <StyledPropertyGroup {...rest}>
-      <PropertyGroupHeader>{name}</PropertyGroupHeader>
-      {description && (
+      <PropertyGroupContent>{children}</PropertyGroupContent>
+      <PropertyContent>
+      <PropertyGroupContent>{name}</PropertyGroupContent>
+
+        {description && (
         <PropertyGroupDescription>
           {description.split("\\n").map((line, i) => (
-            <Fragment key={i}>
+      <>
+      <Fragment key={i}>
               {line}
               <br />
             </Fragment>
+            </>
           ))}
         </PropertyGroupDescription>
       )}
-      <PropertyGroupContent>{children}</PropertyGroupContent>
+      </PropertyContent>
     </StyledPropertyGroup>
   );
 }

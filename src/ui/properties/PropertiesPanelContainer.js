@@ -9,6 +9,9 @@ import TransformPropertyGroup from "./TransformPropertyGroup";
 import NameInputGroup from "./NameInputGroup";
 import InputGroup from "../inputs/InputGroup";
 import BooleanInput from "../inputs/BooleanInput";
+import DarkModeToggleButton from "../ToggleButton";
+import { ToggleButton } from "../Toggle";
+import Toggle from "../Toggle";
 
 const StyledNodeEditor = styled.div`
   display: flex;
@@ -17,7 +20,7 @@ const StyledNodeEditor = styled.div`
 `;
 
 const PropertiesHeader = styled.div`
-  background-color: ${props => props.theme.panel2};
+  // background-color: ${props => props.theme.panel2};
   border: none !important;
   padding-bottom: 0 !important;
 `;
@@ -32,6 +35,7 @@ const NameInputGroupContainer = styled.div`
 const VisibleInputGroup = styled(InputGroup)`
   display: flex;
   flex: 0;
+  flex-direction:row;
 
   & > label {
     width: auto !important;
@@ -41,7 +45,7 @@ const VisibleInputGroup = styled(InputGroup)`
 
 const PropertiesPanelContent = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex: 1;
   overflow-y: auto;
 `;
@@ -146,9 +150,11 @@ class PropertiesPanelContainer extends Component {
               {activeNode.nodeName !== "Scene" && (
                 <>
                   <VisibleInputGroup name="Visible">
+                    {/* <Toggle value={activeNode._visible} onChange={this.onChangeVisible} /> */}
                     <BooleanInput value={activeNode._visible} onChange={this.onChangeVisible} />
                   </VisibleInputGroup>
                   <VisibleInputGroup name="Enabled">
+                    {/* <Toggle value={activeNode.enabled} onChange={this.onChangeEnabled} /> */}
                     <BooleanInput value={activeNode.enabled} onChange={this.onChangeEnabled} />
                   </VisibleInputGroup>
                 </>

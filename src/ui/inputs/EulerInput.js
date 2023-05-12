@@ -37,15 +37,15 @@ export default class EulerInput extends Component {
     return (
       <Vector3InputContainer>
         <Vector3Scrubber {...rest} tag="div" value={vx} onChange={x => this.onChange(x, vy, vz)}>
-          X:
+          X
         </Vector3Scrubber>
         <NumericInput {...rest} value={vx} onChange={x => this.onChange(x, vy, vz)} />
         <Vector3Scrubber {...rest} tag="div" value={vy} onChange={y => this.onChange(vx, y, vz)}>
-          Y:
+          Y
         </Vector3Scrubber>
         <NumericInput {...rest} value={vy} onChange={y => this.onChange(vx, y, vz)} />
         <Vector3Scrubber {...rest} tag="div" value={vz} onChange={z => this.onChange(vx, vy, z)}>
-          Z:
+          Z
         </Vector3Scrubber>
         <NumericInput {...rest} value={vz} onChange={z => this.onChange(vx, vy, z)} />
       </Vector3InputContainer>

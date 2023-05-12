@@ -8,13 +8,20 @@ const CollapsibleContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 4px 8px;
+ 
 `;
 
 const CollapsibleLabel = styled.div`
   color: ${props => props.theme.text2};
+  background-color: ${props => props.theme.black};
   cursor: pointer;
-  display: inline-block;
-
+  display: flex;
+  flex-direction: row;
+  padding: 12px;
+  margin:8px;
+  // justify-content:space-evenly;
+  width:100%;
+  overflow:hidden;
   :hover {
     color: ${props => props.theme.text};
   }
@@ -25,6 +32,10 @@ const CollapsibleContent = styled.div`
   flex-direction: column;
   padding: 4px 8px;
 `;
+// const Collapsel = styled.div`
+// display: flex;
+// flex-direction: row;
+//  `
 
 const CollapseIcon = styled.div``;
 
@@ -37,13 +48,15 @@ export default function Collapsible({ label, open, children }) {
 
   return (
     <CollapsibleContainer>
+   
       <CollapsibleLabel onClick={toggleCollapsed}>
         <CollapseIcon as={collapsed ? CaretRight : CaretDown} size={14} collapsed={collapsed} />
         {label}
       </CollapsibleLabel>
       {!collapsed && <CollapsibleContent>{children}</CollapsibleContent>}
+
     </CollapsibleContainer>
-  );
+  );  
 }
 
 Collapsible.defaultProps = {

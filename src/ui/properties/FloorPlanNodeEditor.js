@@ -13,6 +13,7 @@ import { ShoePrints } from "styled-icons/fa-solid/ShoePrints";
 import { NavMeshMode } from "../../editor/nodes/FloorPlanNode";
 import SelectInput from "../inputs/SelectInput";
 import ModelInput from "../inputs/ModelInput";
+import styled from "styled-components";
 
 const NavMeshModeOptions = [
   {
@@ -25,6 +26,10 @@ const NavMeshModeOptions = [
   }
 ];
 
+export const InputFloor=styled.div`
+border-bottom:1px solid #252525;
+padding:16px 0;
+`
 class FloorPlanNodeEditor extends Component {
   static propTypes = {
     hideDialog: PropTypes.func.isRequired,
@@ -88,15 +93,21 @@ class FloorPlanNodeEditor extends Component {
 
     return (
       <NodeEditor {...this.props} description={FloorPlanNodeEditor.description}>
+        <InputFloor>
         <InputGroup name="Nav Mesh Mode">
           <SelectInput options={NavMeshModeOptions} value={node.navMeshMode} onChange={this.onChangeNavMeshMode} />
         </InputGroup>
+        </InputFloor>
         {node.navMeshMode === NavMeshMode.Automatic ? (
           <>
+        <InputFloor>
             <InputGroup name="Auto Cell Size">
               <BooleanInput value={node.autoCellSize} onChange={this.onChangeAutoCellSize} />
             </InputGroup>
+        </InputFloor>
+          
             {!node.autoCellSize && (
+        <InputFloor>
               <NumericInputGroup
                 name="Cell Size"
                 value={node.cellSize}
@@ -107,7 +118,10 @@ class FloorPlanNodeEditor extends Component {
                 displayPrecision={0.0001}
                 onChange={this.onChangeCellSize}
               />
+        </InputFloor>
+
             )}
+        <InputFloor>
             <NumericInputGroup
               name="Cell Height"
               value={node.cellHeight}
@@ -118,6 +132,9 @@ class FloorPlanNodeEditor extends Component {
               onChange={this.onChangeCellHeight}
               unit="m"
             />
+        </InputFloor>
+        <InputFloor>
+
             <NumericInputGroup
               name="Agent Height"
               value={node.agentHeight}
@@ -128,6 +145,9 @@ class FloorPlanNodeEditor extends Component {
               onChange={this.onChangeAgentHeight}
               unit="m"
             />
+        </InputFloor>
+        <InputFloor>
+
             <NumericInputGroup
               name="Agent Radius"
               value={node.agentRadius}
@@ -138,6 +158,9 @@ class FloorPlanNodeEditor extends Component {
               onChange={this.onChangeAgentRadius}
               unit="m"
             />
+        </InputFloor>
+        <InputFloor>
+
             <NumericInputGroup
               name="Maximum Step Height"
               value={node.agentMaxClimb}
@@ -148,6 +171,9 @@ class FloorPlanNodeEditor extends Component {
               onChange={this.onChangeAgentMaxClimb}
               unit="m"
             />
+        </InputFloor>
+        <InputFloor>
+
             <NumericInputGroup
               name="Maximum Slope"
               value={node.agentMaxSlope}
@@ -159,6 +185,9 @@ class FloorPlanNodeEditor extends Component {
               onChange={this.onChangeAgentMaxSlope}
               unit="°"
             />
+        </InputFloor>
+        <InputFloor>
+
             <NumericInputGroup
               name="Minimum Region Area"
               value={node.regionMinSize}
@@ -169,16 +198,26 @@ class FloorPlanNodeEditor extends Component {
               onChange={this.onChangeRegionMinSize}
               unit="m²"
             />
+        </InputFloor>
+      
+
           </>
         ) : (
+        <InputFloor>
           <InputGroup name="Custom Navmesh Url">
             <ModelInput value={node.navMeshSrc} onChange={this.onChangeNavMeshSrc} />
           </InputGroup>
+        </InputFloor>
+
         )}
+        <InputFloor>
         <InputGroup name="Force Trimesh">
           <BooleanInput value={node.forceTrimesh} onChange={this.onChangeForceTrimesh} />
         </InputGroup>
+        </InputFloor>
+
         {!node.forceTrimesh && settings.enableExperimentalFeatures && (
+        <InputFloor>
           <NumericInputGroup
             name="Collision Geo Triangle Threshold"
             value={node.maxTriangles}
@@ -190,6 +229,7 @@ class FloorPlanNodeEditor extends Component {
             precision={1}
             onChange={this.onChangeMaxTriangles}
           />
+        </InputFloor>
         )}
         <PropertiesPanelButton onClick={this.onRegenerate}>Regenerate</PropertiesPanelButton>
       </NodeEditor>

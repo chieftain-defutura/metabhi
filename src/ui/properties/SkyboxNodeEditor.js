@@ -6,10 +6,16 @@ import NumericInputGroup from "../inputs/NumericInputGroup";
 import RadianNumericInputGroup from "../inputs/RadianNumericInputGroup";
 import CompoundNumericInput from "../inputs/CompoundNumericInput";
 import { Cloud } from "styled-icons/fa-solid/Cloud";
+import styled from "styled-components";
 
 const hoursToRadians = hours => hours / 24;
 const radiansToHours = rads => rads * 24;
 
+
+ export const NumberSkyInput=styled.div`
+ border-bottom:1px solid #252525;
+padding:16px 0;
+ `
 export default class SkyboxNodeEditor extends Component {
   static propTypes = {
     editor: PropTypes.object,
@@ -58,6 +64,7 @@ export default class SkyboxNodeEditor extends Component {
 
     return (
       <NodeEditor description={SkyboxNodeEditor.description} {...this.props}>
+        <NumberSkyInput>
         <NumericInputGroup
           name="Time of Day"
           smallStep={0.1}
@@ -71,6 +78,8 @@ export default class SkyboxNodeEditor extends Component {
           onChange={this.onChangeAzimuth}
           unit="h"
         />
+        </NumberSkyInput>
+        <NumberSkyInput>
         <RadianNumericInputGroup
           name="Latitude"
           min={-90}
@@ -81,6 +90,8 @@ export default class SkyboxNodeEditor extends Component {
           value={node.inclination}
           onChange={this.onChangeInclination}
         />
+        </NumberSkyInput>
+        <NumberSkyInput>
         <InputGroup name="Luminance">
           <CompoundNumericInput
             min={0.001}
@@ -90,6 +101,8 @@ export default class SkyboxNodeEditor extends Component {
             onChange={this.onChangeLuminance}
           />
         </InputGroup>
+        </NumberSkyInput>
+        <NumberSkyInput>
         <InputGroup name="Scattering Amount">
           <CompoundNumericInput
             min={0}
@@ -99,6 +112,8 @@ export default class SkyboxNodeEditor extends Component {
             onChange={this.onChangeMieCoefficient}
           />
         </InputGroup>
+        </NumberSkyInput>
+        <NumberSkyInput>
         <InputGroup name="Scattering Distance">
           <CompoundNumericInput
             min={0}
@@ -108,12 +123,17 @@ export default class SkyboxNodeEditor extends Component {
             onChange={this.onChangeMieDirectionalG}
           />
         </InputGroup>
+        </NumberSkyInput>
+        <NumberSkyInput>
         <InputGroup name="Horizon Start">
           <CompoundNumericInput min={1} max={20} value={node.turbidity} onChange={this.onChangeTurbidity} />
         </InputGroup>
+        </NumberSkyInput>
+        <NumberSkyInput>
         <InputGroup name="Horizon End">
           <CompoundNumericInput min={0} max={4} value={node.rayleigh} onChange={this.onChangeRayleigh} />
         </InputGroup>
+        </NumberSkyInput>
       </NodeEditor>
     );
   }

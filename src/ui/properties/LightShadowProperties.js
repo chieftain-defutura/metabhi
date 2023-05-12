@@ -5,6 +5,7 @@ import SelectInput from "../inputs/SelectInput";
 import BooleanInput from "../inputs/BooleanInput";
 import NumericInputGroup from "../inputs/NumericInputGroup";
 import { Vector2 } from "three";
+import styled from "styled-components";
 
 const ShadowMapResolutionOptions = [
   {
@@ -28,6 +29,15 @@ const ShadowMapResolutionOptions = [
     value: new Vector2(4096, 4096)
   }
 ];
+
+export const InputGroupCast=styled.div`
+border-bottom:1px solid #252525;
+padding:16px 0;
+`
+export const InputGroupShadow=styled.div`
+border-bottom:1px solid #252525;
+padding:16px 0;
+`
 
 export default class LightShadowProperties extends Component {
   static propTypes = {
@@ -56,9 +66,12 @@ export default class LightShadowProperties extends Component {
 
     return (
       <Fragment>
-        <InputGroup name="Cast Shadow">
-          <BooleanInput value={node.castShadow} onChange={this.onChangeCastShadow} />
-        </InputGroup>
+        <InputGroupCast>
+          <InputGroup name="Cast Shadow">
+            <BooleanInput value={node.castShadow} onChange={this.onChangeCastShadow} />
+          </InputGroup>
+        </InputGroupCast>
+       <InputGroupShadow>
         <InputGroup name="Shadow Map Resolution">
           <SelectInput
             options={ShadowMapResolutionOptions}
@@ -66,6 +79,8 @@ export default class LightShadowProperties extends Component {
             onChange={this.onChangeShadowMapResolution}
           />
         </InputGroup>
+        </InputGroupShadow>
+       <InputGroupShadow>
         <NumericInputGroup
           name="Shadow Bias"
           mediumStep={0.00001}
@@ -75,6 +90,8 @@ export default class LightShadowProperties extends Component {
           value={node.shadowBias}
           onChange={this.onChangeShadowBias}
         />
+        </InputGroupShadow>
+        <InputGroupShadow>
         <NumericInputGroup
           name="Shadow Radius"
           mediumStep={0.01}
@@ -84,6 +101,7 @@ export default class LightShadowProperties extends Component {
           value={node.shadowRadius}
           onChange={this.onChangeShadowRadius}
         />
+        </InputGroupShadow>
       </Fragment>
     );
   }

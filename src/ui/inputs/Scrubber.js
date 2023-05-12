@@ -9,6 +9,7 @@ import Overlay from "../layout/Overlay";
 const ScrubberContainer = styled.div`
   cursor: ew-resize;
   user-select: none;
+  // color:${props=>props.theme.text}
 `;
 
 const Cursor = styled(ArrowsAltH).attrs(({ x, y }) => ({
