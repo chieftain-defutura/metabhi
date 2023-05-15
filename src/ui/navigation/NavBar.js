@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { SearchInput } from "../projects/ProjectGrid";
 
-import Profile from "../../assets/profile.png";
-import Toggle from "../../assets/toggle.png";
-import Bell from "../../assets/bell.svg";
+// import Profile from "../../assets/profile.png";
+// import Toggle from "../../assets/toggle.png";
+// import Bell from "../../assets/bell.svg";
 
 const StyledNavBar = styled.header`
   position: relative;
@@ -145,12 +145,12 @@ const NavBar = () => {
       </IconContainer>
       <SearchInput placeholder="Search scenes..." value={params.q} onChange={onChangeQuery} />
 
-      <RightContainer>
+      {/* <RightContainer>
         <img alt="" src={Toggle} />
         <img alt="" src={Bell} />
         <img alt="" src={Profile} />
         <WalletConnect> Connect Wallet</WalletConnect>
-      </RightContainer>
+      </RightContainer> */}
     </StyledNavBar>
   );
 };

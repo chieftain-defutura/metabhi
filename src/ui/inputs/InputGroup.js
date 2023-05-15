@@ -32,8 +32,7 @@ export const InputGroupContainer = styled.div`
 
 export const InputGroupContent = styled.div`
   ${props =>
-    props.disabled &&
-    `
+    props.disabled && `
     pointer-events: none;
     opacity: 0.3;
   `}

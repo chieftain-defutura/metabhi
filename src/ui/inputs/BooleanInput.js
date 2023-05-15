@@ -32,6 +32,7 @@ const BooleanCheck = styled(Check)`
 `;
 
 export default class BooleanInput extends Component {
+
   static propTypes = {
     value: PropTypes.bool,
     onChange: PropTypes.func
@@ -55,10 +56,11 @@ export default class BooleanInput extends Component {
     const { value, onChange, ...rest } = this.props;
 
     return (
+      
       <div>
-        {/* <StyledBooleanInput {...rest} id={this.checkboxId} type="checkbox" checked={value} onChange={this.onChange} />
-        <BooleanInputLabel htmlFor={this.checkboxId}>{value && <BooleanCheck size={12} />}</BooleanInputLabel> */}
-        <Toggle/>
+        <StyledBooleanInput {...rest} id={this.checkboxId} type="checkbox" checked={value} onChange={this.onChange} />
+        <BooleanInputLabel htmlFor={this.checkboxId}>{value && <BooleanCheck size={12} />}</BooleanInputLabel>
+        <Toggle {...rest} id={this.checkboxId} type="checkbox" checked={value} onChange={this.onChange} />
       </div>
     );
   }

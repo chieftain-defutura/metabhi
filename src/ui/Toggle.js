@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import styled from 'styled-components'
 
 export const ToggleButton=styled.div`
@@ -53,13 +53,16 @@ const Background = styled.div`
   position: absolute;
   transition: 0.3s;
 `;
-
-
-
 const Toggle = () => {
+  const [toggle, setToggle] = useState(false)
+
+  const ToggleClick = ()=>{
+    setToggle(!toggle)
+    console.log(toggle)
+  }
   return (
- <ToggleButton>
-    <ToggleInput type="checkbox" id="dark" />
+ <ToggleButton onChange={ToggleClick }  id={`dark ${toggle ? 'dark--checked' : ''}`} >
+    <ToggleInput type="checkbox" id="dark"  />
     <ToggleLabel  htmlFor="dark">
 
     </ToggleLabel>
