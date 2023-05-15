@@ -6,6 +6,18 @@ import ColorInput from "../inputs/ColorInput";
 import NumericInputGroup from "../inputs/NumericInputGroup";
 import LightShadowProperties from "./LightShadowProperties";
 import { Bolt } from "styled-icons/fa-solid/Bolt";
+import styled from "styled-components";
+
+
+export const InputGroupColor=styled.div`
+border-bottom:1px solid #252525;
+padding:16px 0;
+`
+export const InuputNumberGroup=styled.div`
+border-bottom:1px solid #252525;
+padding:16px 0;
+
+`
 
 export default class DirectionalLightNodeEditor extends Component {
   static propTypes = {
@@ -30,9 +42,12 @@ export default class DirectionalLightNodeEditor extends Component {
 
     return (
       <NodeEditor {...this.props} description={DirectionalLightNodeEditor.description}>
+        <InputGroupColor>
         <InputGroup name="Color">
           <ColorInput value={node.color} onChange={this.onChangeColor} />
         </InputGroup>
+        </InputGroupColor>
+        <InuputNumberGroup>
         <NumericInputGroup
           name="Intensity"
           min={0}
@@ -43,6 +58,7 @@ export default class DirectionalLightNodeEditor extends Component {
           onChange={this.onChangeIntensity}
           unit="cd"
         />
+        </InuputNumberGroup>
         <LightShadowProperties node={node} editor={editor} />
       </NodeEditor>
     );

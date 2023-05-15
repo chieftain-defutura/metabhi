@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import Input from "./Input";
 import styled from "styled-components";
 import { Check } from "styled-icons/fa-solid";
+import Toggle from "../Toggle";
 
 let uniqueId = 0;
 
 const StyledBooleanInput = styled.input`
   display: none;
-
   :disabled ~ label {
     background-color: ${props => props.theme.disabled};
     color: ${props => props.theme.disabledText};
@@ -56,8 +56,9 @@ export default class BooleanInput extends Component {
 
     return (
       <div>
-        <StyledBooleanInput {...rest} id={this.checkboxId} type="checkbox" checked={value} onChange={this.onChange} />
-        <BooleanInputLabel htmlFor={this.checkboxId}>{value && <BooleanCheck size={12} />}</BooleanInputLabel>
+        {/* <StyledBooleanInput {...rest} id={this.checkboxId} type="checkbox" checked={value} onChange={this.onChange} />
+        <BooleanInputLabel htmlFor={this.checkboxId}>{value && <BooleanCheck size={12} />}</BooleanInputLabel> */}
+        <Toggle/>
       </div>
     );
   }

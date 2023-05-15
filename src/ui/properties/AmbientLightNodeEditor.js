@@ -29,6 +29,7 @@ export default class AmbientLightNodeEditor extends Component {
 
     return (
       <NodeEditor {...this.props} description={AmbientLightNodeEditor.description}>
+        
         <InputGroup name="Color">
           <ColorInput value={node.color} onChange={this.onChangeColor} />
         </InputGroup>

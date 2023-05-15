@@ -10,7 +10,7 @@ import { PropertyLabel } from "./PropertyLabel";
 export const InputGroupContainer = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 4px 8px;
+  padding: 12px 8px;
   flex: 1;
   min-height: 24px;
   align-items: center;
@@ -40,7 +40,6 @@ export const InputGroupContent = styled.div`
   display: flex;
   flex-direction: row;
   flex: 2;
-  padding-left: 8px;
   align-items: center;
 `;
 
@@ -76,6 +75,7 @@ export const OptionalGroup = styled.div`
   flex-direction: row;
   flex: 1;
   align-items: center;
+  
 
   ${props =>
     props.disabled &&
@@ -83,6 +83,9 @@ export const OptionalGroup = styled.div`
     pointer-events: none;
     opacity: 0.3;
   `}
+`;
+export const InputGroupProperties = styled.div`
+    border-bottom:1px solid #454545;
 `;
 
 export function InputGroupInfo({ info }) {
@@ -106,11 +109,15 @@ export default function InputGroup({ name, children, disabled, info, optional, e
           {name && <PropertyLabel modified={!reset}>{name}:</PropertyLabel>}
         </OptionalGroup>
       </InputGroupHeader>
+     
       <InputGroupContent disabled={optional && !enabled}>
-        {children}
+        {children} 
+        <InputGroupProperties>
         {info && <InputGroupInfo info={info} />}
+       </InputGroupProperties>
         {onReset && <ResetButton disabled={!reset} onClick={onReset} />}
       </InputGroupContent>
+      
     </InputGroupContainer>
   );
 }

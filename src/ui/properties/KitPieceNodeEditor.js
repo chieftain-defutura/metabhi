@@ -6,6 +6,8 @@ import SelectInput from "../inputs/SelectInput";
 import BooleanInput from "../inputs/BooleanInput";
 import { PuzzlePiece } from "styled-icons/fa-solid/PuzzlePiece";
 import styled from "styled-components";
+import { ToggleButton } from "../Toggle";
+import DarkModeToggleButton from "../ToggleButton";
 
 const SubPiecesHeader = styled.div`
   color: ${props => props.theme.text2};
@@ -58,6 +60,10 @@ const MaterialSlotContent = styled.div`
   padding: 0 8px;
   flex: 1;
 `;
+// const InputGroupClass = styled.div`
+// display: flex;
+// flex-direction:row;
+// `
 
 function SubPieceItem({ name, children, ...rest }) {
   return (
@@ -184,9 +190,11 @@ export default class KitPieceNodeEditor extends Component {
             isMulti
           />
         </InputGroup>
+       
         <InputGroup name="Collidable">
           <BooleanInput value={node.collidable} onChange={this.onChangeCollidable} />
         </InputGroup>
+        
         <InputGroup name="Walkable">
           <BooleanInput value={node.walkable} onChange={this.onChangeWalkable} />
         </InputGroup>

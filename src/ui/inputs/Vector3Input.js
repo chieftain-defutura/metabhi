@@ -12,15 +12,15 @@ export const Vector3InputContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1 1 auto;
-  width: 70%;
-  justify-content: flex-start;
+  // width: 70%;
+  justify-content: space-evenly;
 `;
 
 export const Vector3Scrubber = styled(Scrubber)`
   display: flex;
   align-items: center;
-  padding: 0 8px;
-  color: ${props => props.theme.text2};
+  // padding: 0 8px;
+  color: ${props => props.theme.text};
 `;
 
 const UniformButtonContainer = styled.div`
@@ -104,7 +104,7 @@ export default class Vector3Input extends Component {
 
     return (
       <Vector3InputContainer>
-        {uniformScaling && (
+        {/* {uniformScaling && (
           <UniformButtonContainer>
             <Hidden
               as="input"
@@ -117,17 +117,17 @@ export default class Vector3Input extends Component {
               {uniformEnabled ? <Link /> : <Unlink />}
             </label>
           </UniformButtonContainer>
-        )}
+        )} */}
         <Vector3Scrubber {...rest} tag="div" value={vx} onChange={this.onChangeX}>
-          X:
+          X
         </Vector3Scrubber>
         <NumericInput {...rest} value={vx} onChange={this.onChangeX} />
         <Vector3Scrubber {...rest} tag="div" value={vy} onChange={this.onChangeY}>
-          Y:
+          Y
         </Vector3Scrubber>
         <NumericInput {...rest} value={vy} onChange={this.onChangeY} />
         <Vector3Scrubber {...rest} tag="div" value={vz} onChange={this.onChangeZ}>
-          Z:
+          Z
         </Vector3Scrubber>
         <NumericInput {...rest} value={vz} onChange={this.onChangeZ} />
       </Vector3InputContainer>

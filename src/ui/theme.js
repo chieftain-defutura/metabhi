@@ -70,7 +70,6 @@ const darkTheme = {
   selectedText: "#fff",
   hover: "#4B5562",
   hover2: "#636F80",
-  text: "#FFFFFF",
   text2: "#9FA4B5",
   dropdown: "#000000",
   red: "#F44336",

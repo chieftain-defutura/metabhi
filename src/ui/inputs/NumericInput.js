@@ -23,14 +23,14 @@ const NumericInputContainer = styled.div`
   position: relative;
   display: flex;
   flex: 1;
-  max-width: 100px;
+  max-width: 45px;
 `;
 
 const StyledNumericInput = styled.input`
   display: flex;
-  width: 100%;
-  color: ${props => props.theme.text};
-  background: ${props => props.theme.darkClr};
+  width: 45px;
+  color: ${props => props.theme.gray};
+  background: ${props => props.theme.background};
   // background-color: ${props => props.theme.inputBackground};
   border-radius: 4px;
   border: 1px solid ${props => props.theme.border};
@@ -40,7 +40,6 @@ const StyledNumericInput = styled.input`
   box-sizing: border-box;
   outline: none;
   padding-right: ${props => (props.unit ? props.unit.length * 6 + 10 + "px" : 0)};
-
   &:hover {
     border-color: ${props => props.theme.blueHover};
   }
@@ -57,11 +56,11 @@ const StyledNumericInput = styled.input`
 
 const NumericInputUnit = styled.div`
   position: absolute;
-  color: ${props => props.theme.text2};
+  color: ${props => props.theme.gray};
   right: 1px;
   top: 5px;
   bottom: 1px;
-  background: ${props => props.theme.darkClr};
+  background: ${props => props.theme.background};
   // background-color: ${props => props.theme.inputBackground};
   padding: 0 4px;
   border-top-right-radius: 4px;
@@ -215,22 +214,22 @@ export default class NumericInput extends Component {
   }
 }
 
-NumericInput.propTypes = {
-  className: PropTypes.string,
-  unit: PropTypes.node,
-  smallStep: PropTypes.number.isRequired,
-  mediumStep: PropTypes.number.isRequired,
-  largeStep: PropTypes.number.isRequired,
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onCommit: PropTypes.func,
-  convertTo: PropTypes.func.isRequired,
-  convertFrom: PropTypes.func.isRequired,
-  precision: PropTypes.number.isRequired,
-  displayPrecision: PropTypes.number.isRequired
-};
+// NumericInput.propTypes = {
+//   className: PropTypes.string,
+//   unit: PropTypes.node,
+//   smallStep: PropTypes.number.isRequired,
+//   mediumStep: PropTypes.number.isRequired,
+//   largeStep: PropTypes.number.isRequired,
+//   min: PropTypes.number.isRequired,
+//   max: PropTypes.number.isRequired,
+//   value: PropTypes.number.isRequired,
+//   onChange: PropTypes.func.isRequired,
+//   onCommit: PropTypes.func,
+//   convertTo: PropTypes.func.isRequired,
+//   convertFrom: PropTypes.func.isRequired,
+//   precision: PropTypes.number.isRequired,
+//   displayPrecision: PropTypes.number.isRequired
+// };
 
 NumericInput.defaultProps = {
   value: 0,

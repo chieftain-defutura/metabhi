@@ -6,7 +6,7 @@ export const Button = styled.button.attrs(props => ({
   display: flex;
   border: none;
   border-radius: 4px;
-  background: ${props => props.theme.blue};
+  background: ${props => props.theme.gray};
   color: ${props => props.theme.white};
   white-space: nowrap;
   min-height: 24px;
@@ -99,5 +99,7 @@ export const MenuButton = styled(Button)`
 export const PropertiesPanelButton = styled(Button)`
   align-self: center;
   justify-content: center;
+  padding:4px 0;
+  margin:18px 0;
   width: 200px;
 `;
