@@ -31,14 +31,14 @@ function collectNodeMenuProps({ node }) {
 }
 
 const PanelContainer = styled.div`
-  outline: none;
-  user-select: none;
-  width: 100%;
   position: relative;
   display: flex;
-  flex-direction: column;
-  color: ${props => props.theme.text2};
   flex: 1;
+  flex-direction: column;
+  outline: none;
+  width: 100%;
+  user-select: none;
+  color: ${props => props.theme.text2};
 `;
 
 const TreeDepthContainer = styled.li``;
@@ -138,6 +138,10 @@ const TreeNodeLabel = styled.div`
   border-radius: 4px;
   padding: 0 2px;
   text-decoration: ${props => (props.enabled ? "none" : "line-through")};
+`;
+
+const PanelItemContent = styled.div`
+  display: flex;
 `;
 
 function borderStyle({ isOver, canDrop, position }) {
@@ -855,13 +859,25 @@ export default function HierarchyPanel() {
 
   return (
     <>
-      <Panel
-        id="hierarchy-panel"
-        title="Hierarchy"
-        icon={ProjectDiagram}
-        style={{ cursor: "pointer" }}
-        onClick={() => setHierarchyToggle("Hierarchy")}
-      >
+      <PanelItemContent>
+        <Panel
+          id="hierarchy-panel"
+          title="Hierarchy"
+          icon={ProjectDiagram}
+          style={{ cursor: "pointer" }}
+          onClick={() => setHierarchyToggle("Hierarchy")}
+        />
+
+        <Panel
+          id="hierarchy-panel"
+          title="Element"
+          icon={ProjectDiagram}
+          onClick={() => setHierarchyToggle("Element")}
+          style={{ cursor: "pointer" }}
+        />
+      </PanelItemContent>
+
+      <div style={{ display: "flex", width: "100%", height: "100%" }}>
         {hierarchyToggle === "Hierarchy" && (
           <>
             <PanelContainer>
@@ -910,20 +926,12 @@ export default function HierarchyPanel() {
             </ContextMenu>
           </>
         )}
-      </Panel>
-      <Panel
-        id="hierarchy-panel"
-        title="Element"
-        icon={ProjectDiagram}
-        onClick={() => setHierarchyToggle("Element")}
-        style={{ cursor: "pointer" }}
-      >
         {hierarchyToggle === "Element" && (
-          <Resizeable axis="y">
-            <AssetsPanel />
-          </Resizeable>
+          // <Resizeable axis="y">
+          <AssetsPanel />
+          // {/* </Resizeable> */}
         )}
-      </Panel>
+      </div>
     </>
   );
 }

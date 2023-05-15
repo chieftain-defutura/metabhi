@@ -36,7 +36,7 @@ const PositionStyles = {
     &:after {
       top: 100%;
       left: 50%;
-      border-top-color: #000000;
+      border-top-color: ${props => props.theme.black};
       margin-left: -8px;
     }
   `,
@@ -45,7 +45,7 @@ const PositionStyles = {
     &:after {
       top: 100%;
       left: 10%;
-      border-top-color: #000000;
+      border-top-color: ${props => props.theme.black};
       margin-left: -8px;
     }
   `,
@@ -54,7 +54,7 @@ const PositionStyles = {
     &:after {
       top: 100%;
       left: 90%;
-      border-top-color: #000000;
+      border-top-color: ${props => props.theme.black};
       margin-left: -8px;
     }
   `,
@@ -94,7 +94,7 @@ const Popover = styled.div`
   pointer-events: all;
   background-color: #006eff;
   border-radius: 4px;
-  border-color: #000000;
+  border-color: ${props => props.theme.black};
   border-width: 1px;
   max-width: 360px;
 

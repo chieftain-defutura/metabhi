@@ -9,10 +9,8 @@ export const PanelContainer = styled.div`
   flex-direction: column;
   border-radius: 4px;
   background: ${props => props.theme.grayClr};
-  // background-color: ${props => props.theme.panel};
   overflow: hidden;
   user-select: none;
-
 `;
 
 export const PanelToolbar = styled.div`
@@ -59,6 +57,7 @@ export default class Panel extends Component {
           <PanelTitle>{title}</PanelTitle>
           {toolbarContent}
         </PanelToolbar>
+
         <PanelContent>{children}</PanelContent>
       </PanelContainer>
     );

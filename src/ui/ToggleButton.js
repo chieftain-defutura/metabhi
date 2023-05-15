@@ -4,9 +4,9 @@ import Sun from "../assets/moon.svg";
 import Moon from "../assets/sun.svg";
 
 const DarkModeContainer = styled.div`
-  margin-top: -2px;
-  padding-left: 54px;
-  background: ${props => props.theme.lightDarkClr};
+  // margin-top: -2px;
+  // padding-left: 54px;
+  // background: ${props => props.theme.lightDarkClr};
 `;
 const StyledInput = styled.input`
   width: 0;

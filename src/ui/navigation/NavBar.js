@@ -3,37 +3,67 @@ import configs from "../../configs";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { SearchInput } from "../projects/ProjectGrid";
+import SearchIcon from "../../assets/search-icon.png";
+import { useDarkMode } from "usehooks-ts";
 
-// import Profile from "../../assets/profile.png";
-// import Toggle from "../../assets/toggle.png";
-// import Bell from "../../assets/bell.svg";
+import Profile from "../../assets/profile.png";
+import Toggle from "../../assets/toggle.png";
+import Bell from "../../assets/bell.svg";
 
 const StyledNavBar = styled.header`
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 20px;
   font-size: 1.4em;
-  border-bottom: 1px solid #252525;
+  border-bottom: ${props => props.theme.borderStyleClr};
+  background: ${props => props.theme.darkClr};
+
   a {
     color: ${props => props.theme.text};
     text-decoration: none;
   }
 `;
 
+const BorderRight = styled.div`
+  height: 60px;
+`;
+
 const IconContainer = styled.div`
-  margin-right: 20px;
   display: flex;
-  gap: 5px;
+  align-items: center;
+  gap: 6px;
+  border-right: ${props => props.theme.borderStyleClr};
+  padding: 12px 20px;
+  width: 260px;
   a {
     display: block;
   }
 
   img {
-    width: 48px;
+    width: 70px;
+    height: 32px;
     display: block;
   }
+  h1 {
+    font-size: 20px;
+  }
+`;
+
+const InputContent = styled.div`
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  background: ${props => props.theme.black};
+  border: 1px solid rgba(119, 119, 119, 0.3);
+  border-radius: 5px;
+  padding: 2px 16px;
+`;
+
+const ToggleContent = styled.div`
+  display: flex;
+  align-item: center;
+  cursor: pointer;
 `;
 
 const MiddleContainer = styled.div`
@@ -56,16 +86,40 @@ const NavList = styled.ul`
 const RightContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 24px;
 
   @media (max-width: 600px) {
     flex: 1;
   }
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
 `;
 
+const LeftContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 40px;
+
+  @media (max-width: 600px) {
+    flex: 1;
+  }
+`;
 const WalletConnect = styled.div`
   display: flex;
   justify-content: flex-end;
+  background: #002bff;
+  padding: 8px 32px;
+  border: 1px solid #002bff;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 24px;
+  color: ${props => props.theme.text};
 `;
 
 // class NavBar extends Component {
@@ -104,6 +158,7 @@ const NavBar = () => {
     filter: queryParams.get("filter") || "featured-remixable",
     q: queryParams.get("q") || ""
   });
+  const { isDarkMode, setIsDarkMode } = React.useContext(ThemeContext);
 
   const updateParams = useCallback(
     nextParams => {
@@ -135,22 +190,34 @@ const NavBar = () => {
     [updateParams]
   );
 
+  const toggle = theme => {
+    localStorage.setItem("theme", JSON.stringify(theme));
+    setIsDarkMode(theme === "light" ? false : true);
+  };
+
   return (
     <StyledNavBar>
-      <IconContainer>
-        <Link to="/">
-          <img src={configs.icon()} alt={configs.name()} />
-        </Link>
-        <h1>What's New</h1>
-      </IconContainer>
-      <SearchInput placeholder="Search scenes..." value={params.q} onChange={onChangeQuery} />
+      <LeftContainer>
+        <IconContainer>
+          <Link to="/">
+            <img src={configs.icon()} alt={configs.name()} />
+          </Link>
+          <h1>What's New</h1>
+          <BorderRight></BorderRight>
+        </IconContainer>
 
-      {/* <RightContainer>
+        <InputContent>
+          <img src={SearchIcon} alt="search" />
+          <SearchInput placeholder="Search scenes..." value={params.q} onChange={onChangeQuery} />
+        </InputContent>
+      </LeftContainer>
+
+      <RightContainer>
         <img alt="" src={Toggle} />
         <img alt="" src={Bell} />
         <img alt="" src={Profile} />
         <WalletConnect> Connect Wallet</WalletConnect>
-      </RightContainer> */}
+      </RightContainer>
     </StyledNavBar>
   );
 };

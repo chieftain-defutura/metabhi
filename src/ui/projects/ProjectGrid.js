@@ -5,36 +5,107 @@ import { ProjectGridItem, ProjectGridSceneItem } from "./ProjectGridItem";
 import { Row } from "../layout/Flex";
 import StringInput from "../inputs/StringInput";
 import { Link } from "react-router-dom";
-import { Plus } from "styled-icons/fa-solid/Plus";
+import PenFile from "../../assets/pen-file-svg.png";
+import StarIcon from "../../assets/star.svg";
+import Plus from "../../assets/plus.svg";
 
 const ProjectGridItemContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 220px;
-  border-radius: 6px;
+  // display: flex;
+  // flex-direction: column;
+  // height: 220px;
+  // border-radius: 6px;
   text-decoration: none;
-  background-color: ${props => props.theme.toolbar};
-  justify-content: center;
-  align-items: center;
-  border: 1px solid transparent;
+  // background-color: ${props => props.theme.toolbar};
+  // justify-content: center;
+  // align-items: center;
+  // border: 1px solid transparent;
+
+
+  // &:hover {
+  //   color: inherit;
+  //   border-color: ${props => props.theme.selected};
+  // }
+
+  // svg {
+  //   width: 3em;
+  //   height: 3em;
+  //   margin-bottom: 20px;
+  // }
+`;
+
+const Box = styled.div`
+  background: ${props => props.theme.lightDarkClr};
+  border: ${props => props.theme.borderFileClr};
+  border-radius: 5px;
 
   &:hover {
-    color: inherit;
-    border-color: ${props => props.theme.selected};
+    border-color: ${props => props.theme.gray};
+    color: #fff;
   }
+`;
 
-  svg {
-    width: 3em;
-    height: 3em;
-    margin-bottom: 20px;
+const Empty = styled.div`
+  background: ${props => props.theme.emptyBoxClr};
+  // width: 270.5px;
+  height: 160px;
+`;
+
+const UnTitleContent = styled.div`
+  background: ${props => props.theme.darkGray};
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 20px;
+`;
+
+const Untitle = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  h4 {
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+  p {
+    font-size: 12px;
+    color: ${props => props.theme.lightGray};
+  }
+  img {
+    width: 24px;
+    height: 24px;
+  }
+`;
+
+const UntitleProfile = styled.div`
+  margin-top: 8px;
+  img {
+    width: 18px;
+    height: 18px;
   }
 `;
 
 export function NewProjectGridItem({ path, label }) {
   return (
     <ProjectGridItemContainer as={Link} to={path}>
-      <Plus />
-      <h3>{label}</h3>
+      {/* <img src={Plus} alt="plus" />
+      <h3>{label}</h3> */}
+      <Box>
+        <Empty></Empty>
+        <UnTitleContent>
+          <Untitle>
+            <div>
+              <img src={PenFile} alt="NewFileImg" />
+            </div>
+            <div>
+              <h4 style={{ textDecoration: "none" }}>Untitle</h4>
+              <p>Edit time </p>
+            </div>
+          </Untitle>
+          <UntitleProfile>
+            <img src={StarIcon} alt="star" />
+          </UntitleProfile>
+        </UnTitleContent>
+      </Box>
     </ProjectGridItemContainer>
   );
 }
@@ -58,7 +129,7 @@ export function LoadingProjectGridItem() {
 
 const StyledProjectGrid = styled.div`
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 27px;
   width: 100%;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 `;
@@ -92,7 +163,7 @@ export const ProjectGridContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  background-color: ${props => props.theme.panel2};
+  // background-color: ${props => props.theme.panel2};
   border-radius: 3px;
 `;
 
@@ -100,7 +171,7 @@ export const ProjectGridContent = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 20px;
+  padding: 24px 40px;
 `;
 
 export const ProjectGridHeader = styled.div`
@@ -135,8 +206,8 @@ export const ProjectGridHeaderRow = styled(Row)`
 
 export const SearchInput = styled(StringInput)`
   width: auto;
-  min-width: 200px;
-  height: 28px;
+  min-width: 296px;
+  height: 44px;
 `;
 
 export const CenteredMessage = styled.div`

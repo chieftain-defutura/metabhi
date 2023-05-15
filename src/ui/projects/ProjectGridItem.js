@@ -6,6 +6,8 @@ import { showMenu } from "../layout/ContextMenu";
 import { MenuButton } from "../inputs/Button";
 import StylableContextMenuTrigger from "./StylableContextMenuTrigger";
 import { EllipsisV } from "styled-icons/fa-solid/EllipsisV";
+import PenFile from "../../assets/pen-file-svg.png";
+import StarIcon from "../../assets/star.svg";
 
 function collectMenuProps({ project }) {
   return { project };
@@ -15,15 +17,15 @@ const StyledProjectGridItem = styled(Link)`
   display: flex;
   flex-direction: column;
   height: 220px;
-  border-radius: 6px;
-  background-color: ${props => props.theme.toolbar};
+  background-color: ${props => props.theme.darkGray};
   text-decoration: none;
-  border: 1px solid transparent;
+  border: ${props => props.theme.borderStyleClr};
+  border-radius: 5px;
   position: relative;
 
   &:hover {
     color: inherit;
-    border-color: ${props => props.theme.selected};
+    border-color: ${props => props.theme.gray};
   }
 `;
 
@@ -47,10 +49,10 @@ const StyledContextMenuTrigger = styled(StylableContextMenuTrigger)`
 `;
 
 const TitleContainer = styled.div`
-  display: flex;
-  height: 50px;
-  align-items: center;
-  padding: 0 16px;
+  // display: flex;
+  // align-items: center;
+  // height: 50px;
+  padding: 12px 20px;
 
   h3 {
     font-size: 16px;
@@ -95,6 +97,37 @@ const Col = styled.div`
   }
 `;
 
+const Column = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Star = styled.div`
+  margin-top: 8px;
+  img {
+    width: 18px;
+    height: 18px;
+  }
+`;
+
+const UntitleHead = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  img {
+    width: 24px;
+    height: 24px;
+  }
+  h4 {
+    font-size: 14px;
+  }
+  p {
+    font-size: 12px;
+    margin-top: 2px;
+    color: ${props => props.theme.lightGray};
+  }
+`;
+
 export class ProjectGridItem extends Component {
   static propTypes = {
     contextMenuId: PropTypes.string,
@@ -125,10 +158,24 @@ export class ProjectGridItem extends Component {
       <>
         <ThumbnailContainer>{project.thumbnail_url && <Thumbnail src={project.thumbnail_url} />}</ThumbnailContainer>
         <TitleContainer>
-          <Col>
+          <Column>
+            <UntitleHead>
+              <div>
+                <img src={PenFile} alt="PenFile" />
+              </div>
+              <div>
+                <h4>{project.name}</h4>
+                {creatorAttribution && <p>{creatorAttribution}</p>}
+              </div>
+            </UntitleHead>
+            <Star>
+              <img src={StarIcon} alt="star" />
+            </Star>
+          </Column>
+          {/* <Col>
             <h3>{project.name}</h3>
             {creatorAttribution && <p>{creatorAttribution}</p>}
-          </Col>
+          </Col> */}
           {contextMenuId && (
             <MenuButton onClick={this.onShowMenu}>
               <EllipsisV />
