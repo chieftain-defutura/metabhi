@@ -11,6 +11,7 @@ const AssetsPanelContainer = styled(Row)`
   flex: 1;
   background: ${props => props.theme.grayClr};
   // background-color: ${props => props.theme.panel};
+  display: block;
 `;
 
 const AssetsPanelToolbarContainer = styled.div`

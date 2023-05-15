@@ -140,6 +140,10 @@ const TreeNodeLabel = styled.div`
   text-decoration: ${props => (props.enabled ? "none" : "line-through")};
 `;
 
+const PanelItemContent = styled.div`
+  display: flex;
+`;
+
 function borderStyle({ isOver, canDrop, position }) {
   if (isOver && canDrop) {
     return `border-${position === "before" ? "top" : "bottom"}: 2px solid rgba(255, 255, 255, 0.3)`;
@@ -855,75 +859,79 @@ export default function HierarchyPanel() {
 
   return (
     <>
-      <Panel
-        id="hierarchy-panel"
-        title="Hierarchy"
-        icon={ProjectDiagram}
-        style={{ cursor: "pointer" }}
-        onClick={() => setHierarchyToggle("Hierarchy")}
-      />
+      <PanelItemContent>
+        <Panel
+          id="hierarchy-panel"
+          title="Hierarchy"
+          icon={ProjectDiagram}
+          style={{ cursor: "pointer" }}
+          onClick={() => setHierarchyToggle("Hierarchy")}
+        />
 
-      <Panel
-        id="hierarchy-panel"
-        title="Element"
-        icon={ProjectDiagram}
-        onClick={() => setHierarchyToggle("Element")}
-        style={{ cursor: "pointer" }}
-      />
+        <Panel
+          id="hierarchy-panel"
+          title="Element"
+          icon={ProjectDiagram}
+          onClick={() => setHierarchyToggle("Element")}
+          style={{ cursor: "pointer" }}
+        />
+      </PanelItemContent>
 
-      {hierarchyToggle === "Hierarchy" && (
-        <>
-          <PanelContainer>
-            {editor.scene && (
-              <AutoSizer>
-                {({ height, width }) => (
-                  <FixedSizeList
-                    height={height}
-                    width={width}
-                    itemSize={32}
-                    itemCount={nodes.length}
-                    itemData={{
-                      renamingNode,
-                      nodes,
-                      onKeyDown,
-                      onChangeName,
-                      onRenameSubmit,
-                      onMouseDown,
-                      onClick,
-                      onToggle,
-                      onUpload
-                    }}
-                    itemKey={getNodeKey}
-                    outerRef={treeContainerDropTarget}
-                    innerElementType="ul"
-                  >
-                    {MemoTreeNode}
-                  </FixedSizeList>
-                )}
-              </AutoSizer>
-            )}
-          </PanelContainer>
-          <ContextMenu id="hierarchy-node-menu">
-            <MenuItem onClick={onRenameNode}>Rename</MenuItem>
-            <MenuItem onClick={onDuplicateNode}>
-              Duplicate
-              <div>{cmdOrCtrlString + "+ D"}</div>
-            </MenuItem>
-            <MenuItem onClick={onGroupNodes}>
-              Group
-              <div>{cmdOrCtrlString + "+ G"}</div>
-            </MenuItem>
-            <MenuItem onClick={onDeleteNode}>Delete</MenuItem>
-            <MenuItem onClick={onExpandAllNodes}>Expand All</MenuItem>
-            <MenuItem onClick={onCollapseAllNodes}>Collapse All</MenuItem>
-          </ContextMenu>
-        </>
-      )}
-      {hierarchyToggle === "Element" && (
-        <Resizeable axis="y">
+      <div style={{ display: "flex", width: "100%", height: "100%" }}>
+        {hierarchyToggle === "Hierarchy" && (
+          <>
+            <PanelContainer>
+              {editor.scene && (
+                <AutoSizer>
+                  {({ height, width }) => (
+                    <FixedSizeList
+                      height={height}
+                      width={width}
+                      itemSize={32}
+                      itemCount={nodes.length}
+                      itemData={{
+                        renamingNode,
+                        nodes,
+                        onKeyDown,
+                        onChangeName,
+                        onRenameSubmit,
+                        onMouseDown,
+                        onClick,
+                        onToggle,
+                        onUpload
+                      }}
+                      itemKey={getNodeKey}
+                      outerRef={treeContainerDropTarget}
+                      innerElementType="ul"
+                    >
+                      {MemoTreeNode}
+                    </FixedSizeList>
+                  )}
+                </AutoSizer>
+              )}
+            </PanelContainer>
+            <ContextMenu id="hierarchy-node-menu">
+              <MenuItem onClick={onRenameNode}>Rename</MenuItem>
+              <MenuItem onClick={onDuplicateNode}>
+                Duplicate
+                <div>{cmdOrCtrlString + "+ D"}</div>
+              </MenuItem>
+              <MenuItem onClick={onGroupNodes}>
+                Group
+                <div>{cmdOrCtrlString + "+ G"}</div>
+              </MenuItem>
+              <MenuItem onClick={onDeleteNode}>Delete</MenuItem>
+              <MenuItem onClick={onExpandAllNodes}>Expand All</MenuItem>
+              <MenuItem onClick={onCollapseAllNodes}>Collapse All</MenuItem>
+            </ContextMenu>
+          </>
+        )}
+        {hierarchyToggle === "Element" && (
+          // <Resizeable axis="y">
           <AssetsPanel />
-        </Resizeable>
-      )}
+          // {/* </Resizeable> */}
+        )}
+      </div>
     </>
   );
 }

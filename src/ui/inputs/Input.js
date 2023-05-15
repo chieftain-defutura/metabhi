@@ -11,12 +11,12 @@ function borderColor(props, defaultColor) {
 }
 
 const Input = styled.input`
-  background-color: ${props => (props.disabled ? props.theme.disabled : props.theme.inputBackground)};
-  border-radius: 4px;
-  border: 1px solid ${props => borderColor(props, props.theme.border)};
+  // background-color: ${props => (props.disabled ? props.theme.disabled : props.theme.inputBackground)};
+  // border: 1px solid ${props => borderColor(props, props.theme.border)};
   color: ${props => (props.disabled ? props.theme.disabledText : props.theme.text)};
-  height: 24px;
-  padding: 6px 8px;
+  outline: none;
+  border: none;
+  background: transparent;
 
   &:hover {
     border-color: ${props => borderColor(props, props.theme.blueHover)};

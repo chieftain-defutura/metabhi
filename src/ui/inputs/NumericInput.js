@@ -36,7 +36,7 @@ const StyledNumericInput = styled.input`
   border: 1px solid ${props => props.theme.border};
   padding-left: 6px;
   font-size: 12px;
-  height: 24px;
+  // height: 24px;
   box-sizing: border-box;
   outline: none;
   padding-right: ${props => (props.unit ? props.unit.length * 6 + 10 + "px" : 0)};
@@ -59,7 +59,7 @@ const NumericInputUnit = styled.div`
   position: absolute;
   color: ${props => props.theme.text2};
   right: 1px;
-  top: 1px;
+  top: 5px;
   bottom: 1px;
   background: ${props => props.theme.darkClr};
   // background-color: ${props => props.theme.inputBackground};

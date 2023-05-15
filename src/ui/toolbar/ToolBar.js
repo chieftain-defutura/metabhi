@@ -22,6 +22,7 @@ import styledTheme from "../theme";
 import { InfoTooltip } from "../layout/Tooltip";
 import { Pause } from "styled-icons/fa-solid";
 import DarkModeToggleButton from "../ToggleButton";
+import MoonIcon from "../../assets/moon.svg";
 
 const StyledToolbar = styled.div`
   display: flex;
@@ -55,6 +56,7 @@ const ToolToggles = styled.div`
   align-items: center;
   padding: 0 46px;
   gap: 16px;
+  margin-right: 132px;
   border-bottom: 1px solid rgba(68, 68, 68, 0.3);
 `;
 
@@ -67,6 +69,12 @@ const PublishButton = styled(Button)`
   margin: 1em;
   padding: 8px 24px;
   font-size: 12px;
+  border-radiusL 2px;
+`;
+
+const ToggleContent = styled.div`
+  margin-top: 10px;
+  cursor: pointer;
 `;
 
 const snapInputStyles = {
@@ -177,6 +185,7 @@ const ToolbarInputGroup = styled.div`
 
 const ToolbarNumericStepperInput = styled(NumericStepperInput)`
   width: 100px;
+  height: 32px;
 
   input {
     border-width: 0;
@@ -194,6 +203,18 @@ const ToolbarNumericStepperInput = styled(NumericStepperInput)`
       border-left-width: 0;
     }
   }
+`;
+
+const WalletConnect = styled.div`
+  display: flex;
+  align-items: center;
+  border: 1px solid ${props => props.theme.blue};
+  border-radius: 4px;
+  height: 32px;
+  padding: 0px 24px;
+  font-size: 12px;
+  margin-top: 9px;
+  cursor: pointer;
 `;
 
 const translationSnapOptions = [
@@ -510,10 +531,14 @@ export default class ToolBar extends Component {
           </PublishButton>
         )}
 
-        <DarkModeToggleButton />
-        <PublishButton id="publish-button" onClick={this.props.onPublish}>
+        <ToggleContent onClick={() => toggle()}>
+          <img src={MoonIcon} alt="moon" />
+        </ToggleContent>
+        {/* <DarkModeToggleButton /> */}
+        <PublishButton id="publish-button" onClick={this.props.onPublish} style={{ borderRadius: "2px" }}>
           {configs.isMoz() ? "Publish to Hubs..." : "Publish Scene..."}
         </PublishButton>
+        <WalletConnect> Connect Wallet</WalletConnect>
 
         <ContextMenu id="menu">
           {this.props.menu.map(menu => {
