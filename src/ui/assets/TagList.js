@@ -71,6 +71,7 @@ export const TreeListItem = styled.li`
   user-select: none;
   min-height: 24px;
   white-space: nowrap;
+  padding:14px 4px;
 `;
 
 const TagChildrenList = styled.ul`

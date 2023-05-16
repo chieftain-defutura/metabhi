@@ -1,14 +1,15 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback,useContext } from "react";
 import configs from "../../configs";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { SearchInput } from "../projects/ProjectGrid";
 import SearchIcon from "../../assets/search-icon.png";
-import { useDarkMode } from "usehooks-ts";
 
 import Profile from "../../assets/profile.png";
 import Toggle from "../../assets/toggle.png";
 import Bell from "../../assets/bell.svg";
+
+import {ThemeContext} from '../contexts/ThemeContext'
 
 const StyledNavBar = styled.header`
   position: relative;
@@ -158,8 +159,7 @@ const NavBar = () => {
     filter: queryParams.get("filter") || "featured-remixable",
     q: queryParams.get("q") || ""
   });
-  const { isDarkMode, setIsDarkMode } = React.useContext(ThemeContext);
-
+  const { isDarkMode, setIsDarkMode } = useContext(ThemeContext);
   const updateParams = useCallback(
     nextParams => {
       const search = new URLSearchParams();
