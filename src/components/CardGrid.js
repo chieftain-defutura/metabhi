@@ -1,38 +1,58 @@
 import React from "react";
 import styled from "styled-components";
-import Star from "../assets/star.svg";
+import { AiOutlineStar } from "react-icons/ai";
 import PenFile from "../assets/pen-file-svg.png";
 
 const ICardGrid = [
   {
     image: PenFile,
     unTitle: "UnTitle",
-    editName: "Edit Name",
-    star: Star
+    editName: "Edit Name"
   },
   {
     image: PenFile,
     unTitle: "UnTitle",
-    editName: "Edit Name",
-    star: Star
+    editName: "Edit Name"
   },
   {
     image: PenFile,
     unTitle: "UnTitle",
-    editName: "Edit Name",
-    star: Star
+    editName: "Edit Name"
   },
   {
     image: PenFile,
     unTitle: "UnTitle",
-    editName: "Edit Name",
-    star: Star
+    editName: "Edit Name"
   },
   {
     image: PenFile,
     unTitle: "UnTitle",
-    editName: "Edit Name",
-    star: Star
+    editName: "Edit Name"
+  },
+  {
+    image: PenFile,
+    unTitle: "UnTitle",
+    editName: "Edit Name"
+  },
+  {
+    image: PenFile,
+    unTitle: "UnTitle",
+    editName: "Edit Name"
+  },
+  {
+    image: PenFile,
+    unTitle: "UnTitle",
+    editName: "Edit Name"
+  },
+  {
+    image: PenFile,
+    unTitle: "UnTitle",
+    editName: "Edit Name"
+  },
+  {
+    image: PenFile,
+    unTitle: "UnTitle",
+    editName: "Edit Name"
   }
 ];
 
@@ -45,7 +65,7 @@ const CardGridWrapper = styled.div`
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
-    width: 10px;
+    width: 5px;
   }
   &::-webkit-scrollbar-thumb {
     background: ${props => props.theme.scrollbarClr};
@@ -58,6 +78,7 @@ const GridContent = styled.div`
   border: ${props => props.theme.borderFileClr};
   border-radius: 5px;
   width: 264px;
+  height: 219px;
 `;
 
 const CardGridBox = styled.div`
@@ -122,7 +143,7 @@ const CardGrid = () => {
               </CardGridName>
               <Profile>
                 <Circle></Circle>
-                <img src={f.star} alt="star" />
+                <AiOutlineStar size={22} />
               </Profile>
             </CardGridUnTitle>
           </GridContent>

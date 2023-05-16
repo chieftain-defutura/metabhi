@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Sun from "../assets/moon.svg";
-import Moon from "../assets/sun.svg";
 
 const DarkModeContainer = styled.div`
   // margin-top: -2px;

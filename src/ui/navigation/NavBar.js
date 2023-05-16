@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { SearchInput } from "../projects/ProjectGrid";
 import SearchIcon from "../../assets/search-icon.png";
-import { useDarkMode } from "usehooks-ts";
+import Logo from "../../assets/metabhi-logo.png";
 
 import Profile from "../../assets/profile.png";
-import Bell from "../../assets/bell.svg";
+import { BsBell } from "react-icons/bs";
+import MoonIcon from "../../assets/moon.svg";
+import { BsSun } from "react-icons/bs";
 import SunIcon from "../../assets/moon.svg";
-import MoonIcon from "../../assets/sun.svg";
 import { ThemeContext } from "../contexts/ThemeContext";
 
 const StyledNavBar = styled.header`
@@ -36,16 +37,16 @@ const IconContainer = styled.div`
   align-items: center;
   gap: 6px;
   border-right: ${props => props.theme.borderStyleClr};
-  padding: 12px 20px;
+  padding: 6px 20px;
   width: 260px;
   a {
     display: block;
   }
 
   img {
-    width: 70px;
-    height: 32px;
+    width: 65px;
     display: block;
+    object-fit: contain;
   }
   h1 {
     font-size: 20px;
@@ -202,7 +203,9 @@ const NavBar = () => {
       <LeftContainer>
         <IconContainer>
           <Link to="/">
-            <img src={configs.icon()} alt={configs.name()} />
+            <img src={Logo} alt="logo" />
+
+            {/* <img src={configs.icon()} alt={configs.name()} /> */}
           </Link>
           <h1>What's New</h1>
           <BorderRight></BorderRight>
@@ -217,14 +220,14 @@ const NavBar = () => {
       <RightContainer>
         {isDarkMode ? (
           <ToggleContent onClick={() => toggle("light")}>
-            <img src={SunIcon} alt="sun" />
+            <img src={MoonIcon} alt="moon" />
           </ToggleContent>
         ) : (
           <ToggleContent onClick={() => toggle("dark")}>
-            <img src={MoonIcon} alt="moon" />
+            <BsSun size={24} />
           </ToggleContent>
         )}
-        <img alt="" src={Bell} />
+        <BsBell size={22} />
         <img alt="" src={Profile} />
         <WalletConnect>Connect Wallet</WalletConnect>
       </RightContainer>

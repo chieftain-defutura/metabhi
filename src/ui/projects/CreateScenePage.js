@@ -313,7 +313,7 @@ function CreateScenePage({ match, api }) {
           <FormField>
             <FormField inline>
               <label htmlFor="allowRemixing">
-                Allow{" "}
+                Allow
                 <a
                   href="https://github.com/mozilla/Spoke/blob/master/REMIXING.md"
                   target="_blank"
