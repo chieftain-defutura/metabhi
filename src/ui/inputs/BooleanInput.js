@@ -60,7 +60,7 @@ export default class BooleanInput extends Component {
       <div>
         <StyledBooleanInput {...rest} id={this.checkboxId} type="checkbox" checked={value} onChange={this.onChange} />
         <BooleanInputLabel htmlFor={this.checkboxId}>{value && <BooleanCheck size={12} />}</BooleanInputLabel>
-        {/* <Toggle {...rest} id={this.checkboxId} type="checkbox" checked={value} onChange={this.onChange} /> */}
+        <Toggle {...rest} id={this.checkboxId} type="checkbox" checked={value} onChange={this.onChange} />
       </div>
     );
   }
