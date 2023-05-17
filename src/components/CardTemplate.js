@@ -144,7 +144,7 @@ const ProjectTemplateCards = styled.div`
   overflow-y: scroll;
   padding-bottom: 32px;
   &::-webkit-scrollbar {
-    width: 10px;
+    width: 5px;
   }
   &::-webkit-scrollbar-thumb {
     background: ${props => props.theme.scrollbarClr};
@@ -348,7 +348,7 @@ export default function CardTemplate({ history, location }) {
     thumbnail_url: result && result.images && result.images.preview && result.images.preview.url
   }));
   return (
-    <Layout>
+    <>
       <DashboardWrapper>
         <WelComeWrapper>
           <WelComeContent>
@@ -442,7 +442,7 @@ export default function CardTemplate({ history, location }) {
           </ProjectTemplateCards>
         </ProjectGridContainer>
       </div>
-    </Layout>
+    </>
   );
 }
 

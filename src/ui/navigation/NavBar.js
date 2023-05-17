@@ -10,7 +10,6 @@ import Profile from "../../assets/profile.png";
 import { BsBell } from "react-icons/bs";
 import MoonIcon from "../../assets/moon.svg";
 import { BsSun } from "react-icons/bs";
-import SunIcon from "../../assets/moon.svg";
 import { ThemeContext } from "../contexts/ThemeContext";
 
 const StyledNavBar = styled.header`

@@ -57,7 +57,8 @@ const theme = {
   borderFileClr: "1px solid rgba(37, 37, 37, 0.5)",
   emptyBoxClr: "#252525",
   profileClr: "#dddddd",
-  svgIconClr: "#aaaaaa"
+  svgIconClr: "#aaaaaa",
+  toolbarClr: "#252525"
 };
 
 const darkTheme = {
@@ -120,7 +121,8 @@ const darkTheme = {
   borderStyleClr: "1px solid rgba(170, 170, 170, 0.2)",
   emptyBoxClr: "#EEEEEE",
   profileClr: "#ffffff",
-  svgIconClr: "#454545"
+  svgIconClr: "#454545",
+  toolbarClr: "#DDDDDD"
 };
 
 theme.chartColors = [

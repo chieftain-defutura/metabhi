@@ -5,9 +5,9 @@ export const Button = styled.button.attrs(props => ({
 }))`
   display: flex;
   border: none;
-  border-radius: 4px;
-  background: ${props => props.theme.gray};
-  color: ${props => props.theme.white};
+  border-radius: 5px;
+  background: ${props => props.theme.emptyBoxClr};
+  color: ${props => props.theme.text};
   white-space: nowrap;
   min-height: 24px;
   font-size: 12px;
@@ -17,24 +17,26 @@ export const Button = styled.button.attrs(props => ({
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  padding: 1px 6px;
+  padding: 8px 32px;
 
   &:hover {
     color: ${props => props.theme.text};
-    background-color: ${props => props.theme.bluePressed};
+    border: 1px solid ${props => props.theme.blue};
   }
 
   &:active {
     color: ${props => props.theme.text};
-    background-color: ${props => props.theme.bluePressed};
+    border: 1px solid ${props => props.theme.blue};
+    // background-color: ${props => props.theme.bluePressed};
   }
 
   &:disabled {
-    background: ${props => props.theme.disabled};
+    border: 1px solid ${props => props.theme.blue};
     color: ${props => props.theme.disabledText};
 
     &:hover {
-      background-color: ${props => props.theme.disabled};
+      // background-color: ${props => props.theme.disabled};
+      border: 1px solid ${props => props.theme.blue};
     }
   }
 `;
@@ -99,7 +101,7 @@ export const MenuButton = styled(Button)`
 export const PropertiesPanelButton = styled(Button)`
   align-self: center;
   justify-content: center;
-  padding:4px 0;
-  margin:18px 0;
+  padding: 4px 0;
+  margin: 18px 0;
   width: 200px;
 `;

@@ -12,6 +12,8 @@ const StyledToolButton = styled.button`
   position: relative;
   background: ${props => props.theme.darkClr};
 
+ 
+
   // background-color: ${props => (props.selected ? props.theme.blue : props.theme.toolbar)};
 
   &:hover {
@@ -20,9 +22,10 @@ const StyledToolButton = styled.button`
 `;
 
 const Icon = styled.div`
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 18px;
   font-size: 14px;
+  color: ${props => props.theme.svgIconClr};
 `;
 
 export default function ToolButton({ id, icon, onClick, selected, tooltip }) {

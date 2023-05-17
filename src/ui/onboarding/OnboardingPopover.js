@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Button, SecondaryButton } from "../inputs/Button";
+import { Button } from "../inputs/Button";
 import Portal from "../layout/Portal";
 import getPosition from "evergreen-ui/esm/positioner/src/getPosition";
 import styled, { css } from "styled-components";
@@ -92,8 +92,8 @@ const Popover = styled.div`
   top: 0;
   left: 0;
   pointer-events: all;
-  background-color: #006eff;
-  border-radius: 4px;
+  background-color: ${props => props.theme.darkClr};
+  border-radius: 5px;
   border-color: ${props => props.theme.black};
   border-width: 1px;
   max-width: 360px;
@@ -116,7 +116,7 @@ const PopoverContent = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 30px;
+  padding: 24px 40px;
 
   h1 {
     font-size: 3em;
@@ -132,6 +132,7 @@ const PopoverContent = styled.div`
   p {
     margin-bottom: 12px;
     line-height: 1.5em;
+    font-size: 14px;
   }
 `;
 
@@ -141,22 +142,36 @@ const PopoverNav = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  background-color: black;
+  background-color: ${props => props.theme.darkClr};
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
-  padding: 8px;
+  padding: 24px 30px;
 
   a {
-    color: ${props => props.theme.text2};
+    padding: 8px 24px;
+    color: ${props => props.theme.text};
+    background: linear-gradient(92.34deg, #002bff -0.06%, #0092ff 99.94%);
+    border-radius: 5px;
+    text-decoration: none;
+    white-space: nowrap;
+    margin-right: 8px;
+    margin-bottom: 24px;
   }
 
   button {
     width: 84px;
   }
 
-  & > * {
-    margin: 0 8px;
-  }
+  // & > * {
+  //   margin: 0 8px;
+  // }
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 24px;
 `;
 
 export default class OnboardingPopover extends Component {
@@ -276,9 +291,11 @@ export default class OnboardingPopover extends Component {
                   Skip Tutorial
                 </a>
               )}
-              {!disablePrev && curStepIdx > 0 && <SecondaryButton onClick={prevStep}>Back</SecondaryButton>}
-              {!disableNext && curStepIdx < steps.length - 1 && <Button onClick={nextStep}>Next</Button>}
-              {!disableNext && curStepIdx === steps.length - 1 && <Button onClick={nextStep}>Finish</Button>}
+              <Buttons>
+                {!disablePrev && curStepIdx > 0 && <Button onClick={prevStep}>Back</Button>}
+                {!disableNext && curStepIdx < steps.length - 1 && <Button onClick={nextStep}>Next</Button>}
+                {!disableNext && curStepIdx === steps.length - 1 && <Button onClick={nextStep}>Finish</Button>}
+              </Buttons>
             </PopoverNav>
           </Popover>
         </TransformContainer>

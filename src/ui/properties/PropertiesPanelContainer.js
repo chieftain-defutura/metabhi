@@ -35,7 +35,7 @@ const NameInputGroupContainer = styled.div`
 const VisibleInputGroup = styled(InputGroup)`
   display: flex;
   flex: 0;
-  flex-direction:row;
+  flex-direction: row;
 
   & > label {
     width: auto !important;
@@ -48,6 +48,12 @@ const PropertiesPanelContent = styled.div`
   flex-direction: row;
   flex: 1;
   overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: ${props => props.theme.scrollbarClr};
+  }
 `;
 
 const NoNodeSelectedMessage = styled.div`
