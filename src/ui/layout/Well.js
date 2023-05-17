@@ -3,9 +3,9 @@ import styled from "styled-components";
 const Well = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  padding: 4px;
+  background-color: ${props => props.theme.emptyBoxClr};
+  border-radius: 5px;
+  padding: 12px 14px;
   margin: 8px;
 `;
 

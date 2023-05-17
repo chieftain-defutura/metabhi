@@ -913,22 +913,17 @@ class EditorContainer extends Component {
                     onOpenScene={this.onOpenScene}
                   />
                   <WorkspaceContainer>
-                    <Resizeable axis="x" initialSizes={[0.2, 0.6, 0.2]} onChange={this.onResize}>
+                    <Resizeable axis="x" initialSizes={[0.18, 0.64, 0.2]} onChange={this.onResize}>
                       {/* <Resizeable axis="y" initialSizes={[0.5, 0.5]}> */}
                       <div style={{ width: "100%" }}>
                         <HierarchyPanelContainer />
                       </div>
-
-                      {/* <Resizeable axis="y">
-                          <AssetsPanel />
-                        </Resizeable> */}
-
-                      {/* <PropertiesPanelContainer /> */}
-                      {/* </Resizeable> */}
                       <ViewportPanelContainer />
                       {/* <Resizeable axis="y">
                         <AssetsPanel />
                       </Resizeable> */}
+                      {/* <AssetsPanel /> */}
+
                       <PropertiesPanelContainer />
                     </Resizeable>
                   </WorkspaceContainer>

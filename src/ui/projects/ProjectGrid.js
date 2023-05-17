@@ -6,8 +6,7 @@ import { Row } from "../layout/Flex";
 import StringInput from "../inputs/StringInput";
 import { Link } from "react-router-dom";
 import PenFile from "../../assets/pen-file-svg.png";
-import StarIcon from "../../assets/star.svg";
-import Plus from "../../assets/plus.svg";
+import { AiOutlineStar } from "react-icons/ai";
 
 const ProjectGridItemContainer = styled.div`
   // display: flex;
@@ -102,7 +101,7 @@ export function NewProjectGridItem({ path, label }) {
             </div>
           </Untitle>
           <UntitleProfile>
-            <img src={StarIcon} alt="star" />
+            <AiOutlineStar size={22} />
           </UntitleProfile>
         </UnTitleContent>
       </Box>

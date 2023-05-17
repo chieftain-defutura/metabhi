@@ -64,6 +64,7 @@ const NewFilePara = styled.div`
   align-items: center;
   gap: 12px;
   white-space: noWrap;
+
   img {
     width: 28px;
   }
@@ -217,12 +218,8 @@ const DashboardHead = () => {
               </ToolbarInputGroup>
             </DropDown>
             <MenuIcons>
-              <div>
-                <img src={GridIcon} alt="GridIcon" />
-              </div>
-              <div>
-                <img src={MenuIcon} alt="MenuIcon" />
-              </div>
+              <div>{/* <img src={GridIcon} alt="GridIcon" /> */}</div>
+              <div>{/* <img src={MenuIcon} alt="MenuIcon" /> */}</div>
             </MenuIcons>
           </DropDownContent>
         </Recently>

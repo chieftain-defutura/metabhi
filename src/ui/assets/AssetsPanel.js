@@ -10,7 +10,7 @@ const AssetsPanelContainer = styled(Row)`
   position: relative;
   flex: 1;
   background: ${props => props.theme.grayClr};
-  // background-color: ${props => props.theme.panel};
+  background-color: ${props => props.theme.panel};
   display: block;
 `;
 
@@ -35,9 +35,10 @@ export const AssetPanelToolbarContent = styled(Row)`
 
 export function AssetsPanelToolbar({ title, children, ...rest }) {
   return (
-    <AssetsPanelToolbarContainer {...rest}>
-      <AssetPanelToolbarContent>{children}</AssetPanelToolbarContent>
-    </AssetsPanelToolbarContainer>
+    <></>
+    // <AssetsPanelToolbarContainer {...rest}>
+    //   <AssetPanelToolbarContent>{children}</AssetPanelToolbarContent>
+    // </AssetsPanelToolbarContainer>
   );
 }
 
@@ -46,9 +47,20 @@ AssetsPanelToolbar.propTypes = {
   children: PropTypes.node
 };
 
+const Source = styled.div`
+  background-color: ${props => props.theme.dropdown};
+  position: fixed;
+  top: 13%;
+  right: 0;
+  width: 30%;
+  display: flex;
+  z-index: 1000;
+`;
+
 const AssetsPanelColumn = styled(Column)`
   max-width: 100%;
   border-right: 1px solid ${props => props.theme.border};
+  overflow: auto;
 `;
 
 export const AssetPanelContentContainer = styled(Row)`
@@ -112,23 +124,30 @@ export default function AssetsPanel() {
 
   const savedState = savedSourceState[selectedSource.id] || {};
 
+  const [openSavedState, setOpenSavedState] = useState(false);
+
   return (
     <>
       <AssetsPanelContainer id="assets-panel">
         <Column flex>
-          {SourceComponent && !selectedSource.toggle && (
-            <SourceComponent
-              key={selectedSource.id}
-              source={selectedSource.src}
-              editor={editor}
-              savedState={savedState}
-              setSavedState={setSavedState}
-            />
+          {openSavedState && (
+            <Source>
+              <h1 onClick={() => setOpenSavedState(false)}>close</h1>
+              {SourceComponent && !selectedSource.toggle && (
+                <SourceComponent
+                  key={selectedSource.id}
+                  source={selectedSource.src}
+                  editor={editor}
+                  savedState={savedState}
+                  setSavedState={setSavedState}
+                />
+              )}
+            </Source>
           )}
         </Column>
         <AssetsPanelColumn flex>
           <AssetsPanelToolbar title="Assets" />
-          <List>
+          <List onClick={() => setOpenSavedState(true)}>
             {sources.map(source => (
               <ListItem
                 key={source.id}

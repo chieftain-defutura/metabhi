@@ -1,21 +1,28 @@
 import React from "react";
 import styled from "styled-components";
-import RecentIcon from "../../assets/recent-svg.svg";
-import DraftIcon from "../../assets/draft-svg.svg";
-import StarIcon from "../../assets/star.svg";
-import PlusIcon from "../../assets/plus.svg";
 import GrayIcon from "../../assets/gray.svg";
 import WhiteIcon from "../../assets/white.svg";
-import TemplateIcon from "../../assets/template.svg";
+import { BiTime } from "react-icons/bi";
+import { CgTemplate } from "react-icons/cg";
+import { BsFileEarmark } from "react-icons/bs";
+import { AiOutlineStar } from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
 
 const SidebarWrapper = styled.div`
   height: calc(100vh - 85px);
+  width: 260px;
+  overflow-x: hidden;
+  overflow-y: scroll;
   border-right: ${props => props.theme.borderStyleClr};
   background: ${props => props.theme.darkClr};
   position: fixed;
   top: 11%;
   left: 0;
   right: 82.9%;
+  z-index: 1;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
 `;
 
 const RecentContent = styled.div`
@@ -46,7 +53,7 @@ const RecentContent = styled.div`
   }
   &.borderBottom {
     border-bottom: ${props => props.theme.borderStyleClr};
-    padding-bottom: 20px;
+    padding-bottom: 22px;
   }
 `;
 const Teams = styled.div`
@@ -60,9 +67,9 @@ const Sidebar = () => {
   return (
     <SidebarWrapper>
       <div>
-        <a href="/dashboard" style={{ textDecoration: "none", paddingTop: "22px" }}>
+        <a href="/dashboard" style={{ textDecoration: "none" }}>
           <RecentContent>
-            <img src={RecentIcon} alt="RecentIcon" />
+            <BiTime size={24} />
             <h4>Recent</h4>
           </RecentContent>
         </a>
@@ -70,29 +77,29 @@ const Sidebar = () => {
       <div>
         <a href="/dashboard/template" style={{ textDecoration: "none" }}>
           <RecentContent>
-            <img src={TemplateIcon} alt="RecentIcon" />
+            <CgTemplate size={24} />
             <h4>Templates</h4>
           </RecentContent>
         </a>
       </div>
 
       <RecentContent className="borderStyle">
-        <img src={DraftIcon} alt="RecentIcon" />
+        <BsFileEarmark size={24} />
         <h4>Draft</h4>
       </RecentContent>
       <RecentContent className="borderPadding">
-        <img src={StarIcon} alt="RecentIcon" />
+        <AiOutlineStar size={24} />
         <h4>Favorite files</h4>
       </RecentContent>
       <RecentContent className="borderBottom">
-        <img src={PlusIcon} alt="RecentIcon" />
+        <AiOutlinePlus size={24} />
         <h4>Create favorite file</h4>
       </RecentContent>
       <Teams>
         <h4>Teams</h4>
       </Teams>
       <RecentContent>
-        <img src={PlusIcon} alt="RecentIcon" />
+        <AiOutlinePlus size={24} />
         <h4>Create new team</h4>
       </RecentContent>
       <RecentContent>

@@ -133,9 +133,9 @@ import styled from "styled-components";
 import Layout from "./Layout/Layout";
 import NewFileImg from "../assets/new-file.svg";
 import ImportFileImg from "../assets/import-file.svg";
-import PlusIcon from "../assets/plus.svg";
-import GridIcon from "../assets/grid-icon.svg";
-import MenuIcon from "../assets/menu.svg";
+import { AiOutlinePlus } from "react-icons/ai";
+import { TbMenu2 } from "react-icons/tb";
+import { RxDashboard } from "react-icons/rx";
 import PropTypes from "prop-types";
 
 const ProjectTemplateCards = styled.div`
@@ -144,7 +144,7 @@ const ProjectTemplateCards = styled.div`
   overflow-y: scroll;
   padding-bottom: 32px;
   &::-webkit-scrollbar {
-    width: 10px;
+    width: 5px;
   }
   &::-webkit-scrollbar-thumb {
     background: ${props => props.theme.scrollbarClr};
@@ -348,7 +348,7 @@ export default function CardTemplate({ history, location }) {
     thumbnail_url: result && result.images && result.images.preview && result.images.preview.url
   }));
   return (
-    <Layout>
+    <>
       <DashboardWrapper>
         <WelComeWrapper>
           <WelComeContent>
@@ -368,7 +368,7 @@ export default function CardTemplate({ history, location }) {
                 </NewFilePara>
               </a>
               <div>
-                <img src={PlusIcon} alt="PlusIcon" />
+                <AiOutlinePlus size={22} />
               </div>
             </NewFile>
             <NewFile style={{ marginTop: "24px" }}>
@@ -377,7 +377,7 @@ export default function CardTemplate({ history, location }) {
                 <p>Import file</p>
               </NewFilePara>
               <div>
-                <img src={PlusIcon} alt="PlusIcon" />
+                <AiOutlinePlus size={22} />
               </div>
             </NewFile>
           </NewFileContent>
@@ -405,10 +405,10 @@ export default function CardTemplate({ history, location }) {
             </DropDown>
             <MenuIcons>
               <div>
-                <img src={GridIcon} alt="GridIcon" />
+                <RxDashboard size={26} />
               </div>
               <div>
-                <img src={MenuIcon} alt="MenuIcon" />
+                <TbMenu2 size={26} />
               </div>
             </MenuIcons>
           </DropDownContent>
@@ -442,7 +442,7 @@ export default function CardTemplate({ history, location }) {
           </ProjectTemplateCards>
         </ProjectGridContainer>
       </div>
-    </Layout>
+    </>
   );
 }
 

@@ -7,7 +7,7 @@ import { MenuButton } from "../inputs/Button";
 import StylableContextMenuTrigger from "./StylableContextMenuTrigger";
 import { EllipsisV } from "styled-icons/fa-solid/EllipsisV";
 import PenFile from "../../assets/pen-file-svg.png";
-import StarIcon from "../../assets/star.svg";
+import { AiOutlineStar } from "react-icons/ai";
 
 function collectMenuProps({ project }) {
   return { project };
@@ -169,7 +169,7 @@ export class ProjectGridItem extends Component {
               </div>
             </UntitleHead>
             <Star>
-              <img src={StarIcon} alt="star" />
+              <AiOutlineStar size={22} />
             </Star>
           </Column>
           {/* <Col>

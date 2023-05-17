@@ -1,15 +1,12 @@
 import React, { useState, useCallback, useContext } from "react";
 import styled from "styled-components";
-import NewFileImg from "../assets/new-file.svg";
-import ImportFileImg from "../assets/import-file.svg";
-import PlusIcon from "../assets/plus.svg";
-import GridIcon from "../assets/grid-icon.svg";
-import MenuIcon from "../assets/menu.svg";
-import Layout from "../components/Layout/Layout";
 import CardGrid from "./CardGrid";
 import ListGrid from "./ListGrid";
-import { ProjectGrid } from "../ui/projects/ProjectGrid";
-import usePaginatedSearch from "../ui/projects/usePaginatedSearch";
+import { TbMenu2 } from "react-icons/tb";
+import { RxDashboard } from "react-icons/rx";
+import { AiOutlineFileAdd } from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
+import { TbFileImport } from "react-icons/tb";
 import { ApiContext } from "../ui/contexts/ApiContext";
 
 const DashboardWrapper = styled.div`
@@ -69,9 +66,7 @@ const NewFilePara = styled.div`
   align-items: center;
   gap: 12px;
   white-space: noWrap;
-  img {
-    width: 28px;
-  }
+
   p {
     font-size: 16px;
     color: ${props => props.theme.text};
@@ -110,11 +105,15 @@ const MenuIcons = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  img {
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
-  }
+  cursor: pointer;
+`;
+
+const MenuBox = styled.div`
+  border: ${props => props.theme.borderFileClr};
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  border-radius: 5px;
 `;
 
 const ToolbarInputGroup = styled.div`
@@ -171,6 +170,7 @@ const Dashboard = () => {
   const api = useContext(ApiContext);
   const [gridToggle, setGridToggle] = useState("GridIcon");
   const queryParams = new URLSearchParams(location.search);
+  const [isActive, setIsActive] = useState(true);
 
   const [params, setParams] = useState({
     source: "scene_listings",
@@ -206,7 +206,7 @@ const Dashboard = () => {
   }, [updateParams, params]);
 
   return (
-    <Layout>
+    <>
       <DashboardWrapper>
         <WelComeWrapper>
           <WelComeContent>
@@ -221,21 +221,21 @@ const Dashboard = () => {
             <NewFile>
               <a href="/projects/new">
                 <NewFilePara>
-                  <img src={NewFileImg} alt="NewFileImg" />
+                  <AiOutlineFileAdd size={28} />
                   <p>New file</p>
                 </NewFilePara>
               </a>
               <div>
-                <img src={PlusIcon} alt="PlusIcon" />
+                <AiOutlinePlus size={18} />
               </div>
             </NewFile>
             <NewFile style={{ marginTop: "24px" }}>
               <NewFilePara>
-                <img src={ImportFileImg} alt="NewFileImg" />
+                <TbFileImport size={28} />
                 <p>Import file</p>
               </NewFilePara>
               <div>
-                <img src={PlusIcon} alt="PlusIcon" />
+                <AiOutlinePlus size={18} />
               </div>
             </NewFile>
           </NewFileContent>
@@ -260,10 +260,20 @@ const Dashboard = () => {
             </DropDown>
             <MenuIcons>
               <div onClick={() => setGridToggle("GridIcon")}>
-                <img src={GridIcon} alt="GridIcon" />
+                <MenuBox
+                  onClick={() => setIsActive(!isActive)}
+                  style={{ border: isActive ? "1px solid #777777" : "inherit" }}
+                >
+                  <RxDashboard size={26} />
+                </MenuBox>
               </div>
               <div onClick={() => setGridToggle("MenuIcon")}>
-                <img src={MenuIcon} alt="MenuIcon" />
+                <MenuBox
+                  onClick={() => setIsActive(!isActive)}
+                  style={{ border: isActive ? "inherit" : "1px solid #777777" }}
+                >
+                  <TbMenu2 size={26} />
+                </MenuBox>
               </div>
             </MenuIcons>
           </DropDownContent>
@@ -272,7 +282,7 @@ const Dashboard = () => {
 
       {gridToggle === "GridIcon" && <CardGrid />}
       {gridToggle === "MenuIcon" && <ListGrid />}
-    </Layout>
+    </>
   );
 };
 
