@@ -2,10 +2,9 @@ import React, { useState, useCallback } from "react";
 import configs from "../../configs";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+
 import { SearchInput } from "../projects/ProjectGrid";
 import SearchIcon from "../../assets/search-icon.png";
-import { useDarkMode } from "usehooks-ts";
-
 import Profile from "../../assets/profile.png";
 import Bell from "../../assets/bell.svg";
 import SunIcon from "../../assets/moon.svg";
