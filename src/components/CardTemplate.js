@@ -282,6 +282,8 @@ const MenuBox = styled.div`
 
 export default function CardTemplate({ history, location }) {
   const api = useContext(ApiContext);
+  const [isActive, setIsActive] = useState(true);
+  const [gridToggle, setGridToggle] = useState("");
 
   const queryParams = new URLSearchParams(location.search);
 
@@ -412,57 +414,59 @@ export default function CardTemplate({ history, location }) {
                 {/* <SelectInput styles={selectInputStyles} options={transformPivotOptions} value={FilesOption} /> */}
               </ToolbarInputGroup>
             </DropDown>
-            {/* <MenuIcons>
+            <MenuIcons>
               <div onClick={() => setGridToggle("GridIcon")}>
                 <MenuBox
-                  onClick={() => setIsActive(!isActive)}
-                  style={{ border: isActive ? "1px solid #777777" : "inherit" }}
+                  // onClick={() => setIsActive(!isActive)}
+                  style={{ border: gridToggle === "GridIcon" ? "1px solid #777777" : "inherit" }}
                 >
                   <RxDashboard size={26} />
                 </MenuBox>
               </div>
               <div onClick={() => setGridToggle("MenuIcon")}>
                 <MenuBox
-                  onClick={() => setIsActive(!isActive)}
-                  style={{ border: isActive ? "inherit" : "1px solid #777777" }}
+                  // onClick={() => setIsActive(!isActive)}
+                  style={{ border: gridToggle !== "MenuIcon" ? "inherit" : "1px solid #777777" }}
                 >
                   <TbMenu2 size={26} />
                 </MenuBox>
               </div>
-            </MenuIcons> */}
+            </MenuIcons>
           </DropDownContent>
         </Recently>
       </DashboardWrapper>
 
       <div>
-        {/* {gridToggle === "GridIcon" && <CardGrid />}
-        {gridToggle === "MenuIcon" && <ListGrid />} */}
-        <ProjectGridContainer>
-          <ProjectTemplateCards>
-            <ProjectGridContent>
-              <ScrollToTop />
-              {error && <ErrorMessage>{error.message}</ErrorMessage>}
-              {!error && (
-                <InfiniteScroll
-                  initialLoad={false}
-                  pageStart={0}
-                  loadMore={loadMore}
-                  hasMore={hasMore}
-                  threshold={100}
-                  useWindow={true}
-                >
-                  <ProjectGrid
-                    projects={filteredEntries}
-                    newProjectPath="/dashboard/template"
-                    newProjectLabel="New Empty Project"
-                    onSelectProject={onSelectScene}
-                    loading={loading}
-                  />
-                </InfiniteScroll>
-              )}
-            </ProjectGridContent>
-          </ProjectTemplateCards>
-        </ProjectGridContainer>
+        {gridToggle === "GridIcon" && <CardGrid />}
+        {gridToggle === "MenuIcon" && <ListGrid />}
+        {gridToggle === "" && (
+          <ProjectGridContainer>
+            <ProjectTemplateCards>
+              <ProjectGridContent>
+                <ScrollToTop />
+                {error && <ErrorMessage>{error.message}</ErrorMessage>}
+                {!error && (
+                  <InfiniteScroll
+                    initialLoad={false}
+                    pageStart={0}
+                    loadMore={loadMore}
+                    hasMore={hasMore}
+                    threshold={100}
+                    useWindow={true}
+                  >
+                    <ProjectGrid
+                      projects={filteredEntries}
+                      newProjectPath="/dashboard/template"
+                      newProjectLabel="New Empty Project"
+                      onSelectProject={onSelectScene}
+                      loading={loading}
+                    />
+                  </InfiniteScroll>
+                )}
+              </ProjectGridContent>
+            </ProjectTemplateCards>
+          </ProjectGridContainer>
+        )}
       </div>
     </>
   );

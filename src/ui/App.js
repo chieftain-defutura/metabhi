@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import PropTypes from "prop-types";
 import configs from "../configs";
 
 import GlobalStyle from "./GlobalStyle";
@@ -52,7 +51,7 @@ const BaseApp = ({ api }) => {
     const storedTheme = localStorage.getItem("theme");
     if (!storedTheme) {
       setIsDarkMode(false);
-    } else if (JSON.parse(storedTheme) === false) {
+    } else if (JSON.parse(storedTheme) === "light") {
       setIsDarkMode(false);
     } else {
       setIsDarkMode(true);

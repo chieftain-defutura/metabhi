@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
-import configs from "../../configs";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+
 import { SearchInput } from "../projects/ProjectGrid";
 import Logo from "../../assets/metabhi-logo.png";
 
@@ -116,6 +116,24 @@ const WalletConnect = styled.div`
   color: ${props => props.theme.text};
 `;
 
+const WalletConnectContainer = styled.div`
+  position: relative;
+`;
+
+const WalletButtons = styled.div``;
+
+const WalletDropDown = styled.div`
+  width: 200px;
+  height: 200px;
+  background: ${props => props.theme.emptyBoxClr};
+  border-radius: 5px;
+  position: absolute;
+  top: 115%;
+  right: 10%;
+`;
+
+const Address = styled.div``;
+
 // class NavBar extends Component {
 //   static propTypes = {
 //     isAuthenticated: PropTypes.bool.isRequired
@@ -220,13 +238,28 @@ const NavBar = () => {
         )}
         <BsBell size={22} />
         <img alt="" src={Profile} />
-        {account ? (
-          <WalletConnect>
-            {account.slice(0, 6)}...{account.slice(account.length - 6)}
-          </WalletConnect>
-        ) : (
-          <WalletConnect onClick={() => activate(Injected)}>Connect Wallet</WalletConnect>
-        )}
+        <WalletConnectContainer>
+          <WalletButtons>
+            {account ? (
+              <WalletConnect>
+                {account.slice(0, 6)}...{account.slice(account.length - 6)}
+              </WalletConnect>
+            ) : (
+              <WalletConnect onClick={() => activate(Injected)}>Connect Wallet</WalletConnect>
+            )}
+          </WalletButtons>
+          {/* <WalletDropDown>
+            <Address>
+              {account ? (
+                <WalletConnect>
+                  {account.slice(0, 6)}...{account.slice(account.length - 6)}
+                </WalletConnect>
+              ) : (
+                <WalletConnect onClick={() => activate(Injected)}>Connect Wallet</WalletConnect>
+              )}
+            </Address>
+          </WalletDropDown> */}
+        </WalletConnectContainer>
       </RightContainer>
     </StyledNavBar>
   );

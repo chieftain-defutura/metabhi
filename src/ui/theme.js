@@ -58,7 +58,8 @@ const theme = {
   emptyBoxClr: "#252525",
   profileClr: "#dddddd",
   svgIconClr: "#aaaaaa",
-  toolbarClr: "#252525"
+  toolbarClr: "#252525",
+  box: "#252525"
 };
 
 const darkTheme = {
@@ -122,7 +123,8 @@ const darkTheme = {
   emptyBoxClr: "#EEEEEE",
   profileClr: "#ffffff",
   svgIconClr: "#454545",
-  toolbarClr: "#DDDDDD"
+  toolbarClr: "#DDDDDD",
+  box: "#aaaaaa"
 };
 
 theme.chartColors = [

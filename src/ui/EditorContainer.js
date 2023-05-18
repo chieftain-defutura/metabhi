@@ -918,17 +918,12 @@ class EditorContainer extends Component {
                       <div style={{ width: "100%" }}>
                         <HierarchyPanelContainer />
                       </div>
-
-                      {/* <Resizeable axis="y">
-                          <AssetsPanel />
-                        </Resizeable> */}
-
-                      {/* <PropertiesPanelContainer /> */}
-                      {/* </Resizeable> */}
                       <ViewportPanelContainer />
                       {/* <Resizeable axis="y">
                         <AssetsPanel />
                       </Resizeable> */}
+                      {/* <AssetsPanel /> */}
+
                       <PropertiesPanelContainer />
                     </Resizeable>
                   </WorkspaceContainer>
