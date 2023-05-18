@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import configs from "../configs";
 import styled from "styled-components";
 import Input from "../ui/inputs/Input";
+import MetaMaskLogo from "../assets/MetaMask-logo.png";
 // import { PRIVACY, TERMS } from "../constants";
 
 const StyledAuthForm = styled.form`
@@ -20,18 +21,25 @@ const StyledAuthForm = styled.form`
   button {
     display: inline-block;
     border: none;
-    border-radius: 4px;
-    background: ${props => props.theme.blue};
-    color: ${props => props.theme.white};
+    background: linear-gradient(92.34deg, #002bff -0.06%, #0092ff 99.94%);
+    border-radius: 5px;
+    color: ${props => props.theme.text};
     white-space: nowrap;
     min-height: 36px;
     font-size: 16px;
     padding: 1px 6px;
+    cursor: pointer;
 
     &:hover,
     &:active {
       background-color: ${props => props.theme.bluePressed};
     }
+  }
+
+  img {
+    width: 100px;
+    margin: 0 auto;
+    margin-bottom: 20px;
   }
 
   h3 {
@@ -83,15 +91,16 @@ export default class AuthForm extends Component {
     return (
       <StyledAuthForm onSubmit={this.onSubmit}>
         {this.props.error && <ErrorMessage>{this.props.error}</ErrorMessage>}
-        <h3>Register or Login</h3>
-        <h4>Login to save projects and publish scenes{configs.isMoz() && " to Hubs"}.</h4>
-        <FormInput
+        <h3>Connect Wallet</h3>
+        <img src={MetaMaskLogo} alt="MetaMasklogo" />
+        {/* <h4>Login to save projects and publish scenes{configs.isMoz() && " to Hubs"}.</h4> */}
+        {/* <FormInput
           type="email"
           name="email"
           placeholder="Email"
           value={this.state.email}
           onChange={this.onEmailChange}
-        />
+        /> */}
         {/* <LegalText>
           By proceeding, you agree to the{" "}
           <a rel="noopener noreferrer" target="_blank" href={TERMS}>
@@ -103,7 +112,7 @@ export default class AuthForm extends Component {
           </a>
           .
         </LegalText> */}
-        <button type="submit">Send Magic Link</button>
+        <button type="submit">Connect Wallet</button>
       </StyledAuthForm>
     );
   }

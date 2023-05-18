@@ -3,7 +3,6 @@ import configs from "../../configs";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { SearchInput } from "../projects/ProjectGrid";
-import SearchIcon from "../../assets/search-icon.png";
 import Logo from "../../assets/metabhi-logo.png";
 
 import Profile from "../../assets/profile.png";
@@ -11,6 +10,9 @@ import { BsBell } from "react-icons/bs";
 import MoonIcon from "../../assets/moon.svg";
 import { BsSun } from "react-icons/bs";
 import { ThemeContext } from "../contexts/ThemeContext";
+import SearchFilter from "../../components/SearchFilter";
+import { useWeb3React } from "@web3-react/core";
+import { Injected } from "../connectors";
 
 const StyledNavBar = styled.header`
   position: relative;
@@ -50,16 +52,6 @@ const IconContainer = styled.div`
   h1 {
     font-size: 20px;
   }
-`;
-
-const InputContent = styled.div`
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  background: ${props => props.theme.black};
-  border: 1px solid rgba(119, 119, 119, 0.3);
-  border-radius: 5px;
-  padding: 2px 16px;
 `;
 
 const ToggleContent = styled.div`
@@ -161,6 +153,7 @@ const NavBar = () => {
     q: queryParams.get("q") || ""
   });
   const { isDarkMode, setIsDarkMode } = React.useContext(ThemeContext);
+  const { activate, account } = useWeb3React();
 
   const updateParams = useCallback(
     nextParams => {
@@ -210,10 +203,9 @@ const NavBar = () => {
           <BorderRight></BorderRight>
         </IconContainer>
 
-        <InputContent>
-          <img src={SearchIcon} alt="search" />
-          <SearchInput placeholder="Search scenes..." value={params.q} onChange={onChangeQuery} />
-        </InputContent>
+        <SearchFilter />
+
+        {/* <SearchInput placeholder="Search scenes..." value={params.q} onChange={onChangeQuery} /> */}
       </LeftContainer>
 
       <RightContainer>
@@ -228,7 +220,13 @@ const NavBar = () => {
         )}
         <BsBell size={22} />
         <img alt="" src={Profile} />
-        <WalletConnect>Connect Wallet</WalletConnect>
+        {account ? (
+          <WalletConnect>
+            {account.slice(0, 6)}...{account.slice(account.length - 6)}
+          </WalletConnect>
+        ) : (
+          <WalletConnect onClick={() => activate(Injected)}>Connect Wallet</WalletConnect>
+        )}
       </RightContainer>
     </StyledNavBar>
   );

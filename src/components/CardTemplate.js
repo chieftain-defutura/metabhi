@@ -130,13 +130,14 @@ import InfiniteScroll from "react-infinite-scroller";
 import usePaginatedSearch from "../ui/projects/usePaginatedSearch";
 import { ApiContext } from "../ui/contexts/ApiContext";
 import styled from "styled-components";
-import Layout from "./Layout/Layout";
 import NewFileImg from "../assets/new-file.svg";
 import ImportFileImg from "../assets/import-file.svg";
 import { AiOutlinePlus } from "react-icons/ai";
 import { TbMenu2 } from "react-icons/tb";
 import { RxDashboard } from "react-icons/rx";
 import PropTypes from "prop-types";
+import CardGrid from "./CardGrid";
+import ListGrid from "./ListGrid";
 
 const ProjectTemplateCards = styled.div`
   height: 500px;
@@ -229,6 +230,7 @@ const Recently = styled.div`
 `;
 const DropDown = styled.div`
   display: flex;
+  align-items: center;
   gap: 12px;
 
   h4 {
@@ -269,6 +271,13 @@ const ToolbarInputGroup = styled.div`
     color: #fff;
     font-size: 17px;
   }
+`;
+const MenuBox = styled.div`
+  border: ${props => props.theme.borderFileClr};
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  border-radius: 5px;
 `;
 
 export default function CardTemplate({ history, location }) {
@@ -403,18 +412,31 @@ export default function CardTemplate({ history, location }) {
                 {/* <SelectInput styles={selectInputStyles} options={transformPivotOptions} value={FilesOption} /> */}
               </ToolbarInputGroup>
             </DropDown>
-            <MenuIcons>
-              <div>
-                <RxDashboard size={26} />
+            {/* <MenuIcons>
+              <div onClick={() => setGridToggle("GridIcon")}>
+                <MenuBox
+                  onClick={() => setIsActive(!isActive)}
+                  style={{ border: isActive ? "1px solid #777777" : "inherit" }}
+                >
+                  <RxDashboard size={26} />
+                </MenuBox>
               </div>
-              <div>
-                <TbMenu2 size={26} />
+              <div onClick={() => setGridToggle("MenuIcon")}>
+                <MenuBox
+                  onClick={() => setIsActive(!isActive)}
+                  style={{ border: isActive ? "inherit" : "1px solid #777777" }}
+                >
+                  <TbMenu2 size={26} />
+                </MenuBox>
               </div>
-            </MenuIcons>
+            </MenuIcons> */}
           </DropDownContent>
         </Recently>
       </DashboardWrapper>
+
       <div>
+        {/* {gridToggle === "GridIcon" && <CardGrid />}
+        {gridToggle === "MenuIcon" && <ListGrid />} */}
         <ProjectGridContainer>
           <ProjectTemplateCards>
             <ProjectGridContent>
