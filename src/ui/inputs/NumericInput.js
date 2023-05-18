@@ -30,7 +30,7 @@ const StyledNumericInput = styled.input`
   display: flex;
   width: 45px;
   color: ${props => props.theme.gray};
-  background: ${props => props.theme.background};
+  background: ${props => props.theme.inputBackground};
   // background-color: ${props => props.theme.inputBackground};
   border-radius: 4px;
   border: 1px solid ${props => props.theme.border};
@@ -58,7 +58,7 @@ const NumericInputUnit = styled.div`
   position: absolute;
   color: ${props => props.theme.gray};
   right: 1px;
-  top: 5px;
+  top: -1px;
   bottom: 1px;
   background: ${props => props.theme.background};
   // background-color: ${props => props.theme.inputBackground};

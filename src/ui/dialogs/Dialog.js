@@ -8,7 +8,7 @@ const DialogContainer = styled.form`
   flex-direction: column;
   flex: 1;
   border-radius: 4px;
-  background-color: #282c31;
+  background-color: ${props => props.theme.black};
   max-width: 800px;
   min-width: 400px;
   min-height: 150px;
@@ -23,7 +23,7 @@ const DialogHeader = styled.div`
   font-size: 12px;
   overflow: hidden;
   height: 32px;
-  background: black;
+  background-color: ${props => props.theme.emptyBoxClr};
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
 
@@ -34,7 +34,7 @@ const DialogHeader = styled.div`
 `;
 
 export const DialogContent = styled.div`
-  color: ${props => props.theme.text2};
+  color: ${props => props.theme.text};
   display: flex;
   flex: 1;
   flex-direction: row;
@@ -61,7 +61,7 @@ const DialogBottomNav = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  background-color: black;
+  background-color: red;
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
   padding: 8px;

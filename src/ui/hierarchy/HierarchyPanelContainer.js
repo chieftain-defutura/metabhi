@@ -73,7 +73,7 @@ const TreeNodeContainer = styled.div`
   // outline: none;
   overflow: hidden;
   background: ${props => props.theme.grayClr};
-  padding: 13px 24px;
+  padding: 10px 24px;
   margin:5px 0;
   // background-color: ${treeNodeBackgroundColor};
   border-bottom: ${props => (props.root ? props.theme.borderStyle : "none")};

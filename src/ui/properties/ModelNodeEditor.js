@@ -17,7 +17,7 @@ flex-direction:row;
 const InputGroupSction =styled.div`
 display:flex;
 flex-direction:row;
-justify-content:space-around;
+justify-content:start;
 `
 
 export default class ModelNodeEditor extends Component {

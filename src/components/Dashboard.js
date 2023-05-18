@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useContext } from "react";
 import styled from "styled-components";
-import Layout from "../components/Layout/Layout";
 import CardGrid from "./CardGrid";
 import ListGrid from "./ListGrid";
 import { TbMenu2 } from "react-icons/tb";
@@ -77,11 +76,14 @@ const NewFilePara = styled.div`
 const Recently = styled.div`
   padding: 22px 40px;
   border-bottom: ${props => props.theme.borderStyleClr};
-  height: 150px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   h3 {
     font-size: 20px;
-    margin-bottom: 18px;
+    // margin-bottom: 18px;
   }
 `;
 
@@ -243,19 +245,21 @@ const Dashboard = () => {
         </WelComeWrapper>
 
         <Recently>
-          <h3>Recently viewed</h3>
+          <div>
+            <h3>Recently viewed</h3>
+          </div>
           <DropDownContent>
             <DropDown>
-              <h4>Filter:</h4>
+              {/* <h4>Filter:</h4> */}
 
               <ToolbarInputGroup>
-                <select>
+                {/* <select>
                   <option>Select file</option>
                   <option value="allfile" onClick={onSetAll} active={params.filter === "remixable"}>
                     All files
                   </option>
                   <option value="importfile">Design files</option>
-                </select>
+                </select> */}
                 {/* <SelectInput styles={selectInputStyles} options={transformPivotOptions} value={FilesOption} /> */}
               </ToolbarInputGroup>
             </DropDown>

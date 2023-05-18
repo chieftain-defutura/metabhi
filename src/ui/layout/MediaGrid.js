@@ -167,7 +167,7 @@ export const MediaGrid = styled.div`
   display: grid;
   grid-gap: ${props => props.gap};
   width: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(${props => props.minWidth}, 1fr));
+  grid-template-columns: 1fr 1fr;
   padding: ${props => props.gap};
 `;
 

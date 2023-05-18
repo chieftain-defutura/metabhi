@@ -15,7 +15,11 @@ const ChartContainer = styled.div`
   border-radius: 4px;
   width:100%;
 `;
+   
+const CollapsibleLabel =styled.div`
+background-color: ${props => props.theme.disabled};
 
+`
 export function GLTFFileChart({ node }) {
   const stats = node.stats;
 
@@ -438,7 +442,7 @@ GLTFValidation.propTypes = {
 export function GLTFInfo({ node }) {
   return (
     <Collapsible label="glTF Info">
-      <Collapsible open label="Stats">
+       <Collapsible open label="Stats">
         <GLTFStats node={node} />
       </Collapsible>
       <Collapsible open label="Files">

@@ -13,8 +13,7 @@ const radiansToHours = rads => rads * 24;
 
 
  export const NumberSkyInput=styled.div`
- border-bottom:1px solid #252525;
-padding:16px 0;
+ border-bottom:1px solid ${props => props.theme.borderStyleClr};
  `
 export default class SkyboxNodeEditor extends Component {
   static propTypes = {

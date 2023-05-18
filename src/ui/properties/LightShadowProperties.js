@@ -31,12 +31,12 @@ const ShadowMapResolutionOptions = [
 ];
 
 export const InputGroupCast=styled.div`
-border-bottom:1px solid #252525;
-padding:16px 0;
+border-bottom:1px solid ${props => props.theme.borderStyleClr};
+// padding:16px 0;
 `
 export const InputGroupShadow=styled.div`
-border-bottom:1px solid #252525;
-padding:16px 0;
+border-bottom:1px solid ${props => props.theme.borderStyleClr};
+// padding:16px 0;
 `
 const InputGroupSection = styled.div`
 display: flex;

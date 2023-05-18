@@ -10,9 +10,9 @@ import { PropertyLabel } from "./PropertyLabel";
 export const InputGroupContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 12px 8px;
-  gap:12px; 
-  flex: 1;
+  padding: 13px 8px;
+  margin:3px 0;
+  gap:8px; 
   min-height: 24px;
   justify-content:space-between;
   ${props =>
@@ -52,9 +52,8 @@ export const InputGroupInfoIcon = styled(QuestionCircle)`
 
 export const InputGroupHeader = styled.div`
   display: flex;
-  flex-direction: row;
-  flex: 1;
-  align-items: center;
+  // flex-direction: row;
+  // align-items: center;
 
   ${props =>
     props.disabled &&

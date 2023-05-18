@@ -15,7 +15,8 @@ const LoginContainer = styled.div`
   padding: 60px;
   margin: 0 auto;
   max-width: 480px;
-  background: ${props => props.theme.panel};
+  background: ${props => props.theme.darkClr};
+  color: ${props => props.theme.text};
   border-radius: 8px;
 `;
 

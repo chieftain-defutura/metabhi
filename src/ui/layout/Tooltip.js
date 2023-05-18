@@ -41,7 +41,8 @@ Tooltip.propTypes = {
 export const TooltipContainer = styled.div`
   display: inline-block;
   pointer-events: none;
-  background-color: rgba(21, 23, 27, 0.9);
+  background-color: ${props => props.theme.darkClr};
+  color: ${props => props.theme.text}
   border-radius: 3px;
   font-size: 13px;
   padding: 8px;

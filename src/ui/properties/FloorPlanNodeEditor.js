@@ -29,12 +29,12 @@ const NavMeshModeOptions = [
 export const InputFloorSection=styled.div`
 display:flex;
 flex-direction:row;
-border-bottom:1px solid #252525;
-padding:16px 0;
+border-bottom:1px solid ${props => props.theme.borderStyleClr};
+
 `
 export const InputFloor=styled.div`
-border-bottom:1px solid #252525;
-padding:16px 0;
+border-bottom:1px solid ${props => props.theme.borderStyleClr};
+
 `
 class FloorPlanNodeEditor extends Component {
   static propTypes = {

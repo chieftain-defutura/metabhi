@@ -53,11 +53,14 @@ const theme = {
   lightGray: "#aaaaaa",
   scrollbarClr: "#454545",
   text: "#ffffff",
-  borderStyleClr: "1px solid #252525",
-  borderFileClr: "1px solid rgba(37, 37, 37, 0.5)",
+  borderStyleClr: "#252525",
+  borderFileClr: "rgba(37, 37, 37, 0.5)",
   emptyBoxClr: "#252525",
   profileClr: "#dddddd",
   svgIconClr: "#aaaaaa",
+  toolbarClr: "#252525",
+  box: "#252525",
+  inputBackground:"#0A0A0A",
 };
 
 const darkTheme = {
@@ -118,7 +121,19 @@ const darkTheme = {
   borderStyleClr: "1px solid rgba(170, 170, 170, 0.2)",
   emptyBoxClr: "#EEEEEE",
   profileClr: "#ffffff",
-  svgIconClr: "#454545"
+  svgIconClr: "#454545",
+  toolbarClr: "#DDDDDD",
+  box: "#aaaaaa",
+  inputBackground:"#EEEEEE;",
+  panel2:"#ffffff",
+  panel:"#ffffff",
+  blueHover:"rgba(0, 146, 255, 0.2)",
+  bluePressed:"rgba(0, 146, 255, 0.2)",
+  selected:"rgba(0, 146, 255, 0.2)",
+  hover: "rgba(170, 170, 170, 0.2);",
+  borderStyleClr:"fff",
+
+
 };
 
 theme.chartColors = [

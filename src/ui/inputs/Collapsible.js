@@ -7,13 +7,13 @@ import { CaretDown } from "styled-icons/fa-solid/CaretDown";
 const CollapsibleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 4px 8px;
+  width:100%;
  
 `;
 
 const CollapsibleLabel = styled.div`
   color: ${props => props.theme.text2};
-  background-color: ${props => props.theme.disabled};
+  // background-color: ${props => props.theme.disabled};
   cursor: pointer;
   display: flex;
   flex-direction: row-reverse;
@@ -31,6 +31,8 @@ const CollapsibleContent = styled.div`
   display: flex;
   flex-direction: column;
   padding: 4px 8px;
+  width:100%;
+
 `;
 // const Collapsel = styled.div`
 // display: flex;

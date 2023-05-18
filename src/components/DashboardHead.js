@@ -3,9 +3,9 @@ import styled from "styled-components";
 import NewFileImg from "../assets/new-file.svg";
 import ImportFileImg from "../assets/import-file.svg";
 import PlusIcon from "../assets/plus.svg";
-import GridIcon from "../assets/grid-icon.svg";
-import MenuIcon from "../assets/menu.svg";
 import Layout from "../components/Layout/Layout";
+import { TbMenu2 } from "react-icons/tb";
+import { RxDashboard } from "react-icons/rx";
 
 const DashboardWrapper = styled.div`
   margin-top: 75px;
@@ -218,8 +218,12 @@ const DashboardHead = () => {
               </ToolbarInputGroup>
             </DropDown>
             <MenuIcons>
-              <div>{/* <img src={GridIcon} alt="GridIcon" /> */}</div>
-              <div>{/* <img src={MenuIcon} alt="MenuIcon" /> */}</div>
+              <div>
+                <RxDashboard size={26} />
+              </div>
+              <div>
+                <TbMenu2 size={26} />
+              </div>
             </MenuIcons>
           </DropDownContent>
         </Recently>

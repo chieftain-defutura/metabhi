@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import OnboardingOverlay from "./OnboardingOverlay";
 import { Button, SecondaryButton } from "../inputs/Button";
 import defaultBackgroundImage from "../../assets/onboarding/default.png";
+import WelcomeImg from "../../assets/welcome-page-img.png";
 import styled from "styled-components";
 
 const StyledOnboadingDialog = styled.div`
-  width: 800px;
-  height: 480px;
-  background-color: #282c31;
-  border-radius: 4px;
+  width: 640px;
+  height: 420px;
+  background-color: ${props => props.theme.darkClr};
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
 `;
@@ -24,39 +25,48 @@ const Content = styled.div`
 
 const LeftContent = styled.div`
   display: flex;
-  width: 360px;
-  background-color: #006eff;
+  width: 460px;
+  // background-color: #006eff;
   background-size: cover;
   border-top-left-radius: inherit;
   align-items: center;
-  padding: 30px;
+  // padding: 30px;
   background-image: url(${props => props.backgroundImage});
 
-  video {
-    border-radius: 6px;
+  img {
+    height: 420px;
+    width: 460px;
   }
+
+  // video {
+  //   border-radius: 6px;
+  // }
 `;
 
 const RightContent = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
+  // flex: 1;
   padding: 90px 60px 30px 60px;
-
-  h1 {
-    font-size: 3em;
-    font-weight: lighter;
-    margin-bottom: 16px;
-  }
 
   h2 {
     color: ${props => props.theme.text2};
-    margin-bottom: 8px;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  h1 {
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 16px;
   }
 
   p {
-    margin-bottom: 12px;
-    line-height: 1.5em;
+    line-height: 20px;
+    font-size: 14px;
+    text-align: center;
   }
 
   img {
@@ -66,19 +76,16 @@ const RightContent = styled.div`
 `;
 
 const BottomNav = styled.div`
-  display: flex;
-  height: 64px;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  background-color: black;
-  border-bottom-left-radius: inherit;
-  border-bottom-right-radius: inherit;
-  padding: 8px;
-
-  a {
-    color: ${props => props.theme.text2};
-  }
+  // display: flex;
+  // height: 64px;
+  // flex-direction: row;
+  // justify-content: flex-end;
+  // align-items: center;
+  // background-color: black;
+  // border-bottom-left-radius: inherit;
+  // border-bottom-right-radius: inherit;
+  // padding: 8px;
+  margin-top: 44px;
 
   button {
     width: 84px;
@@ -86,6 +93,26 @@ const BottomNav = styled.div`
 
   & > * {
     margin: 0 8px;
+  }
+`;
+
+const SkipBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+  a {
+    padding: 8px 32px;
+    color: ${props => props.theme.text};
+    background: linear-gradient(92.34deg, #002bff -0.06%, #0092ff 99.94%);
+    border-radius: 5px;
+    text-decoration: none;
+  }
+`;
+
+const Buttons = styled.div`
+  .next-btn {
+    width: 130px;
+    margin: 0 auto;
   }
 `;
 
@@ -107,27 +134,39 @@ export default function OnboardingDialog({
       <StyledOnboadingDialog>
         <Content>
           <LeftContent backgroundImage={backgroundImage || defaultBackgroundImage}>
-            {videoSrc && <video src={videoSrc} loop autoPlay muted />}
+            <img src={WelcomeImg} alt="welcome-img" />
+            {/* {videoSrc && <video src={videoSrc} loop autoPlay muted />} */}
           </LeftContent>
-          <RightContent>{children}</RightContent>
+          <RightContent>
+            {children}
+
+            <BottomNav>
+              {!disableSkip && (
+                <SkipBtn>
+                  <a
+                    href=""
+                    onClick={e => {
+                      e.preventDefault();
+                      e.target.blur();
+                      skip();
+                    }}
+                  >
+                    Skip Tutorial
+                  </a>
+                </SkipBtn>
+              )}
+              <Buttons>
+                {!disablePrev && curStepIdx > 0 && <SecondaryButton onClick={prevStep}>Back</SecondaryButton>}
+                {!disableNext && curStepIdx < steps.length - 1 && (
+                  <Button onClick={nextStep} className="next-btn">
+                    Next
+                  </Button>
+                )}
+                {!disableNext && curStepIdx === steps.length - 1 && <Button onClick={nextStep}>Finish</Button>}
+              </Buttons>
+            </BottomNav>
+          </RightContent>
         </Content>
-        <BottomNav>
-          {!disableSkip && (
-            <a
-              href=""
-              onClick={e => {
-                e.preventDefault();
-                e.target.blur();
-                skip();
-              }}
-            >
-              Skip Tutorial
-            </a>
-          )}
-          {!disablePrev && curStepIdx > 0 && <SecondaryButton onClick={prevStep}>Back</SecondaryButton>}
-          {!disableNext && curStepIdx < steps.length - 1 && <Button onClick={nextStep}>Next</Button>}
-          {!disableNext && curStepIdx === steps.length - 1 && <Button onClick={nextStep}>Finish</Button>}
-        </BottomNav>
       </StyledOnboadingDialog>
     </OnboardingOverlay>
   );

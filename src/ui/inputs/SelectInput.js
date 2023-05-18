@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 const staticStyle = {
   container: base => ({
@@ -93,13 +94,43 @@ export default function SelectInput({
         }
       }) || null;
 
+  const { isDarkMode } = useContext(ThemeContext);
+
   const dynamicStyle = {
     ...staticStyle,
     placeholder: (base, { isDisabled }) => ({
       ...base,
       color: isDisabled ? "grey" : error ? "red" : "white"
     }),
-    ...styles
+    ...styles,
+    container: base => ({
+      ...base,
+      width: "80px",
+      color: isDarkMode ? "#fff" : "#252525"
+    }),
+    control: base => ({
+      ...base,
+      backgroundColor: isDarkMode ? "#111111" : "#EEEEEE",
+      border: "none",
+      minHeight: "31px",
+      borderRadius: "0"
+    }),
+    singleValue: base => ({
+      ...base,
+      color: isDarkMode ? "#fff" : "#252525"
+    }),
+
+    dropdownIndicator: base => ({
+      ...base,
+      padding: "0 4px 0 0",
+      color: isDarkMode ? "#777777" : "#777777"
+    }),
+    option: (base, { isFocused }) => ({
+      ...base,
+      cursor: "pointer",
+      backgroundColor: isDarkMode ? "#111111" : "#eeeeee",
+      color: isDarkMode ? "#fff" : "#252525"
+    })
   };
 
   const Component = creatable ? CreatableSelect : Select;

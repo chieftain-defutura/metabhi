@@ -21,17 +21,17 @@ import styled from "styled-components";
 import styledTheme from "../theme";
 import { InfoTooltip } from "../layout/Tooltip";
 import { Pause } from "styled-icons/fa-solid";
-import DarkModeToggleButton from "../ToggleButton";
-import MoonIcon from "../../assets/moon.svg";
+import DarkModeLightMode from "../../components/DarkModeLightMode";
 
 const StyledToolbar = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   height: 48px;
-  background: ${props => props.theme.lightDarkClr};
+  background: ${props => props.theme.emptyBoxClr};
   // background-color: ${props => props.theme.toolbar};
   user-select: none;
-  border-bottom: 1px solid rgba(68, 68, 68, 0.3);
+  // border-bottom: 1px solid rgba(68, 68, 68, 0.3);
 
 `;
 
@@ -40,7 +40,7 @@ const ToolButtons = styled.div`
   height: inherit;
   display: flex;
   flex-direction: row;
-  width: 280px;
+  width: 275px;
   gap: 16px;
   padding: 0 20px;
   background: ${props => props.theme.darkClr};
@@ -51,13 +51,13 @@ const ToolToggles = styled.div`
   height: inherit;
   display: flex;
   flex-direction: row;
-  background: ${props => props.theme.lightDarkClr};
+  background: ${props => props.theme.emptyBoxClr};
   // background-color: ${props => props.theme.toolbar2};
   align-items: center;
   padding: 0 46px;
   gap: 16px;
   margin-right: 132px;
-  border-bottom: 1px solid rgba(68, 68, 68, 0.3);
+  // border-bottom: 1px solid rgba(68, 68, 68, 0.3);
 `;
 
 const Spacer = styled.div`
@@ -66,14 +66,18 @@ const Spacer = styled.div`
 
 const PublishButton = styled(Button)`
   align-self: center;
-  margin: 1em;
+  margin: 1em -24px 1em 0;
   padding: 8px 24px;
   font-size: 12px;
   border-radiusL 2px;
+  background: linear-gradient(92.34deg, #002BFF -0.06%, #0092FF 99.94%);
+  border-radius: 2px;
+  color: #fff;
 `;
 
 const ToggleContent = styled.div`
   margin-top: 10px;
+  margin-right: -24px;
   cursor: pointer;
 `;
 
@@ -84,8 +88,7 @@ const snapInputStyles = {
   }),
   control: base => ({
     ...base,
-    background: "#111111",
-    // backgroundColor: styledTheme.inputBackground,
+    backgroundColor: styledTheme.inputBackground,
     minHeight: "24px",
     borderRadius: "0px",
     borderWidth: "0px",
@@ -115,7 +118,7 @@ const rightSnapInputStyles = {
     boxShadow: "none",
     padding: "5px 0",
     ":hover": {
-      borderColor: styledTheme.border
+      borderColor: "red"
     }
   })
 };
@@ -145,19 +148,17 @@ const StyledToggleButton = styled.div`
   justify-content: center;
   align-items: center;
   width: 24px;
-  height: 24px;
-  background: ${props => props.theme.lightDarkClr};
+  height: 32px;
+  background: ${props => props.theme.toolbarClr};
   // background-color: ${props => (props.value ? props.theme.blue : props.theme.toolbar)};
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 
-  :hover {
-    background-color: ${props => props.theme.blueHover};
-  }
+  
 
-  :active {
-    background-color: ${props => props.theme.blue};
-  }
+  // :active {
+  //   background-color: ${props => props.theme.blue};
+  // }
 `;
 
 function ToggleButton({ tooltip, children, ...rest }) {
@@ -184,11 +185,13 @@ const ToolbarInputGroup = styled.div`
 `;
 
 const ToolbarNumericStepperInput = styled(NumericStepperInput)`
-  width: 100px;
+  width: 86px;
   height: 32px;
 
   input {
     border-width: 0;
+    color: ${props => props.theme.text};
+    background: ${props => props.theme.toolbarClr};
   }
 
   button {
@@ -215,6 +218,17 @@ const WalletConnect = styled.div`
   font-size: 12px;
   margin-top: 9px;
   cursor: pointer;
+  margin-right: 32px;
+`;
+
+const SelectInputLine = styled.div`
+  margin-right: 2px;
+`;
+
+const GlobeIcon = styled.div`
+  svg {
+    color: ${props => props.theme.svgIconClr};
+  }
 `;
 
 const translationSnapOptions = [
@@ -447,9 +461,12 @@ export default class ToolBar extends Component {
           <ToolbarInputGroup id="transform-space">
             <InfoTooltip info="[Z] Toggle Transform Space" position="bottom">
               <ToggleButton onClick={this.onToggleTransformSpace}>
-                <Globe size={12} />
+                <GlobeIcon>
+                  <Globe size={12} />
+                </GlobeIcon>
               </ToggleButton>
             </InfoTooltip>
+
             <SelectInput
               styles={selectInputStyles}
               onChange={this.onChangeTransformSpace}
@@ -459,7 +476,9 @@ export default class ToolBar extends Component {
           </ToolbarInputGroup>
           <ToolbarInputGroup id="transform-pivot">
             <ToggleButton onClick={this.onToggleTransformPivot} tooltip="[X] Toggle Transform Pivot">
-              <Bullseye size={12} />
+              <GlobeIcon>
+                <Bullseye size={12} />
+              </GlobeIcon>
             </ToggleButton>
             <SelectInput
               styles={selectInputStyles}
@@ -474,18 +493,22 @@ export default class ToolBar extends Component {
               onClick={this.onToggleSnapMode}
               tooltip={"[C] Toggle Snap Mode"}
             >
-              <Magnet size={12} />
+              <GlobeIcon>
+                <Magnet size={12} />
+              </GlobeIcon>
             </ToggleButton>
-            <SelectInput
-              styles={snapInputStyles}
-              onChange={this.onChangeTranslationSnap}
-              options={translationSnapOptions}
-              value={translationSnap}
-              placeholder={translationSnap + "m"}
-              formatCreateLabel={value => "Custom: " + value + "m"}
-              isValidNewOption={value => value.trim() !== "" && !isNaN(value)}
-              creatable
-            />
+            <SelectInputLine>
+              <SelectInput
+                styles={snapInputStyles}
+                onChange={this.onChangeTranslationSnap}
+                options={translationSnapOptions}
+                value={translationSnap}
+                placeholder={translationSnap + "m"}
+                formatCreateLabel={value => "Custom: " + value + "m"}
+                isValidNewOption={value => value.trim() !== "" && !isNaN(value)}
+                creatable
+              />
+            </SelectInputLine>
             <SelectInput
               styles={rightSnapInputStyles}
               onChange={this.onChangeRotationSnap}
@@ -499,7 +522,9 @@ export default class ToolBar extends Component {
           </ToolbarInputGroup>
           <ToolbarInputGroup id="transform-grid">
             <ToggleButton onClick={this.onToggleGridVisible} tooltip="Toggle Grid Visibility">
-              <Grid size={16} />
+              <GlobeIcon>
+                <Grid size={16} />
+              </GlobeIcon>
             </ToggleButton>
             <ToolbarNumericStepperInput
               value={this.props.editor.grid.position.y}
@@ -519,7 +544,15 @@ export default class ToolBar extends Component {
                 onClick={this.onTogglePlayMode}
                 tooltip={this.props.editor.playing ? "Stop Previewing Scene" : "Preview Scene"}
               >
-                {this.props.editor.playing ? <Pause size={14} /> : <Play size={14} />}
+                {this.props.editor.playing ? (
+                  <GlobeIcon>
+                    <Pause size={14} />
+                  </GlobeIcon>
+                ) : (
+                  <GlobeIcon>
+                    <Play size={14} />
+                  </GlobeIcon>
+                )}
               </ToggleButton>
             </ToolbarInputGroup>
           )}
@@ -532,7 +565,7 @@ export default class ToolBar extends Component {
         )}
 
         <ToggleContent onClick={() => toggle()}>
-          <img src={MoonIcon} alt="moon" />
+          <DarkModeLightMode />
         </ToggleContent>
         {/* <DarkModeToggleButton /> */}
         <PublishButton id="publish-button" onClick={this.props.onPublish} style={{ borderRadius: "2px" }}>

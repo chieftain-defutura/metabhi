@@ -10,12 +10,12 @@ import styled from "styled-components";
 
 
 export const InputGroupColor=styled.div`
-border-bottom:1px solid #252525;
-padding:16px 0;
+border-bottom:1px solid ${props=>props.theme.borderStyleClr};
+// padding:13px 0;
 `
 export const InuputNumberGroup=styled.div`
-border-bottom:1px solid #252525;
-padding:16px 0;
+border-bottom:1px solid ${props=>props.theme.borderStyleClr};
+// padding:13px 0;
 
 `
 
