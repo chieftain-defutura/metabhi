@@ -134,6 +134,10 @@ const WalletDropDown = styled.div`
 
 const Address = styled.div``;
 
+const WalletConnectAddress = styled.div``;
+
+const CopyText = styled.div``;
+
 // class NavBar extends Component {
 //   static propTypes = {
 //     isAuthenticated: PropTypes.bool.isRequired
@@ -248,17 +252,17 @@ const NavBar = () => {
               <WalletConnect onClick={() => activate(Injected)}>Connect Wallet</WalletConnect>
             )}
           </WalletButtons>
-          {/* <WalletDropDown>
+          <WalletDropDown>
             <Address>
               {account ? (
-                <WalletConnect>
+                <WalletConnectAddress>
                   {account.slice(0, 6)}...{account.slice(account.length - 6)}
-                </WalletConnect>
+                </WalletConnectAddress>
               ) : (
-                <WalletConnect onClick={() => activate(Injected)}>Connect Wallet</WalletConnect>
+                <CopyText onClick={() => activate(Injected)}>Copy Text</CopyText>
               )}
             </Address>
-          </WalletDropDown> */}
+          </WalletDropDown>
         </WalletConnectContainer>
       </RightContainer>
     </StyledNavBar>
