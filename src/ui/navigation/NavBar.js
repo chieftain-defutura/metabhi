@@ -1,9 +1,8 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
-import { SearchInput } from "../projects/ProjectGrid";
 import Logo from "../../assets/metabhi-logo.png";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import Profile from "../../assets/profile.png";
 import { BsBell } from "react-icons/bs";
@@ -13,6 +12,9 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import SearchFilter from "../../components/SearchFilter";
 import { useWeb3React } from "@web3-react/core";
 import { Injected } from "../connectors";
+import { TiTick } from "react-icons/ti";
+import { TbCopy } from "react-icons/tb";
+import autoAnimate from "@formkit/auto-animate";
 
 const StyledNavBar = styled.header`
   position: relative;
@@ -113,30 +115,76 @@ const WalletConnect = styled.div`
   font-size: 16px;
   cursor: pointer;
   margin-right: 24px;
-  color: ${props => props.theme.text};
+  color: white;
 `;
 
 const WalletConnectContainer = styled.div`
   position: relative;
 `;
 
+const WalletConnectAddr = styled.div`
+  border: 1px solid #0092ff;
+  border-radius: 2px;
+  padding: 8px 32px;
+  color: ${props => props.theme.text};
+  margin-right: 24px;
+  cursor: pointer;
+`;
+
 const WalletButtons = styled.div``;
 
 const WalletDropDown = styled.div`
-  width: 200px;
-  height: 200px;
-  background: ${props => props.theme.emptyBoxClr};
+  width: 280px;
+  height: auto;
+  background: ${props => props.theme.dropdown};
   border-radius: 5px;
   position: absolute;
   top: 115%;
   right: 10%;
+  box-shadow: ${props => props.theme.boxShadow};
 `;
 
-const Address = styled.div``;
+const Address = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 22px;
+  border-bottom: 1px solid ${props => props.theme.walletborder};
+`;
 
-const WalletConnectAddress = styled.div``;
+const CopyText = styled.p`
+  font-weight: 600;
+  font-size: 16px;
+  color: ${props => props.theme.text};
+  cursor: pointer;
+`;
 
-const CopyText = styled.div``;
+const Content = styled.div`
+  h3 {
+    font-size: 16px;
+    padding: 12px 22px;
+    cursor: pointer;
+    &:hover {
+      background: rgba(0, 146, 255, 0.4);
+    }
+  }
+`;
+const DashboardPara = styled.div`
+  margin-top: 10px;
+`;
+
+const Logout = styled.div`
+  margin-bottom: 14px;
+  h4 {
+    color: #ff6347;
+    font-size: 16px;
+    padding: 12px 22px;
+    cursor: pointer;
+    &:hover {
+      background: rgba(0, 146, 255, 0.4);
+    }
+  }
+`;
 
 // class NavBar extends Component {
 //   static propTypes = {
@@ -175,7 +223,42 @@ const NavBar = () => {
     q: queryParams.get("q") || ""
   });
   const { isDarkMode, setIsDarkMode } = React.useContext(ThemeContext);
-  const { activate, account } = useWeb3React();
+  const { activate, account, deactivate } = useWeb3React();
+  const [copied, setCopied] = useState(false);
+  const [walletOpen, setWalletOpen] = useState(false);
+
+  const WalletToggle = () => {
+    setWalletOpen(!walletOpen);
+  };
+
+  const handleCopy = () => {
+    setCopied(true);
+  };
+
+  const displayAccount = account => {
+    const slicedAccount = account.slice(0, 6) + "..." + account.slice(-6);
+    return slicedAccount;
+  };
+
+  const parent = useRef(null);
+
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current);
+    let timer;
+    if (copied) {
+      timer = setTimeout(() => {
+        setCopied(false);
+      }, 3000);
+    }
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [copied, parent]);
+
+  const handleLogout = () => {
+    deactivate();
+  };
 
   const updateParams = useCallback(
     nextParams => {
@@ -245,24 +328,47 @@ const NavBar = () => {
         <WalletConnectContainer>
           <WalletButtons>
             {account ? (
-              <WalletConnect>
+              <WalletConnectAddr onClick={WalletToggle}>
                 {account.slice(0, 6)}...{account.slice(account.length - 6)}
-              </WalletConnect>
+              </WalletConnectAddr>
             ) : (
               <WalletConnect onClick={() => activate(Injected)}>Connect Wallet</WalletConnect>
             )}
           </WalletButtons>
-          <WalletDropDown>
-            <Address>
-              {account ? (
-                <WalletConnectAddress>
-                  {account.slice(0, 6)}...{account.slice(account.length - 6)}
-                </WalletConnectAddress>
-              ) : (
-                <CopyText onClick={() => activate(Injected)}>Copy Text</CopyText>
-              )}
-            </Address>
-          </WalletDropDown>
+          <div ref={parent} style={{ marginTop: "10px" }}>
+            {walletOpen && (
+              <WalletDropDown>
+                <Address>
+                  <div>
+                    <CopyToClipboard text={account} onCopy={handleCopy}>
+                      <CopyText>{displayAccount(account)}</CopyText>
+                    </CopyToClipboard>
+                  </div>
+                  {!copied && (
+                    <CopyToClipboard text={account} onCopy={handleCopy}>
+                      <TbCopy size={22} />
+                    </CopyToClipboard>
+                  )}
+
+                  {copied ? (
+                    <div style={{ display: "flex", alignItems: "center", gap: "2px", cursor: "pointer" }}>
+                      <TiTick size={25} />
+                    </div>
+                  ) : null}
+                </Address>
+                <Content>
+                  <DashboardPara>
+                    <Link to={"/dashboard"}>
+                      <h3>Dashboard</h3>
+                    </Link>
+                  </DashboardPara>
+                  <Logout>
+                    <h4 onClick={handleLogout}>Logout</h4>
+                  </Logout>
+                </Content>
+              </WalletDropDown>
+            )}
+          </div>
         </WalletConnectContainer>
       </RightContainer>
     </StyledNavBar>

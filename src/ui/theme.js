@@ -59,7 +59,10 @@ const theme = {
   profileClr: "#dddddd",
   svgIconClr: "#aaaaaa",
   toolbarClr: "#252525",
-  box: "#252525"
+  box: "#252525",
+  walletborder: "#434242",
+  dropdown: "#000000",
+  boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"
 };
 
 const darkTheme = {
@@ -104,6 +107,7 @@ const darkTheme = {
   shadow15: "0px 4px 4px  rgba(0, 0, 0, 0.15)",
   shadow30: "0px 4px 4px  rgba(0, 0, 0, 0.3)",
   borderStyle: "1px solid #5D646C",
+  walletborder: "#dddddd",
 
   //white mode theme
 
@@ -124,7 +128,9 @@ const darkTheme = {
   profileClr: "#ffffff",
   svgIconClr: "#454545",
   toolbarClr: "#DDDDDD",
-  box: "#aaaaaa"
+  box: "#aaaaaa",
+  dropdown: "#ffffff",
+  boxShadow: "rgba(17, 12, 46, 0.15) 0px 48px 100px 0px"
 };
 
 theme.chartColors = [

@@ -90,7 +90,7 @@ const BaseApp = ({ api }) => {
                   <Route>
                     <Layouts>
                       <Switch>
-                        <Route exact path="/dashboard" component={Dashboard} />
+                        <Route exact path="/dashboard/recent" component={Dashboard} />
                         <Route path="/dashboard/template" component={CardTemplate} />
                       </Switch>
                     </Layouts>

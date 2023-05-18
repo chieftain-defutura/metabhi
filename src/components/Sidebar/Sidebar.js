@@ -7,14 +7,13 @@ import { CgTemplate } from "react-icons/cg";
 import { BsFileEarmark } from "react-icons/bs";
 import { AiOutlineStar } from "react-icons/ai";
 import { AiOutlinePlus } from "react-icons/ai";
+import { NavLink } from "react-router-dom";
 
 const SidebarWrapper = styled.div`
   height: calc(100vh - 85px);
   width: 260px;
   overflow-x: hidden;
   overflow-y: scroll;
-  border-right: ${props => props.theme.borderStyleClr};
-  background: ${props => props.theme.darkClr};
   position: fixed;
   top: 10.3%;
   left: 0;
@@ -22,6 +21,10 @@ const SidebarWrapper = styled.div`
   z-index: 1;
   &::-webkit-scrollbar {
     width: 5px;
+  }
+  a.active {
+    background: ${props => props.theme.darkClr};
+    color: #0092ff;
   }
 `;
 
@@ -73,7 +76,7 @@ const Sidebar = () => {
   return (
     <SidebarWrapper>
       <div>
-        <a href="/dashboard" style={{ textDecoration: "none" }}>
+        <NavLink to="/dashboard/recent" style={{ textDecoration: "none" }}>
           <RecentContent
             className="recent"
             style={{
@@ -84,10 +87,10 @@ const Sidebar = () => {
             <BiTime size={24} />
             <h4>Recent</h4>
           </RecentContent>
-        </a>
+        </NavLink>
       </div>
       <div>
-        <a href="/dashboard/template" style={{ textDecoration: "none" }}>
+        <NavLink to="/dashboard/template" style={{ textDecoration: "none" }}>
           <RecentContent
             style={{
               background: activeIndex === 1 ? "rgba(0, 146, 255, 0.2)" : "transparent"
@@ -97,7 +100,7 @@ const Sidebar = () => {
             <CgTemplate size={24} />
             <h4>Templates</h4>
           </RecentContent>
-        </a>
+        </NavLink>
       </div>
 
       <RecentContent
@@ -110,6 +113,7 @@ const Sidebar = () => {
         <BsFileEarmark size={24} />
         <h4>Draft</h4>
       </RecentContent>
+
       <RecentContent
         className="borderPadding"
         style={{

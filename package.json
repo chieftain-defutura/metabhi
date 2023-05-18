@@ -76,6 +76,7 @@
   "dependencies": {
     "@babel/runtime": "^7.6.0",
     "@ethersproject/providers": "^5.7.2",
+    "@formkit/auto-animate": "^1.0.0-beta.6",
     "@mozillareality/easing-functions": "^0.1.1",
     "@mozillareality/three-batch-manager": "^0.1.10",
     "@mozillareality/three-particle-emitter": "^0.2.2",
@@ -100,6 +101,7 @@
     "react": "^16.9.0",
     "react-color": "^2.17.0",
     "react-contextmenu": "^2.10.0",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dnd": "^10.0.2",
     "react-dnd-html5-backend": "^10.0.2",
     "react-dom": "^16.9.0",
