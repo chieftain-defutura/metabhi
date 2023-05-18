@@ -7,6 +7,8 @@ function getFlex(props) {
     return 1;
   }
 
+  
+
   return props.flex;
 }
 

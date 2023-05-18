@@ -12,8 +12,11 @@ import { withSettings } from "../contexts/SettingsContext";
 import { ShoePrints } from "styled-icons/fa-solid/ShoePrints";
 import { NavMeshMode } from "../../editor/nodes/FloorPlanNode";
 import SelectInput from "../inputs/SelectInput";
+
 import ModelInput from "../inputs/ModelInput";
+
 import styled from "styled-components";
+
 
 const NavMeshModeOptions = [
   {

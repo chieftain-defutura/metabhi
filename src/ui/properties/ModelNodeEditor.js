@@ -7,7 +7,9 @@ import BooleanInput from "../inputs/BooleanInput";
 import ModelInput from "../inputs/ModelInput";
 import { Cube } from "styled-icons/fa-solid/Cube";
 import { GLTFInfo } from "../inputs/GLTFInfo";
+
 import AttributionNodeEditor from "./AttributionNodeEditor";
+
 import styled from "styled-components";
 
 const InputGltfInfo = styled.div`
