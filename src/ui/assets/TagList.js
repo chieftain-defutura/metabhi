@@ -8,7 +8,7 @@ import { CaretDown } from "styled-icons/fa-solid/CaretDown";
 
 const StyledTagList = styled(Column)`
   height: auto;
-  min-height: 100%;
+  // min-height: 100%;
   min-width: 175px;
   border-right: 1px solid ${props => props.theme.panel};
 `;
@@ -24,8 +24,8 @@ const TagListHeader = styled(Row)`
 `;
 
 const TagListContainer = styled.div`
-  height: 100%;
-  overflow-y: scroll;
+  height: auto;
+  overflow-y: auto;
   overflow-x: auto;
 `;
 
