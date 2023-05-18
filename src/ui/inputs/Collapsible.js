@@ -7,21 +7,21 @@ import { CaretDown } from "styled-icons/fa-solid/CaretDown";
 const CollapsibleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 4px 8px;
+  width:100%;
  
 `;
 
 const CollapsibleLabel = styled.div`
   color: ${props => props.theme.text2};
-  background-color: ${props => props.theme.black};
+  // background-color: ${props => props.theme.disabled};
   cursor: pointer;
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
+  width:100%;
   padding: 12px;
   margin:8px;
-  // justify-content:space-evenly;
-  width:100%;
   overflow:hidden;
+  justify-content:space-between ;
   :hover {
     color: ${props => props.theme.text};
   }
@@ -31,6 +31,8 @@ const CollapsibleContent = styled.div`
   display: flex;
   flex-direction: column;
   padding: 4px 8px;
+  width:100%;
+
 `;
 // const Collapsel = styled.div`
 // display: flex;
@@ -47,15 +49,18 @@ export default function Collapsible({ label, open, children }) {
   }, [setCollapsed]);
 
   return (
+    
     <CollapsibleContainer>
-   
       <CollapsibleLabel onClick={toggleCollapsed}>
         <CollapseIcon as={collapsed ? CaretRight : CaretDown} size={14} collapsed={collapsed} />
         {label}
       </CollapsibleLabel>
-      {!collapsed && <CollapsibleContent>{children}</CollapsibleContent>}
-
+      {!collapsed && 
+      <div  style={{ display: "flex", width: "100%", height: "100%" }}>
+      <CollapsibleContent collapsed={collapsed}>{children}</CollapsibleContent>
+      </div>}
     </CollapsibleContainer>
+   
   );  
 }
 

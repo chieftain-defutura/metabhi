@@ -76,9 +76,9 @@ const BaseApp = ({ api }) => {
               <Column as={Suspense} fallback={<Loading message="Loading..." fullScreen />}>
                 <Switch>
                   {configs.isMoz() && <Route path="/" exact component={LandingPage} />}
-                  {!configs.isMoz() && <RedirectRoute path="/" exact to="/projects" />}
+                  {!configs.isMoz() && <RedirectRoute path="/" exact to="/dashboard/recent" />}
                   <Route path="/whats-new" exact component={WhatsNewPage} />
-                  <RedirectRoute path="/new" exact to="/projects" />
+                  <RedirectRoute path="/new" exact to="/dashboard/recent" />
                   <Route path="/login" exact component={LoginPage} />
                   <Route path="/logout" exact component={LogoutPage} />
                   <Route path="/projects/create" exact component={CreateProjectPage} />

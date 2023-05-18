@@ -14,7 +14,7 @@ const StyledPropertyGroup = styled.div`
 
 const PropertyGroupHeader = styled.div`
   display: flex;
-  flex-direction: row;
+  // flex-direction: row;
   align-items: left;
   font-weight: bold;
   font-size: 12px;

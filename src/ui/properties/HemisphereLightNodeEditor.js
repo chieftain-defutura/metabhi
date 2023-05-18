@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import NodeEditor from "./NodeEditor";
+
 import InputGroup from "../inputs/InputGroup";
+
 import ColorInput from "../inputs/ColorInput";
+
 import NumericInputGroup from "../inputs/NumericInputGroup";
 import { Certificate } from "styled-icons/fa-solid/Certificate";
 

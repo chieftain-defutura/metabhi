@@ -8,7 +8,7 @@ import { CaretDown } from "styled-icons/fa-solid/CaretDown";
 
 const StyledTagList = styled(Column)`
   height: auto;
-  min-height: 100%;
+  // min-height: 100%;
   min-width: 175px;
   border-right: 1px solid ${props => props.theme.panel};
 `;
@@ -24,8 +24,8 @@ const TagListHeader = styled(Row)`
 `;
 
 const TagListContainer = styled.div`
-  height: 100%;
-  overflow-y: scroll;
+  height: auto;
+  overflow-y: auto;
   overflow-x: auto;
 `;
 
@@ -44,11 +44,9 @@ const TagContent = styled.div`
   display: flex;
   align-items: center;
   min-height: 24px;
-
   padding-left: ${props => props.depth * 20}px;
-
   color: ${props => props.theme.text};
-
+  padding:14px 4px;
   background-color: ${props => (props.selected ? props.theme.selected : "transparent")};
 
   :hover,
@@ -69,7 +67,7 @@ export const TreeListItem = styled.li`
   outline: none;
   overflow: hidden;
   user-select: none;
-  min-height: 24px;
+  // min-height: 24px;
   white-space: nowrap;
 `;
 

@@ -60,10 +60,7 @@ const MaterialSlotContent = styled.div`
   padding: 0 8px;
   flex: 1;
 `;
-// const InputGroupClass = styled.div`
-// display: flex;
-// flex-direction:row;
-// `
+
 
 function SubPieceItem({ name, children, ...rest }) {
   return (
@@ -198,9 +195,11 @@ export default class KitPieceNodeEditor extends Component {
         <InputGroup name="Walkable">
           <BooleanInput value={node.walkable} onChange={this.onChangeWalkable} />
         </InputGroup>
+        
         <InputGroup name="Cast Shadow">
-          <BooleanInput value={node.castShadow} onChange={this.onChangeCastShadow} />
+        <BooleanInput value={node.castShadow} onChange={this.onChangeCastShadow} />
         </InputGroup>
+        
         <InputGroup name="Receive Shadow">
           <BooleanInput value={node.receiveShadow} onChange={this.onChangeReceiveShadow} />
         </InputGroup>

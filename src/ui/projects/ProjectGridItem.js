@@ -19,7 +19,7 @@ const StyledProjectGridItem = styled(Link)`
   height: 220px;
   background-color: ${props => props.theme.darkGray};
   text-decoration: none;
-  border: ${props => props.theme.borderStyleClr};
+  border: 1px solid ${props => props.theme.borderStyleClr};
   border-radius: 5px;
   position: relative;
 

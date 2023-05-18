@@ -53,8 +53,8 @@ const theme = {
   lightGray: "#aaaaaa",
   scrollbarClr: "#454545",
   text: "#ffffff",
-  borderStyleClr: "1px solid #252525",
-  borderFileClr: "1px solid rgba(37, 37, 37, 0.5)",
+  borderStyleClr: "rgba(119, 119, 119, 0.2)",
+  borderFileClr: "rgba(37, 37, 37, 0.5)",
   emptyBoxClr: "#252525",
   profileClr: "#dddddd",
   svgIconClr: "#aaaaaa",
@@ -62,7 +62,8 @@ const theme = {
   box: "#252525",
   walletborder: "#434242",
   dropdown: "#000000",
-  boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"
+  boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px",
+  inputBackground: "#0A0A0A"
 };
 
 const darkTheme = {
@@ -121,16 +122,23 @@ const darkTheme = {
   lightGray: "#454545",
   scrollbarClr: "#454545",
   text: "#252525",
-  borderStyle: "1px solid red",
+  borderStyle: "1px solid rgba(170, 170, 170, 0.2);",
   borderFileClr: "1px solid #DDDDDD",
-  borderStyleClr: "1px solid rgba(170, 170, 170, 0.2)",
+  borderStyleClr: "rgba(119, 119, 119, 0.2)",
   emptyBoxClr: "#EEEEEE",
   profileClr: "#ffffff",
   svgIconClr: "#454545",
   toolbarClr: "#DDDDDD",
   box: "#aaaaaa",
   dropdown: "#ffffff",
-  boxShadow: "rgba(17, 12, 46, 0.15) 0px 48px 100px 0px"
+  boxShadow: "rgba(17, 12, 46, 0.15) 0px 48px 100px 0px",
+  inputBackground: "#EEEEEE;",
+  panel2: "#ffffff",
+  panel: "#ffffff",
+  blueHover: "rgba(0, 146, 255, 0.2)",
+  bluePressed: "rgba(0, 146, 255, 0.2)",
+  selected: "rgba(0, 146, 255, 0.2)",
+  hover: "rgba(170, 170, 170, 0.2);"
 };
 
 theme.chartColors = [

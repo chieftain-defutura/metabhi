@@ -22,7 +22,7 @@ const StyledNavBar = styled.header`
   align-items: center;
   justify-content: space-between;
   font-size: 1.4em;
-  border-bottom: ${props => props.theme.borderStyleClr};
+  border-bottom: 1px solid ${props => props.theme.borderStyleClr};
   background: ${props => props.theme.darkClr};
 
   a {
@@ -39,7 +39,7 @@ const IconContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
-  border-right: ${props => props.theme.borderStyleClr};
+  border-right: 1px solid ${props => props.theme.borderStyleClr};
   padding: 6px 20px;
   width: 260px;
   a {
@@ -358,7 +358,7 @@ const NavBar = () => {
                 </Address>
                 <Content>
                   <DashboardPara>
-                    <Link to={"/dashboard"}>
+                    <Link to={"/dashboard/recent"}>
                       <h3>Dashboard</h3>
                     </Link>
                   </DashboardPara>

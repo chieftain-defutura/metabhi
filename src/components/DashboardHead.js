@@ -17,7 +17,7 @@ const WelComeWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 180px;
-  border-bottom: ${props => props.theme.borderStyleClr};
+  border-bottom: 1px solid ${props => props.theme.borderStyleClr};
 `;
 
 const WelComeContent = styled.div`
@@ -76,7 +76,7 @@ const NewFilePara = styled.div`
 
 const Recently = styled.div`
   padding: 22px 40px;
-  border-bottom: ${props => props.theme.borderStyleClr};
+  border-bottom: 1px solid ${props => props.theme.borderStyleClr};
   height: 150px;
 
   h3 {

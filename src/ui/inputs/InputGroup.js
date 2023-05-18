@@ -9,12 +9,12 @@ import { PropertyLabel } from "./PropertyLabel";
 
 export const InputGroupContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  padding: 12px 8px;
-  flex: 1;
+  flex-direction: column;
+  padding: 13px 8px;
+  margin:3px 0;
+  gap:8px; 
   min-height: 24px;
-  align-items: center;
-
+  justify-content:space-between;
   ${props =>
     props.disabled &&
     `
@@ -29,11 +29,9 @@ export const InputGroupContainer = styled.div`
     padding-top: 4px;
   }
 `;
-
 export const InputGroupContent = styled.div`
   ${props =>
-    props.disabled &&
-    `
+    props.disabled && `
     pointer-events: none;
     opacity: 0.3;
   `}
@@ -54,9 +52,8 @@ export const InputGroupInfoIcon = styled(QuestionCircle)`
 
 export const InputGroupHeader = styled.div`
   display: flex;
-  flex-direction: row;
-  flex: 1;
-  align-items: center;
+  // flex-direction: row;
+  // align-items: center;
 
   ${props =>
     props.disabled &&

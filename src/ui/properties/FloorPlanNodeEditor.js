@@ -12,7 +12,9 @@ import { withSettings } from "../contexts/SettingsContext";
 import { ShoePrints } from "styled-icons/fa-solid/ShoePrints";
 import { NavMeshMode } from "../../editor/nodes/FloorPlanNode";
 import SelectInput from "../inputs/SelectInput";
+
 import ModelInput from "../inputs/ModelInput";
+
 import styled from "styled-components";
 
 const NavMeshModeOptions = [
@@ -26,10 +28,14 @@ const NavMeshModeOptions = [
   }
 ];
 
-export const InputFloor=styled.div`
-border-bottom:1px solid #252525;
-padding:16px 0;
-`
+export const InputFloorSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid ${props => props.theme.borderStyleClr};
+`;
+export const InputFloor = styled.div`
+  border-bottom: 1px solid ${props => props.theme.borderStyleClr};
+`;
 class FloorPlanNodeEditor extends Component {
   static propTypes = {
     hideDialog: PropTypes.func.isRequired,
@@ -94,142 +100,131 @@ class FloorPlanNodeEditor extends Component {
     return (
       <NodeEditor {...this.props} description={FloorPlanNodeEditor.description}>
         <InputFloor>
-        <InputGroup name="Nav Mesh Mode">
-          <SelectInput options={NavMeshModeOptions} value={node.navMeshMode} onChange={this.onChangeNavMeshMode} />
-        </InputGroup>
+          <InputGroup name="Nav Mesh Mode">
+            <SelectInput options={NavMeshModeOptions} value={node.navMeshMode} onChange={this.onChangeNavMeshMode} />
+          </InputGroup>
         </InputFloor>
         {node.navMeshMode === NavMeshMode.Automatic ? (
           <>
-        <InputFloor>
-            <InputGroup name="Auto Cell Size">
+            <InputFloorSection>
+              <InputGroup name="Auto Cell Size"></InputGroup>
               <BooleanInput value={node.autoCellSize} onChange={this.onChangeAutoCellSize} />
-            </InputGroup>
-        </InputFloor>
-          
+            </InputFloorSection>
+
             {!node.autoCellSize && (
-        <InputFloor>
+              <InputFloor>
+                <NumericInputGroup
+                  name="Cell Size"
+                  value={node.cellSize}
+                  smallStep={0.001}
+                  mediumStep={0.01}
+                  largeStep={0.1}
+                  min={0.1}
+                  displayPrecision={0.0001}
+                  onChange={this.onChangeCellSize}
+                />
+              </InputFloor>
+            )}
+            <InputFloor>
               <NumericInputGroup
-                name="Cell Size"
-                value={node.cellSize}
+                name="Cell Height"
+                value={node.cellHeight}
                 smallStep={0.001}
                 mediumStep={0.01}
                 largeStep={0.1}
                 min={0.1}
-                displayPrecision={0.0001}
-                onChange={this.onChangeCellSize}
+                onChange={this.onChangeCellHeight}
+                unit="m"
               />
-        </InputFloor>
-
-            )}
-        <InputFloor>
-            <NumericInputGroup
-              name="Cell Height"
-              value={node.cellHeight}
-              smallStep={0.001}
-              mediumStep={0.01}
-              largeStep={0.1}
-              min={0.1}
-              onChange={this.onChangeCellHeight}
-              unit="m"
-            />
-        </InputFloor>
-        <InputFloor>
-
-            <NumericInputGroup
-              name="Agent Height"
-              value={node.agentHeight}
-              smallStep={0.001}
-              mediumStep={0.01}
-              largeStep={0.1}
-              min={0.1}
-              onChange={this.onChangeAgentHeight}
-              unit="m"
-            />
-        </InputFloor>
-        <InputFloor>
-
-            <NumericInputGroup
-              name="Agent Radius"
-              value={node.agentRadius}
-              min={0}
-              smallStep={0.001}
-              mediumStep={0.01}
-              largeStep={0.1}
-              onChange={this.onChangeAgentRadius}
-              unit="m"
-            />
-        </InputFloor>
-        <InputFloor>
-
-            <NumericInputGroup
-              name="Maximum Step Height"
-              value={node.agentMaxClimb}
-              min={0}
-              smallStep={0.001}
-              mediumStep={0.01}
-              largeStep={0.1}
-              onChange={this.onChangeAgentMaxClimb}
-              unit="m"
-            />
-        </InputFloor>
-        <InputFloor>
-
-            <NumericInputGroup
-              name="Maximum Slope"
-              value={node.agentMaxSlope}
-              min={0.00001}
-              max={90}
-              smallStep={1}
-              mediumStep={5}
-              largeStep={15}
-              onChange={this.onChangeAgentMaxSlope}
-              unit="°"
-            />
-        </InputFloor>
-        <InputFloor>
-
-            <NumericInputGroup
-              name="Minimum Region Area"
-              value={node.regionMinSize}
-              min={0.1}
-              smallStep={0.1}
-              mediumStep={1}
-              largeStep={10}
-              onChange={this.onChangeRegionMinSize}
-              unit="m²"
-            />
-        </InputFloor>
-      
-
+            </InputFloor>
+            <InputFloor>
+              <NumericInputGroup
+                name="Agent Height"
+                value={node.agentHeight}
+                smallStep={0.001}
+                mediumStep={0.01}
+                largeStep={0.1}
+                min={0.1}
+                onChange={this.onChangeAgentHeight}
+                unit="m"
+              />
+            </InputFloor>
+            <InputFloor>
+              <NumericInputGroup
+                name="Agent Radius"
+                value={node.agentRadius}
+                min={0}
+                smallStep={0.001}
+                mediumStep={0.01}
+                largeStep={0.1}
+                onChange={this.onChangeAgentRadius}
+                unit="m"
+              />
+            </InputFloor>
+            <InputFloor>
+              <NumericInputGroup
+                name="Maximum Step Height"
+                value={node.agentMaxClimb}
+                min={0}
+                smallStep={0.001}
+                mediumStep={0.01}
+                largeStep={0.1}
+                onChange={this.onChangeAgentMaxClimb}
+                unit="m"
+              />
+            </InputFloor>
+            <InputFloor>
+              <NumericInputGroup
+                name="Maximum Slope"
+                value={node.agentMaxSlope}
+                min={0.00001}
+                max={90}
+                smallStep={1}
+                mediumStep={5}
+                largeStep={15}
+                onChange={this.onChangeAgentMaxSlope}
+                unit="°"
+              />
+            </InputFloor>
+            <InputFloor>
+              <NumericInputGroup
+                name="Minimum Region Area"
+                value={node.regionMinSize}
+                min={0.1}
+                smallStep={0.1}
+                mediumStep={1}
+                largeStep={10}
+                onChange={this.onChangeRegionMinSize}
+                unit="m²"
+              />
+            </InputFloor>
           </>
         ) : (
-        <InputFloor>
-          <InputGroup name="Custom Navmesh Url">
-            <ModelInput value={node.navMeshSrc} onChange={this.onChangeNavMeshSrc} />
-          </InputGroup>
-        </InputFloor>
-
+          <InputFloor>
+            <InputGroup name="Custom Navmesh Url">
+              <ModelInput value={node.navMeshSrc} onChange={this.onChangeNavMeshSrc} />
+            </InputGroup>
+          </InputFloor>
         )}
-        <InputFloor>
-        <InputGroup name="Force Trimesh">
+        <InputFloorSection>
+          <InputGroup name="Force Trimesh"></InputGroup>
           <BooleanInput value={node.forceTrimesh} onChange={this.onChangeForceTrimesh} />
-        </InputGroup>
-        </InputFloor>
+        </InputFloorSection>
 
         {!node.forceTrimesh && settings.enableExperimentalFeatures && (
-        <InputFloor>
-          <NumericInputGroup
-            name="Collision Geo Triangle Threshold"
-            value={node.maxTriangles}
-            min={10}
-            max={10000}
-            smallStep={1}
-            mediumStep={100}
-            largeStep={1000}
-            precision={1}
-            onChange={this.onChangeMaxTriangles}
-          />
-        </InputFloor>
+          <InputFloor>
+            <NumericInputGroup
+              name="Collision Geo Triangle Threshold"
+              value={node.maxTriangles}
+              min={10}
+              max={10000}
+              smallStep={1}
+              mediumStep={100}
+              largeStep={1000}
+              precision={1}
+              onChange={this.onChangeMaxTriangles}
+            />
+          </InputFloor>
         )}
         <PropertiesPanelButton onClick={this.onRegenerate}>Regenerate</PropertiesPanelButton>
       </NodeEditor>

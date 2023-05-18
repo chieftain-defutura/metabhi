@@ -10,7 +10,7 @@ const AssetsPanelContainer = styled(Row)`
   position: relative;
   flex: 1;
   background: ${props => props.theme.grayClr};
-  background-color: ${props => props.theme.panel};
+  // background-color: ${props => props.theme.panel};
   display: block;
 `;
 
@@ -48,24 +48,27 @@ AssetsPanelToolbar.propTypes = {
 };
 
 const Source = styled.div`
-  background-color: ${props => props.theme.dropdown};
+  background-color: ${props => props.theme.box};
   position: fixed;
   top: 13%;
   right: 0;
-  width: 30%;
+  width: 20%;
   display: flex;
   z-index: 1000;
+  height: 100%;
+  overflow-y: scroll;
 `;
 
 const AssetsPanelColumn = styled(Column)`
-  max-width: 100%;
-  border-right: 1px solid ${props => props.theme.border};
-  overflow: auto;
+  // max-width: 100%;
+  // border-right: 1px solid ${props => props.theme.border};
+  // overflow: auto;
 `;
 
 export const AssetPanelContentContainer = styled(Row)`
-  flex: 1;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  // overflow: hidden;
 `;
 
 function getSources(editor) {
@@ -81,6 +84,7 @@ export default function AssetsPanel() {
   );
   const [selectedSource, setSelectedSource] = useState({ src: sources.length > 0 ? sources[0] : null, toggle: true });
   const SourceComponent = selectedSource.src && selectedSource.src.component;
+
   useEffect(() => {
     const onSetSource = sourceId => {
       setSelectedSource({ src: sources.find(s => s.id === sourceId) });
@@ -132,15 +136,17 @@ export default function AssetsPanel() {
         <Column flex>
           {openSavedState && (
             <Source>
-              <h1 onClick={() => setOpenSavedState(false)}>close</h1>
               {SourceComponent && !selectedSource.toggle && (
-                <SourceComponent
-                  key={selectedSource.id}
-                  source={selectedSource.src}
-                  editor={editor}
-                  savedState={savedState}
-                  setSavedState={setSavedState}
-                />
+                <>
+                  {/* <h1 onClick={() => setOpenSavedState(false)}>close</h1> */}
+                  <SourceComponent
+                    key={selectedSource.id}
+                    source={selectedSource.src}
+                    editor={editor}
+                    savedState={savedState}
+                    setSavedState={setSavedState}
+                  />
+                </>
               )}
             </Source>
           )}
