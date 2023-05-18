@@ -57,7 +57,7 @@ const theme = {
   borderFileClr: "1px solid rgba(37, 37, 37, 0.5)",
   emptyBoxClr: "#252525",
   profileClr: "#dddddd",
-  svgIconClr: "#aaaaaa"
+  svgIconClr: "#aaaaaa",
 };
 
 const darkTheme = {
@@ -101,8 +101,6 @@ const darkTheme = {
   white: "#fff",
   shadow15: "0px 4px 4px  rgba(0, 0, 0, 0.15)",
   shadow30: "0px 4px 4px  rgba(0, 0, 0, 0.3)",
-  borderStyle: "1px solid #5D646C",
-
   //white mode theme
 
   darkClr: "#eeeeee",
@@ -115,7 +113,7 @@ const darkTheme = {
   lightGray: "#454545",
   scrollbarClr: "#454545",
   text: "#252525",
-  borderStyle: "1px solid red",
+  borderStyle: "1px solid rgba(170, 170, 170, 0.2);",
   borderFileClr: "1px solid #DDDDDD",
   borderStyleClr: "1px solid rgba(170, 170, 170, 0.2)",
   emptyBoxClr: "#EEEEEE",

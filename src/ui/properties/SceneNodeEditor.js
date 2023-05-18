@@ -12,6 +12,15 @@ import useSetPropertySelected from "./useSetPropertySelected";
 import BooleanInput from "../inputs/BooleanInput";
 import { Defaults, DistanceModelOptions, DistanceModelType, SourceType } from "../../editor/objects/AudioParams";
 import useOptionalParam from "./useOptionalParam";
+import styled from "styled-components";
+
+
+const InputGroupSection =styled.div`
+display:flex;
+flex-direction:row;
+position:relative;
+left:-200px;
+`
 
 const FogTypeOptions = [
   {
@@ -168,9 +177,12 @@ export default function SceneNodeEditor(props) {
           onChange={onChangeFogDensity}
         />
       )}
+
+    <InputGroupSection>
       <InputGroup name="Override Audio Settings">
-        <BooleanInput value={node.overrideAudioSettings} onChange={onChangeOverrideAudioSettings} />
       </InputGroup>
+      <BooleanInput value={node.overrideAudioSettings} onChange={onChangeOverrideAudioSettings} />
+      </InputGroupSection>
       {node.overrideAudioSettings && (
         <>
           <InputGroup

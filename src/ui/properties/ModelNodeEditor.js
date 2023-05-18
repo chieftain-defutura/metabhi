@@ -8,7 +8,17 @@ import ModelInput from "../inputs/ModelInput";
 import { Cube } from "styled-icons/fa-solid/Cube";
 import { GLTFInfo } from "../inputs/GLTFInfo";
 import AttributionNodeEditor from "./AttributionNodeEditor";
-import { ToggleButton } from "../Toggle";
+import styled from "styled-components";
+
+const InputGltfInfo = styled.div`
+display:flex;
+flex-direction:row;
+`
+const InputGroupSction =styled.div`
+display:flex;
+flex-direction:row;
+justify-content:space-around;
+`
 
 export default class ModelNodeEditor extends Component {
   static propTypes = {
@@ -82,27 +92,40 @@ export default class ModelNodeEditor extends Component {
             isMulti
           />
         </InputGroup>
+        <InputGroupSction>
         <InputGroup name="Collidable">
+        </InputGroup>
           <BooleanInput value={node.collidable} onChange={this.onChangeCollidable} />
-         
-        </InputGroup>
+        </InputGroupSction>
+        <InputGroupSction>
         <InputGroup name="Walkable">
-          <BooleanInput value={node.walkable} onChange={this.onChangeWalkable} />
         </InputGroup>
+        <BooleanInput value={node.walkable} onChange={this.onChangeWalkable} />
+        </InputGroupSction>
+        <InputGroupSction>
         <InputGroup name="Cast Shadow">
-          <BooleanInput value={node.castShadow} onChange={this.onChangeCastShadow} />
         </InputGroup>
+        <BooleanInput value={node.castShadow} onChange={this.onChangeCastShadow} />
+        </InputGroupSction>
+        <InputGroupSction>
         <InputGroup name="Receive Shadow">
-          <BooleanInput value={node.receiveShadow} onChange={this.onChangeReceiveShadow} />
         </InputGroup>
+        <BooleanInput value={node.receiveShadow} onChange={this.onChangeReceiveShadow} />
+        </InputGroupSction>
+        <InputGroupSction>
         <InputGroup name="Combine">
-          <BooleanInput value={node.combine} onChange={this.onChangeCombine} />
         </InputGroup>
+        <BooleanInput value={node.combine} onChange={this.onChangeCombine} />
+        </InputGroupSction>
+        <InputGroupSction>
         <InputGroup name="Billboard" info="Model always faces user in Hubs. Does not billboard in Spoke.">
-          <BooleanInput value={node.billboard} onChange={this.onChangeBillboard} />
         </InputGroup>
+        <BooleanInput value={node.billboard} onChange={this.onChangeBillboard} />
+        </InputGroupSction>
+        <InputGltfInfo>
         {node.model && <GLTFInfo node={node} />}
         <AttributionNodeEditor name="Attribution" {...this.props} />
+        </InputGltfInfo>
       </NodeEditor>
     );
   }

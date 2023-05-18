@@ -38,6 +38,10 @@ export const InputGroupShadow=styled.div`
 border-bottom:1px solid #252525;
 padding:16px 0;
 `
+const InputGroupSection = styled.div`
+display: flex;
+flex-direction:row;
+`
 
 export default class LightShadowProperties extends Component {
   static propTypes = {
@@ -67,9 +71,11 @@ export default class LightShadowProperties extends Component {
     return (
       <Fragment>
         <InputGroupCast>
+        <InputGroupSection>
           <InputGroup name="Cast Shadow">
-            <BooleanInput value={node.castShadow} onChange={this.onChangeCastShadow} />
           </InputGroup>
+          <BooleanInput value={node.castShadow} onChange={this.onChangeCastShadow} />
+        </InputGroupSection>
         </InputGroupCast>
        <InputGroupShadow>
         <InputGroup name="Shadow Map Resolution">

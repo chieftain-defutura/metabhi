@@ -28,8 +28,10 @@ const PropertiesHeader = styled.div`
 const NameInputGroupContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
-  align-items: flex-start;
+  // align-items: flex-start;
+  justify-content:space-around;
   padding: 8px 0;
+  border-bottom: 1px solid ${props => props.theme.emptyBoxClr};
 `;
 
 const VisibleInputGroup = styled(InputGroup)`
@@ -56,6 +58,10 @@ const NoNodeSelectedMessage = styled.div`
   align-items: center;
   height: 100%;
 `;
+const VisibleInput= styled.div`
+display: flex;
+flex-direction: row;
+`
 
 class PropertiesPanelContainer extends Component {
   static propTypes = {
@@ -146,17 +152,19 @@ class PropertiesPanelContainer extends Component {
         <StyledNodeEditor>
           <PropertiesHeader>
             <NameInputGroupContainer>
-              <NameInputGroup node={activeNode} editor={editor} />
+              {/* <NameInputGroup node={activeNode} editor={editor} />  */}
               {activeNode.nodeName !== "Scene" && (
                 <>
+                <VisibleInput>
                   <VisibleInputGroup name="Visible">
-                    {/* <Toggle value={activeNode._visible} onChange={this.onChangeVisible} /> */}
-                    <BooleanInput value={activeNode._visible} onChange={this.onChangeVisible} />
                   </VisibleInputGroup>
+                  <BooleanInput value={activeNode._visible} onChange={this.onChangeVisible} />
+                  </VisibleInput>
+                <VisibleInput>
                   <VisibleInputGroup name="Enabled">
-                    {/* <Toggle value={activeNode.enabled} onChange={this.onChangeEnabled} /> */}
-                    <BooleanInput value={activeNode.enabled} onChange={this.onChangeEnabled} />
                   </VisibleInputGroup>
+                  <BooleanInput value={activeNode.enabled} onChange={this.onChangeEnabled} />
+                  </VisibleInput>
                 </>
               )}
             </NameInputGroupContainer>

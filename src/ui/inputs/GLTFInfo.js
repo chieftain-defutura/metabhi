@@ -11,9 +11,9 @@ import { bytesToSize } from "../utils";
 const ChartContainer = styled.div`
   margin: 4px 0;
   padding: 4px;
-  background-color: ${props => props.theme.black};
+  // background-color: ${props => props.theme.black};
   border-radius: 4px;
-  width:90%;
+  width:100%;
 `;
 
 export function GLTFFileChart({ node }) {
@@ -69,7 +69,7 @@ export function GLTFFileChart({ node }) {
 
   return (
     <ChartContainer>
-      <PieChart width={400} height={height}>
+      <PieChart width={175} height={height}>
         <Pie
           isAnimationActive={false}
           data={payload}
@@ -99,15 +99,18 @@ const Thumbnail = styled.img`
   height: 64px;
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 4px;
+  display:flex;
 `;
 
-const ImageItemContainer = styled.li`
+
+
+const ImageItemContainer = styled.ul`
   display: flex;
   margin: 4px 0;
   padding: 12px;
-  background-color: ${props => props.theme.black};
+  // background-color: ${props => props.theme.gray};
   border-radius: 4px;
-  width:90%;
+  width:100%;
 
   & > :first-child {
     margin-right: 8px;
@@ -116,6 +119,9 @@ const ImageItemContainer = styled.li`
   h3 {
     font-size: 14px;
   }
+  li{
+    display: flex;
+  }
 `;
 
 function GLTFTextureItem({ item }) {
@@ -123,7 +129,7 @@ function GLTFTextureItem({ item }) {
     <ImageItemContainer>
       <Thumbnail src={item.url} alt={item.name} />
       <div>
-        <h3>{item.name}</h3>
+        {/* <h3>{item.name}</h3> */}
         <ul>
           <li>
             <b>Type:</b> {item.type}

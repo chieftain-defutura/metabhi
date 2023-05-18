@@ -249,7 +249,7 @@ export default class SceneNode extends EditorNodeMixin(Scene) {
     this.fogNearDistance = source.fogNearDistance;
     this.fogFarDistance = source.fogFarDistance;
     this.overrideAudioSettings = source.overrideAudioSettings;
-    this.avatarDistanceModel = source.avatarDistanceModel;
+    this.avatarDistanceModel = source.avatarDistanceel;
     this.avatarRolloffFactor = source.avatarRolloffFactor;
     this.avatarRefDistance = source.avatarRefDistance;
     this.avatarMaxDistance = source.avatarMaxDistance;

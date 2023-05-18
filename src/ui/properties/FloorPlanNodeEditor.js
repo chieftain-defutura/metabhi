@@ -26,6 +26,12 @@ const NavMeshModeOptions = [
   }
 ];
 
+export const InputFloorSection=styled.div`
+display:flex;
+flex-direction:row;
+border-bottom:1px solid #252525;
+padding:16px 0;
+`
 export const InputFloor=styled.div`
 border-bottom:1px solid #252525;
 padding:16px 0;
@@ -100,11 +106,11 @@ class FloorPlanNodeEditor extends Component {
         </InputFloor>
         {node.navMeshMode === NavMeshMode.Automatic ? (
           <>
-        <InputFloor>
+        <InputFloorSection>
             <InputGroup name="Auto Cell Size">
-              <BooleanInput value={node.autoCellSize} onChange={this.onChangeAutoCellSize} />
             </InputGroup>
-        </InputFloor>
+            <BooleanInput value={node.autoCellSize} onChange={this.onChangeAutoCellSize} />
+        </InputFloorSection>
           
             {!node.autoCellSize && (
         <InputFloor>
@@ -210,11 +216,11 @@ class FloorPlanNodeEditor extends Component {
         </InputFloor>
 
         )}
-        <InputFloor>
+        <InputFloorSection>
         <InputGroup name="Force Trimesh">
-          <BooleanInput value={node.forceTrimesh} onChange={this.onChangeForceTrimesh} />
         </InputGroup>
-        </InputFloor>
+        <BooleanInput value={node.forceTrimesh} onChange={this.onChangeForceTrimesh} />
+        </InputFloorSection>
 
         {!node.forceTrimesh && settings.enableExperimentalFeatures && (
         <InputFloor>

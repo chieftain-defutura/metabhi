@@ -10,12 +10,11 @@ const StyledPropertyGroup = styled.div`
   padding: 12px 0;
   border-bottom: 1px solid ${props => props.theme.border};
   // overflow:scroll;
-
 `;
 
 const PropertyGroupHeader = styled.div`
   display: flex;
-  flex-direction: row;
+  // flex-direction: row;
   align-items: left;
   font-weight: bold;
   font-size:12px;
@@ -64,7 +63,7 @@ function PropertyGroup(props) {
         {description && (
         <PropertyGroupDescription>
           {description.split("\\n").map((line, i) => (
-      <>
+      <> 
       <Fragment key={i}>
               {line}
               <br />

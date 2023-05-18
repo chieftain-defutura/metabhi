@@ -9,12 +9,12 @@ import { PropertyLabel } from "./PropertyLabel";
 
 export const InputGroupContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: 12px 8px;
+  gap:12px; 
   flex: 1;
   min-height: 24px;
-  align-items: center;
-
+  justify-content:space-between;
   ${props =>
     props.disabled &&
     `
@@ -29,7 +29,6 @@ export const InputGroupContainer = styled.div`
     padding-top: 4px;
   }
 `;
-
 export const InputGroupContent = styled.div`
   ${props =>
     props.disabled && `

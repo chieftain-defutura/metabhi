@@ -70,10 +70,11 @@ function getNodeElId(node) {
 const TreeNodeContainer = styled.div`
   display: flex;
   flex-direction: column;
-  outline: none;
+  // outline: none;
   overflow: hidden;
   background: ${props => props.theme.grayClr};
-
+  padding: 13px 24px;
+  margin:5px 0;
   // background-color: ${treeNodeBackgroundColor};
   border-bottom: ${props => (props.root ? props.theme.borderStyle : "none")};
 
@@ -81,7 +82,7 @@ const TreeNodeContainer = styled.div`
 
   :hover,
   :focus {
-    background-color: ${props => (props.selected ? props.theme.blueHover : props.theme.hover)};
+    background-color: ${props => (props.selected ? props.theme.emptyBoxClr : props.theme.hover)};
     color: ${props => props.theme.text};
   }
 
@@ -106,7 +107,6 @@ const TreeNodeContent = styled.div`
   outline: none;
   display: flex;
   flex-direction: row-reverse;
-  padding: 13px 24px;
   // padding-right: 8px;
   // padding-left: ${props => props.depth * 8 + 2 + "px"};
 `;

@@ -15,6 +15,9 @@ import {
 import useOptionalParam from "./useOptionalParam";
 import useSetPropertySelected from "./useSetPropertySelected";
 import BooleanInput from "../inputs/BooleanInput";
+import styled from "styled-components";
+
+
 
 export default function AudioParamsProperties({ node, editor, multiEdit, sourceType }) {
   const onChangeOverrideAudioSettings = useSetPropertySelected(editor, "overrideAudioSettings");
@@ -65,9 +68,11 @@ export default function AudioParamsProperties({ node, editor, multiEdit, sourceT
 
   return (
     <>
+    
       <InputGroup name="Override Audio Settings">
-        <BooleanInput value={node.overrideAudioSettings} onChange={onChangeOverrideAudioSettings} />
+      <BooleanInput value={node.overrideAudioSettings} onChange={onChangeOverrideAudioSettings} />
       </InputGroup>
+      
       {node.overrideAudioSettings && (
         <>
           <InputGroup name="Audio Type" optional={isOptional} {...paramProps.audioType}>

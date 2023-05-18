@@ -176,7 +176,7 @@ export default function AssetGrid({ isLoading, selectedItems, items, onSelect, o
   );
 
   return (
-    <>
+    <section>
       <VerticalScrollContainer flex>
         <InfiniteScroll pageStart={0} loadMore={onLoadMore} hasMore={hasMore} threshold={100} useWindow={false}>
           <MediaGrid>
@@ -202,7 +202,7 @@ export default function AssetGrid({ isLoading, selectedItems, items, onSelect, o
         {!source.disableUrl && <MenuItem onClick={openURL}>Open URL in New Tab</MenuItem>}
         {source.delete && <MenuItem onClick={onDelete}>Delete Asset</MenuItem>}
       </ContextMenu>
-    </>
+    </section>
   );
 }
 

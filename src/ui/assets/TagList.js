@@ -44,11 +44,9 @@ const TagContent = styled.div`
   display: flex;
   align-items: center;
   min-height: 24px;
-
   padding-left: ${props => props.depth * 20}px;
-
   color: ${props => props.theme.text};
-
+  padding:14px 4px;
   background-color: ${props => (props.selected ? props.theme.selected : "transparent")};
 
   :hover,
@@ -69,9 +67,8 @@ export const TreeListItem = styled.li`
   outline: none;
   overflow: hidden;
   user-select: none;
-  min-height: 24px;
+  // min-height: 24px;
   white-space: nowrap;
-  padding:14px 4px;
 `;
 
 const TagChildrenList = styled.ul`

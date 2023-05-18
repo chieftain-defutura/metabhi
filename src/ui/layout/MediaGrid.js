@@ -163,6 +163,7 @@ IconMediaGridItem.propTypes = {
 };
 
 export const MediaGrid = styled.div`
+
   display: grid;
   grid-gap: ${props => props.gap};
   width: 100%;
