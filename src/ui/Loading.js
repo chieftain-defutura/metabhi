@@ -12,8 +12,31 @@ const StyledLoading = styled.div`
   width: ${props => (props.fullScreen ? "100vw" : "100%")};
   min-height: 300px;
 
+  span {
+    width: 100px;
+    height: 100px;
+    background: transparent;
+    border-radius: 50%;
+    border-top: 1px solid ${props => props.theme.blue};
+    animation: spin 2s linear infinite;
+    margin-bottom: 50px;
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+
   svg {
     margin-bottom: 20px;
+  }
+  img {
+    width: 100px;
+    height: 100px;
   }
 `;
 
@@ -26,7 +49,8 @@ export default class Loading extends Component {
   render() {
     return (
       <StyledLoading fullScreen={this.props.fullScreen}>
-        <SpokeLogo />
+        <span></span>
+        {/* <SpokeLogo /> */}
         {this.props.message}
       </StyledLoading>
     );

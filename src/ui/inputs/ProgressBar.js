@@ -11,7 +11,7 @@ const ProgressBarContainer = styled.div`
     display: block;
     height: 100%;
     border-radius: 4px;
-    background-color: ${props => props.theme.blue};
+    background: linear-gradient(92.34deg, #002bff -0.06%, #0092ff 99.94%);
     position: relative;
     overflow: hidden;
 

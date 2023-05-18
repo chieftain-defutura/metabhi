@@ -21,15 +21,17 @@ import LogoutPage from "./auth/LogoutPage";
 import ProjectsPage from "./projects/ProjectsPage";
 import CreateProjectPage from "./projects/CreateProjectPage";
 import CreateScenePage from "./projects/CreateScenePage";
+import { Web3Provider } from "@ethersproject/providers";
+import { Web3ReactProvider } from "@web3-react/core";
 
 import { ThemeProvider } from "styled-components";
-
 import { Column } from "./layout/Flex";
 
 import lightTheme, { darkTheme } from "./theme";
 import Layouts from "../components/Layouts";
 import CardTemplate from "../components/CardTemplate";
 import Dashboard from "../components/Dashboard";
+import { useEagerConnect } from "./useEagerConnect";
 
 const EditorContainer = React.lazy(() =>
   import(/* webpackChunkName: "project-page", webpackPrefetch: true */ "./EditorContainer")
@@ -42,13 +44,14 @@ const PackageKitPage = React.lazy(() =>
 const BaseApp = ({ api }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(api.isAuthenticated());
   const { isDarkMode, setIsDarkMode } = React.useContext(ThemeContext);
+  useEagerConnect();
 
   useEffect(() => {
     api.addListener("authentication-changed", handleAuthenticationChange);
     const storedTheme = localStorage.getItem("theme");
     if (!storedTheme) {
       setIsDarkMode(false);
-    } else if (JSON.parse(storedTheme) === false) {
+    } else if (JSON.parse(storedTheme) === "light") {
       setIsDarkMode(false);
     } else {
       setIsDarkMode(true);
@@ -105,11 +108,17 @@ const BaseApp = ({ api }) => {
   );
 };
 
+function getLibrary(provider) {
+  return new Web3Provider(provider);
+}
+
 const App = ({ api }) => {
   return (
-    <ThemeContextProvider>
-      <BaseApp api={api} />
-    </ThemeContextProvider>
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <ThemeContextProvider>
+        <BaseApp api={api} />
+      </ThemeContextProvider>
+    </Web3ReactProvider>
   );
 };
 

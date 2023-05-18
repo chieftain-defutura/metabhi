@@ -130,13 +130,14 @@ import InfiniteScroll from "react-infinite-scroller";
 import usePaginatedSearch from "../ui/projects/usePaginatedSearch";
 import { ApiContext } from "../ui/contexts/ApiContext";
 import styled from "styled-components";
-import Layout from "./Layout/Layout";
 import NewFileImg from "../assets/new-file.svg";
 import ImportFileImg from "../assets/import-file.svg";
 import { AiOutlinePlus } from "react-icons/ai";
 import { TbMenu2 } from "react-icons/tb";
 import { RxDashboard } from "react-icons/rx";
 import PropTypes from "prop-types";
+import CardGrid from "./CardGrid";
+import ListGrid from "./ListGrid";
 
 const ProjectTemplateCards = styled.div`
   height: 500px;
@@ -229,6 +230,7 @@ const Recently = styled.div`
 `;
 const DropDown = styled.div`
   display: flex;
+  align-items: center;
   gap: 12px;
 
   h4 {
@@ -270,9 +272,18 @@ const ToolbarInputGroup = styled.div`
     font-size: 17px;
   }
 `;
+const MenuBox = styled.div`
+  border: ${props => props.theme.borderFileClr};
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  border-radius: 5px;
+`;
 
 export default function CardTemplate({ history, location }) {
   const api = useContext(ApiContext);
+  const [isActive, setIsActive] = useState(true);
+  const [gridToggle, setGridToggle] = useState("");
 
   const queryParams = new URLSearchParams(location.search);
 
@@ -404,43 +415,58 @@ export default function CardTemplate({ history, location }) {
               </ToolbarInputGroup>
             </DropDown>
             <MenuIcons>
-              <div>
-                <RxDashboard size={26} />
+              <div onClick={() => setGridToggle("GridIcon")}>
+                <MenuBox
+                  // onClick={() => setIsActive(!isActive)}
+                  style={{ border: gridToggle === "GridIcon" ? "1px solid #777777" : "inherit" }}
+                >
+                  <RxDashboard size={26} />
+                </MenuBox>
               </div>
-              <div>
-                <TbMenu2 size={26} />
+              <div onClick={() => setGridToggle("MenuIcon")}>
+                <MenuBox
+                  // onClick={() => setIsActive(!isActive)}
+                  style={{ border: gridToggle !== "MenuIcon" ? "inherit" : "1px solid #777777" }}
+                >
+                  <TbMenu2 size={26} />
+                </MenuBox>
               </div>
             </MenuIcons>
           </DropDownContent>
         </Recently>
       </DashboardWrapper>
+
       <div>
-        <ProjectGridContainer>
-          <ProjectTemplateCards>
-            <ProjectGridContent>
-              <ScrollToTop />
-              {error && <ErrorMessage>{error.message}</ErrorMessage>}
-              {!error && (
-                <InfiniteScroll
-                  initialLoad={false}
-                  pageStart={0}
-                  loadMore={loadMore}
-                  hasMore={hasMore}
-                  threshold={100}
-                  useWindow={true}
-                >
-                  <ProjectGrid
-                    projects={filteredEntries}
-                    newProjectPath="/dashboard/template"
-                    newProjectLabel="New Empty Project"
-                    onSelectProject={onSelectScene}
-                    loading={loading}
-                  />
-                </InfiniteScroll>
-              )}
-            </ProjectGridContent>
-          </ProjectTemplateCards>
-        </ProjectGridContainer>
+        {gridToggle === "GridIcon" && <CardGrid />}
+        {gridToggle === "MenuIcon" && <ListGrid />}
+        {gridToggle === "" && (
+          <ProjectGridContainer>
+            <ProjectTemplateCards>
+              <ProjectGridContent>
+                <ScrollToTop />
+                {error && <ErrorMessage>{error.message}</ErrorMessage>}
+                {!error && (
+                  <InfiniteScroll
+                    initialLoad={false}
+                    pageStart={0}
+                    loadMore={loadMore}
+                    hasMore={hasMore}
+                    threshold={100}
+                    useWindow={true}
+                  >
+                    <ProjectGrid
+                      projects={filteredEntries}
+                      newProjectPath="/dashboard/template"
+                      newProjectLabel="New Empty Project"
+                      onSelectProject={onSelectScene}
+                      loading={loading}
+                    />
+                  </InfiniteScroll>
+                )}
+              </ProjectGridContent>
+            </ProjectTemplateCards>
+          </ProjectGridContainer>
+        )}
       </div>
     </>
   );

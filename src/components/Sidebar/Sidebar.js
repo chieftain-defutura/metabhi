@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import GrayIcon from "../../assets/gray.svg";
 import WhiteIcon from "../../assets/white.svg";
@@ -16,7 +16,7 @@ const SidebarWrapper = styled.div`
   border-right: ${props => props.theme.borderStyleClr};
   background: ${props => props.theme.darkClr};
   position: fixed;
-  top: 11%;
+  top: 10.3%;
   left: 0;
   right: 82.9%;
   z-index: 1;
@@ -43,32 +43,44 @@ const RecentContent = styled.div`
   h4 {
     font-size: 18px;
   }
+  &.recent {
+    margin-top: 14px;
+  }
 
   &.borderStyle {
     border-bottom: ${props => props.theme.borderStyleClr};
-    padding-bottom: 22px;
+    margin-bottom: 8px;
   }
   &.borderPadding {
-    padding-top: 20px;
+    margin-top: 8px;
   }
   &.borderBottom {
-    border-bottom: ${props => props.theme.borderStyleClr};
-    padding-bottom: 22px;
+    margin-bottom: 8px;
   }
 `;
 const Teams = styled.div`
   padding: 16px 21px;
+  border-top: ${props => props.theme.borderStyleClr};
+  margin-top: 8px;
+
   h4 {
     font-size: 20px;
   }
 `;
 
 const Sidebar = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
   return (
     <SidebarWrapper>
       <div>
         <a href="/dashboard" style={{ textDecoration: "none" }}>
-          <RecentContent>
+          <RecentContent
+            className="recent"
+            style={{
+              background: activeIndex === 0 ? "rgba(0, 146, 255, 0.2)" : "transparent"
+            }}
+            onClick={() => setActiveIndex(0)}
+          >
             <BiTime size={24} />
             <h4>Recent</h4>
           </RecentContent>
@@ -76,37 +88,75 @@ const Sidebar = () => {
       </div>
       <div>
         <a href="/dashboard/template" style={{ textDecoration: "none" }}>
-          <RecentContent>
+          <RecentContent
+            style={{
+              background: activeIndex === 1 ? "rgba(0, 146, 255, 0.2)" : "transparent"
+            }}
+            onClick={() => setActiveIndex(1)}
+          >
             <CgTemplate size={24} />
             <h4>Templates</h4>
           </RecentContent>
         </a>
       </div>
 
-      <RecentContent className="borderStyle">
+      <RecentContent
+        className="borderStyle"
+        style={{
+          background: activeIndex === 2 ? "rgba(0, 146, 255, 0.2)" : "transparent"
+        }}
+        onClick={() => setActiveIndex(2)}
+      >
         <BsFileEarmark size={24} />
         <h4>Draft</h4>
       </RecentContent>
-      <RecentContent className="borderPadding">
+      <RecentContent
+        className="borderPadding"
+        style={{
+          background: activeIndex === 3 ? "rgba(0, 146, 255, 0.2)" : "transparent"
+        }}
+        onClick={() => setActiveIndex(3)}
+      >
         <AiOutlineStar size={24} />
         <h4>Favorite files</h4>
       </RecentContent>
-      <RecentContent className="borderBottom">
+      <RecentContent
+        className="borderBottom"
+        style={{
+          background: activeIndex === 4 ? "rgba(0, 146, 255, 0.2)" : "transparent"
+        }}
+        onClick={() => setActiveIndex(4)}
+      >
         <AiOutlinePlus size={24} />
         <h4>Create favorite file</h4>
       </RecentContent>
       <Teams>
         <h4>Teams</h4>
       </Teams>
-      <RecentContent>
+      <RecentContent
+        style={{
+          background: activeIndex === 5 ? "rgba(0, 146, 255, 0.2)" : "transparent"
+        }}
+        onClick={() => setActiveIndex(5)}
+      >
         <AiOutlinePlus size={24} />
         <h4>Create new team</h4>
       </RecentContent>
-      <RecentContent>
+      <RecentContent
+        style={{
+          background: activeIndex === 6 ? "rgba(0, 146, 255, 0.2)" : "transparent"
+        }}
+        onClick={() => setActiveIndex(6)}
+      >
         <img src={GrayIcon} alt="RecentIcon" />
         <h4>Personal</h4>
       </RecentContent>
-      <RecentContent>
+      <RecentContent
+        style={{
+          background: activeIndex === 7 ? "rgba(0, 146, 255, 0.2)" : "transparent"
+        }}
+        onClick={() => setActiveIndex(7)}
+      >
         <img src={WhiteIcon} alt="RecentIcon" />
         <h4>Company</h4>
       </RecentContent>
