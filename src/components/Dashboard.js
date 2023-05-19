@@ -55,7 +55,7 @@ const NewFile = styled.div`
   justify-content: space-between;
   gap: 150px;
   background: ${props => props.theme.darkClr};
-  border: ${props => props.theme.borderFileClr};
+  border: 1px solid ${props => props.theme.borderFileClr};
   padding: 15px 25px;
   border-radius: 5px;
   cursor: pointer;

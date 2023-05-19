@@ -22,6 +22,7 @@ import styledTheme from "../theme";
 import { InfoTooltip } from "../layout/Tooltip";
 import { Pause } from "styled-icons/fa-solid";
 import DarkModeLightMode from "../../components/DarkModeLightMode";
+import ConnectWalletBtn from "../../components/ConnectWalletBtn";
 
 const StyledToolbar = styled.div`
   display: flex;
@@ -67,7 +68,7 @@ const Spacer = styled.div`
 const PublishButton = styled(Button)`
   align-self: center;
   margin: 1em -24px 1em 0;
-  padding: 8px 24px;
+  padding: 8px 32px;
   font-size: 12px;
   border-radiusL 2px;
   background: linear-gradient(92.34deg, #002BFF -0.06%, #0092FF 99.94%);
@@ -208,19 +209,6 @@ const ToolbarNumericStepperInput = styled(NumericStepperInput)`
   }
 `;
 
-const WalletConnect = styled.div`
-  display: flex;
-  align-items: center;
-  border: 1px solid ${props => props.theme.blue};
-  border-radius: 4px;
-  height: 32px;
-  padding: 0px 24px;
-  font-size: 12px;
-  margin-top: 9px;
-  cursor: pointer;
-  margin-right: 32px;
-`;
-
 const SelectInputLine = styled.div`
   margin-right: 2px;
 `;
@@ -229,6 +217,10 @@ const GlobeIcon = styled.div`
   svg {
     color: ${props => props.theme.svgIconClr};
   }
+`;
+
+const WalletConnect = styled.div`
+  margin-top: 9px;
 `;
 
 const translationSnapOptions = [
@@ -571,8 +563,9 @@ export default class ToolBar extends Component {
         <PublishButton id="publish-button" onClick={this.props.onPublish} style={{ borderRadius: "2px" }}>
           {configs.isMoz() ? "Publish to Hubs..." : "Publish Scene..."}
         </PublishButton>
-        <WalletConnect> Connect Wallet</WalletConnect>
-
+        <WalletConnect>
+          <ConnectWalletBtn />
+        </WalletConnect>
         <ContextMenu id="menu">
           {this.props.menu.map(menu => {
             return this.renderMenu(menu);
