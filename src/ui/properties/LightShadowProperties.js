@@ -30,19 +30,18 @@ const ShadowMapResolutionOptions = [
   }
 ];
 
-
-export const InputGroupCast=styled.div`
-border-bottom:1px solid ${props => props.theme.borderStyleClr};
-// padding:16px 0;
-`
-export const InputGroupShadow=styled.div`
-border-bottom:1px solid ${props => props.theme.borderStyleClr};
-// padding:16px 0;
-`
+export const InputGroupCast = styled.div`
+  border-bottom: 1px solid ${props => props.theme.borderStyleClr};
+  // padding:16px 0;
+`;
+export const InputGroupShadow = styled.div`
+  border-bottom: 1px solid ${props => props.theme.borderStyleClr};
+  // padding:16px 0;
+`;
 const InputGroupSection = styled.div`
-display: flex;
-flex-direction:row;
-`
+  display: flex;
+  flex-direction: row;
+`;
 
 export default class LightShadowProperties extends Component {
   static propTypes = {
@@ -72,42 +71,41 @@ export default class LightShadowProperties extends Component {
     return (
       <Fragment>
         <InputGroupCast>
-        <InputGroupSection>
-          <InputGroup name="Cast Shadow">
-          </InputGroup>
-          <BooleanInput value={node.castShadow} onChange={this.onChangeCastShadow} />
-        </InputGroupSection>
+          <InputGroupSection>
+            <InputGroup name="Cast Shadow"></InputGroup>
+            <BooleanInput value={node.castShadow} onChange={this.onChangeCastShadow} />
+          </InputGroupSection>
         </InputGroupCast>
-       <InputGroupShadow>
-        <InputGroup name="Shadow Map Resolution">
-          <SelectInput
-            options={ShadowMapResolutionOptions}
-            value={node.shadowMapResolution}
-            onChange={this.onChangeShadowMapResolution}
-          />
-        </InputGroup>
-        </InputGroupShadow>
-       <InputGroupShadow>
-        <NumericInputGroup
-          name="Shadow Bias"
-          mediumStep={0.00001}
-          smallStep={0.0001}
-          largeStep={0.001}
-          displayPrecision={0.000001}
-          value={node.shadowBias}
-          onChange={this.onChangeShadowBias}
-        />
+        <InputGroupShadow>
+          <InputGroup name="Shadow Map Resolution">
+            <SelectInput
+              options={ShadowMapResolutionOptions}
+              value={node.shadowMapResolution}
+              onChange={this.onChangeShadowMapResolution}
+            />
+          </InputGroup>
         </InputGroupShadow>
         <InputGroupShadow>
-        <NumericInputGroup
-          name="Shadow Radius"
-          mediumStep={0.01}
-          smallStep={0.1}
-          largeStep={1}
-          displayPrecision={0.0001}
-          value={node.shadowRadius}
-          onChange={this.onChangeShadowRadius}
-        />
+          <NumericInputGroup
+            name="Shadow Bias"
+            mediumStep={0.00001}
+            smallStep={0.0001}
+            largeStep={0.001}
+            displayPrecision={0.000001}
+            value={node.shadowBias}
+            onChange={this.onChangeShadowBias}
+          />
+        </InputGroupShadow>
+        <InputGroupShadow>
+          <NumericInputGroup
+            name="Shadow Radius"
+            mediumStep={0.01}
+            smallStep={0.1}
+            largeStep={1}
+            displayPrecision={0.0001}
+            value={node.shadowRadius}
+            onChange={this.onChangeShadowRadius}
+          />
         </InputGroupShadow>
       </Fragment>
     );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import GrayIcon from "../../assets/gray.svg";
 import WhiteIcon from "../../assets/white.svg";
@@ -7,21 +7,27 @@ import { CgTemplate } from "react-icons/cg";
 import { BsFileEarmark } from "react-icons/bs";
 import { AiOutlineStar } from "react-icons/ai";
 import { AiOutlinePlus } from "react-icons/ai";
+import { NavLink } from "react-router-dom";
 
 const SidebarWrapper = styled.div`
   height: calc(100vh - 85px);
   width: 260px;
   overflow-x: hidden;
   overflow-y: scroll;
-  border-right: ${props => props.theme.borderStyleClr};
-  background: ${props => props.theme.darkClr};
   position: fixed;
   top: 10.3%;
   left: 0;
   right: 82.9%;
   z-index: 1;
+  border-right: 1px solid ${props => props.theme.borderStyleClr};
   &::-webkit-scrollbar {
     width: 5px;
+  }
+  a {
+    text-decoration: none;
+  }
+  a.active {
+    color: #0092ff;
   }
 `;
 
@@ -48,7 +54,7 @@ const RecentContent = styled.div`
   }
 
   &.borderStyle {
-    border-bottom: ${props => props.theme.borderStyleClr};
+    border-bottom: 1px solid ${props => props.theme.borderStyleClr};
     margin-bottom: 8px;
   }
   &.borderPadding {
@@ -60,7 +66,7 @@ const RecentContent = styled.div`
 `;
 const Teams = styled.div`
   padding: 16px 21px;
-  border-top: ${props => props.theme.borderStyleClr};
+  border-top: 1px solid ${props => props.theme.borderStyleClr};
   margin-top: 8px;
 
   h4 {
@@ -69,95 +75,51 @@ const Teams = styled.div`
 `;
 
 const Sidebar = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
   return (
     <SidebarWrapper>
       <div>
-        <a href="/dashboard" style={{ textDecoration: "none" }}>
-          <RecentContent
-            className="recent"
-            style={{
-              background: activeIndex === 0 ? "rgba(0, 146, 255, 0.2)" : "transparent"
-            }}
-            onClick={() => setActiveIndex(0)}
-          >
+        <NavLink to="/dashboard/recent">
+          <RecentContent className="recent">
             <BiTime size={24} />
             <h4>Recent</h4>
           </RecentContent>
-        </a>
+        </NavLink>
       </div>
       <div>
-        <a href="/dashboard/template" style={{ textDecoration: "none" }}>
-          <RecentContent
-            style={{
-              background: activeIndex === 1 ? "rgba(0, 146, 255, 0.2)" : "transparent"
-            }}
-            onClick={() => setActiveIndex(1)}
-          >
+        <NavLink to="/dashboard/template">
+          <RecentContent>
             <CgTemplate size={24} />
             <h4>Templates</h4>
           </RecentContent>
-        </a>
+        </NavLink>
       </div>
 
-      <RecentContent
-        className="borderStyle"
-        style={{
-          background: activeIndex === 2 ? "rgba(0, 146, 255, 0.2)" : "transparent"
-        }}
-        onClick={() => setActiveIndex(2)}
-      >
+      <RecentContent className="borderStyle">
         <BsFileEarmark size={24} />
         <h4>Draft</h4>
       </RecentContent>
-      <RecentContent
-        className="borderPadding"
-        style={{
-          background: activeIndex === 3 ? "rgba(0, 146, 255, 0.2)" : "transparent"
-        }}
-        onClick={() => setActiveIndex(3)}
-      >
+
+      <RecentContent className="borderPadding">
         <AiOutlineStar size={24} />
         <h4>Favorite files</h4>
       </RecentContent>
-      <RecentContent
-        className="borderBottom"
-        style={{
-          background: activeIndex === 4 ? "rgba(0, 146, 255, 0.2)" : "transparent"
-        }}
-        onClick={() => setActiveIndex(4)}
-      >
+      <RecentContent className="borderBottom">
         <AiOutlinePlus size={24} />
         <h4>Create favorite file</h4>
       </RecentContent>
       <Teams>
         <h4>Teams</h4>
       </Teams>
-      <RecentContent
-        style={{
-          background: activeIndex === 5 ? "rgba(0, 146, 255, 0.2)" : "transparent"
-        }}
-        onClick={() => setActiveIndex(5)}
-      >
+      <RecentContent>
         <AiOutlinePlus size={24} />
         <h4>Create new team</h4>
       </RecentContent>
-      <RecentContent
-        style={{
-          background: activeIndex === 6 ? "rgba(0, 146, 255, 0.2)" : "transparent"
-        }}
-        onClick={() => setActiveIndex(6)}
-      >
-        <img src={GrayIcon} alt="RecentIcon" />
+      <RecentContent>
+        <img src={GrayIcon} alt="GrayIcon" />
         <h4>Personal</h4>
       </RecentContent>
-      <RecentContent
-        style={{
-          background: activeIndex === 7 ? "rgba(0, 146, 255, 0.2)" : "transparent"
-        }}
-        onClick={() => setActiveIndex(7)}
-      >
-        <img src={WhiteIcon} alt="RecentIcon" />
+      <RecentContent>
+        <img src={WhiteIcon} alt="WhiteIcon" />
         <h4>Company</h4>
       </RecentContent>
     </SidebarWrapper>

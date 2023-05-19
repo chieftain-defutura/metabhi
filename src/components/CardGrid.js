@@ -60,6 +60,7 @@ const CardGridWrapper = styled.div`
   margin: 24px 40px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  row-gap: 32px;
   height: 500px;
   overflow-x: hidden;
   overflow-y: scroll;

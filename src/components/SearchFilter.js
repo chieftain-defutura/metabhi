@@ -61,15 +61,16 @@ const DropDown = styled.div`
   ul {
     padding: 8px 22px;
     margin: 6px 0;
+    cursor: pointer;
+    &:hover {
+      background: rgba(0, 146, 255, 0.2);
+    }
   }
 
   li {
     color: ${props => props.theme.text};
     font-size: 16px;
     cursor: pointer;
-    &:hover {
-      background: rgba(0, 146, 255, 0.2);
-    }
   }
   p {
     color: ${props => props.theme.lightGray};

@@ -22,6 +22,7 @@ const LayoutChildren = styled.div`
   flex: 1;
   position: absolute;
   right: 0;
+  left: 17%;
   &::-webkit-scrollbar {
     width: 5px;
   }

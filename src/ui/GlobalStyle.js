@@ -52,10 +52,12 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     box-sizing: border-box;
+    
   }
 
   *, *:before, *:after {
     box-sizing: inherit;
+    font-family: 'Lato', sans-serif;
   }
 
   img,
@@ -129,7 +131,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: ${props => props.theme.lato};
     font-size: 12px;
     color: ${props => props.theme.text};
     background-color: ${props => props.theme.background};

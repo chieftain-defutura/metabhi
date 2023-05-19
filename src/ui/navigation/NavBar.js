@@ -1,19 +1,14 @@
 import React, { useState, useCallback } from "react";
-import configs from "../../configs";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
-import { SearchInput } from "../projects/ProjectGrid";
 import Logo from "../../assets/metabhi-logo.png";
-
 import Profile from "../../assets/profile.png";
 import { BsBell } from "react-icons/bs";
 import MoonIcon from "../../assets/moon.svg";
 import { BsSun } from "react-icons/bs";
 import { ThemeContext } from "../contexts/ThemeContext";
 import SearchFilter from "../../components/SearchFilter";
-import { useWeb3React } from "@web3-react/core";
-import { Injected } from "../connectors";
+import ConnectWalletBtn from "../../components/ConnectWalletBtn";
 
 const StyledNavBar = styled.header`
   position: relative;
@@ -21,7 +16,7 @@ const StyledNavBar = styled.header`
   align-items: center;
   justify-content: space-between;
   font-size: 1.4em;
-  border-bottom: ${props => props.theme.borderStyleClr};
+  border-bottom: 1px solid ${props => props.theme.borderStyleClr};
   background: ${props => props.theme.darkClr};
 
   a {
@@ -38,7 +33,7 @@ const IconContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
-  border-right: ${props => props.theme.borderStyleClr};
+  border-right: 1px solid ${props => props.theme.borderStyleClr};
   padding: 6px 20px;
   width: 260px;
   a {
@@ -59,23 +54,6 @@ const ToggleContent = styled.div`
   display: flex;
   align-item: center;
   cursor: pointer;
-`;
-
-const MiddleContainer = styled.div`
-  display: flex;
-  flex: 1;
-
-  @media (max-width: 600px) {
-    display: none;
-  }
-`;
-
-const NavList = styled.ul`
-  display: flex;
-
-  li {
-    padding: 0 20px;
-  }
 `;
 
 const RightContainer = styled.div`
@@ -104,65 +82,6 @@ const LeftContainer = styled.div`
     flex: 1;
   }
 `;
-const WalletConnect = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  background: #002bff;
-  padding: 8px 32px;
-  border: 1px solid #002bff;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-right: 24px;
-  color: ${props => props.theme.text};
-`;
-
-const WalletConnectContainer = styled.div`
-  position: relative;
-`;
-
-const WalletButtons = styled.div``;
-
-const WalletDropDown = styled.div`
-  width: 200px;
-  height: 200px;
-  background: ${props => props.theme.emptyBoxClr};
-  border-radius: 5px;
-  position: absolute;
-  top: 115%;
-  right: 10%;
-`;
-
-const Address = styled.div``;
-
-// class NavBar extends Component {
-//   static propTypes = {
-//     isAuthenticated: PropTypes.bool.isRequired
-//   };
-
-//   render() {
-//     return (
-//       <StyledNavBar>
-//         <IconContainer>
-//           <Link to="/">
-//             <img src={configs.icon()} alt={configs.name()} />
-//           </Link>
-//           <h1>What's New</h1>
-//         </IconContainer>
-//         <SearchInput placeholder="Search scenes..." value={params.q} onChange={onChangeQuery} />
-
-//         <RightContainer>
-//           <img alt="" src={Toggle} />
-//           <img alt="" src={Bell} />
-//           <img alt="" src={Profile} />
-//           <WalletConnect> Connect Wallet</WalletConnect>
-//         </RightContainer>
-//       </StyledNavBar>
-//     );
-//   }
-// }
-
-// export default withAuth(NavBar);
 
 const NavBar = () => {
   const queryParams = new URLSearchParams(location.search);
@@ -238,7 +157,7 @@ const NavBar = () => {
         )}
         <BsBell size={22} />
         <img alt="" src={Profile} />
-        <WalletConnect>Connect Wallet</WalletConnect>
+        <ConnectWalletBtn />
       </RightContainer>
     </StyledNavBar>
   );
