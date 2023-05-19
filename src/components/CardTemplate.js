@@ -138,6 +138,7 @@ import { RxDashboard } from "react-icons/rx";
 import PropTypes from "prop-types";
 import CardGrid from "./CardGrid";
 import ListGrid from "./ListGrid";
+import { Link } from "react-router-dom";
 
 const ProjectTemplateCards = styled.div`
   height: 500px;
@@ -178,14 +179,16 @@ const WelComeContent = styled.div`
   }
 `;
 
-const MediumButton = styled.a`
-  color: ${props => props.theme.blue};
-  padding: 8px 24px;
-  border: 1px solid ${props => props.theme.blue};
-  border-radius: 5px;
-  font-size: 14px;
-  text-decoration: none;
-  margin-top: 25px;
+const MediumBtn = styled.div`
+  a {
+    color: ${props => props.theme.blue};
+    padding: 8px 24px;
+    border: 1px solid ${props => props.theme.blue};
+    border-radius: 5px;
+    font-size: 14px;
+    text-decoration: none;
+    margin-top: 25px;
+  }
 `;
 
 const NewFileContent = styled.div``;
@@ -367,17 +370,19 @@ export default function CardTemplate({ history, location }) {
             <p>If You’re new here we recommend going through the tutorial.</p>
             <p>Otherwise, jump right in and create a project from scratch or from one of our templates.</p>
             <div style={{ marginTop: "32px" }}>
-              <MediumButton href="/projects/tutorial">Start Tutorial</MediumButton>
+              <MediumBtn>
+                <Link to="/projects/tutorial">Start Tutorial</Link>
+              </MediumBtn>
             </div>
           </WelComeContent>
           <NewFileContent>
             <NewFile>
-              <a href="/projects/new">
+              <Link to="/projects/new">
                 <NewFilePara>
                   <img src={NewFileImg} alt="NewFileImg" />
                   <p>New file</p>
                 </NewFilePara>
-              </a>
+              </Link>
               <div>
                 <AiOutlinePlus size={22} />
               </div>

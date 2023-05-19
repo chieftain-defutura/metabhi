@@ -58,16 +58,14 @@ const NumericInputUnit = styled.div`
   position: absolute;
   color: ${props => props.theme.gray};
   right: 1px;
-  top: 5px;
+  top: 6px;
   bottom: 1px;
   background: ${props => props.theme.background};
-  // background-color: ${props => props.theme.inputBackground};
-  padding: 0 4px;
+  padding: 0 2px;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
   line-height: 20px;
   height: 22px;
-  
 `;
 
 export default class NumericInput extends Component {
