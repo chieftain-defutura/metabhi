@@ -106,6 +106,7 @@ export default function InputGroup({ name, children, disabled, info, optional, e
           {name && <PropertyLabel modified={!reset}>{name}:</PropertyLabel>}
         </OptionalGroup>
       </InputGroupHeader>
+      
       <InputGroupContent disabled={optional && !enabled}>
         {children} 
         <InputGroupProperties>
