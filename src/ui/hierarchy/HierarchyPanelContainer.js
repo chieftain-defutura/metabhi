@@ -68,7 +68,7 @@ function getNodeElId(node) {
 }
 
 const TreeNodeContainer = styled.div`
-  display: flex;
+  display: flex;  
   flex-direction: column;
   // outline: none;
   overflow: hidden;
@@ -76,7 +76,8 @@ const TreeNodeContainer = styled.div`
   padding: 10px 24px;
   margin:5px 0;
   // background-color: ${treeNodeBackgroundColor};
-  border-bottom: ${props => (props.root ? props.theme.borderStyle : "none")};
+  border-bottom: 1px solid ${props => (props.root ? props.theme.borderStyle : "none")};
+  // border-bottom:1px solid ${props => props.theme.borderStyle};
 
   color: ${props => (props.selected || props.focused ? props.theme.text : props.theme.text2)};
 
@@ -91,7 +92,8 @@ const TreeNodeContainer = styled.div`
     color: ${props => props.theme.text};
   }
 `;
-
+const TreeInput =styled.div`
+`
 const TreeNodeSelectTarget = styled.div`
   display: flex;
   flex: 1;
@@ -419,7 +421,8 @@ function TreeNode({
   });
 
   return (
-    <TreeDepthContainer style={style}>
+    <TreeDepthContainer style={style} >
+      <TreeInput>
       <ContextMenuTrigger holdToDisplay={-1} id="hierarchy-node-menu" node={node} collect={collectNodeMenuProps}>
         <TreeNodeContainer
           ref={drag}
@@ -481,6 +484,7 @@ function TreeNode({
           />
         </TreeNodeContainer>
       </ContextMenuTrigger>
+      </TreeInput>
     </TreeDepthContainer>
   );
 }

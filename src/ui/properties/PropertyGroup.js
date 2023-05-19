@@ -30,16 +30,16 @@ const PropertyGroupDescription = styled.div`
   color: ${props => props.theme.text};
   font-size:12px;
   white-space: pre-wrap;
-  padding: 0 8px 8px;
+  padding: 12px;
 `;
 const PropertyContent = styled.div`
-  padding: 17px 12px;
+  // padding: 17px 12px;
   bottom: 0;
 `;
 const PropertyGroupContent = styled.div`
   display: flex;
   flex-direction: column;
-  padding-bottom: 12px;
+  padding-left: 12px;
 `;
 const StyledPropertyGroupSection = styled.div`
 // display: flex;
@@ -55,8 +55,7 @@ function PropertyGroup(props) {
 
   return (
     <StyledPropertyGroup {...rest}>
-      <PropertyGroupContent>{children}</PropertyGroupContent>
-      <PropertyContent>
+        <PropertyContent>
         <PropertyGroupContent>{name}</PropertyGroupContent>
 
         {description && (
@@ -70,6 +69,8 @@ function PropertyGroup(props) {
           </PropertyGroupDescription>
         )}
       </PropertyContent>
+      <PropertyGroupContent>{children}</PropertyGroupContent>
+      
     </StyledPropertyGroup>
   );
 }

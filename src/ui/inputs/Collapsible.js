@@ -17,7 +17,7 @@ const CollapsibleLabel = styled.div`
   cursor: pointer;
   display: flex;
   flex-direction: row-reverse;
-  width:100%;
+  // width:100%;
   padding: 12px;
   margin:8px;
   overflow:hidden;

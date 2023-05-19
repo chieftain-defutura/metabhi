@@ -132,8 +132,8 @@ function GLTFTextureItem({ item }) {
   return (
     <ImageItemContainer>
       <Thumbnail src={item.url} alt={item.name} />
-      <div>
-        {/* <h3>{item.name}</h3> */}
+      {/* <div>
+        <h3>{item.name}</h3>
         <ul>
           <li>
             <b>Type:</b> {item.type}
@@ -145,7 +145,7 @@ function GLTFTextureItem({ item }) {
             <b>Dimensions:</b> {`${item.width}px x ${item.height}px`}
           </li>
         </ul>
-      </div>
+      </div> */}
     </ImageItemContainer>
   );
 }

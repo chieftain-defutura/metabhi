@@ -30,7 +30,6 @@ const NameInputGroupContainer = styled.div`
   flex-flow: row wrap;
   // align-items: flex-start;
   justify-content:space-around;
-  padding: 8px 0;
   border-bottom: 1px solid ${props => props.theme.emptyBoxClr};
 `;
 
