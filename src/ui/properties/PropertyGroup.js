@@ -31,6 +31,7 @@ const PropertyGroupDescription = styled.div`
   font-size:12px;
   white-space: pre-wrap;
   padding: 12px;
+  font-weight:300;
 `;
 const PropertyContent = styled.div`
   // padding: 17px 12px;
@@ -40,6 +41,7 @@ const PropertyGroupContent = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 12px;
+  font-weight:700;
 `;
 const StyledPropertyGroupSection = styled.div`
 // display: flex;

@@ -20,6 +20,7 @@ const CollapsibleLabel = styled.div`
   // width:100%;
   padding: 12px;
   margin:8px;
+  align-items:center;
   overflow:hidden;
   justify-content:space-between ;
   :hover {
@@ -30,8 +31,11 @@ const CollapsibleLabel = styled.div`
 const CollapsibleContent = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 4px 8px;
+  // padding: 4px 8px;
   width:100%;
+  ul{
+    display: flex;
+  }
 
 `;
 // const Collapsel = styled.div`
@@ -49,18 +53,15 @@ export default function Collapsible({ label, open, children }) {
   }, [setCollapsed]);
 
   return (
-    
+    <div>
     <CollapsibleContainer>
       <CollapsibleLabel onClick={toggleCollapsed}>
         <CollapseIcon as={collapsed ? CaretRight : CaretDown} size={14} collapsed={collapsed} />
         {label}
       </CollapsibleLabel>
-      {!collapsed && 
-      <div  style={{ display: "flex", width: "100%", height: "100%" }}>
-      <CollapsibleContent collapsed={collapsed}>{children}</CollapsibleContent>
-      </div>}
+    {!collapsed && <CollapsibleContent collapsed={collapsed}>{children}</CollapsibleContent>}
     </CollapsibleContainer>
-   
+    </div>
   );  
 }
 

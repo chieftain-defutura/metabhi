@@ -62,6 +62,7 @@ const theme = {
   box: "#252525",
   walletborder: "#434242",
   dropdown: "#000000",
+  borderStyle: "rgba(119,119,119,0.2)",
   boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px",
   inputBackground: "#0A0A0A"
 };
@@ -122,7 +123,7 @@ const darkTheme = {
   lightGray: "#454545",
   scrollbarClr: "#454545",
   text: "#252525",
-  borderStyle: "1px solid rgba(170, 170, 170, 0.2);",
+  borderStyle: "rgba(119,119,119,0.2)",
   borderFileClr: "1px solid #DDDDDD",
   borderStyleClr: "rgba(119, 119, 119, 0.2)",
   emptyBoxClr: "#EEEEEE",

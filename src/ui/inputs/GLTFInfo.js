@@ -104,6 +104,17 @@ const Thumbnail = styled.img`
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 4px;
   display:flex;
+  opacity: 1;
+  display: block;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+
+  :hover{
+  opacity: 0.3;
+  border:2px solid #FFFFFF;
+  border-radius: 5px;
+  }
 `;
 
 
@@ -114,7 +125,7 @@ const ImageItemContainer = styled.ul`
   padding: 12px;
   // background-color: ${props => props.theme.gray};
   border-radius: 4px;
-  width:100%;
+ 
 
   & > :first-child {
     margin-right: 8px;
@@ -127,12 +138,27 @@ const ImageItemContainer = styled.ul`
     display: flex;
   }
 `;
+const ImageHover = styled.div`
+transition: .5s ease;
+opacity: 0;
+position: relative;
+top: 50%;
+left: 50%;
+bottom:0;
+transform: translate(-50%, -50%);
+-ms-transform: translate(-50%, -50%);
+text-align: center;
+
+:hover{
+  opacity: 1;
+}
+`
 
 function GLTFTextureItem({ item }) {
   return (
     <ImageItemContainer>
       <Thumbnail src={item.url} alt={item.name} />
-      {/* <div>
+      {/* <ImageHover>
         <h3>{item.name}</h3>
         <ul>
           <li>
@@ -145,7 +171,7 @@ function GLTFTextureItem({ item }) {
             <b>Dimensions:</b> {`${item.width}px x ${item.height}px`}
           </li>
         </ul>
-      </div> */}
+      </ImageHover> */}
     </ImageItemContainer>
   );
 }
@@ -175,9 +201,9 @@ const MeshItemContainer = styled.li`
   flex-direction: column;
   margin: 4px 0;
   padding: 12px;
-  background-color: ${props => props.theme.black};
+  background-color: ${props => props.theme.lightDarkClr};
   border-radius: 4px;
-  width:90%;
+  width:100%;
   h3 {
     font-size: 14px;
     margin-bottom: 4px;
@@ -225,8 +251,8 @@ const StatsContainer = styled.ul`
   border-radius: 4px;
   padding:12px 24px;
   display:flex;
-  gap:30px;
-  width:90%;
+  gap:20px;
+  width:100%;
 
   // align-items:center;
 
@@ -278,6 +304,10 @@ const ValidationInfoContainer = styled.div`
 
   h3 {
     font-size: 14px;
+  }
+  ul{
+    display:flex;
+    flex-direction:column;
   }
 `;
 
@@ -442,6 +472,7 @@ GLTFValidation.propTypes = {
 export function GLTFInfo({ node }) {
   return (
     <Collapsible label="glTF Info">
+      <div style={{width:"100",height:"100"}}>
        <Collapsible open label="Stats">
         <GLTFStats node={node} />
       </Collapsible>
@@ -457,6 +488,7 @@ export function GLTFInfo({ node }) {
       <Collapsible open label="Validation">
         <GLTFValidation node={node} />
       </Collapsible>
+      </div>
     </Collapsible>
   );
 }
