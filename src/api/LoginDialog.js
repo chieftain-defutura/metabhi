@@ -9,7 +9,7 @@ const Container = styled.div`
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding: 60px;
+  // padding: 60px;
 `;
 
 export default class LoginDialog extends Component {

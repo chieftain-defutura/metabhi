@@ -18,6 +18,7 @@ const StyledNavBar = styled.header`
   font-size: 1.4em;
   border-bottom: 1px solid ${props => props.theme.borderStyleClr};
   background: ${props => props.theme.darkClr};
+  height: 77px;
 
   a {
     color: ${props => props.theme.text};
@@ -61,6 +62,7 @@ const RightContainer = styled.div`
   justify-content: flex-end;
   align-items: center;
   gap: 24px;
+  padding-right: 24px;
 
   @media (max-width: 600px) {
     flex: 1;
@@ -157,7 +159,9 @@ const NavBar = () => {
         )}
         <BsBell size={22} />
         <img alt="" src={Profile} />
-        <ConnectWalletBtn />
+        <div style={{ marginTop: "10px" }}>
+          <ConnectWalletBtn />
+        </div>
       </RightContainer>
     </StyledNavBar>
   );

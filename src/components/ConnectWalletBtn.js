@@ -8,7 +8,6 @@ import { TiTick } from "react-icons/ti";
 import { TbCopy } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { InjectedConnector } from "@web3-react/injected-connector";
-import Web3 from "web3";
 
 const chainId = "0x153c099c";
 
@@ -22,9 +21,9 @@ const WalletButtons = styled.div``;
 const WalletConnectAddr = styled.div`
   border: 1px solid #0092ff;
   border-radius: 2px;
-  padding: 8px 16px;
+  padding: 8px 32px;
   color: ${props => props.theme.text};
-  margin-right: 24px;
+  // margin-right: 24px;
   cursor: pointer;
 `;
 
@@ -32,12 +31,12 @@ const WalletConnect = styled.div`
   display: flex;
   justify-content: flex-end;
   background: #002bff;
-  padding: 8px 16px;
+  padding: 8px 32px;
   border: 1px solid #002bff;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 12px;
   cursor: pointer;
-  margin-right: 24px;
+  // margin-right: 24px;
   color: white;
 `;
 const WalletDropDown = styled.div`
@@ -49,6 +48,7 @@ const WalletDropDown = styled.div`
   top: 115%;
   right: 10%;
   box-shadow: ${props => props.theme.boxShadow};
+  z-index: 1;
 `;
 const Address = styled.div`
   display: flex;
@@ -76,6 +76,9 @@ const Content = styled.div`
 `;
 const DashboardPara = styled.div`
   margin-top: 10px;
+  a {
+    text-decoration: none;
+  }
 `;
 const Logout = styled.div`
   margin-bottom: 14px;
@@ -85,7 +88,7 @@ const Logout = styled.div`
     padding: 12px 22px;
     cursor: pointer;
     &:hover {
-      background: rgba(0, 146, 255, 0.4);
+      background: rgba(255, 99, 65, 0.3);
     }
   }
 `;
@@ -93,6 +96,7 @@ const Logout = styled.div`
 const WalletWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
 `;
 const WalletCircle = styled.div`
@@ -102,52 +106,25 @@ const WalletCircle = styled.div`
   border-radius: 50%;
 `;
 
+const WrongButton = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  background: rgba(255, 99, 65, 0.3);
+  padding: 8px 32px;
+  border: 1px solid rgba(255, 99, 65, 0.3);
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #ff6347;
+`;
+
 const ConnectWalletBtn = () => {
-  const { activate, account, deactivate } = useWeb3React();
+  const { activate, account, deactivate, error, chainId: chainid } = useWeb3React();
   const [copied, setCopied] = useState(false);
   const [walletOpen, setWalletOpen] = useState(false);
-  const [currentNetworkId, setCurrentNetworkId] = useState(null);
 
-  useEffect(() => {
-    const fetchNetworkId = async () => {
-      if (window.ethereum) {
-        try {
-          const chainId = await window.ethereum.request({ method: "eth_chainId" });
-          setCurrentNetworkId(chainId);
-        } catch (error) {
-          console.error("Error fetching network ID:", error);
-        }
-      }
-    };
-
-    fetchNetworkId();
-  }, []);
-
-  const addGatherTestnet = async () => {
-    try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x153c099c" }]
-      });
-    } catch (error) {
-      console.error("Error activating MetaMask:", error);
-      try {
-        await window.ethereum.request({
-          method: "wallet_addEthereumChain",
-          params: [
-            {
-              chainName: "Gather Testnet",
-              chainId: "0x153c099c",
-              nativeCurrency: { name: "GTH", decimals: 18, symbol: "GTH" },
-              rpcUrls: ["https://testnet.gather.network"]
-            }
-          ]
-        });
-      } catch (error) {
-        console.error("Error adding Gather Testnet:", error);
-      }
-    }
-  };
+  console.log(chainid);
+  console.log(Number(chainId));
 
   const WalletToggle = () => {
     setWalletOpen(!walletOpen);
@@ -171,61 +148,69 @@ const ConnectWalletBtn = () => {
         setCopied(false);
       }, 3000);
     }
+    if (error) {
+      console.log(error);
+    }
 
     return () => {
       clearTimeout(timer);
     };
-  }, [copied, parent]);
+  }, [copied, parent, error]);
 
   const displayAccount = account => {
     const slicedAccount = account && account.slice(0, 6) + "..." + account.slice(-6);
     return slicedAccount;
   };
 
-  const web3 = new Web3(injected);
-
-  console.log("web3", web3);
-
-  // const addGatherTestnet = async () => {
-  //   try {
-  //     await window.ethereum.request({
-  //       method: "wallet_switchEthereumChain",
-  //       params: [{ chainId: "0x153c099c" }]
-  //     });
-  //   } catch (error) {
-  //     console.error("Error activating MetaMask:", error);
-  //     try {
-  //       await window.ethereum.request({
-  //         method: "wallet_addEthereumChain",
-  //         params: [
-  //           {
-  //             chainName: "Gather Testnet",
-  //             chainId: "0x153c099c",
-  //             nativeCurrency: { name: "GTH", decimals: 18, symbol: "GTH" },
-  //             rpcUrls: ["https://testnet.gather.network"]
-  //           }
-  //         ]
-  //       });
-  //     } catch (error) {
-  //       console.error("Error adding Gather Testnet:", error);
-  //     }
-  //   }
-  // };
+  const addGatherTestnet = async () => {
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x153c099c" }]
+      });
+    } catch (error) {
+      console.error("Error activating MetaMask:", error);
+      try {
+        await window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainName: "Gather Testnet",
+              chainId: "0x153c099c",
+              nativeCurrency: {
+                name: "GTH",
+                decimals: 18,
+                symbol: "GTH"
+              },
+              rpcUrls: ["https://testnet.gather.network"]
+            }
+          ]
+        });
+      } catch (error) {
+        console.error("Error adding Gather Testnet:", error);
+      }
+    }
+  };
 
   return (
     <div>
       <WalletConnectContainer>
-        <div>{currentNetworkId !== "0x153c099c" && <button onClick={addGatherTestnet}>Wrong Network</button>}</div>
         <WalletButtons>
           {account ? (
             <WalletConnectAddr onClick={WalletToggle}>
               <WalletWrapper>
-                <WalletCircle></WalletCircle>
+                <WalletCircle />
                 {account.slice(0, 6)}...{account.slice(account.length - 6)}
               </WalletWrapper>
             </WalletConnectAddr>
           ) : (
-            <WalletConnect onClick={() => activate(Injected)}>Connect Wallet</WalletConnect>
+            <div>
+              {Number(chainId) === chainid ? (
+                <WrongButton onClick={addGatherTestnet}>Wrong Network</WrongButton>
+              ) : (
+                <WalletConnect onClick={() => activate(Injected)}>Connect Wallet</WalletConnect>
+              )}
+            </div>
           )}
         </WalletButtons>
 

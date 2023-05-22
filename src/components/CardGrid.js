@@ -57,29 +57,21 @@ const ICardGrid = [
 ];
 
 const CardGridWrapper = styled.div`
-  margin: 24px 40px;
+  padding: 24px 40px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  row-gap: 32px;
-  height: 500px;
-  overflow-x: hidden;
-  overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: ${props => props.theme.scrollbarClr};
-    border-radius: 50px;
-  }
+  gap: 28px;
 `;
 
 const GridContent = styled.div`
   background: ${props => props.theme.grayClr};
-  border: ${props => props.theme.borderFileClr};
+  border: 1px solid ${props => props.theme.borderFileClr};
   border-radius: 5px;
-  width: 264px;
-  height: 219px;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover {
+    box-shadow: rgba(69, 68, 68, 0.3) 0px 8px 24px;
+  }
 `;
 
 const CardGridBox = styled.div`
@@ -105,10 +97,12 @@ const CardGridName = styled.div`
   }
   h5 {
     font-size: 14px;
+    font-weight: 700;
   }
   p {
     margin-top: 2px;
     font-size: 12px;
+    font-weight: 400;
   }
 `;
 
@@ -144,7 +138,7 @@ const CardGrid = () => {
               </CardGridName>
               <Profile>
                 <Circle></Circle>
-                <AiOutlineStar size={22} />
+                <AiOutlineStar size={18} />
               </Profile>
             </CardGridUnTitle>
           </GridContent>

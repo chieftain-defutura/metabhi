@@ -17,13 +17,14 @@ const StyledToolButton = styled.button`
   // background-color: ${props => (props.selected ? props.theme.blue : props.theme.toolbar)};
 
   &:hover {
-    background-color: ${props => (props.selected ? props.theme.blueHover : props.theme.panel2)};
+    background: rgba(0, 43, 255, 0.4);
+    border: 1px solid rgba(0, 146, 255, 0.2);
   }
 `;
 
 const Icon = styled.div`
-  width: 24px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   font-size: 14px;
   color: ${props => props.theme.svgIconClr};
 `;

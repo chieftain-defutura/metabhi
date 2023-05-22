@@ -65,8 +65,9 @@ const ListGridHead = styled.div`
   align-items: center;
   margin-right: 120px;
   h5 {
-    font-size: 18px;
+    font-size: 16px;
     margin-bottom: 24px;
+    font-weight: 700;
   }
 `;
 
@@ -86,7 +87,8 @@ const ListGridContent = styled.div`
     height: 24px;
   }
   p {
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: 400;
     color: ${props => props.theme.lightGray};
   }
 `;
@@ -105,7 +107,7 @@ const Minutes = styled.div`
   padding-right: 30px;
 
   p {
-    font-size: 16px;
+    font-size: 12px;
     color: ${props => props.theme.lightGray};
   }
 `;
@@ -128,7 +130,7 @@ const ListGrid = () => {
         return (
           <ListGridContainer key={index}>
             <ListGridContent>
-              <AiOutlineStar size={22} />
+              <AiOutlineStar size={18} />
               <Profile></Profile>
               <p>{f.unknown}</p>
             </ListGridContent>

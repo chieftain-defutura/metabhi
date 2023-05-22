@@ -15,7 +15,7 @@ const DashboardWrapper = styled.div`
 `;
 
 const WelComeWrapper = styled.div`
-  padding: 32px;
+  padding: 28px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -25,13 +25,14 @@ const WelComeWrapper = styled.div`
 
 const WelComeContent = styled.div`
   h4 {
-    font-size: 28px;
-    margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
   }
   p {
-    font-size: 18px;
-    margin-top: 8px;
-    line-height: 24px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
     color: ${props => props.theme.lightGray};
   }
 `;
@@ -42,7 +43,7 @@ const MediumBtn = styled.div`
     padding: 8px 24px;
     border: 1px solid ${props => props.theme.blue};
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 12px;
     text-decoration: none;
     margin-top: 25px;
   }
@@ -55,12 +56,19 @@ const NewFile = styled.div`
   justify-content: space-between;
   gap: 150px;
   background: ${props => props.theme.darkClr};
-  border: 1px solid ${props => props.theme.borderFileClr};
+  border: 1px solid ${props => props.theme.borderStyleClr};
   padding: 15px 25px;
   border-radius: 5px;
   cursor: pointer;
   a {
     text-decoration: none;
+    &:hover {
+      color: ${props => props.theme.text};
+    }
+  }
+  &:hover {
+    background: rgba(0, 43, 255, 0.1);
+    border: 1px solid rgba(0, 146, 255, 0.2);
   }
 `;
 
@@ -71,7 +79,8 @@ const NewFilePara = styled.div`
   white-space: noWrap;
 
   p {
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: 400;
     color: ${props => props.theme.text};
   }
 `;
@@ -85,8 +94,8 @@ const Recently = styled.div`
   justify-content: space-between;
 
   h3 {
-    font-size: 20px;
-    // margin-bottom: 18px;
+    font-weight: 500;
+    font-size: 14px;
   }
 `;
 
@@ -102,9 +111,20 @@ const DropDown = styled.div`
 `;
 
 const DropDownContent = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  h3 {
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  h4 {
+    font-weight: 500;
+    font-size: 14px;
+    color: ${props => props.theme.gray};
+  }
+  p {
+    font-weight: 500;
+    font-size: 14px;
+  }
 `;
 
 const MenuIcons = styled.div`
@@ -138,7 +158,13 @@ const ToolbarInputGroup = styled.div`
     font-size: 17px;
   }
 `;
-
+const RecentlyContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 40px;
+  border-bottom: 1px solid ${props => props.theme.borderStyleClr};
+`;
 const selectInputStyles = {
   container: base => ({
     ...base,
@@ -229,17 +255,17 @@ const Dashboard = () => {
             <NewFile>
               <Link to="/projects/new">
                 <NewFilePara>
-                  <AiOutlineFileAdd size={28} />
+                  <AiOutlineFileAdd size={24} />
                   <p>New file</p>
                 </NewFilePara>
               </Link>
               <div>
-                <AiOutlinePlus size={18} />
+                <AiOutlinePlus size={16} />
               </div>
             </NewFile>
             <NewFile style={{ marginTop: "24px" }}>
               <NewFilePara>
-                <TbFileImport size={28} />
+                <TbFileImport size={24} />
                 <p>Import file</p>
               </NewFilePara>
               <div>
@@ -249,45 +275,23 @@ const Dashboard = () => {
           </NewFileContent>
         </WelComeWrapper>
 
-        <Recently>
-          <div>
-            <h3>Recently viewed</h3>
-          </div>
+        <RecentlyContent>
           <DropDownContent>
-            <DropDown>
-              {/* <h4>Filter:</h4> */}
-
-              <ToolbarInputGroup>
-                {/* <select>
-                  <option>Select file</option>
-                  <option value="allfile" onClick={onSetAll} active={params.filter === "remixable"}>
-                    All files
-                  </option>
-                  <option value="importfile">Design files</option>
-                </select> */}
-                {/* <SelectInput styles={selectInputStyles} options={transformPivotOptions} value={FilesOption} /> */}
-              </ToolbarInputGroup>
-            </DropDown>
-            <MenuIcons>
-              <div onClick={() => setGridToggle("GridIcon")}>
-                <MenuBox
-                  onClick={() => setIsActive(!isActive)}
-                  style={{ border: isActive ? "1px solid #777777" : "inherit" }}
-                >
-                  <RxDashboard size={26} />
-                </MenuBox>
-              </div>
-              <div onClick={() => setGridToggle("MenuIcon")}>
-                <MenuBox
-                  onClick={() => setIsActive(!isActive)}
-                  style={{ border: isActive ? "inherit" : "1px solid #777777" }}
-                >
-                  <TbMenu2 size={26} />
-                </MenuBox>
-              </div>
-            </MenuIcons>
+            <h3>Recently viewed</h3>
           </DropDownContent>
-        </Recently>
+          <MenuIcons>
+            <div onClick={() => setGridToggle("GridIcon")}>
+              <MenuBox style={{ border: gridToggle === "GridIcon" ? "1px solid #777777" : "inherit" }}>
+                <RxDashboard size={26} />
+              </MenuBox>
+            </div>
+            <div onClick={() => setGridToggle("MenuIcon")}>
+              <MenuBox style={{ border: gridToggle !== "MenuIcon" ? "inherit" : "1px solid #777777" }}>
+                <TbMenu2 size={26} />
+              </MenuBox>
+            </div>
+          </MenuIcons>
+        </RecentlyContent>
       </DashboardWrapper>
 
       {gridToggle === "GridIcon" && <CardGrid />}
