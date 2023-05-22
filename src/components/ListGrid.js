@@ -47,16 +47,6 @@ const IListCard = [
 
 const ListGridWrapper = styled.div`
   margin: 24px 40px;
-  height: 500px;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: ${props => props.theme.scrollbarClr};
-    border-radius: 50px;
-  }
 `;
 
 const ListGridHead = styled.div`

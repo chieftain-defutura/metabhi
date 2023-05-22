@@ -46,6 +46,7 @@ const MediumBtn = styled.div`
     font-size: 12px;
     text-decoration: none;
     margin-top: 25px;
+    font-weight: 700;
   }
 `;
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { useWeb3React } from "@web3-react/core";
+import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import { Injected } from "../ui/connectors";
 import autoAnimate from "@formkit/auto-animate";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -8,10 +8,20 @@ import { TiTick } from "react-icons/ti";
 import { TbCopy } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { InjectedConnector } from "@web3-react/injected-connector";
+import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 
 const chainId = "0x153c099c";
 
 const injected = new InjectedConnector({ supportedChainIds: [chainId] });
+
+export const walletconnect = new WalletConnectConnector({
+  rpc: {
+    1: "https://mainnet.infura.io/v3/ec03b8dcd95348149519e0be7ac5098e"
+  },
+  bridge: "https://bridge.walletconnect.org",
+  qrcode: true,
+  pollingInterval: 12000
+});
 
 const WalletConnectContainer = styled.div`
   position: relative;
@@ -79,12 +89,15 @@ const DashboardPara = styled.div`
   a {
     text-decoration: none;
   }
+  h3 {
+    font-size: 14px;
+  }
 `;
 const Logout = styled.div`
   margin-bottom: 14px;
   h4 {
     color: #ff6347;
-    font-size: 16px;
+    font-size: 14px;
     padding: 12px 22px;
     cursor: pointer;
     &:hover {
@@ -98,6 +111,7 @@ const WalletWrapper = styled.div`
   align-items: center;
   justify-content: center;
   gap: 8px;
+  font-size: 14px;
 `;
 const WalletCircle = styled.div`
   width: 14px;
@@ -122,6 +136,7 @@ const ConnectWalletBtn = () => {
   const { activate, account, deactivate, error, chainId: chainid } = useWeb3React();
   const [copied, setCopied] = useState(false);
   const [walletOpen, setWalletOpen] = useState(false);
+  const [wrongNetwork, setWrongNetwork] = useState(false);
 
   console.log(chainid);
   console.log(Number(chainId));
@@ -141,6 +156,16 @@ const ConnectWalletBtn = () => {
   };
 
   useEffect(() => {
+    if (error) {
+      console.log(error);
+      if (error instanceof UnsupportedChainIdError) {
+        return setWrongNetwork(true);
+      }
+    }
+    setWrongNetwork(false);
+  }, [error]);
+
+  useEffect(() => {
     parent.current && autoAnimate(parent.current);
     let timer;
     if (copied) {
@@ -148,14 +173,11 @@ const ConnectWalletBtn = () => {
         setCopied(false);
       }, 3000);
     }
-    if (error) {
-      console.log(error);
-    }
 
     return () => {
       clearTimeout(timer);
     };
-  }, [copied, parent, error]);
+  }, [copied, parent]);
 
   const displayAccount = account => {
     const slicedAccount = account && account.slice(0, 6) + "..." + account.slice(-6);
@@ -203,15 +225,14 @@ const ConnectWalletBtn = () => {
                 {account.slice(0, 6)}...{account.slice(account.length - 6)}
               </WalletWrapper>
             </WalletConnectAddr>
+          ) : wrongNetwork ? (
+            <WrongButton onClick={addGatherTestnet}>Wrong Network</WrongButton>
           ) : (
             <div>
-              {Number(chainId) === chainid ? (
-                <WrongButton onClick={addGatherTestnet}>Wrong Network</WrongButton>
-              ) : (
-                <WalletConnect onClick={() => activate(Injected)}>Connect Wallet</WalletConnect>
-              )}
+              <WalletConnect onClick={() => activate(Injected)}>Connect Wallet</WalletConnect>
             </div>
           )}
+          {/* <WalletConnect onClick={() => activate(walletconnect)}>Connect Wallet wc</WalletConnect> */}
         </WalletButtons>
 
         <div ref={parent} style={{ marginTop: "10px" }}>
@@ -231,7 +252,7 @@ const ConnectWalletBtn = () => {
 
                 {copied ? (
                   <div style={{ display: "flex", alignItems: "center", gap: "2px", cursor: "pointer" }}>
-                    <TiTick size={25} />
+                    <TiTick size={22} />
                   </div>
                 ) : null}
               </Address>

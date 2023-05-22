@@ -76,8 +76,8 @@ const TreeNodeContainer = styled.div`
   padding: 12px 24px;
   margin:5px 0;
   // background-color: ${treeNodeBackgroundColor};
-  border-bottom: 1px solid ${props => (props.root ? props.theme.borderStyle:"none")};
-  // border-bottom:1px solid ${props => props.theme.borderStyle};
+  border-bottom: 1px solid ${props => (props.root ? props.theme.borderStyle : "none")};
+  
 
   color: ${props => (props.selected || props.focused ? props.theme.text : props.theme.text2)};
 
@@ -92,8 +92,7 @@ const TreeNodeContainer = styled.div`
     color: ${props => props.theme.text};
   }
 `;
-const TreeInput =styled.div`
-`
+const TreeInput = styled.div``;
 const TreeNodeSelectTarget = styled.div`
   display: flex;
   flex: 1;
@@ -139,7 +138,7 @@ const TreeNodeLabel = styled.div`
   color: ${props => (props.isOver && props.canDrop ? props.theme.text : "inherit")};
   border-radius: 4px;
   padding: 0 2px;
-  font-weight:400;
+  font-weight: 400;
   text-decoration: ${props => (props.enabled ? "none" : "line-through")};
 `;
 
@@ -422,69 +421,69 @@ function TreeNode({
   });
 
   return (
-    <TreeDepthContainer  >
+    <TreeDepthContainer>
       <TreeInput>
-      <ContextMenuTrigger holdToDisplay={-1} id="hierarchy-node-menu" node={node} collect={collectNodeMenuProps}>
-        <TreeNodeContainer
-          ref={drag}
-          id={getNodeElId(node)}
-          onMouseDown={onMouseDownNode}
-          onClick={onClickNode}
-          tabIndex="0"
-          onKeyDown={onNodeKeyDown}
-          root={depth === 0}
-          selected={selected}
-          active={active}
-        >
-          <TreeNodeDropTarget
-            ref={beforeDropTarget}
-            depth={depth}
-            position="before"
-            canDrop={canDropBefore}
-            isOver={isOverBefore}
-          />
-          <TreeNodeContent depth={depth} ref={onDropTarget}>
-            {isLeaf ? (
-              <TreeNodeLeafSpacer />
-            ) : (
-              <TreeNodeToggle onClick={onClickToggle}>
-                {isExpanded ? <CaretDown size={12} /> : <CaretRight size={12} />}
-              </TreeNodeToggle>
-            )}
+        <ContextMenuTrigger holdToDisplay={-1} id="hierarchy-node-menu" node={node} collect={collectNodeMenuProps}>
+          <TreeNodeContainer
+            ref={drag}
+            id={getNodeElId(node)}
+            onMouseDown={onMouseDownNode}
+            onClick={onClickNode}
+            tabIndex="0"
+            onKeyDown={onNodeKeyDown}
+            root={depth === 0}
+            selected={selected}
+            active={active}
+          >
+            <TreeNodeDropTarget
+              ref={beforeDropTarget}
+              depth={depth}
+              position="before"
+              canDrop={canDropBefore}
+              isOver={isOverBefore}
+            />
+            <TreeNodeContent depth={depth} ref={onDropTarget}>
+              {isLeaf ? (
+                <TreeNodeLeafSpacer />
+              ) : (
+                <TreeNodeToggle onClick={onClickToggle}>
+                  {isExpanded ? <CaretDown size={12} /> : <CaretRight size={12} />}
+                </TreeNodeToggle>
+              )}
 
-            <TreeNodeSelectTarget>
-              <TreeNodeIcon as={iconComponent} />
-              <TreeNodeLabelContainer>
-                {renaming ? (
-                  <TreeNodeRenameInputContainer>
-                    <TreeNodeRenameInput
-                      type="text"
-                      onChange={onChangeNodeName}
-                      onKeyDown={onKeyDownNameInput}
-                      onBlur={onSubmitNodeName}
-                      value={renamingNode.name}
-                      autoFocus
-                    />
-                  </TreeNodeRenameInputContainer>
-                ) : (
-                  <TreeNodeLabel enabled={enabled} canDrop={canDropOn} isOver={isOverOn}>
-                    {object.name}
-                  </TreeNodeLabel>
-                )}
-              </TreeNodeLabelContainer>
-              {node.object.issues.length > 0 && <NodeIssuesIcon node={node.object} />}
-            </TreeNodeSelectTarget>
-          </TreeNodeContent>
+              <TreeNodeSelectTarget>
+                <TreeNodeIcon as={iconComponent} />
+                <TreeNodeLabelContainer>
+                  {renaming ? (
+                    <TreeNodeRenameInputContainer>
+                      <TreeNodeRenameInput
+                        type="text"
+                        onChange={onChangeNodeName}
+                        onKeyDown={onKeyDownNameInput}
+                        onBlur={onSubmitNodeName}
+                        value={renamingNode.name}
+                        autoFocus
+                      />
+                    </TreeNodeRenameInputContainer>
+                  ) : (
+                    <TreeNodeLabel enabled={enabled} canDrop={canDropOn} isOver={isOverOn}>
+                      {object.name}
+                    </TreeNodeLabel>
+                  )}
+                </TreeNodeLabelContainer>
+                {node.object.issues.length > 0 && <NodeIssuesIcon node={node.object} />}
+              </TreeNodeSelectTarget>
+            </TreeNodeContent>
 
-          <TreeNodeDropTarget
-            depth={depth}
-            ref={afterDropTarget}
-            position="after"
-            canDrop={canDropAfter}
-            isOver={isOverAfter}
-          />
-        </TreeNodeContainer>
-      </ContextMenuTrigger>
+            <TreeNodeDropTarget
+              depth={depth}
+              ref={afterDropTarget}
+              position="after"
+              canDrop={canDropAfter}
+              isOver={isOverAfter}
+            />
+          </TreeNodeContainer>
+        </ContextMenuTrigger>
       </TreeInput>
     </TreeDepthContainer>
   );

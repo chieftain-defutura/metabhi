@@ -58,7 +58,7 @@ const NumericInputUnit = styled.div`
   position: absolute;
   color: ${props => props.theme.gray};
   right: 1px;
-  top: 4px;
+  top: 5px;
   bottom: 1px;
   background: ${props => props.theme.background};
   padding: 0 2px;

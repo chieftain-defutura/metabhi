@@ -69,6 +69,7 @@ const PublishButton = styled(Button)`
   color: #fff;
   transition-duration: 8s;
   transition-delay: 7s;
+  font-weight: 700;
   &:hover {
     color: #fff;
   }

@@ -179,6 +179,7 @@ const MediumBtn = styled.div`
     font-size: 12px;
     text-decoration: none;
     margin-top: 25px;
+    font-weight: 700;
   }
 `;
 
@@ -292,6 +293,7 @@ const MenuBox = styled.div`
   align-items: center;
   padding: 6px;
   border-radius: 5px;
+  cursor: pointer;
 `;
 
 const RecentlyContent = styled.div`

@@ -149,7 +149,8 @@ const PopoverNav = styled.div`
 
   a {
     padding: 8px 24px;
-    color: ${props => props.theme.text};
+    color: #fff;
+    font-weight: 700;
     background: linear-gradient(92.34deg, #002bff -0.06%, #0092ff 99.94%);
     border-radius: 5px;
     text-decoration: none;
@@ -160,6 +161,9 @@ const PopoverNav = styled.div`
 
   button {
     width: 84px;
+    border: 1px solid #002bff;
+    font-weight: 700;
+    background: transparent;
   }
 
   // & > * {

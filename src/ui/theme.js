@@ -65,7 +65,8 @@ const theme = {
   borderStyle: "rgba(119,119,119,0.2)",
   boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px",
   inputBackground: "#0A0A0A",
-  blueHover: "#0092FF"
+  blueHover: "#0092FF",
+  hoverClr: "#252525"
 };
 
 const darkTheme = {
@@ -140,7 +141,8 @@ const darkTheme = {
   bluePressed: "rgba(0, 146, 255, 0.2)",
   selected: "rgba(0, 146, 255, 0.2)",
   hover: "rgba(170, 170, 170, 0.2);",
-  blueHover: "#0092FF"
+  blueHover: "#0092FF",
+  hoverClr: "#dddddd"
 };
 
 theme.chartColors = [

@@ -17,8 +17,8 @@ const StyledToolButton = styled.button`
   // background-color: ${props => (props.selected ? props.theme.blue : props.theme.toolbar)};
 
   &:hover {
-    background: rgba(0, 43, 255, 0.4);
-    border: 1px solid rgba(0, 146, 255, 0.2);
+    background: ${props => props.theme.hoverClr};
+   
   }
 `;
 
