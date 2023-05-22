@@ -123,13 +123,14 @@ const WalletCircle = styled.div`
 const WrongButton = styled.div`
   display: flex;
   justify-content: flex-end;
-  background: rgba(255, 99, 65, 0.3);
+  background: #ff6347;
   padding: 8px 32px;
   border: 1px solid rgba(255, 99, 65, 0.3);
   border-radius: 5px;
   font-size: 12px;
+  font-weight: 700;
   cursor: pointer;
-  color: #ff6347;
+  color: #fff;
 `;
 
 const ConnectWalletBtn = () => {
@@ -262,7 +263,7 @@ const ConnectWalletBtn = () => {
                     <h3>Dashboard</h3>
                   </Link>
                 </DashboardPara>
-                <Logout>
+                <Logout onClick={WalletToggle}>
                   <h4 onClick={handleLogout}>Logout</h4>
                 </Logout>
               </Content>

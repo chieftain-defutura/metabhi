@@ -123,7 +123,7 @@ const darkTheme = {
   gray: "#777777",
   darkGray: "#DDDDDD",
   lightGray: "#454545",
-  scrollbarClr: "#454545",
+  scrollbarClr: "#999999",
   text: "#252525",
   borderStyle: "rgba(119,119,119,0.2)",
   borderFileClr: "1px solid #DDDDDD",
