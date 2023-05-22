@@ -40,7 +40,7 @@ const PropertyContent = styled.div`
 const PropertyGroupContent = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 12px;
+  padding:0 12px;
   font-weight:700;
 `;
 const StyledPropertyGroupSection = styled.div`

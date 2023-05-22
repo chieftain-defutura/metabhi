@@ -114,7 +114,7 @@ const darkTheme = {
   //white mode theme
 
   darkClr: "#eeeeee",
-  lightDarkClr: "#252525",
+  lightDarkClr: "rgba(170, 170, 170, 0.1)",
   grayClr: "#FFFFFF",
   black: "#EEEEEE",
   blue: "#0092FF",
@@ -139,7 +139,8 @@ const darkTheme = {
   blueHover: "rgba(0, 146, 255, 0.2)",
   bluePressed: "rgba(0, 146, 255, 0.2)",
   selected: "rgba(0, 146, 255, 0.2)",
-  hover: "rgba(170, 170, 170, 0.2);"
+  hover: "rgba(170, 170, 170, 0.2)",
+  border: "rgba(170, 170, 170, 0.5)",
 };
 
 theme.chartColors = [

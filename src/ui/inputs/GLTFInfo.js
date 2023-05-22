@@ -136,19 +136,18 @@ const ImageItemContainer = styled.ul`
   }
   li{
     display: flex;
+    background:red;
+    padding:12px;
   }
 `;
 const ImageHover = styled.div`
 transition: .5s ease;
 opacity: 0;
 position: relative;
-top: 50%;
-left: 50%;
-bottom:0;
+top:100%;
 transform: translate(-50%, -50%);
 -ms-transform: translate(-50%, -50%);
 text-align: center;
-
 :hover{
   opacity: 1;
 }

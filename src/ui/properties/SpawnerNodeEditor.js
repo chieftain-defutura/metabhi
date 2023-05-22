@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component,} from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import NodeEditor from "./NodeEditor";
 import InputGroup from "../inputs/InputGroup";
@@ -10,6 +11,8 @@ import AttributionNodeEditor from "./AttributionNodeEditor";
 
 
 export default class SpawnerNodeEditor extends Component {
+ 
+  
   static propTypes = {
     editor: PropTypes.object,
     node: PropTypes.object
@@ -29,6 +32,12 @@ export default class SpawnerNodeEditor extends Component {
 
   render() {
     const node = this.props.node;
+    const[open,setOpen]= useState(false);
+    
+    useEffect(() => {
+      setOpen(open => !open)
+    }, [setOpen])
+    
 
     return (
       <NodeEditor {...this.props} description={SpawnerNodeEditor.description}>
@@ -38,9 +47,10 @@ export default class SpawnerNodeEditor extends Component {
         <InputGroup name="Apply gravity to spawned object">
           <BooleanInput value={node.applyGravity} onChange={this.onChangeApplyGravity} />
         </InputGroup>
-        {node.model && <GLTFInfo node={node} />}
-        <AttributionNodeEditor name="Attribution" {...this.props} />
-        
+        <div style={{background:"red"}}>
+        {node.model && <GLTFInfo onClick={setOpen} node={node} />}
+        <AttributionNodeEditor name="Attribution" onClick={setOpen} {...this.props} />
+        </div>
       </NodeEditor>
     );
   }
