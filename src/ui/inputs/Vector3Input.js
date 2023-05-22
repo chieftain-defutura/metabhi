@@ -11,7 +11,8 @@ import Hidden from "../layout/Hidden";
 export const Vector3InputContainer = styled.div`
   display: flex;
   flex-direction: row;
-  flex: 1 1 auto;
+  // flex: 1 ;
+  gap:16px;
   // width: 70%;
   justify-content: space-evenly;
 `;
@@ -22,7 +23,10 @@ export const Vector3Scrubber = styled(Scrubber)`
   // padding: 0 8px;
   color: ${props => props.theme.text};
 `;
-
+const VectorInput = styled.div`
+display: flex;
+gap:4px;
+`
 const UniformButtonContainer = styled.div`
   display: flex;
   align-items: center;
@@ -118,18 +122,24 @@ export default class Vector3Input extends Component {
             </label>
           </UniformButtonContainer>
         )} */}
+        <VectorInput>
         <Vector3Scrubber {...rest} tag="div" value={vx} onChange={this.onChangeX}>
           X
         </Vector3Scrubber>
         <NumericInput {...rest} value={vx} onChange={this.onChangeX} />
+        </VectorInput>
+        <VectorInput>
         <Vector3Scrubber {...rest} tag="div" value={vy} onChange={this.onChangeY}>
           Y
         </Vector3Scrubber>
         <NumericInput {...rest} value={vy} onChange={this.onChangeY} />
+        </VectorInput>
+        <VectorInput>
         <Vector3Scrubber {...rest} tag="div" value={vz} onChange={this.onChangeZ}>
           Z
         </Vector3Scrubber>
         <NumericInput {...rest} value={vz} onChange={this.onChangeZ} />
+        </VectorInput>
       </Vector3InputContainer>
     );
   }

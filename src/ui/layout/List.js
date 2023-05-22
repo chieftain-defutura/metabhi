@@ -8,15 +8,16 @@ export const ListItem = styled.li`
   outline: none;
   overflow: hidden;
   user-select: none;
+  font-weight:600;
   min-height: 24px;
   padding: 13px 24px;
   align-items: center;
   color: ${props => props.theme.text};
 
-  background-color: ${props => (props.selected ? props.theme.selected : props.theme.panel2)};
+  // background-color: ${props => (props.selected ? props.theme.selected : props.theme.panel2)};
 
   :nth-child(odd) {
-    background-color: ${props => (props.selected ? props.theme.selected : props.theme.panel)};
+    // background-color: ${props => (props.selected ? props.theme.selected : props.theme.panel)};
   }
 
   :hover,

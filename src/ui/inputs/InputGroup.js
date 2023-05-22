@@ -10,9 +10,9 @@ import { PropertyLabel } from "./PropertyLabel";
 export const InputGroupContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 13px 8px;
+  padding: 10px 6px;
   margin:3px 0;
-  gap:8px; 
+  gap:12px; 
   min-height: 24px;
   justify-content:space-between;
   ${props =>
@@ -37,7 +37,7 @@ export const InputGroupContent = styled.div`
   `}
   display: flex;
   flex-direction: row;
-  flex: 2;
+  // flex: 2;
   align-items: center;
 `;
 
@@ -106,7 +106,7 @@ export default function InputGroup({ name, children, disabled, info, optional, e
           {name && <PropertyLabel modified={!reset}>{name}:</PropertyLabel>}
         </OptionalGroup>
       </InputGroupHeader>
-     
+      
       <InputGroupContent disabled={optional && !enabled}>
         {children} 
         <InputGroupProperties>

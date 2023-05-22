@@ -3,8 +3,14 @@ import PropTypes from "prop-types";
 import NumericInput from "./NumericInput";
 import { Math as _Math, Euler } from "three";
 import { Vector3InputContainer, Vector3Scrubber } from "./Vector3Input";
+import styled from "styled-components"; 
 
 const { RAD2DEG, DEG2RAD } = _Math;
+
+const VectorInput = styled.div`
+display: flex;
+gap:4px;
+`;
 
 export default class EulerInput extends Component {
   static propTypes = {
@@ -36,18 +42,24 @@ export default class EulerInput extends Component {
     const vz = value ? (value.z || 0) * RAD2DEG : 0;
     return (
       <Vector3InputContainer>
+        <VectorInput>
         <Vector3Scrubber {...rest} tag="div" value={vx} onChange={x => this.onChange(x, vy, vz)}>
           X
         </Vector3Scrubber>
         <NumericInput {...rest} value={vx} onChange={x => this.onChange(x, vy, vz)} />
+        </VectorInput>
+        <VectorInput>
         <Vector3Scrubber {...rest} tag="div" value={vy} onChange={y => this.onChange(vx, y, vz)}>
           Y
         </Vector3Scrubber>
         <NumericInput {...rest} value={vy} onChange={y => this.onChange(vx, y, vz)} />
+        </VectorInput>
+        <VectorInput>
         <Vector3Scrubber {...rest} tag="div" value={vz} onChange={z => this.onChange(vx, vy, z)}>
           Z
         </Vector3Scrubber>
         <NumericInput {...rest} value={vz} onChange={z => this.onChange(vx, vy, z)} />
+        </VectorInput>
       </Vector3InputContainer>
     );
   }

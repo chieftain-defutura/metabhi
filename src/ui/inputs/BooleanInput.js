@@ -45,7 +45,8 @@ const BooleanInputLabel = styled(Input).attrs(() => ({ as: "label" }))`
   border-radius: 200px;
   box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px 15px rgba(255, 255, 255, 0.4);
   cursor: pointer;
-  // transition: 0.5s;
+  transition: 0.3s;
+
 
   
   &:after {
@@ -58,11 +59,11 @@ const BooleanInputLabel = styled(Input).attrs(() => ({ as: "label" }))`
     background: linear-gradient(180deg, #FFFFFF,#999999);
     border-radius: 180px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-    // transition: 0.1s;
+    transition: 0.3s;
   }
-  &:active::after {
-    width: 16px;
-  }
+  // &:active::after {
+  //   width: 16px;
+  // }
   
 `;
 //check

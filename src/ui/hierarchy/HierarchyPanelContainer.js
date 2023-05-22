@@ -68,15 +68,16 @@ function getNodeElId(node) {
 }
 
 const TreeNodeContainer = styled.div`
-  display: flex;
+  display: flex;  
   flex-direction: column;
   // outline: none;
   overflow: hidden;
   background: ${props => props.theme.grayClr};
-  padding: 10px 24px;
+  padding: 12px 24px;
   margin:5px 0;
   // background-color: ${treeNodeBackgroundColor};
-  border-bottom: ${props => (props.root ? props.theme.borderStyle : "none")};
+  border-bottom: 1px solid ${props => (props.root ? props.theme.borderStyle:"none")};
+  // border-bottom:1px solid ${props => props.theme.borderStyle};
 
   color: ${props => (props.selected || props.focused ? props.theme.text : props.theme.text2)};
 
@@ -91,7 +92,8 @@ const TreeNodeContainer = styled.div`
     color: ${props => props.theme.text};
   }
 `;
-
+const TreeInput =styled.div`
+`
 const TreeNodeSelectTarget = styled.div`
   display: flex;
   flex: 1;
@@ -137,6 +139,7 @@ const TreeNodeLabel = styled.div`
   color: ${props => (props.isOver && props.canDrop ? props.theme.text : "inherit")};
   border-radius: 4px;
   padding: 0 2px;
+  font-weight:400;
   text-decoration: ${props => (props.enabled ? "none" : "line-through")};
 `;
 
@@ -419,7 +422,8 @@ function TreeNode({
   });
 
   return (
-    <TreeDepthContainer style={style}>
+    <TreeDepthContainer  >
+      <TreeInput>
       <ContextMenuTrigger holdToDisplay={-1} id="hierarchy-node-menu" node={node} collect={collectNodeMenuProps}>
         <TreeNodeContainer
           ref={drag}
@@ -481,6 +485,7 @@ function TreeNode({
           />
         </TreeNodeContainer>
       </ContextMenuTrigger>
+      </TreeInput>
     </TreeDepthContainer>
   );
 }
