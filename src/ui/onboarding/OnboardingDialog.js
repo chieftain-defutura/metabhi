@@ -102,10 +102,11 @@ const SkipBtn = styled.div`
   margin-bottom: 16px;
   a {
     padding: 8px 32px;
-    color: ${props => props.theme.text};
+    color: #fff;
     background: linear-gradient(92.34deg, #002bff -0.06%, #0092ff 99.94%);
     border-radius: 5px;
     text-decoration: none;
+    font-weight: 700;
   }
 `;
 
@@ -113,6 +114,9 @@ const Buttons = styled.div`
   .next-btn {
     width: 130px;
     margin: 0 auto;
+    border: 1px solid #002bff;
+    background: transparent;
+    font-weight: 700;
   }
 `;
 

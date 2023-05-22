@@ -34,18 +34,17 @@ const ProjectGridItemContainer = styled.div`
 
 const Box = styled.div`
   background: ${props => props.theme.lightDarkClr};
-  border: ${props => props.theme.borderFileClr};
+  border: 1px solid ${props => props.theme.borderFileClr};
   border-radius: 5px;
 
   &:hover {
-    border-color: ${props => props.theme.gray};
-    color: #fff;
+    box-shadow: rgba(69, 68, 68, 0.3) 0px 8px 24px;
+    color: ${props => props.theme.text};
   }
 `;
 
 const Empty = styled.div`
   background: ${props => props.theme.emptyBoxClr};
-  // width: 270.5px;
   height: 160px;
 `;
 
@@ -53,7 +52,7 @@ const UnTitleContent = styled.div`
   background: ${props => props.theme.darkGray};
   display: flex;
   justify-content: space-between;
-  padding: 12px 20px;
+  padding: 12px 15px;
 `;
 
 const Untitle = styled.div`
@@ -62,10 +61,12 @@ const Untitle = styled.div`
   gap: 8px;
 
   h4 {
-    font-size: 14px;
     margin-bottom: 2px;
+    font-weight: 700;
+    font-size: 14px;
   }
   p {
+    font-weight: 400;
     font-size: 12px;
     color: ${props => props.theme.lightGray};
   }
@@ -77,10 +78,6 @@ const Untitle = styled.div`
 
 const UntitleProfile = styled.div`
   margin-top: 8px;
-  img {
-    width: 18px;
-    height: 18px;
-  }
 `;
 
 export function NewProjectGridItem({ path, label }) {
@@ -101,7 +98,7 @@ export function NewProjectGridItem({ path, label }) {
             </div>
           </Untitle>
           <UntitleProfile>
-            <AiOutlineStar size={22} />
+            <AiOutlineStar size={16} />
           </UntitleProfile>
         </UnTitleContent>
       </Box>
@@ -184,7 +181,7 @@ export const ProjectGridHeader = styled.div`
 `;
 
 export const Filter = styled.a`
-  font-size: 1.25em;
+  font-size: 14px;
   cursor: pointer;
   color: ${props => (props.active ? props.theme.blue : props.theme.text)};
 `;

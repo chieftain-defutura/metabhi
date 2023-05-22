@@ -10,19 +10,21 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 
 const SidebarWrapper = styled.div`
-  height: calc(100vh - 85px);
+  height: calc(100vh - 77px);
   width: 260px;
   overflow-x: hidden;
   overflow-y: scroll;
   position: fixed;
-  top: 10.3%;
+  top: 75px;
   left: 0;
-  right: 82.9%;
   z-index: 1;
   border-right: 1px solid ${props => props.theme.borderStyleClr};
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 0px;
   }
+  // &::-webkit-scrollbar-thumb {
+  //   background: red;
+  // }
   a {
     text-decoration: none;
   }
@@ -47,7 +49,8 @@ const RecentContent = styled.div`
     width: 24px;
   }
   h4 {
-    font-size: 18px;
+    font-size: 14px;
+    font-weight: 400;
   }
   &.recent {
     margin-top: 14px;
@@ -70,7 +73,8 @@ const Teams = styled.div`
   margin-top: 8px;
 
   h4 {
-    font-size: 20px;
+    font-size: 14px;
+    font-weight: 700;
   }
 `;
 
@@ -80,7 +84,7 @@ const Sidebar = () => {
       <div>
         <NavLink to="/dashboard/recent">
           <RecentContent className="recent">
-            <BiTime size={24} />
+            <BiTime size={16} />
             <h4>Recent</h4>
           </RecentContent>
         </NavLink>
@@ -88,30 +92,30 @@ const Sidebar = () => {
       <div>
         <NavLink to="/dashboard/template">
           <RecentContent>
-            <CgTemplate size={24} />
+            <CgTemplate size={16} />
             <h4>Templates</h4>
           </RecentContent>
         </NavLink>
       </div>
 
       <RecentContent className="borderStyle">
-        <BsFileEarmark size={24} />
+        <BsFileEarmark size={16} />
         <h4>Draft</h4>
       </RecentContent>
 
       <RecentContent className="borderPadding">
-        <AiOutlineStar size={24} />
-        <h4>Favorite files</h4>
+        <AiOutlineStar size={16} />
+        <h4 style={{ fontWeight: "700" }}>Favorite files</h4>
       </RecentContent>
       <RecentContent className="borderBottom">
-        <AiOutlinePlus size={24} />
+        <AiOutlinePlus size={16} />
         <h4>Create favorite file</h4>
       </RecentContent>
       <Teams>
         <h4>Teams</h4>
       </Teams>
       <RecentContent>
-        <AiOutlinePlus size={24} />
+        <AiOutlinePlus size={16} />
         <h4>Create new team</h4>
       </RecentContent>
       <RecentContent>

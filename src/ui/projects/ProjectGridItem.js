@@ -25,7 +25,7 @@ const StyledProjectGridItem = styled(Link)`
 
   &:hover {
     color: inherit;
-    border-color: ${props => props.theme.gray};
+    box-shadow: rgba(69, 68, 68, 0.3) 0px 8px 24px;
   }
 `;
 
@@ -52,7 +52,7 @@ const TitleContainer = styled.div`
   // display: flex;
   // align-items: center;
   // height: 50px;
-  padding: 12px 20px;
+  padding: 12px 15px;
 
   h3 {
     font-size: 16px;
@@ -120,11 +120,13 @@ const UntitleHead = styled.div`
   }
   h4 {
     font-size: 14px;
+    font-weight: 700;
   }
   p {
     font-size: 12px;
     margin-top: 2px;
     color: ${props => props.theme.lightGray};
+    font-weight: 400;
   }
 `;
 
@@ -169,7 +171,7 @@ export class ProjectGridItem extends Component {
               </div>
             </UntitleHead>
             <Star>
-              <AiOutlineStar size={22} />
+              <AiOutlineStar size={16} />
             </Star>
           </Column>
           {/* <Col>

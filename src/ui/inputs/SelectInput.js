@@ -125,7 +125,7 @@ export default function SelectInput({
       padding: "0 4px 0 0",
       color: isDarkMode ? "#777777" : "#777777"
     }),
-    option: (base, { isFocused }) => ({
+    option: base => ({
       ...base,
       cursor: "pointer",
       backgroundColor: isDarkMode ? "#111111" : "#eeeeee",

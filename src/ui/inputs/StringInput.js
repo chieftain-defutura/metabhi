@@ -6,10 +6,11 @@ import Input from "./Input";
 const StyledStringInput = styled(Input)`
   display: flex;
   width: 100%;
-  background:${props => props.theme.inputBackground};
-  padding:12px;
-  outline:none;
-  border-radius: 2px;
+  background: ${props => props.theme.darkGray};
+  padding: 12px;
+  outline: none;
+  border-radius: 5px;
+  margin-top: 15px;
 `;
 
 const StringInput = React.forwardRef(({ onChange, ...rest }, ref) => (

@@ -30,10 +30,7 @@ const StyledToolbar = styled.div`
   justify-content: space-between;
   height: 48px;
   background: ${props => props.theme.emptyBoxClr};
-  // background-color: ${props => props.theme.toolbar};
   user-select: none;
-  // border-bottom: 1px solid rgba(68, 68, 68, 0.3);
-
 `;
 
 const ToolButtons = styled.div`
@@ -43,7 +40,7 @@ const ToolButtons = styled.div`
   flex-direction: row;
   width: 275px;
   gap: 16px;
-  padding: 0 20px;
+  // padding: 0 20px;
   background: ${props => props.theme.darkClr};
 `;
 
@@ -53,12 +50,9 @@ const ToolToggles = styled.div`
   display: flex;
   flex-direction: row;
   background: ${props => props.theme.emptyBoxClr};
-  // background-color: ${props => props.theme.toolbar2};
   align-items: center;
-  padding: 0 46px;
   gap: 16px;
-  margin-right: 132px;
-  // border-bottom: 1px solid rgba(68, 68, 68, 0.3);
+  margin-left: -232px;
 `;
 
 const Spacer = styled.div`
@@ -67,19 +61,28 @@ const Spacer = styled.div`
 
 const PublishButton = styled(Button)`
   align-self: center;
-  margin: 1em -24px 1em 0;
   padding: 8px 32px;
   font-size: 12px;
   border-radiusL 2px;
-  background: linear-gradient(92.34deg, #002BFF -0.06%, #0092FF 99.94%);
+  background: #0092FF;
   border-radius: 2px;
   color: #fff;
+  transition-duration: 8s;
+  transition-delay: 7s;
+  font-weight: 700;
+  &:hover {
+    color: #fff;
+  }
 `;
 
 const ToggleContent = styled.div`
-  margin-top: 10px;
-  margin-right: -24px;
   cursor: pointer;
+`;
+const ToolBotton = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-right: 16px;
 `;
 
 const snapInputStyles = {
@@ -96,7 +99,10 @@ const snapInputStyles = {
     cursor: "pointer",
     outline: "none",
     boxShadow: "none",
-    padding: "5px 0"
+    padding: "5px 0",
+    "&:hover": {
+      background: "red"
+    }
   })
 };
 
@@ -108,7 +114,6 @@ const rightSnapInputStyles = {
   control: base => ({
     ...base,
     background: "#111111",
-    // backgroundColor: styledTheme.inputBackground,
     minHeight: "24px",
     borderTopLeftRadius: "0px",
     borderBottomLeftRadius: "0px",
@@ -131,7 +136,6 @@ const selectInputStyles = {
   }),
   control: base => ({
     ...base,
-    // backgroundColor: styledTheme.inputBackground,
     background: "#111111",
     minHeight: "24px",
     borderTopLeftRadius: "0px",
@@ -140,7 +144,10 @@ const selectInputStyles = {
     cursor: "pointer",
     outline: "none",
     boxShadow: "none",
-    padding: "5px 0px"
+    padding: "5px 0px",
+    "&:hover": {
+      background: "red"
+    }
   })
 };
 
@@ -151,15 +158,8 @@ const StyledToggleButton = styled.div`
   width: 24px;
   height: 32px;
   background: ${props => props.theme.toolbarClr};
-  // background-color: ${props => (props.value ? props.theme.blue : props.theme.toolbar)};
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
-
-  
-
-  // :active {
-  //   background-color: ${props => props.theme.blue};
-  // }
 `;
 
 function ToggleButton({ tooltip, children, ...rest }) {
@@ -550,27 +550,30 @@ export default class ToolBar extends Component {
           )}
         </ToolToggles>
         {/* <Spacer /> */}
-        {this.props.isPublishedScene && (
-          <PublishButton onClick={this.props.onOpenScene}>
-            {configs.isMoz() ? "Open in Hubs" : "Open Scene"}
-          </PublishButton>
-        )}
 
-        <ToggleContent onClick={() => toggle()}>
-          <DarkModeLightMode />
-        </ToggleContent>
-        {/* <DarkModeToggleButton /> */}
-        <PublishButton id="publish-button" onClick={this.props.onPublish} style={{ borderRadius: "2px" }}>
-          {configs.isMoz() ? "Publish to Hubs..." : "Publish Scene..."}
-        </PublishButton>
-        <WalletConnect>
-          <ConnectWalletBtn />
-        </WalletConnect>
-        <ContextMenu id="menu">
-          {this.props.menu.map(menu => {
-            return this.renderMenu(menu);
-          })}
-        </ContextMenu>
+        <ToolBotton>
+          {this.props.isPublishedScene && (
+            <PublishButton onClick={this.props.onOpenScene}>
+              {configs.isMoz() ? "Open in Hubs" : "Open Scene"}
+            </PublishButton>
+          )}
+
+          <ToggleContent>
+            <DarkModeLightMode />
+          </ToggleContent>
+          {/* <DarkModeToggleButton /> */}
+          <PublishButton id="publish-button" onClick={this.props.onPublish} style={{ borderRadius: "2px" }}>
+            {configs.isMoz() ? "Publish to Hubs..." : "Publish Scene..."}
+          </PublishButton>
+          <WalletConnect>
+            <ConnectWalletBtn />
+          </WalletConnect>
+          <ContextMenu id="menu">
+            {this.props.menu.map(menu => {
+              return this.renderMenu(menu);
+            })}
+          </ContextMenu>
+        </ToolBotton>
       </StyledToolbar>
     );
   }

@@ -23,7 +23,8 @@ const DialogHeader = styled.div`
   font-size: 12px;
   overflow: hidden;
   height: 32px;
-  background-color: ${props => props.theme.emptyBoxClr};
+  font-weight: 400;
+  background-color: ${props => props.theme.darkGray};
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
 
@@ -40,6 +41,7 @@ export const DialogContent = styled.div`
   flex-direction: row;
   /* This forces firefox to give the contents a proper height. */
   overflow: hidden;
+  background: ${props => props.theme.dropdown};
   padding: 8px;
   min-height: 100px;
 
@@ -61,10 +63,21 @@ const DialogBottomNav = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  background-color: red;
+  background-color: ${props => props.theme.darkGray};
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
   padding: 8px;
+
+  .primary-save-btn {
+    border: 1px solid #0092ff;
+  }
+  .save-btn {
+    background: linear-gradient(92.34deg, #002bff -0.06%, #0092ff 99.94%);
+    color: #fff;
+    &:hover {
+      border: none;
+    }
+  }
 
   a {
     color: ${props => props.theme.text2};
@@ -110,9 +123,13 @@ export default function Dialog({
       {(onConfirm || onCancel || bottomNav) && (
         <DialogBottomNav>
           {bottomNav}
-          {onCancel && <SecondaryButton onClick={onCancel}>{cancelLabel}</SecondaryButton>}
+          {onCancel && (
+            <Button className="primary-save-btn" onClick={onCancel}>
+              {cancelLabel}
+            </Button>
+          )}
           {onConfirm && (
-            <Button type="submit" onClick={tag === "form" ? null : onConfirm}>
+            <Button className="save-btn" type="submit" onClick={tag === "form" ? null : onConfirm}>
               {confirmLabel}
             </Button>
           )}

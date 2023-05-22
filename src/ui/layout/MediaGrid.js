@@ -11,8 +11,9 @@ const MediaGridItemContainer = styled.div`
   overflow: hidden;
   user-select: none;
   text-decoration: none;
-  border-radius: ${props => props.borderRadius}px;
-  background-color: ${props => props.theme.panel2};
+  border-radius: ${props => props.borderRadius};
+  background-color: ${props => props.theme.box};
+
   border: 2px solid ${props => (props.selected ? props.theme.selected : "transparent")};
   cursor: pointer;
 
@@ -163,7 +164,6 @@ IconMediaGridItem.propTypes = {
 };
 
 export const MediaGrid = styled.div`
-
   display: grid;
   grid-gap: ${props => props.gap};
   width: 100%;

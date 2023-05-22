@@ -20,9 +20,8 @@ const LayoutChildren = styled.div`
   height: 100%;
   background: ${props => props.theme.grayClr};
   flex: 1;
-  position: absolute;
-  right: 0;
-  left: 17%;
+  margin-left: 260px;
+
   &::-webkit-scrollbar {
     width: 5px;
   }

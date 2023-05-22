@@ -4,6 +4,7 @@ import configs from "../configs";
 import styled from "styled-components";
 import Input from "../ui/inputs/Input";
 import MetaMaskLogo from "../assets/MetaMask-logo.png";
+import ConnectWalletBtn from "../components/ConnectWalletBtn";
 // import { PRIVACY, TERMS } from "../constants";
 
 const StyledAuthForm = styled.form`
@@ -18,33 +19,15 @@ const StyledAuthForm = styled.form`
     margin-bottom: 20px;
   }
 
-  button {
-    display: inline-block;
-    border: none;
-    background: linear-gradient(92.34deg, #002bff -0.06%, #0092ff 99.94%);
-    border-radius: 5px;
-    color: ${props => props.theme.text};
-    white-space: nowrap;
-    min-height: 36px;
-    font-size: 16px;
-    padding: 1px 6px;
-    cursor: pointer;
-
-    &:hover,
-    &:active {
-      background-color: ${props => props.theme.bluePressed};
-    }
-  }
-
   img {
     width: 100px;
     margin: 0 auto;
-    margin-bottom: 20px;
   }
 
   h3 {
     font-size: 2em;
     color: ${props => props.theme.text};
+    margin: 20px 0;
   }
 
   h4 {
@@ -112,7 +95,7 @@ export default class AuthForm extends Component {
           </a>
           .
         </LegalText> */}
-        <button type="submit">Connect Wallet</button>
+        <ConnectWalletBtn />
       </StyledAuthForm>
     );
   }

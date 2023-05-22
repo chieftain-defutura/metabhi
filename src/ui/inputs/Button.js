@@ -18,6 +18,7 @@ export const Button = styled.button.attrs(props => ({
   justify-content: center;
   text-decoration: none;
   padding: 8px 32px;
+  font-weight: 700;
 
   &:hover {
     color: ${props => props.theme.text};
@@ -104,4 +105,5 @@ export const PropertiesPanelButton = styled(Button)`
   padding: 4px 0;
   margin: 18px 0;
   width: 200px;
+  font-weigth: 700;
 `;
