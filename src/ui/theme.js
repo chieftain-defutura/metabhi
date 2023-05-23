@@ -133,6 +133,8 @@ const darkTheme = {
   svgIconClr: "#454545",
   toolbarClr: "#DDDDDD",
   box: "#aaaaaa",
+  disabled: " rgba(170, 170, 170, 0.1);",
+
   dropdown: "#ffffff",
   boxShadow: "rgba(17, 12, 46, 0.15) 0px 48px 100px 0px",
   inputBackground: "#EEEEEE;",
