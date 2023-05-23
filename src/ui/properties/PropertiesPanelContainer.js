@@ -63,6 +63,7 @@ const NoNodeSelectedMessage = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
+  padding-left:100px;
 `;
 const VisibleInput= styled.div`
 display: flex;
