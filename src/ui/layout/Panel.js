@@ -47,7 +47,7 @@ export const PanelToolbar = styled.div`
   }
 
   :active {
-    background-color: ${props => props.theme.bluePressed};
+    background-color: ${treeNodeBackgroundColor};
     color: ${props => props.theme.text};
   }
 `;

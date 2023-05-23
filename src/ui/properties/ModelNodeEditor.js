@@ -35,10 +35,43 @@ const GltfInfoSection = styled.div`
 display:flex;
 flex-direction:row;
 justify-content:space-evenly;
-padding:12px 0;
+ h3{
+ padding:6px 14px;
+ font-weight:700;
+ :hover
+ {
+  color: ${props => (props.selected || props.focused ? props.theme.text : props.theme.text2)};
+
+ }
+
+ :active {
+  // background-color: ${props => props.theme.disabled};
+  color: ${props => props.theme.text2};
+}
+ }
+
+ 
+
+
 ` 
 const AttributionSection = styled.div`
 ` 
+function treeNodeBackgroundColor({ root, selected, active, theme }) {
+  if (selected) {
+    if (active) {
+      return theme.bluePressed;
+    } else {
+      return theme.selected;
+    }
+  } else {
+    if (root) {
+      return theme.panel2;
+    } else {
+      return theme.panel;
+    }
+  }
+}
+
 
 export default class ModelNodeEditor extends Component {
   static propTypes = {
