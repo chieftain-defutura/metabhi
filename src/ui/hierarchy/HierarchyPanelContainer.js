@@ -88,7 +88,7 @@ const TreeNodeContainer = styled.div`
   }
 
   :active {
-    background-color: ${props => props.theme.bluePressed};
+    // background-color: ${props => props.theme.bluePressed};
     color: ${props => props.theme.text};
   }
 `;

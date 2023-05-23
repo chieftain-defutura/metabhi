@@ -2,7 +2,7 @@ const theme = {
   lato: "'Lato', sans-serif",
   zilla: "'Zilla Slab', sans-serif",
   inputBackground: "#070809",
-  border: "#5D646C",
+  border: "#252525",
   panel: "#282C31",
   panel2: "#3A4048",
   selected: "#006EFF",
@@ -49,7 +49,7 @@ const theme = {
   black: "#000000",
   blue: "#0092FF",
   gray: "#777777",
-  darkGray: "#151515",
+  darkGray: "#0A0A0A",
   lightGray: "#aaaaaa",
   scrollbarClr: "#454545",
   text: "#ffffff",
@@ -116,7 +116,7 @@ const darkTheme = {
   //white mode theme
 
   darkClr: "#eeeeee",
-  lightDarkClr: "#252525",
+  lightDarkClr: "rgba(170, 170, 170, 0.1)",
   grayClr: "#FFFFFF",
   black: "#EEEEEE",
   blue: "#0092FF",
@@ -140,6 +140,8 @@ const darkTheme = {
   panel: "#ffffff",
   bluePressed: "rgba(0, 146, 255, 0.2)",
   selected: "rgba(0, 146, 255, 0.2)",
+  hover: "rgba(170, 170, 170, 0.2)",
+  border: "rgba(170, 170, 170, 0.5)",
   hover: "rgba(170, 170, 170, 0.2);",
   blueHover: "#0092FF",
   hoverClr: "#dddddd"

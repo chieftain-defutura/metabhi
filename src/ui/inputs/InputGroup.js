@@ -35,7 +35,7 @@ export const InputGroupContent = styled.div`
     pointer-events: none;
     opacity: 0.3;
   `}
-  display: flex;
+  // display: flex;
   flex-direction: row;
   // flex: 2;
   align-items: center;
@@ -82,7 +82,7 @@ export const OptionalGroup = styled.div`
   `}
 `;
 export const InputGroupProperties = styled.div`
-    border-bottom:1px solid #454545;
+    // border-bottom:1px solid #454545;
 `;
 
 export function InputGroupInfo({ info }) {

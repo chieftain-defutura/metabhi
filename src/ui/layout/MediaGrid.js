@@ -5,12 +5,13 @@ import styled from "styled-components";
 const MediaGridItemContainer = styled.div`
   position: relative;
   display: flex;
-  flex: 1;
+  // flex: 1;
   flex-direction: column;
   outline: none;
   overflow: hidden;
   user-select: none;
   text-decoration: none;
+  // width:50%;
   border-radius: ${props => props.borderRadius};
   background-color: ${props => props.theme.box};
 
@@ -167,8 +168,9 @@ export const MediaGrid = styled.div`
   display: grid;
   grid-gap: ${props => props.gap};
   width: 100%;
-  grid-template-columns: 1fr 1fr;
+  // grid-template-columns: 1fr 1fr;
   padding: ${props => props.gap};
+  margin-bottom:100px;
 `;
 
 MediaGrid.propTypes = {
