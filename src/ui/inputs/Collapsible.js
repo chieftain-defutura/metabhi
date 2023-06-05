@@ -13,7 +13,7 @@ const CollapsibleContainer = styled.div`
 
 const CollapsibleLabel = styled.div`
   color: ${props => props.theme.text2};
-  // background-color: ${props => props.theme.disabled};
+  background-color: ${props => props.theme.disabled};
   cursor: pointer;
   display: flex;
   flex-direction: row-reverse;
@@ -31,8 +31,9 @@ const CollapsibleLabel = styled.div`
 const CollapsibleContent = styled.div`
   display: flex;
   flex-direction: column;
-  // padding: 4px 8px;
-  width:100%;
+  padding: 4px 8px;
+  margin:12px 14px;
+  width:90%;
   ul{
     display: flex;
   }
@@ -54,8 +55,8 @@ export default function Collapsible({ label, open, children }) {
 
   return (
     <div>
-    <CollapsibleContainer>
-      <CollapsibleLabel onClick={toggleCollapsed}>
+    <CollapsibleContainer onClick={toggleCollapsed }>
+      <CollapsibleLabel >
         <CollapseIcon as={collapsed ? CaretRight : CaretDown} size={14} collapsed={collapsed} />
         {label}
       </CollapsibleLabel>
@@ -66,7 +67,7 @@ export default function Collapsible({ label, open, children }) {
 }
 
 Collapsible.defaultProps = {
-  open: false
+  open: false,
 };
 
 Collapsible.propTypes = {

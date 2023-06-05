@@ -13,6 +13,22 @@ export const PanelContainer = styled.div`
   user-select: none;
 `;
 
+function treeNodeBackgroundColor({ root, selected, active, theme }) {
+  if (selected) {
+    if (active) {
+      return theme.bluePressed;
+    } else {
+      return theme.selected;
+    }
+  } else {
+    if (root) {
+      return theme.panel2;
+    } else {
+      return theme.panel;
+    }
+  }
+}
+
 export const PanelToolbar = styled.div`
   display: flex;
   padding: 4px;
@@ -21,6 +37,19 @@ export const PanelToolbar = styled.div`
   padding: 13px 24px;
   border-bottom: 1px solid rgba(119, 119, 119, 0.2);
   border-top: 1px solid rgba(119, 119, 119, 0.2);
+
+  color: ${props => (props.selected || props.focused ? props.theme.text : props.theme.text2)};
+
+  :hover,
+  :focus {
+    background-color: ${props => (props.selected ? props.theme.emptyBoxClr : props.theme.hover)};
+    color: ${props => props.theme.text};
+  }
+
+  :active {
+    background-color: ${treeNodeBackgroundColor};
+    color: ${props => props.theme.text};
+  }
 `;
 
 export const PanelIcon = styled.div`

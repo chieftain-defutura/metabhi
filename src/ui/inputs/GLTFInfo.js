@@ -9,9 +9,9 @@ import Collapsible from "./Collapsible";
 import { bytesToSize } from "../utils";
 
 const ChartContainer = styled.div`
-  margin: 4px 0;
-  padding: 4px;
-  // background-color: ${props => props.theme.black};
+  // margin: 4px 0;
+  // padding: 4px;
+  // background-color: ${props => props.theme.disabled};
   border-radius: 4px;
   width:100%;
 `;
@@ -72,6 +72,8 @@ export function GLTFFileChart({ node }) {
   );
 
   return (
+    <>
+    {/* <h1>File</h1> */}
     <ChartContainer>
       <PieChart width={175} height={height}>
         <Pie
@@ -91,6 +93,7 @@ export function GLTFFileChart({ node }) {
         {/* <Legend layout="vertical" align="right" verticalAlign="middle" iconType="rect" formatter={legendFormatter} /> */}
       </PieChart>
     </ChartContainer>
+    </>
   );
 }
 
@@ -121,6 +124,7 @@ const Thumbnail = styled.img`
 
 const ImageItemContainer = styled.ul`
   display: flex;
+  flex-direction:column;
   margin: 4px 0;
   padding: 12px;
   // background-color: ${props => props.theme.gray};
@@ -144,9 +148,10 @@ const ImageHover = styled.div`
 transition: .5s ease;
 opacity: 0;
 position: relative;
-top:100%;
-transform: translate(-50%, -50%);
--ms-transform: translate(-50%, -50%);
+top:0%;
+left:0;
+padding:12px;
+background:red;
 text-align: center;
 :hover{
   opacity: 1;
@@ -155,6 +160,8 @@ text-align: center;
 
 function GLTFTextureItem({ item }) {
   return (
+    <>
+    {/* <h1>Textures</h1> */}
     <ImageItemContainer>
       <Thumbnail src={item.url} alt={item.name} />
       {/* <ImageHover>
@@ -172,6 +179,7 @@ function GLTFTextureItem({ item }) {
         </ul>
       </ImageHover> */}
     </ImageItemContainer>
+    </>
   );
 }
 
@@ -210,6 +218,8 @@ const MeshItemContainer = styled.li`
 `;
 function GLTFMeshItem({ item }) {
   return (
+    <>  
+    {/* <h1>Meshes</h1> */}
     <MeshItemContainer>
       <h3>{item.name}</h3>
       <ul>
@@ -221,6 +231,7 @@ function GLTFMeshItem({ item }) {
         </li>
       </ul>
     </MeshItemContainer>
+    </>
   );
 }
 
@@ -250,7 +261,7 @@ const StatsContainer = styled.ul`
   border-radius: 4px;
   padding:12px 24px;
   display:flex;
-  gap:20px;
+  justify-content:space-evenly;
   width:100%;
 
   // align-items:center;
@@ -264,30 +275,32 @@ export function GLTFStats({ node }) {
   const stats = node.stats;
 
   return (
+    <>
+    {/* <h1>States</h1> */}
     <StatsContainer>
       <div>
-      <li>
-        <b>Nodes:</b> {stats.nodes}
-      </li>
-      <li>
-        <b>Meshes:</b> {stats.meshes}
-      </li>
-      <li>
-        <b>Materials:</b> {stats.materials}
-      </li>
+        <li>
+          <b>Nodes:</b> {stats.nodes}
+        </li>
+        <li>
+          <b>Meshes:</b> {stats.meshes}
+        </li>
+        <li>
+          <b>Materials:</b> {stats.materials}
+        </li>
       </div>
       <div>
-      <li>
-        <b>Textures:</b> {stats.textures}
-      </li>
-      <li>
-        <b>Triangles:</b> {stats.triangles}
-      </li>
-      <li>
-        <b>Vertices:</b> {stats.vertices}
-      </li>
+        <li>
+          <b>Textures:</b> {stats.textures}
+        </li>
+        <li>
+          <b>Triangles:</b> {stats.triangles}
+        </li>
+        <li>
+          <b>Vertices:</b> {stats.vertices}
+        </li>
       </div>
-    </StatsContainer>
+    </StatsContainer></>
   );
 }
 
@@ -298,9 +311,8 @@ GLTFStats.propTypes = {
 const ValidationInfoContainer = styled.div`
   margin: 4px 0;
   padding: 8px;
-  background-color: ${props => props.theme.panel2};
+  background-color: ${props => props.theme.lightDarkClr};
   border-radius: 4px;
-
   h3 {
     font-size: 14px;
   }
@@ -399,6 +411,7 @@ export function GLTFValidation({ node }) {
 
   return (
     <>
+      {/* <h1>Validation</h1> */}
       {validation && (
         <>
           <ValidationInfoContainer>
@@ -470,7 +483,7 @@ GLTFValidation.propTypes = {
 
 export function GLTFInfo({ node }) {
   return (
-    <Collapsible label="glTF Info">
+    
       <div style={{width:"100",height:"100"}}>
        <Collapsible open label="Stats">
         <GLTFStats node={node} />
@@ -488,7 +501,7 @@ export function GLTFInfo({ node }) {
         <GLTFValidation node={node} />
       </Collapsible>
       </div>
-    </Collapsible>
+    
   );
 }
 

@@ -144,6 +144,7 @@ const TreeNodeLabel = styled.div`
 
 const PanelItemContent = styled.div`
   display: flex;
+  
 `;
 
 function borderStyle({ isOver, canDrop, position }) {

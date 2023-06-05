@@ -47,10 +47,8 @@ export default class SpawnerNodeEditor extends Component {
         <InputGroup name="Apply gravity to spawned object">
           <BooleanInput value={node.applyGravity} onChange={this.onChangeApplyGravity} />
         </InputGroup>
-        <div style={{background:"red"}}>
         {node.model && <GLTFInfo onClick={setOpen} node={node} />}
         <AttributionNodeEditor name="Attribution" onClick={setOpen} {...this.props} />
-        </div>
       </NodeEditor>
     );
   }

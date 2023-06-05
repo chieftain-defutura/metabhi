@@ -27,26 +27,21 @@ export default class AttributionNodeEditor extends Component {
     const { name, node } = this.props;
 
     return (
-      <Collapsible label={name}>
-        <InputGroup name="Title">
-          <StringInput
-            value={(node.attribution && node.attribution.title) || ""}
-            onChange={title => this.onChangeAttribution(node.attribution, "title", title)}
-          />
-        </InputGroup>
-        <InputGroup name="Author">
+    
+        <><InputGroup name="Title">
+        <StringInput
+          value={(node.attribution && node.attribution.title) || ""}
+          onChange={title => this.onChangeAttribution(node.attribution, "title", title)} />
+      </InputGroup><InputGroup name="Author">
           <StringInput
             value={(node.attribution && node.attribution.author) || ""}
-            onChange={author => this.onChangeAttribution(node.attribution, "author", author)}
-          />
-        </InputGroup>
-        <InputGroup name="Url">
+            onChange={author => this.onChangeAttribution(node.attribution, "author", author)} />
+        </InputGroup><InputGroup name="Url">
           <StringInput
             value={(node.attribution && node.attribution.url) || ""}
-            onChange={url => this.onChangeAttribution(node.attribution, "url", url)}
-          />
-        </InputGroup>
-      </Collapsible>
+            onChange={url => this.onChangeAttribution(node.attribution, "url", url)} />
+        </InputGroup></>
+      
     );
   }
 }
