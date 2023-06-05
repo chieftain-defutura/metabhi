@@ -203,7 +203,6 @@ const Dashboard = () => {
   const api = useContext(ApiContext);
   const [gridToggle, setGridToggle] = useState("GridIcon");
   const queryParams = new URLSearchParams(location.search);
-  const [isActive, setIsActive] = useState(true);
 
   const [params, setParams] = useState({
     source: "scene_listings",

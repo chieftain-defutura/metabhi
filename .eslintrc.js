@@ -8,6 +8,7 @@ module.exports = {
   },
   plugins: ["prettier", "react", "react-hooks"],
   rules: {
+    semi: ["error", "never"],
     "prettier/prettier": "error",
     "prefer-const": "error",
     "no-use-before-define": ["error", { functions: false, classes: false, variables: true }],
@@ -55,4 +56,4 @@ module.exports = {
       { name: "Link", linkAttribute: "to" }
     ]
   }
-};
+}

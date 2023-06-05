@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import configs from "../configs";
-import PreviewDialog from "../ui/dialogs/PreviewDialog";
-import StringInput from "../ui/inputs/StringInput";
-import BooleanInput from "../ui/inputs/BooleanInput";
-import FormField from "../ui/inputs/FormField";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import configs from "../configs"
+import PreviewDialog from "../ui/dialogs/PreviewDialog"
+import StringInput from "../ui/inputs/StringInput"
+import BooleanInput from "../ui/inputs/BooleanInput"
+import FormField from "../ui/inputs/FormField"
 
 export default class PublishDialog extends Component {
   static propTypes = {
@@ -15,10 +15,10 @@ export default class PublishDialog extends Component {
     published: PropTypes.bool,
     sceneUrl: PropTypes.string,
     initialSceneParams: PropTypes.object
-  };
+  }
 
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       name: "",
@@ -26,28 +26,29 @@ export default class PublishDialog extends Component {
       allowRemixing: false,
       allowPromotion: false,
       ...props.initialSceneParams
-    };
+    }
   }
 
-  onChangeName = name => this.setState({ name });
+  onChangeName = name => this.setState({ name })
 
-  onChangeCreatorAttribution = creatorAttribution => this.setState({ creatorAttribution });
+  onChangeCreatorAttribution = creatorAttribution => this.setState({ creatorAttribution })
 
-  onChangeAllowRemixing = allowRemixing => this.setState({ allowRemixing });
+  onChangeAllowRemixing = allowRemixing => this.setState({ allowRemixing })
 
-  onChangeAllowPromotion = allowPromotion => this.setState({ allowPromotion });
+  onChangeAllowPromotion = allowPromotion => this.setState({ allowPromotion })
 
   onConfirm = () => {
-    const publishState = { ...this.state, contentAttributions: this.props.contentAttributions };
-    publishState.name = publishState.name.trim();
-    publishState.creatorAttribution = publishState.creatorAttribution.trim();
-    this.props.onPublish(publishState);
-  };
+    const publishState = { ...this.state, contentAttributions: this.props.contentAttributions }
+    publishState.name = publishState.name.trim()
+    publishState.creatorAttribution = publishState.creatorAttribution.trim()
+    this.props.onPublish(publishState)
+  }
 
   render() {
-    const { onCancel, screenshotUrl, contentAttributions } = this.props;
-    const { creatorAttribution, name, allowRemixing, allowPromotion } = this.state;
+    const { onCancel, screenshotUrl, contentAttributions } = this.props
+    const { creatorAttribution, name, allowRemixing, allowPromotion } = this.state
 
+    console.log("screenshotUrl", screenshotUrl)
     return (
       <PreviewDialog
         imageSrc={screenshotUrl}
@@ -122,6 +123,6 @@ export default class PublishDialog extends Component {
           </FormField>
         )}
       </PreviewDialog>
-    );
+    )
   }
 }

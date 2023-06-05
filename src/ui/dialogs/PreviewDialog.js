@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Dialog from "./Dialog";
-import styled from "styled-components";
+import React from "react"
+import PropTypes from "prop-types"
+import Dialog from "./Dialog"
+import styled from "styled-components"
 
 const LeftContent = styled.div`
   display: flex;
@@ -13,16 +13,18 @@ const LeftContent = styled.div`
   img {
     border-radius: 6px;
   }
-`;
+`
 
 const RightContent = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
   padding: 30px 30px;
-`;
+`
 
 export default function PreviewDialog({ imageSrc, children, ...props }) {
+  console.log("imagescr", imageSrc)
+
   return (
     <Dialog {...props}>
       <LeftContent>
@@ -30,10 +32,10 @@ export default function PreviewDialog({ imageSrc, children, ...props }) {
       </LeftContent>
       <RightContent>{children}</RightContent>
     </Dialog>
-  );
+  )
 }
 
 PreviewDialog.propTypes = {
   imageSrc: PropTypes.string,
   children: PropTypes.node
-};
+}

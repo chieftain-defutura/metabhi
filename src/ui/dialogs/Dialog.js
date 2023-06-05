@@ -1,7 +1,10 @@
-import React, { useCallback } from "react";
-import PropTypes from "prop-types";
-import { Button, SecondaryButton } from "../inputs/Button";
-import styled from "styled-components";
+import React, { useCallback, useState } from "react"
+import PropTypes from "prop-types"
+import { Button, SecondaryButton } from "../inputs/Button"
+import { nftAbi } from "../../api/NftAbi/nftAbi"
+import { useWeb3React } from "@web3-react/core"
+import styled from "styled-components"
+// import { Web3Storage } from "web3.storage"
 
 const DialogContainer = styled.form`
   display: flex;
@@ -13,7 +16,7 @@ const DialogContainer = styled.form`
   min-width: 400px;
   min-height: 150px;
   max-height: 80vh;
-`;
+`
 
 const DialogHeader = styled.div`
   display: flex;
@@ -32,7 +35,7 @@ const DialogHeader = styled.div`
     display: flex;
     align-items: center;
   }
-`;
+`
 
 export const DialogContent = styled.div`
   color: ${props => props.theme.text};
@@ -55,7 +58,7 @@ export const DialogContent = styled.div`
     margin-bottom: 12px;
     line-height: 1.5em;
   }
-`;
+`
 
 const DialogBottomNav = styled.div`
   display: flex;
@@ -90,7 +93,7 @@ const DialogBottomNav = styled.div`
   & > * {
     margin: 0 8px;
   }
-`;
+`
 
 export default function Dialog({
   tag,
@@ -103,40 +106,122 @@ export default function Dialog({
   children,
   ...rest
 }) {
-  const onSubmitForm = useCallback(
-    e => {
-      e.preventDefault();
+  const { account, active, library } = useWeb3React()
+  const [objectCID, setObjectCID] = useState("")
+  console.log("account", account)
 
-      if (onConfirm) {
-        onConfirm(e);
+  const mintNftAddress = "0x2bcd90c44679e246b72De8f2be76b4332a46c85c".toLowerCase()
+
+  const onSubmitForm = useCallback(
+    async e => {
+      // e.preventDefault()
+
+      if (!onConfirm) return
+      onConfirm(e)
+      if (!account || !library.provider) return
+
+      try {
+        const token =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDhmMTBiYjIxQTFlNTE1MmVlZEJBNjEwMTk1NTdlNmIyMkVBMDhBMDEiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2ODM3OTc0MzU0MTcsIm5hbWUiOiJmdW5naWJsZXoifQ.XRneiYEVsMUm_Nsjp62CqIo18PBkwt61DzoooVhS0k8"
+
+        const storage = new Web3Storage({ token: token })
+
+        const obj = {
+          name: "evalues.name",
+          image: "https://hubs.local:9090/529a103e-a660-4e7b-8178-d6f0c3edeb8e"
+        }
+
+        console.log(obj)
+        const blob = new Blob([JSON.stringify(obj)], {
+          type: "application/json"
+        })
+        const Objectfiles = [new File([blob], "object.json")]
+        const objectCid = await storage.put(Objectfiles)
+        const objectres = await storage.get(objectCid)
+        if (!objectres) return
+        const files = await objectres.files()
+        for (const file of files) {
+          setObjectCID(file.cid)
+        }
+
+        const mintContract = new ethers.Contract(mintNftAddress, nftAbi, library.provider)
+        const tx = await mintContract.mint(account, objectCID)
+        await tx.wait()
+      } catch (error) {
+        console.log("Error sending File to IPFS:")
+        console.log(error)
       }
     },
-    [onConfirm]
-  );
+    [onConfirm, objectCID]
+  )
+
+  const onsubmit = async () => {
+    if (!account || !library.provider) return
+
+    try {
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDhmMTBiYjIxQTFlNTE1MmVlZEJBNjEwMTk1NTdlNmIyMkVBMDhBMDEiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2ODM3OTc0MzU0MTcsIm5hbWUiOiJmdW5naWJsZXoifQ.XRneiYEVsMUm_Nsjp62CqIo18PBkwt61DzoooVhS0k8"
+
+      // const storage = new Web3Storage({ token: token })
+
+      const obj = {
+        name: "evalues.name",
+        image: "https://hubs.local:9090/529a103e-a660-4e7b-8178-d6f0c3edeb8e"
+      }
+
+      console.log(obj)
+      const blob = new Blob([JSON.stringify(obj)], {
+        type: "application/json"
+      })
+      const Objectfiles = [new File([blob], "object.json")]
+      const objectCid = await storage.put(Objectfiles)
+      const objectres = await storage.get(objectCid)
+      if (!objectres) return
+      const files = await objectres.files()
+      for (const file of files) {
+        setObjectCID(file.cid)
+      }
+
+      const mintContract = new ethers.Contract(mintNftAddress, nftAbi, library.provider)
+      const tx = await mintContract.mint(account, objectCID)
+      await tx.wait()
+    } catch (error) {
+      console.log("Error sending File to IPFS:")
+      console.log(error)
+    }
+  }
 
   return (
-    <DialogContainer as={tag} onSubmit={onSubmitForm} {...rest}>
-      <DialogHeader>
-        <span>{title}</span>
-      </DialogHeader>
-      <DialogContent>{children}</DialogContent>
-      {(onConfirm || onCancel || bottomNav) && (
-        <DialogBottomNav>
-          {bottomNav}
-          {onCancel && (
-            <Button className="primary-save-btn" onClick={onCancel}>
-              {cancelLabel}
-            </Button>
-          )}
-          {onConfirm && (
-            <Button className="save-btn" type="submit" onClick={tag === "form" ? null : onConfirm}>
-              {confirmLabel}
-            </Button>
-          )}
-        </DialogBottomNav>
-      )}
-    </DialogContainer>
-  );
+    <>
+      <DialogContainer as={tag} onSubmit={onSubmitForm} {...rest}>
+        <DialogHeader>
+          <span>{title}</span>
+        </DialogHeader>
+        <DialogContent>{children}</DialogContent>
+        {(onConfirm || onCancel || bottomNav) && (
+          <DialogBottomNav>
+            {bottomNav}
+            {onCancel && (
+              <Button className="primary-save-btn" onClick={onCancel}>
+                {cancelLabel}
+              </Button>
+            )}
+            {onConfirm && (
+              <Button className="save-btn" type="submit" onClick={tag === "form" ? null : onConfirm}>
+                {confirmLabel}
+              </Button>
+            )}
+            {/* <Button className="save-btn" type="submit" onClick={tag === "form" ? null : onConfirm}>
+              save
+            </Button> */}
+          </DialogBottomNav>
+        )}
+      </DialogContainer>
+      {/* <Button className="save-btn" type="submit" onClick={onsubmit}>
+        save
+      </Button> */}
+    </>
+  )
 }
 
 Dialog.propTypes = {
@@ -148,10 +233,10 @@ Dialog.propTypes = {
   confirmLabel: PropTypes.string.isRequired,
   bottomNav: PropTypes.node,
   children: PropTypes.node
-};
+}
 
 Dialog.defaultProps = {
   tag: "form",
   confirmLabel: "Ok",
   cancelLabel: "Cancel"
-};
+}

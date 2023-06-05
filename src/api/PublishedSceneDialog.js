@@ -1,10 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import configs from "../configs";
-import PreviewDialog from "../ui/dialogs/PreviewDialog";
-import { Button } from "../ui/inputs/Button";
+import React from "react"
+import PropTypes from "prop-types"
+import configs from "../configs"
+import PreviewDialog from "../ui/dialogs/PreviewDialog"
+import { Button } from "../ui/inputs/Button"
 
 export default function PublishedSceneDialog({ onCancel, sceneName, sceneUrl, screenshotUrl, ...props }) {
+  console.log("sceneUrl", screenshotUrl)
   return (
     <PreviewDialog imageSrc={screenshotUrl} title="Scene Published" {...props}>
       <h1>{sceneName}</h1>
@@ -13,7 +14,7 @@ export default function PublishedSceneDialog({ onCancel, sceneName, sceneUrl, sc
         View Your Scene
       </Button>
     </PreviewDialog>
-  );
+  )
 }
 
 PublishedSceneDialog.propTypes = {
@@ -21,4 +22,4 @@ PublishedSceneDialog.propTypes = {
   sceneName: PropTypes.string.isRequired,
   sceneUrl: PropTypes.string.isRequired,
   screenshotUrl: PropTypes.string.isRequired
-};
+}

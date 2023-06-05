@@ -1,34 +1,36 @@
-import React, { useState, useCallback } from "react";
-import PropTypes from "prop-types";
-import StringInput from "../inputs/StringInput";
-import FormField from "../inputs/FormField";
-import PreviewDialog from "./PreviewDialog";
+import React, { useState, useCallback } from "react"
+import PropTypes from "prop-types"
+import StringInput from "../inputs/StringInput"
+import FormField from "../inputs/FormField"
+import PreviewDialog from "./PreviewDialog"
 
 export default function SaveNewProjectDialog({ thumbnailUrl, initialName, onConfirm, onCancel }) {
-  const [name, setName] = useState(initialName);
+  const [name, setName] = useState(initialName)
 
   const onChangeName = useCallback(
     value => {
-      setName(value);
+      setName(value)
     },
     [setName]
-  );
+  )
 
   const onConfirmCallback = useCallback(
     e => {
-      e.preventDefault();
-      onConfirm({ name });
+      e.preventDefault()
+      onConfirm({ name })
     },
     [name, onConfirm]
-  );
+  )
 
   const onCancelCallback = useCallback(
     e => {
-      e.preventDefault();
-      onCancel();
+      e.preventDefault()
+      onCancel()
     },
     [onCancel]
-  );
+  )
+
+  console.log("thumbnail", thumbnailUrl)
 
   return (
     <PreviewDialog
@@ -50,7 +52,7 @@ export default function SaveNewProjectDialog({ thumbnailUrl, initialName, onConf
         />
       </FormField>
     </PreviewDialog>
-  );
+  )
 }
 
 SaveNewProjectDialog.propTypes = {
@@ -58,4 +60,4 @@ SaveNewProjectDialog.propTypes = {
   initialName: PropTypes.string.isRequired,
   onConfirm: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired
-};
+}
