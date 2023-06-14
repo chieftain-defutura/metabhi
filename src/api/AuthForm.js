@@ -1,10 +1,14 @@
-import React, { Component } from "react"
+import React, { Component, useState } from "react"
 import PropTypes from "prop-types"
 import configs from "../configs"
 import styled from "styled-components"
 import Input from "../ui/inputs/Input"
-import MetaMaskLogo from "../assets/MetaMask-logo.png"
-import ConnectWalletBtn from "../components/ConnectWalletBtn"
+import { useWeb3React } from "@web3-react/core"
+import { useHistory } from "react-router-dom"
+import axios from "axios"
+
+// import MetaMaskLogo from "../assets/MetaMask-logo.png"
+// import ConnectWalletBtn from "../components/ConnectWalletBtn"
 // import { PRIVACY, TERMS } from "../constants";
 
 const StyledAuthForm = styled.form`
@@ -34,6 +38,12 @@ const StyledAuthForm = styled.form`
     font-size: 1.1em;
     color: ${props => props.theme.text};
   }
+  button {
+    border: none;
+    outline: none;
+    padding: 8px 32px;
+    background: #0092ff;
+  }
 `
 
 const FormInput = styled(Input)`
@@ -47,57 +57,133 @@ const ErrorMessage = styled.p`
   margin-bottom: 20px;
 `
 
-// const LegalText = styled.p`
-//   margin-bottom: 20px;
-// `;
+const LegalText = styled.p`
+  margin-bottom: 20px;
+`
 
-export default class AuthForm extends Component {
-  static propTypes = {
-    error: PropTypes.string,
-    onSubmit: PropTypes.func.isRequired
-  }
+// export default class AuthForm extends Component {
+//   static propTypes = {
+//     error: PropTypes.string,
+//     onSubmit: PropTypes.func.isRequired
+//   }
 
-  state = {
-    email: ""
-  }
+//   state = {
+//     email: ""
+//   }
 
-  onSubmit = e => {
+//   onSubmit = async e => {
+//     e.preventDefault()
+//     this.props.onSubmit(this.state.email)
+//     console.log("email", this.state.email)
+//   }
+
+//   onEmailChange = e => {
+//     this.setState({ email: e.target.value })
+//   }
+
+//   // handleSubmit = async e => {
+//   //   e.preventDefault()
+
+//   //   const { account, history, onSubmit } = this.props
+//   //   const { email } = this.state
+
+//   //   if (!account) return
+
+//   //   try {
+//   //     if (!localStorage.getItem("token")) {
+//   //       const { data } = await axios.post("https://node-reticulum.onrender.com/auth/register", {
+//   //         wallet: account,
+//   //         email: email
+//   //       })
+//   //       console.log("datas", data)
+//   //     }
+
+//   //     onSubmit(email)
+//   //     console.log("email", email)
+
+//   //     history.goBack()
+//   //   } catch (error) {
+//   //     console.error("An error occurred:", error)
+//   //   }
+//   // }
+
+//   render() {
+//     return (
+//       <StyledAuthForm onSubmit={this.onSubmit}>
+//         {this.props.error && <ErrorMessage>{this.props.error}</ErrorMessage>}
+//         <h3>Register or Login</h3>
+//         <h4>Login to save projects and publish scenes{configs.isMoz() && " to Hubs"}.</h4>
+//         {/* <img src={MetaMaskLogo} alt="MetaMasklogo" /> */}
+//         <FormInput
+//           type="email"
+//           name="email"
+//           placeholder="Email"
+//           value={this.state.email}
+//           onChange={this.onEmailChange}
+//         />
+//         {/* <LegalText>
+//           By proceeding, you agree to the{" "}
+//           <a rel="noopener noreferrer" target="_blank" href={TERMS}>
+//             terms of use
+//           </a>{" "}
+//           and{" "}
+//           <a rel="noopener noreferrer" target="_blank" href={PRIVACY}>
+//             privacy notice
+//           </a>
+//           .
+//         </LegalText> */}
+//         {/* <ConnectWalletBtn /> */}
+
+//         <button type="submit">Send Magic Link</button>
+//       </StyledAuthForm>
+//     )
+//   }
+// }
+
+const LoginForm = ({ error, onSubmit }) => {
+  const [email, setEmail] = useState("")
+  const { account } = useWeb3React()
+  const history = useHistory()
+
+  const handleSubmit = async e => {
     e.preventDefault()
-    this.props.onSubmit(this.state.email)
+
+    if (!account) return
+    if (localStorage.getItem("token")) return
+
+    try {
+      const { data } = await axios.post("https://node-reticulum.onrender.com/auth/register", {
+        wallet: account,
+        email: email
+      })
+      console.log("datas", data)
+      onSubmit(email)
+      console.log("email", email)
+
+      // history.push("/dashboard/recent")
+    } catch (error) {
+      console.error("An error occurred:", error)
+    }
   }
 
-  onEmailChange = e => {
-    this.setState({ email: e.target.value })
+  const handleEmailChange = e => {
+    setEmail(e.target.value)
   }
 
-  render() {
-    return (
-      <StyledAuthForm onSubmit={this.onSubmit}>
-        {this.props.error && <ErrorMessage>{this.props.error}</ErrorMessage>}
-        <h3>Register or Login</h3>
-        <h4>Login to save projects and publish scenes{configs.isMoz() && " to Hubs"}.</h4>
-        {/* <img src={MetaMaskLogo} alt="MetaMasklogo" /> */}
-        <FormInput
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={this.state.email}
-          onChange={this.onEmailChange}
-        />
-        {/* <LegalText>
-          By proceeding, you agree to the{" "}
-          <a rel="noopener noreferrer" target="_blank" href={TERMS}>
-            terms of use
-          </a>{" "}
-          and{" "}
-          <a rel="noopener noreferrer" target="_blank" href={PRIVACY}>
-            privacy notice
-          </a>
-          .
-        </LegalText> */}
-        {/* <ConnectWalletBtn /> */}
-        <button type="submit">Send Magic Link</button>
-      </StyledAuthForm>
-    )
-  }
+  return (
+    <StyledAuthForm onSubmit={handleSubmit}>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      <h3>Register or Login</h3>
+      <h4>Login to save projects and publish scenes{configs.isMoz() && " to Hubs"}.</h4>
+      <FormInput type="email" name="email" placeholder="Email" value={email} onChange={handleEmailChange} />
+
+      <button type="submit">Send Magic Link</button>
+    </StyledAuthForm>
+  )
 }
+LoginForm.propTypes = {
+  error: PropTypes.string,
+  onSubmit: PropTypes.func.isRequired
+}
+
+export default LoginForm

@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import InputGroup from "../inputs/InputGroup";
-import StringInput from "../inputs/StringInput";
-import Collapsible from "../inputs/Collapsible";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import InputGroup from "../inputs/InputGroup"
+import StringInput from "../inputs/StringInput"
+import Collapsible from "../inputs/Collapsible"
 
 export default class AttributionNodeEditor extends Component {
   static propTypes = {
@@ -12,36 +12,42 @@ export default class AttributionNodeEditor extends Component {
     editor: PropTypes.object,
     children: PropTypes.node,
     disableTransform: PropTypes.bool
-  };
+  }
 
   static defaultProps = {
     disableTransform: false
-  };
+  }
 
   onChangeAttribution = (attribution, key, value) => {
-    attribution[key] = value;
-    this.props.editor.setPropertySelected("attribution", attribution);
-  };
+    attribution = attribution || {}
+    attribution[key] = value
+    this.props.editor.setPropertySelected("attribution", attribution)
+  }
 
   render() {
-    const { name, node } = this.props;
+    const { name, node } = this.props
 
     return (
-    
-        <><InputGroup name="Title">
-        <StringInput
-          value={(node.attribution && node.attribution.title) || ""}
-          onChange={title => this.onChangeAttribution(node.attribution, "title", title)} />
-      </InputGroup><InputGroup name="Author">
+      <>
+        <InputGroup name="Title">
+          <StringInput
+            value={(node.attribution && node.attribution.title) || ""}
+            onChange={title => this.onChangeAttribution(node.attribution, "title", title)}
+          />
+        </InputGroup>
+        <InputGroup name="Author">
           <StringInput
             value={(node.attribution && node.attribution.author) || ""}
-            onChange={author => this.onChangeAttribution(node.attribution, "author", author)} />
-        </InputGroup><InputGroup name="Url">
+            onChange={author => this.onChangeAttribution(node.attribution, "author", author)}
+          />
+        </InputGroup>
+        <InputGroup name="Url">
           <StringInput
             value={(node.attribution && node.attribution.url) || ""}
-            onChange={url => this.onChangeAttribution(node.attribution, "url", url)} />
-        </InputGroup></>
-      
-    );
+            onChange={url => this.onChangeAttribution(node.attribution, "url", url)}
+          />
+        </InputGroup>
+      </>
+    )
   }
 }

@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-import PropTypes from "prop-types";
+import React, { Component } from "react"
+import styled from "styled-components"
+import PropTypes from "prop-types"
 
 export const PanelContainer = styled.div`
   position: relative;
@@ -11,20 +11,20 @@ export const PanelContainer = styled.div`
   background: ${props => props.theme.grayClr};
   overflow: hidden;
   user-select: none;
-`;
+`
 
 function treeNodeBackgroundColor({ root, selected, active, theme }) {
   if (selected) {
     if (active) {
-      return theme.bluePressed;
+      return theme.bluePressed
     } else {
-      return theme.selected;
+      return theme.selected
     }
   } else {
     if (root) {
-      return theme.panel2;
+      return theme.panel2
     } else {
-      return theme.panel;
+      return theme.panel
     }
   }
 }
@@ -37,26 +37,25 @@ export const PanelToolbar = styled.div`
   padding: 13px 24px;
   border-bottom: 1px solid rgba(119, 119, 119, 0.2);
   border-top: 1px solid rgba(119, 119, 119, 0.2);
-
   color: ${props => (props.selected || props.focused ? props.theme.text : props.theme.text2)};
 
-  :hover,
-  :focus {
-    background-color: ${props => (props.selected ? props.theme.emptyBoxClr : props.theme.hover)};
-    color: ${props => props.theme.text};
-  }
+  // :hover,
+  // :focus {
+  //   background-color: ${props => (props.selected ? props.theme.emptyBoxClr : props.theme.hover)};
+  //   color: ${props => props.theme.text};
+  // }
 
-  :active {
-    background-color: ${treeNodeBackgroundColor};
-    color: ${props => props.theme.text};
-  }
-`;
+  // :active {
+  //   background-color: ${treeNodeBackgroundColor};
+  //   color: ${props => props.theme.text};
+  // }
+`
 
 export const PanelIcon = styled.div`
   margin-right: 8px;
-`;
+`
 
-export const PanelTitle = styled.div``;
+export const PanelTitle = styled.div``
 
 export const PanelContent = styled.div`
   display: flex;
@@ -64,7 +63,7 @@ export const PanelContent = styled.div`
   flex-direction: column;
   position: relative;
   overflow: hidden;
-`;
+`
 
 export default class Panel extends Component {
   static propTypes = {
@@ -72,10 +71,10 @@ export default class Panel extends Component {
     title: PropTypes.string,
     children: PropTypes.node,
     toolbarContent: PropTypes.node
-  };
+  }
 
   render() {
-    const { icon, title, children, toolbarContent, ...rest } = this.props;
+    const { icon, title, children, toolbarContent, ...rest } = this.props
 
     // .toolbar used for onboarding
 
@@ -89,6 +88,6 @@ export default class Panel extends Component {
 
         <PanelContent>{children}</PanelContent>
       </PanelContainer>
-    );
+    )
   }
 }

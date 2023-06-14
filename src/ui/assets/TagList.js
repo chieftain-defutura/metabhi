@@ -1,17 +1,17 @@
-import React, { useCallback, useState, useRef, useContext, useEffect } from "react";
-import PropTypes from "prop-types";
-import styled, { ThemeContext } from "styled-components";
-import { Column, Row } from "../layout/Flex";
-import { useSelectionHandler } from "./useSelection";
-import { CaretRight } from "styled-icons/fa-solid/CaretRight";
-import { CaretDown } from "styled-icons/fa-solid/CaretDown";
+import React, { useCallback, useState, useRef, useContext, useEffect } from "react"
+import PropTypes from "prop-types"
+import styled, { ThemeContext } from "styled-components"
+import { Column, Row } from "../layout/Flex"
+import { useSelectionHandler } from "./useSelection"
+import { CaretRight } from "styled-icons/fa-solid/CaretRight"
+import { CaretDown } from "styled-icons/fa-solid/CaretDown"
 
 const StyledTagList = styled(Column)`
   height: auto;
   // min-height: 100%;
   min-width: 175px;
   border-right: 1px solid ${props => props.theme.panel};
-`;
+`
 
 const TagListHeader = styled(Row)`
   color: ${props => props.theme.text2};
@@ -21,13 +21,13 @@ const TagListHeader = styled(Row)`
   min-height: 24px;
   background-color: ${props => props.theme.panel2};
   border-bottom: 1px solid ${props => props.theme.panel};
-`;
+`
 
 const TagListContainer = styled.div`
   height: auto;
   overflow-y: auto;
   overflow-x: auto;
-`;
+`
 
 const TagListToggle = styled.div`
   padding: 2px 2px;
@@ -38,7 +38,7 @@ const TagListToggle = styled.div`
     background-color: ${props => props.theme.hover2};
     border-radius: 3px;
   }
-`;
+`
 
 const TagContent = styled.div`
   display: flex;
@@ -46,7 +46,7 @@ const TagContent = styled.div`
   min-height: 24px;
   padding-left: ${props => props.depth * 20}px;
   color: ${props => props.theme.text};
-  padding:14px 4px;
+  padding: 14px 4px;
   background-color: ${props => (props.selected ? props.theme.selected : "transparent")};
 
   :hover,
@@ -59,7 +59,7 @@ const TagContent = styled.div`
     background-color: ${props => props.theme.bluePressed};
     color: ${props => props.theme.text};
   }
-`;
+`
 
 export const TreeListItem = styled.li`
   display: flex;
@@ -69,41 +69,41 @@ export const TreeListItem = styled.li`
   user-select: none;
   // min-height: 24px;
   white-space: nowrap;
-`;
+`
 
 const TagChildrenList = styled.ul`
   width: max-content;
   min-width: 100%;
-`;
+`
 
 const TreeLeafSpacer = styled.div`
   width: 16px;
-`;
+`
 
 function TagListItem({ tag, depth, onClick, expanded, onToggleExpanded, selectedTags, ...rest }) {
   const onClickItem = useCallback(
     e => {
-      e.stopPropagation();
+      e.stopPropagation()
 
       if (tag.disabled) {
-        return;
+        return
       }
 
-      onClick(tag, e);
+      onClick(tag, e)
     },
     [onClick, tag]
-  );
+  )
 
   const onClickToggle = useCallback(
     e => {
-      e.stopPropagation();
-      onToggleExpanded(tag);
+      e.stopPropagation()
+      onToggleExpanded(tag)
     },
     [onToggleExpanded, tag]
-  );
+  )
 
-  const selected = selectedTags.indexOf(tag) !== -1 || (selectedTags.length === 0 && tag.value === "All");
-  const isExpanded = expanded[tag.value];
+  const selected = selectedTags.indexOf(tag) !== -1 || (selectedTags.length === 0 && tag.value === "All")
+  const isExpanded = expanded[tag.value]
 
   return (
     <TreeListItem selected={selected} {...rest}>
@@ -134,7 +134,7 @@ function TagListItem({ tag, depth, onClick, expanded, onToggleExpanded, selected
         </TagChildrenList>
       )}
     </TreeListItem>
-  );
+  )
 }
 
 TagListItem.propTypes = {
@@ -144,11 +144,11 @@ TagListItem.propTypes = {
   expanded: PropTypes.object,
   onToggleExpanded: PropTypes.func,
   selectedTags: PropTypes.arrayOf(PropTypes.object)
-};
+}
 
 TagListItem.defaultProps = {
   depth: 0
-};
+}
 
 export default function TagList({
   tags,
@@ -158,28 +158,28 @@ export default function TagList({
   initialExpandedTags,
   onChangeExpandedTags
 }) {
-  const theme = useContext(ThemeContext);
-  const tagListContainerRef = useRef();
-  const [onSelect, clearSelection] = useSelectionHandler(tags, selectedTags, onChange, multiselect);
-  const [expanded, setExpanded] = useState(initialExpandedTags || {});
+  const theme = useContext(ThemeContext)
+  const tagListContainerRef = useRef()
+  const [onSelect, clearSelection] = useSelectionHandler(tags, selectedTags, onChange, multiselect)
+  const [expanded, setExpanded] = useState(initialExpandedTags || {})
   const onToggleExpanded = useCallback(
     tag => {
       const nextExpanded = {
         ...expanded,
         [tag.value]: !expanded[tag.value]
-      };
+      }
 
-      setExpanded(nextExpanded);
-      onChangeExpandedTags(nextExpanded);
+      setExpanded(nextExpanded)
+      onChangeExpandedTags(nextExpanded)
     },
     [expanded, setExpanded, onChangeExpandedTags]
-  );
+  )
 
   useEffect(() => {
     tagListContainerRef.current.querySelectorAll("li").forEach((el, index) => {
-      el.style.backgroundColor = index % 2 === 0 ? theme.panel : theme.panel2;
-    });
-  }, [tagListContainerRef, theme, expanded, tags]);
+      el.style.backgroundColor = index % 2 === 0 ? theme.panel : theme.panel2
+    })
+  }, [tagListContainerRef, theme, expanded, tags])
 
   return (
     <StyledTagList>
@@ -194,20 +194,23 @@ export default function TagList({
             selectedTags={selectedTags}
             tag={{ label: "All", value: "All" }}
           />
-          {tags.map(tag => (
-            <TagListItem
-              key={tag.value}
-              onClick={onSelect}
-              onToggleExpanded={onToggleExpanded}
-              expanded={expanded}
-              selectedTags={selectedTags}
-              tag={tag}
-            />
-          ))}
+
+          <div>
+            {tags.map(tag => (
+              <TagListItem
+                key={tag.value}
+                onClick={onSelect}
+                onToggleExpanded={onToggleExpanded}
+                expanded={expanded}
+                selectedTags={selectedTags}
+                tag={tag}
+              />
+            ))}
+          </div>
         </TagChildrenList>
       </TagListContainer>
     </StyledTagList>
-  );
+  )
 }
 
 TagList.propTypes = {
@@ -217,7 +220,7 @@ TagList.propTypes = {
   multiselect: PropTypes.bool,
   initialExpandedTags: PropTypes.object,
   onChangeExpandedTags: PropTypes.func
-};
+}
 
 TagList.defaultProps = {
   tags: [],
@@ -225,4 +228,4 @@ TagList.defaultProps = {
   onSelect: () => {},
   initialExpandedTags: {},
   onChangeExpandedTags: () => {}
-};
+}

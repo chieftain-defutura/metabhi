@@ -1,151 +1,27 @@
-// import React from "react";
-// import PlusIcon from "../assets/plus.svg";
-// import NewFileImg from "../assets/new-file.svg";
-// import StarIcon from "../assets/star.svg";
-// import styled from "styled-components";
-
-// const IDemoTemplate = [
-//   {
-//     image: "1",
-//     newFileIcon: "",
-//     unTitle: "",
-//     editTime: "",
-//     starIcon: ""
-//   },
-//   {
-//     image: "2",
-//     newFileIcon: "",
-//     unTitle: "",
-//     editTime: "",
-//     starIcon: ""
-//   },
-//   {
-//     image: "3",
-//     newFileIcon: "",
-//     unTitle: "",
-//     editTime: "",
-//     starIcon: ""
-//   },
-//   {
-//     image: "4",
-//     newFileIcon: "",
-//     unTitle: "",
-//     editTime: "",
-//     starIcon: ""
-//   }
-// ];
-
-// const ProjectTemplate = styled.div`
-//   width: 225px;
-//   margin: 26px 40px;
-// `;
-
-// const TemplateBox = styled.div`
-//   background: ${props => props.theme.lightDarkClr};
-//   border: 1px solid #252525;
-//   border-radius: 5px;
-// `;
-
-// const Plus = styled.div`
-//   padding: 44px 96px;
-//   img {
-//     width: 32px;
-//     height: 32px;
-//   }
-// `;
-
-// const UnTitleContent = styled.div`
-//   background: ${props => props.theme.darkGray};
-//   display: flex;
-//   justify-content: space-between;
-//   padding: 12px 20px;
-// `;
-
-// const Untitle = styled.div`
-//   display: flex;
-//   align-items: center;
-//   gap: 12px;
-//   h4 {
-//     font-size: 14px;
-//     margin-bottom: 2px;
-//   }
-// `;
-
-// const UntitleProfile = styled.div`
-//   display: flex;
-//   align-items: center;
-//   gap: 8px;
-//   img {
-//     width: 18px;
-//     height: 18px;
-//   }
-// `;
-
-// const Circle = styled.div`
-//   width: 28px;
-//   height: 28px;
-//   background: #dddddd;
-//   border-radius: 50%;
-// `;
-
-// const CardTemplate = () => {
-//   return (
-//     <ProjectTemplate>
-//       <TemplateBox>
-//         <Plus>
-//           <img src={PlusIcon} alt="Plus" />
-//         </Plus>
-//         <UnTitleContent>
-//           <Untitle>
-//             <div>
-//               <img src={NewFileImg} alt="NewFileImg" />
-//             </div>
-//             <div>
-//               <h4>Untitle</h4>
-//               <p>Edit time </p>
-//             </div>
-//           </Untitle>
-//           <UntitleProfile>
-//             <Circle></Circle>
-//             <img src={StarIcon} alt="star" />
-//           </UntitleProfile>
-//         </UnTitleContent>
-//       </TemplateBox>
-//     </ProjectTemplate>
-//   );
-// };
-
-// export default CardTemplate;
-
-import React, { useContext, useState, useCallback } from "react";
-import {
-  ProjectGridContainer,
-  ProjectGridContent,
-  ErrorMessage,
-  ProjectGrid,
-  Filter
-} from "../ui/projects/ProjectGrid";
-import ScrollToTop from "../ui/router/ScrollToTop";
-import InfiniteScroll from "react-infinite-scroller";
-import usePaginatedSearch from "../ui/projects/usePaginatedSearch";
-import { ApiContext } from "../ui/contexts/ApiContext";
-import styled from "styled-components";
-import { AiOutlinePlus } from "react-icons/ai";
-import { TbMenu2 } from "react-icons/tb";
-import { RxDashboard } from "react-icons/rx";
-import PropTypes from "prop-types";
-import CardGrid from "./CardGrid";
-import ListGrid from "./ListGrid";
-import { Link } from "react-router-dom";
-import { AiOutlineFileAdd } from "react-icons/ai";
-import { TbFileImport } from "react-icons/tb";
+import React, { useContext, useState, useCallback, useEffect } from "react"
+import { ProjectGridContainer, ProjectGridContent, ErrorMessage, ProjectGrid, Filter } from "../ui/projects/ProjectGrid"
+import ScrollToTop from "../ui/router/ScrollToTop"
+import InfiniteScroll from "react-infinite-scroller"
+import usePaginatedSearch from "../ui/projects/usePaginatedSearch"
+import { ApiContext } from "../ui/contexts/ApiContext"
+import styled from "styled-components"
+import { AiOutlinePlus } from "react-icons/ai"
+import { TbMenu2 } from "react-icons/tb"
+import { RxDashboard } from "react-icons/rx"
+import PropTypes from "prop-types"
+import CardGrid from "./CardGrid"
+import ListGrid from "./ListGrid"
+import { Link } from "react-router-dom"
+import { AiOutlineFileAdd } from "react-icons/ai"
+import { TbFileImport } from "react-icons/tb"
+import configs from "../configs"
 
 const ProjectTemplateCards = styled.div`
   padding-bottom: 32px;
-`;
+`
 const DashboardWrapper = styled.div`
   margin-top: 75px;
-`;
+`
 
 const WelComeWrapper = styled.div`
   padding: 28px 40px;
@@ -154,7 +30,7 @@ const WelComeWrapper = styled.div`
   justify-content: space-between;
   gap: 180px;
   border-bottom: 1px solid ${props => props.theme.borderStyleClr};
-`;
+`
 
 const WelComeContent = styled.div`
   h4 {
@@ -168,7 +44,7 @@ const WelComeContent = styled.div`
     line-height: 21px;
     color: ${props => props.theme.lightGray};
   }
-`;
+`
 
 const MediumBtn = styled.div`
   a {
@@ -181,9 +57,9 @@ const MediumBtn = styled.div`
     margin-top: 25px;
     font-weight: 700;
   }
-`;
+`
 
-const NewFileContent = styled.div``;
+const NewFileContent = styled.div``
 
 const NewFile = styled.div`
   display: flex;
@@ -204,7 +80,7 @@ const NewFile = styled.div`
     background: rgba(0, 43, 255, 0.1);
     border: 1px solid rgba(0, 146, 255, 0.2);
   }
-`;
+`
 
 const NewFilePara = styled.div`
   display: flex;
@@ -219,7 +95,7 @@ const NewFilePara = styled.div`
     font-weight: 400;
     color: ${props => props.theme.text};
   }
-`;
+`
 
 const Recently = styled.div`
   padding: 22px 40px;
@@ -231,7 +107,7 @@ const Recently = styled.div`
     font-size: 14px;
     margin-bottom: 12px;
   }
-`;
+`
 const DropDown = styled.div`
   // display: flex;
   // align-items: center;
@@ -242,7 +118,7 @@ const DropDown = styled.div`
     font-weight: 500;
     font-size: 14px;
   }
-`;
+`
 const DropDownContent = styled.div`
   h3 {
     font-weight: 500;
@@ -258,7 +134,7 @@ const DropDownContent = styled.div`
     font-weight: 500;
     font-size: 14px;
   }
-`;
+`
 
 const MenuIcons = styled.div`
   display: flex;
@@ -269,7 +145,7 @@ const MenuIcons = styled.div`
     width: 32px;
     height: 32px;
   }
-`;
+`
 
 const ToolbarInputGroup = styled.div`
   margin-top: 20px;
@@ -286,7 +162,7 @@ const ToolbarInputGroup = styled.div`
     color: #fff;
     font-size: 17px;
   }
-`;
+`
 const MenuBox = styled.div`
   border: ${props => props.theme.borderFileClr};
   display: flex;
@@ -294,7 +170,7 @@ const MenuBox = styled.div`
   padding: 6px;
   border-radius: 5px;
   cursor: pointer;
-`;
+`
 
 const RecentlyContent = styled.div`
   display: flex;
@@ -302,39 +178,111 @@ const RecentlyContent = styled.div`
   justify-content: space-between;
   padding: 16px 40px;
   border-bottom: 1px solid ${props => props.theme.borderStyleClr};
-`;
+`
+
+const RETICULUM_SERVER = configs.RETICULUM_SERVER || document.location.hostname
+
+console.log("Reticulum", RETICULUM_SERVER)
+const LOCAL_STORE_KEY = "___hubs_store"
 
 export default function CardTemplate({ history, location }) {
-  const api = useContext(ApiContext);
-  const [isActive, setIsActive] = useState(true);
-  const [gridToggle, setGridToggle] = useState("");
+  const api = useContext(ApiContext)
+  const [gridToggle, setGridToggle] = useState("")
+  const [mappedProjects, setMappedProjects] = useState([])
 
-  const queryParams = new URLSearchParams(location.search);
+  const getToken = () => {
+    const value = localStorage.getItem(LOCAL_STORE_KEY)
+
+    if (!value) {
+      throw new Error("Not authenticated")
+    }
+
+    const store = JSON.parse(value)
+
+    if (!store || !store.credentials || !store.credentials.token) {
+      throw new Error("Not authenticated")
+    }
+
+    return store.credentials.token
+  }
+
+  useEffect(() => {
+    const dataGet = async () => {
+      try {
+        const token = getToken()
+
+        console.log("token", token)
+
+        const headers = {
+          "content-type": "application/json",
+          authorization: `Bearer ${token}`
+        }
+
+        console.log("RETICULUM_SERVER", RETICULUM_SERVER)
+
+        const response = await fetch(`https://${RETICULUM_SERVER}/api/v1/projects`, { headers })
+
+        console.log("response", response)
+
+        const json = await response.json()
+
+        if (!Array.isArray(json.projects)) {
+          throw new Error(`Error fetching projects: ${json.error || "Unknown error."}`)
+        }
+
+        console.log("json.projects", json.projects)
+
+        const mappedData = json.projects.map(project => {
+          console.log("Project Name:", project.name)
+          console.log("Thumbnail url:", project.thumbnail_url)
+          console.log("Project_id:", project.project_id)
+
+          return {
+            name: project.name,
+            thumbnail_url: project.thumbnail_url,
+            project_id: project.project_id
+          }
+        })
+
+        console.log("mappedData", mappedData)
+
+        setMappedProjects(mappedData)
+
+        // return json.projects
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    dataGet()
+  }, [])
+
+  const queryParams = new URLSearchParams(location.search)
 
   const [params, setParams] = useState({
     source: "scene_listings",
     filter: queryParams.get("filter") || "featured-remixable",
     q: queryParams.get("q") || ""
-  });
+  })
 
   const updateParams = useCallback(
     nextParams => {
-      const search = new URLSearchParams();
+      const search = new URLSearchParams()
 
       for (const name in nextParams) {
         if (name === "source" || !nextParams[name]) {
-          continue;
+          continue
         }
 
-        search.set(name, nextParams[name]);
+        search.set(name, nextParams[name])
       }
 
-      history.push(`/dashboard/template?${search}`);
+      history.push(`/dashboard/template?${search}`)
 
-      setParams(nextParams);
+      setParams(nextParams)
     },
     [history]
-  );
+  )
 
   const onChangeQuery = useCallback(
     value => {
@@ -342,46 +290,43 @@ export default function CardTemplate({ history, location }) {
         source: "scene_listings",
         filter: "remixable",
         q: value
-      });
+      })
     },
     [updateParams]
-  );
+  )
 
   const onSetFeaturedRemixable = useCallback(() => {
     updateParams({
       ...params,
       filter: "featured-remixable",
       q: ""
-    });
-  }, [updateParams, params]);
+    })
+  }, [updateParams, params])
 
   const onSetAll = useCallback(() => {
     updateParams({
       ...params,
       filter: "remixable",
       q: ""
-    });
-  }, [updateParams, params]);
+    })
+  }, [updateParams, params])
 
   const onSelectScene = useCallback(
     scene => {
-      const search = new URLSearchParams();
-      search.set("sceneId", scene.id);
-      history.push(`/dashboard/template?${search}`);
+      const search = new URLSearchParams()
+      search.set("sceneId", scene.id)
+      history.push(`/dashboard/template?${search}`)
     },
     [history]
-  );
+  )
 
-  const { loading, error, entries, hasMore, loadMore } = usePaginatedSearch(
-    `${api.apiURL}/api/v1/media/search`,
-    params
-  );
+  const { loading, error, entries, hasMore, loadMore } = usePaginatedSearch(`${api.apiURL}/api/v1/media/search`, params)
 
   const filteredEntries = entries.map(result => ({
     ...result,
     url: `/dashboard/template?sceneId=${result.id}`,
     thumbnail_url: result && result.images && result.images.preview && result.images.preview.url
-  }));
+  }))
   return (
     <>
       <DashboardWrapper>
@@ -446,8 +391,8 @@ export default function CardTemplate({ history, location }) {
       </DashboardWrapper>
 
       <div>
-        {gridToggle === "GridIcon" && <CardGrid />}
-        {gridToggle === "MenuIcon" && <ListGrid />}
+        {gridToggle === "GridIcon" && <CardGrid mappedProjects={mappedProjects} />}
+        {gridToggle === "MenuIcon" && <ListGrid mappedProjects={mappedProjects} />}
         {gridToggle === "" && (
           <ProjectGridContainer>
             <ProjectTemplateCards>
@@ -478,10 +423,10 @@ export default function CardTemplate({ history, location }) {
         )}
       </div>
     </>
-  );
+  )
 }
 
 CardTemplate.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired
-};
+}

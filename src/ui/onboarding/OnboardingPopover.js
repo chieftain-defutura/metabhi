@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { Button } from "../inputs/Button";
-import Portal from "../layout/Portal";
-import getPosition from "evergreen-ui/esm/positioner/src/getPosition";
-import styled, { css } from "styled-components";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { Button } from "../inputs/Button"
+import Portal from "../layout/Portal"
+import getPosition from "evergreen-ui/esm/positioner/src/getPosition"
+import styled, { css } from "styled-components"
 
 const TransformContainer = styled.div`
   position: fixed;
@@ -11,7 +11,7 @@ const TransformContainer = styled.div`
   left: 0;
   right: 0;
   pointer-events: none;
-`;
+`
 
 const PositionStyles = {
   left: css`
@@ -85,7 +85,7 @@ const PositionStyles = {
       margin-left: -8px;
     }
   `
-};
+}
 
 const Popover = styled.div`
   position: absolute;
@@ -110,7 +110,7 @@ const Popover = styled.div`
   }
 
   ${props => PositionStyles[props.position]}
-`;
+`
 
 const PopoverContent = styled.div`
   display: flex;
@@ -134,7 +134,7 @@ const PopoverContent = styled.div`
     line-height: 1.5em;
     font-size: 14px;
   }
-`;
+`
 
 const PopoverNav = styled.div`
   display: flex;
@@ -169,14 +169,14 @@ const PopoverNav = styled.div`
   // & > * {
   //   margin: 0 8px;
   // }
-`;
+`
 
 const Buttons = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
   margin-bottom: 24px;
-`;
+`
 
 export default class OnboardingPopover extends Component {
   static propTypes = {
@@ -192,7 +192,7 @@ export default class OnboardingPopover extends Component {
     prevStep: PropTypes.func.isRequired,
     disableSkip: PropTypes.bool.isRequired,
     skip: PropTypes.func.isRequired
-  };
+  }
 
   static defaultProps = {
     disablePrev: false,
@@ -200,51 +200,51 @@ export default class OnboardingPopover extends Component {
     disableSkip: false,
     position: "top",
     padding: 16
-  };
+  }
 
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.el = document.createElement("div");
-    this.popoverRef = React.createRef();
+    this.el = document.createElement("div")
+    this.popoverRef = React.createRef()
 
     this.state = {
       targetEl: null,
       finalPosition: props.position,
       transform: "translate(0px,0px)",
       transformOrigin: "initial"
-    };
+    }
   }
 
   componentDidMount() {
-    const targetEl = document.querySelector(this.props.target);
-    this.updatePosition(targetEl);
-    window.addEventListener("resize", this.onResize);
+    const targetEl = document.querySelector(this.props.target)
+    this.updatePosition(targetEl)
+    window.addEventListener("resize", this.onResize)
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.target !== prevProps.target) {
-      const targetEl = document.querySelector(this.props.target);
-      this.updatePosition(targetEl);
+      const targetEl = document.querySelector(this.props.target)
+      this.updatePosition(targetEl)
     }
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.onResize);
+    window.removeEventListener("resize", this.onResize)
   }
 
   onResize = () => {
-    this.updatePosition(this.state.targetEl);
-  };
+    this.updatePosition(this.state.targetEl)
+  }
 
   updatePosition(targetEl) {
-    if (!targetEl) return;
+    if (!targetEl) return
 
-    const { position, padding } = this.props;
-    const popoverRect = this.popoverRef.current.getBoundingClientRect();
-    const targetRect = targetEl.getBoundingClientRect();
-    const viewportHeight = document.documentElement.clientHeight;
-    const viewportWidth = document.documentElement.clientWidth;
+    const { position, padding } = this.props
+    const popoverRect = this.popoverRef.current.getBoundingClientRect()
+    const targetRect = targetEl.getBoundingClientRect()
+    const viewportHeight = document.documentElement.clientHeight
+    const viewportWidth = document.documentElement.clientWidth
 
     const { rect, position: finalPosition, transformOrigin } = getPosition({
       position,
@@ -253,17 +253,17 @@ export default class OnboardingPopover extends Component {
       dimensions: { width: popoverRect.width, height: popoverRect.height },
       viewport: { width: viewportWidth, height: viewportHeight },
       viewportOffset: padding
-    });
+    })
 
     this.setState({
       finalPosition,
       transformOrigin,
       transform: `translate(${rect.left}px, ${rect.top}px)`
-    });
+    })
   }
 
   render() {
-    const { transform, transformOrigin } = this.state;
+    const { transform, transformOrigin } = this.state
     const {
       position,
       children,
@@ -275,7 +275,7 @@ export default class OnboardingPopover extends Component {
       disableNext,
       skip,
       disableSkip
-    } = this.props;
+    } = this.props
 
     return (
       <Portal>
@@ -287,9 +287,9 @@ export default class OnboardingPopover extends Component {
                 <a
                   href=""
                   onClick={e => {
-                    e.preventDefault();
-                    e.target.blur();
-                    skip();
+                    e.preventDefault()
+                    e.target.blur()
+                    skip()
                   }}
                 >
                   Skip Tutorial
@@ -304,6 +304,6 @@ export default class OnboardingPopover extends Component {
           </Popover>
         </TransformContainer>
       </Portal>
-    );
+    )
   }
 }

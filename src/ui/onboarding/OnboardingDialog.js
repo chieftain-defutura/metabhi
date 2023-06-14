@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import OnboardingOverlay from "./OnboardingOverlay";
-import { Button, SecondaryButton } from "../inputs/Button";
-import defaultBackgroundImage from "../../assets/onboarding/default.png";
-import WelcomeImg from "../../assets/welcome-page-img.png";
-import styled from "styled-components";
+import React from "react"
+import PropTypes from "prop-types"
+import OnboardingOverlay from "./OnboardingOverlay"
+import { Button, SecondaryButton } from "../inputs/Button"
+import defaultBackgroundImage from "../../assets/onboarding/default.png"
+import WelcomeImg from "../../assets/welcome-page-img.png"
+import styled from "styled-components"
 
 const StyledOnboadingDialog = styled.div`
   width: 640px;
@@ -13,7 +13,7 @@ const StyledOnboadingDialog = styled.div`
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-`;
+`
 
 const Content = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ const Content = styled.div`
   flex: 1;
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
-`;
+`
 
 const LeftContent = styled.div`
   display: flex;
@@ -41,7 +41,7 @@ const LeftContent = styled.div`
   // video {
   //   border-radius: 6px;
   // }
-`;
+`
 
 const RightContent = styled.div`
   display: flex;
@@ -73,7 +73,7 @@ const RightContent = styled.div`
     align-self: center;
     margin-bottom: 8px;
   }
-`;
+`
 
 const BottomNav = styled.div`
   // display: flex;
@@ -94,7 +94,7 @@ const BottomNav = styled.div`
   & > * {
     margin: 0 8px;
   }
-`;
+`
 
 const SkipBtn = styled.div`
   display: flex;
@@ -108,7 +108,7 @@ const SkipBtn = styled.div`
     text-decoration: none;
     font-weight: 700;
   }
-`;
+`
 
 const Buttons = styled.div`
   .next-btn {
@@ -118,7 +118,7 @@ const Buttons = styled.div`
     background: transparent;
     font-weight: 700;
   }
-`;
+`
 
 export default function OnboardingDialog({
   children,
@@ -150,9 +150,9 @@ export default function OnboardingDialog({
                   <a
                     href=""
                     onClick={e => {
-                      e.preventDefault();
-                      e.target.blur();
-                      skip();
+                      e.preventDefault()
+                      e.target.blur()
+                      skip()
                     }}
                   >
                     Skip Tutorial
@@ -173,7 +173,7 @@ export default function OnboardingDialog({
         </Content>
       </StyledOnboadingDialog>
     </OnboardingOverlay>
-  );
+  )
 }
 
 OnboardingDialog.propTypes = {
@@ -188,4 +188,4 @@ OnboardingDialog.propTypes = {
   disablePrev: PropTypes.bool,
   disableSkip: PropTypes.bool,
   skip: PropTypes.func.isRequired
-};
+}

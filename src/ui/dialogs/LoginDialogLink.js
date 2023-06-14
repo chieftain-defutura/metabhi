@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withDialog } from "../contexts/DialogContext";
-import { withApi } from "../contexts/ApiContext";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { withDialog } from "../contexts/DialogContext"
+import { withApi } from "../contexts/ApiContext"
 
 class LoginDialogLink extends Component {
   static propTypes = {
@@ -9,22 +9,22 @@ class LoginDialogLink extends Component {
     showDialog: PropTypes.func.isRequired,
     hideDialog: PropTypes.func.isRequired,
     children: PropTypes.node
-  };
+  }
 
   onClick = e => {
-    const { api, showDialog, hideDialog } = this.props;
-    e.preventDefault();
-    e.target.blur();
-    api.showLoginDialog(showDialog, hideDialog);
-  };
+    const { api, showDialog, hideDialog } = this.props
+    e.preventDefault()
+    e.target.blur()
+    api.showLoginDialog(showDialog, hideDialog)
+  }
 
   render() {
     return (
       <a href="" onClick={this.onClick}>
         {this.props.children}
       </a>
-    );
+    )
   }
 }
 
-export default withDialog(withApi(LoginDialogLink));
+export default withDialog(withApi(LoginDialogLink))

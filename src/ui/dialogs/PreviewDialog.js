@@ -19,7 +19,8 @@ const RightContent = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 30px 30px;
+  // padding: 30px 30px;
+  padding-right: 30px;
 `
 
 export default function PreviewDialog({ imageSrc, children, ...props }) {

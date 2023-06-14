@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import SpokeLogo from "./SpokeLogo";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
 
 const StyledLoading = styled.div`
   display: flex;
@@ -38,13 +37,13 @@ const StyledLoading = styled.div`
     width: 100px;
     height: 100px;
   }
-`;
+`
 
 export default class Loading extends Component {
   static propTypes = {
     message: PropTypes.string,
     fullScreen: PropTypes.bool
-  };
+  }
 
   render() {
     return (
@@ -53,6 +52,6 @@ export default class Loading extends Component {
         {/* <SpokeLogo /> */}
         {this.props.message}
       </StyledLoading>
-    );
+    )
   }
 }

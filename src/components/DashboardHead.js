@@ -1,16 +1,16 @@
-import React from "react";
-import styled from "styled-components";
-import Layout from "../components/Layout/Layout";
-import { TbMenu2 } from "react-icons/tb";
-import { RxDashboard } from "react-icons/rx";
-import { Link } from "react-router-dom";
-import { AiOutlineFileAdd } from "react-icons/ai";
-import { AiOutlinePlus } from "react-icons/ai";
-import { TbFileImport } from "react-icons/tb";
+import React from "react"
+import styled from "styled-components"
+import Layout from "../components/Layout/Layout"
+import { TbMenu2 } from "react-icons/tb"
+import { RxDashboard } from "react-icons/rx"
+import { Link } from "react-router-dom"
+import { AiOutlineFileAdd } from "react-icons/ai"
+import { AiOutlinePlus } from "react-icons/ai"
+import { TbFileImport } from "react-icons/tb"
 
 const DashboardWrapper = styled.div`
   margin-top: 75px;
-`;
+`
 
 const WelComeWrapper = styled.div`
   padding: 28px 40px;
@@ -19,7 +19,7 @@ const WelComeWrapper = styled.div`
   justify-content: space-between;
   gap: 180px;
   border-bottom: 1px solid ${props => props.theme.borderStyleClr};
-`;
+`
 
 const WelComeContent = styled.div`
   h4 {
@@ -33,7 +33,7 @@ const WelComeContent = styled.div`
     line-height: 21px;
     color: ${props => props.theme.lightGray};
   }
-`;
+`
 
 const MediumBtn = styled.div`
   a {
@@ -46,9 +46,9 @@ const MediumBtn = styled.div`
     margin-top: 25px;
     font-weight: 700;
   }
-`;
+`
 
-const NewFileContent = styled.div``;
+const NewFileContent = styled.div``
 
 const NewFile = styled.div`
   display: flex;
@@ -69,7 +69,7 @@ const NewFile = styled.div`
     background: rgba(0, 43, 255, 0.1);
     border: 1px solid rgba(0, 146, 255, 0.2);
   }
-`;
+`
 
 const NewFilePara = styled.div`
   display: flex;
@@ -85,7 +85,7 @@ const NewFilePara = styled.div`
     font-weight: 400;
     color: ${props => props.theme.text};
   }
-`;
+`
 
 const Recently = styled.div`
   padding: 22px 40px;
@@ -97,7 +97,7 @@ const Recently = styled.div`
     font-size: 14px;
     margin-bottom: 18px;
   }
-`;
+`
 
 const DropDown = styled.div`
   display: flex;
@@ -108,7 +108,7 @@ const DropDown = styled.div`
     font-size: 18px;
     margin-top: 20px;
   }
-`;
+`
 
 const DropDownContent = styled.div`
   h3 {
@@ -125,7 +125,7 @@ const DropDownContent = styled.div`
     font-weight: 500;
     font-size: 14px;
   }
-`;
+`
 
 const MenuIcons = styled.div`
   display: flex;
@@ -136,7 +136,7 @@ const MenuIcons = styled.div`
     width: 32px;
     height: 32px;
   }
-`;
+`
 
 const ToolbarInputGroup = styled.div`
   margin-top: 20px;
@@ -153,14 +153,14 @@ const ToolbarInputGroup = styled.div`
     color: #fff;
     font-size: 17px;
   }
-`;
+`
 const RecentlyContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 16px 40px;
   border-bottom: 1px solid ${props => props.theme.borderStyleClr};
-`;
+`
 
 const selectInputStyles = {
   container: base => ({
@@ -183,17 +183,17 @@ const selectInputStyles = {
     boxShadow: "none",
     padding: "5px 0px"
   })
-};
+}
 
 const FilesOption = {
   AllFiles: "All files",
   DesignFiles: "Design files"
-};
+}
 
 const transformPivotOptions = [
   { label: "All files", value: FilesOption.AllFiles },
   { label: "Design files", value: FilesOption.DesignFiles }
-];
+]
 
 const DashboardHead = () => {
   return (
@@ -253,7 +253,7 @@ const DashboardHead = () => {
         </RecentlyContent>
       </DashboardWrapper>
     </Layout>
-  );
-};
+  )
+}
 
-export default DashboardHead;
+export default DashboardHead

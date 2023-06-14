@@ -1,18 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
-import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
-import { Injected } from "../ui/connectors";
-import autoAnimate from "@formkit/auto-animate";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { TiTick } from "react-icons/ti";
-import { TbCopy } from "react-icons/tb";
-import { Link } from "react-router-dom";
-import { InjectedConnector } from "@web3-react/injected-connector";
-import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
-
-const chainId = "0x153c099c";
-
-const injected = new InjectedConnector({ supportedChainIds: [chainId] });
+import React, { useState, useEffect, useRef, useCallback } from "react"
+import styled from "styled-components"
+import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core"
+import { Injected } from "../ui/connectors"
+import autoAnimate from "@formkit/auto-animate"
+import { CopyToClipboard } from "react-copy-to-clipboard"
+import { TiTick } from "react-icons/ti"
+import { TbCopy } from "react-icons/tb"
+import { Link, useHistory } from "react-router-dom"
+import { WalletConnectConnector } from "@web3-react/walletconnect-connector"
+import axios from "axios"
 
 export const walletconnect = new WalletConnectConnector({
   rpc: {
@@ -21,12 +17,12 @@ export const walletconnect = new WalletConnectConnector({
   bridge: "https://bridge.walletconnect.org",
   qrcode: true,
   pollingInterval: 12000
-});
+})
 
 const WalletConnectContainer = styled.div`
   position: relative;
-`;
-const WalletButtons = styled.div``;
+`
+const WalletButtons = styled.div``
 
 const WalletConnectAddr = styled.div`
   border: 1px solid #0092ff;
@@ -35,7 +31,7 @@ const WalletConnectAddr = styled.div`
   color: ${props => props.theme.text};
   // margin-right: 24px;
   cursor: pointer;
-`;
+`
 
 const WalletConnect = styled.div`
   display: flex;
@@ -48,7 +44,7 @@ const WalletConnect = styled.div`
   cursor: pointer;
   // margin-right: 24px;
   color: white;
-`;
+`
 const WalletDropDown = styled.div`
   width: 280px;
   height: auto;
@@ -59,21 +55,21 @@ const WalletDropDown = styled.div`
   right: 10%;
   box-shadow: ${props => props.theme.boxShadow};
   z-index: 1;
-`;
+`
 const Address = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 24px 22px;
   border-bottom: 1px solid ${props => props.theme.walletborder};
-`;
+`
 
 const CopyText = styled.p`
   font-weight: 600;
   font-size: 16px;
   color: ${props => props.theme.text};
   cursor: pointer;
-`;
+`
 const Content = styled.div`
   h3 {
     font-size: 16px;
@@ -83,7 +79,7 @@ const Content = styled.div`
       background: rgba(0, 146, 255, 0.4);
     }
   }
-`;
+`
 const DashboardPara = styled.div`
   margin-top: 10px;
   a {
@@ -92,7 +88,7 @@ const DashboardPara = styled.div`
   h3 {
     font-size: 14px;
   }
-`;
+`
 const Logout = styled.div`
   margin-bottom: 14px;
   h4 {
@@ -104,7 +100,7 @@ const Logout = styled.div`
       background: rgba(255, 99, 65, 0.3);
     }
   }
-`;
+`
 
 const WalletWrapper = styled.div`
   display: flex;
@@ -112,13 +108,13 @@ const WalletWrapper = styled.div`
   justify-content: center;
   gap: 8px;
   font-size: 14px;
-`;
+`
 const WalletCircle = styled.div`
   width: 14px;
   height: 14px;
   background: linear-gradient(90deg, #9d630c 0%, #e818ec 100%);
   border-radius: 50%;
-`;
+`
 
 const WrongButton = styled.div`
   display: flex;
@@ -131,68 +127,112 @@ const WrongButton = styled.div`
   font-weight: 700;
   cursor: pointer;
   color: #fff;
-`;
+`
 
 const ConnectWalletBtn = () => {
-  const { activate, account, deactivate, error, chainId: chainid } = useWeb3React();
-  const [copied, setCopied] = useState(false);
-  const [walletOpen, setWalletOpen] = useState(false);
-  const [wrongNetwork, setWrongNetwork] = useState(false);
-
-  console.log(chainid);
-  console.log(Number(chainId));
+  const { activate, account, deactivate, error } = useWeb3React()
+  const [copied, setCopied] = useState(false)
+  const [walletOpen, setWalletOpen] = useState(false)
+  const [wrongNetwork, setWrongNetwork] = useState(false)
+  const history = useHistory()
 
   const WalletToggle = () => {
-    setWalletOpen(!walletOpen);
-  };
+    setWalletOpen(!walletOpen)
+  }
 
-  const parent = useRef(null);
+  const parent = useRef(null)
 
   const handleCopy = () => {
-    setCopied(true);
-  };
+    setCopied(true)
+  }
 
   const handleLogout = () => {
-    deactivate();
-  };
+    deactivate()
+    localStorage.clear("token")
+    history.push("/login")
+  }
 
   useEffect(() => {
     if (error) {
-      console.log(error);
+      console.log(error)
       if (error instanceof UnsupportedChainIdError) {
-        return setWrongNetwork(true);
+        return setWrongNetwork(true)
       }
     }
-    setWrongNetwork(false);
-  }, [error]);
+    setWrongNetwork(false)
+  }, [error])
 
   useEffect(() => {
-    parent.current && autoAnimate(parent.current);
-    let timer;
+    parent.current && autoAnimate(parent.current)
+    let timer
     if (copied) {
       timer = setTimeout(() => {
-        setCopied(false);
-      }, 3000);
+        setCopied(false)
+      }, 3000)
     }
 
     return () => {
-      clearTimeout(timer);
-    };
-  }, [copied, parent]);
+      clearTimeout(timer)
+    }
+  }, [copied, parent])
+
+  const createData = useCallback(async () => {
+    try {
+      if (!account) return
+
+      const { data: datas } = await axios.post("https://node-reticulum.onrender.com/auth/login", {
+        wallet: account
+      })
+      console.log("data", datas)
+
+      if (datas.data === null) {
+        history.push("/login")
+        return
+      }
+      localStorage.setItem("token", JSON.stringify(datas.data))
+      // history.push("/dashboard/recent")
+    } catch (error) {
+      console.log(error)
+    }
+  }, [account])
+
+  useEffect(() => {
+    createData()
+  }, [createData])
 
   const displayAccount = account => {
-    const slicedAccount = account && account.slice(0, 6) + "..." + account.slice(-6);
-    return slicedAccount;
-  };
+    const slicedAccount = account && account.slice(0, 6) + "..." + account.slice(-6)
+    return slicedAccount
+  }
+
+  const getData = useCallback(async () => {
+    try {
+      console.log("localStorage", localStorage.getItem("token"))
+      const response = await axios.get("https://node-reticulum.onrender.com/auth/status", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+
+      const data = response.data
+      console.log("datas", data)
+    } catch (error) {
+      console.error(error)
+    }
+  }, [])
+
+  useEffect(() => {
+    getData()
+  }, [getData])
 
   const addGatherTestnet = async () => {
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: "0x153c099c" }]
-      });
+      })
     } catch (error) {
-      console.error("Error activating MetaMask:", error);
+      console.error("Error activating MetaMask:", error)
       try {
         await window.ethereum.request({
           method: "wallet_addEthereumChain",
@@ -208,12 +248,12 @@ const ConnectWalletBtn = () => {
               rpcUrls: ["https://testnet.gather.network"]
             }
           ]
-        });
+        })
       } catch (error) {
-        console.error("Error adding Gather Testnet:", error);
+        console.error("Error adding Gather Testnet:", error)
       }
     }
-  };
+  }
 
   return (
     <div>
@@ -272,7 +312,7 @@ const ConnectWalletBtn = () => {
         </div>
       </WalletConnectContainer>
     </div>
-  );
-};
+  )
+}
 
-export default ConnectWalletBtn;
+export default ConnectWalletBtn

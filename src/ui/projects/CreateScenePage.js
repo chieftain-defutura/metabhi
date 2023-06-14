@@ -1,20 +1,20 @@
-import PropTypes from "prop-types";
-import configs from "../../configs";
-import { withApi } from "../contexts/ApiContext";
-import NavBar from "../navigation/NavBar";
-import Footer from "../navigation/Footer";
-import styled from "styled-components";
-import { Redirect } from "react-router-dom";
+import PropTypes from "prop-types"
+import configs from "../../configs"
+import { withApi } from "../contexts/ApiContext"
+import NavBar from "../navigation/NavBar"
+import Footer from "../navigation/Footer"
+import styled from "styled-components"
+import { Redirect } from "react-router-dom"
 
-import React, { useState, useCallback, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useCallback, useEffect } from "react"
+import { useHistory } from "react-router-dom"
 
-import StringInput from "../inputs/StringInput";
-import BooleanInput from "../inputs/BooleanInput";
-import FileInput from "../inputs/FileInput";
-import FormField from "../inputs/FormField";
-import { Button } from "../inputs/Button";
-import ProgressBar from "../inputs/ProgressBar";
+import StringInput from "../inputs/StringInput"
+import BooleanInput from "../inputs/BooleanInput"
+import FileInput from "../inputs/FileInput"
+import FormField from "../inputs/FormField"
+import { Button } from "../inputs/Button"
+import ProgressBar from "../inputs/ProgressBar"
 
 const SceneUploadFormContainer = styled.div`
   display: flex;
@@ -22,7 +22,7 @@ const SceneUploadFormContainer = styled.div`
   flex-direction: row;
   background-color: ${props => props.theme.panel2};
   border-radius: 3px;
-`;
+`
 
 const InfoBox = styled.div`
   background-color: ${props => props.theme.panel2};
@@ -30,12 +30,12 @@ const InfoBox = styled.div`
   padding: 10px;
   border-radius: 3px;
   text-align: center;
-`;
+`
 
 const ErrorMessage = styled.div`
   color: ${props => props.theme.red};
   margin-top: 8px;
-`;
+`
 
 export const UploadSceneSection = styled.form`
   padding-bottom: 100px;
@@ -52,7 +52,7 @@ export const UploadSceneSection = styled.form`
   h2 {
     font-size: 16px;
   }
-`;
+`
 
 export const UploadSceneContainer = styled.div`
   display: flex;
@@ -62,14 +62,14 @@ export const UploadSceneContainer = styled.div`
   max-width: 800px;
   min-width: 400px;
   padding: 0 20px;
-`;
+`
 
 export const SceneUploadHeader = styled.div`
   margin-bottom: 36px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
+`
 
 const LeftContent = styled.div`
   display: flex;
@@ -94,7 +94,7 @@ const LeftContent = styled.div`
     opacity: 0;
     position: absolute;
   }
-`;
+`
 
 const RightContent = styled.div`
   display: flex;
@@ -107,126 +107,126 @@ const RightContent = styled.div`
     margin-bottom: 0;
     margin-right: 5px;
   }
-`;
+`
 
 function CreateScenePage({ match, api }) {
-  const [isUploading, setIsUploading] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isUploading, setIsUploading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
-  const [sceneId, setSceneId] = useState(null);
-  const [error, setError] = useState(null);
+  const [sceneId, setSceneId] = useState(null)
+  const [error, setError] = useState(null)
 
   const [sceneInfo, setSceneInfo] = useState({
     name: "",
     creatorAttribution: "",
     allowRemixing: false,
     allowPromotion: false
-  });
+  })
 
-  const [glbFile, setGlbFile] = useState(null);
-  const [thumbnailFile, setThumbnailFile] = useState(null);
+  const [glbFile, setGlbFile] = useState(null)
+  const [thumbnailFile, setThumbnailFile] = useState(null)
 
-  const [thumbnailUrl, setThumbnailUrl] = useState(null);
-  const [sceneUrl, setSceneUrl] = useState(null);
+  const [thumbnailUrl, setThumbnailUrl] = useState(null)
+  const [sceneUrl, setSceneUrl] = useState(null)
 
-  const history = useHistory();
+  const history = useHistory()
 
   const openScene = useCallback(() => {
-    window.open(sceneUrl);
-  }, [sceneUrl]);
+    window.open(sceneUrl)
+  }, [sceneUrl])
 
   useEffect(() => {
     async function doInitialLoad() {
-      const sceneId = match.params.sceneId;
-      const isNew = sceneId === "new";
+      const sceneId = match.params.sceneId
+      const isNew = sceneId === "new"
 
-      const scene = isNew ? {} : await api.getScene(sceneId);
+      const scene = isNew ? {} : await api.getScene(sceneId)
       setSceneInfo({
         name: scene.name || "",
         creatorAttribution: (scene.attributions && scene.attributions.creator) || "",
         allowRemixing: scene.allow_remixing,
         allowPromotion: scene.allow_promotion
-      });
-      setThumbnailUrl(scene.screenshot_url);
-      setSceneId(scene.scene_id);
-      setSceneUrl(scene.url);
-      setIsLoading(false);
+      })
+      setThumbnailUrl(scene.screenshot_url)
+      setSceneId(scene.scene_id)
+      setSceneUrl(scene.url)
+      setIsLoading(false)
     }
     doInitialLoad().catch(e => {
-      console.error(e);
-      setError(e.message);
-    });
-  }, [match, api, setSceneInfo, setThumbnailUrl, setSceneId, setSceneUrl, setIsLoading]);
+      console.error(e)
+      setError(e.message)
+    })
+  }, [match, api, setSceneInfo, setThumbnailUrl, setSceneId, setSceneUrl, setIsLoading])
 
   const onChangeName = useCallback(
     name => {
-      setSceneInfo(sceneInfo => ({ ...sceneInfo, name }));
+      setSceneInfo(sceneInfo => ({ ...sceneInfo, name }))
     },
     [setSceneInfo]
-  );
+  )
 
   const onChangeCreatorAttribution = useCallback(
     creatorAttribution => {
-      setSceneInfo({ ...sceneInfo, creatorAttribution });
+      setSceneInfo({ ...sceneInfo, creatorAttribution })
     },
     [sceneInfo, setSceneInfo]
-  );
+  )
 
   const onChangeAllowRemixing = useCallback(
     allowRemixing => {
-      setSceneInfo({ ...sceneInfo, allowRemixing });
+      setSceneInfo({ ...sceneInfo, allowRemixing })
     },
     [sceneInfo, setSceneInfo]
-  );
+  )
 
   const onChangeAllowPromotion = useCallback(
     allowPromotion => {
-      setSceneInfo({ ...sceneInfo, allowPromotion });
+      setSceneInfo({ ...sceneInfo, allowPromotion })
     },
     [sceneInfo, setSceneInfo]
-  );
+  )
 
   const onChangeGlbFile = useCallback(
     ([file]) => {
-      setGlbFile(file);
+      setGlbFile(file)
     },
     [setGlbFile]
-  );
+  )
 
   const onChangeThumbnailFile = useCallback(
     ([file]) => {
-      setThumbnailFile(file);
+      setThumbnailFile(file)
     },
     [setThumbnailFile]
-  );
+  )
 
   // For preview
   useEffect(() => {
-    if (!thumbnailFile) return;
-    const reader = new FileReader();
+    if (!thumbnailFile) return
+    const reader = new FileReader()
     reader.onload = e => {
       setThumbnailUrl(prevUrl => {
         if (prevUrl && prevUrl.indexOf("data:") === 0) {
-          URL.revokeObjectURL(prevUrl);
+          URL.revokeObjectURL(prevUrl)
         }
-        return e.target.result;
-      });
-    };
-    reader.readAsDataURL(thumbnailFile);
+        return e.target.result
+      })
+    }
+    reader.readAsDataURL(thumbnailFile)
 
     return () => {
-      reader.abort();
-    };
-  }, [thumbnailFile, setThumbnailUrl]);
+      reader.abort()
+    }
+  }, [thumbnailFile, setThumbnailUrl])
 
   const onPublish = useCallback(
     e => {
-      e.preventDefault();
+      e.preventDefault()
 
-      setError(null);
-      setIsUploading(true);
+      setError(null)
+      setIsUploading(true)
 
-      const abortController = new AbortController();
+      const abortController = new AbortController()
 
       api
         .publishGLBScene(
@@ -246,18 +246,18 @@ function CreateScenePage({ match, api }) {
         )
         .then(() => history.push("/projects"))
         .catch(e => {
-          setIsUploading(false);
-          setError(e.message);
-        });
+          setIsUploading(false)
+          setError(e.message)
+        })
     },
     [thumbnailFile, glbFile, sceneInfo, sceneId, setIsUploading, api, history, setError]
-  );
+  )
 
   if (!api.isAuthenticated()) {
-    return <Redirect to="/login" />;
+    return <Redirect to="/login" />
   }
 
-  const isNew = !sceneId;
+  const isNew = !sceneId
 
   const content = isLoading ? (
     error ? (
@@ -368,7 +368,7 @@ function CreateScenePage({ match, api }) {
         <a href="https://github.com/mozillareality/hubs-blender-exporter">Hubs Blender Exporter</a>
       </InfoBox>
     </>
-  );
+  )
 
   return (
     <>
@@ -380,13 +380,13 @@ function CreateScenePage({ match, api }) {
       </main>
       <Footer />
     </>
-  );
+  )
 }
 
 CreateScenePage.propTypes = {
   api: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   match: PropTypes.object
-};
+}
 
-export default withApi(CreateScenePage);
+export default withApi(CreateScenePage)

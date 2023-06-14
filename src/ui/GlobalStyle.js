@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components"
 
 const GlobalStyle = createGlobalStyle`
   /*! minireset.css v0.0.4 | MIT License | github.com/jgthms/minireset.css */
@@ -100,6 +100,7 @@ const GlobalStyle = createGlobalStyle`
 
   a {
     color: ${props => props.theme.text};
+    text-decoration: none;
 
     &:hover {
       color: ${props => props.theme.blueHover};
@@ -172,6 +173,6 @@ const GlobalStyle = createGlobalStyle`
       display: none;
     }
   }
-`;
+`
 
-export default GlobalStyle;
+export default GlobalStyle

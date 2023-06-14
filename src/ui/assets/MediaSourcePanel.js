@@ -1,12 +1,12 @@
-import React, { useCallback } from "react";
-import PropTypes from "prop-types";
-import { useAssetSearch } from "./useAssetSearch";
-import { AssetsPanelToolbar, AssetPanelContentContainer } from "./AssetsPanel";
-import AssetSearchInput from "./AssetSearchInput";
-import TagList from "./TagList";
-import AssetGrid from "./AssetGrid";
-import FileInput from "../inputs/FileInput";
-import useUpload from "./useUpload";
+import React, { useCallback } from "react"
+import PropTypes from "prop-types"
+import { useAssetSearch } from "./useAssetSearch"
+import { AssetsPanelToolbar, AssetPanelContentContainer } from "./AssetsPanel"
+import AssetSearchInput from "./AssetSearchInput"
+import TagList from "./TagList"
+import AssetGrid from "./AssetGrid"
+import FileInput from "../inputs/FileInput"
+import useUpload from "./useUpload"
 
 export default function MediaSourcePanel({
   editor,
@@ -20,56 +20,56 @@ export default function MediaSourcePanel({
   const { params, setParams, isLoading, loadMore, hasMore, results } = useAssetSearch(
     source,
     savedState.searchParams || initialSearchParams
-  );
+  )
 
   const onSelect = useCallback(
     item => {
-      const { nodeClass, initialProps } = item;
-      const node = new nodeClass(editor);
+      const { nodeClass, initialProps } = item
+      const node = new nodeClass(editor)
 
       if (initialProps) {
-        Object.assign(node, initialProps);
+        Object.assign(node, initialProps)
       }
 
-      const transformPivot = item.transformPivot || source.transformPivot;
+      const transformPivot = item.transformPivot || source.transformPivot
 
       if (transformPivot) {
-        editor.spokeControls.setTransformPivot(transformPivot);
+        editor.spokeControls.setTransformPivot(transformPivot)
       }
 
-      editor.spawnGrabbedObject(node);
+      editor.spawnGrabbedObject(node)
     },
     [editor, source.transformPivot]
-  );
+  )
 
-  const onUpload = useUpload({ source });
+  const onUpload = useUpload({ source })
 
   const onLoadMore = useCallback(() => {
-    loadMore(params);
-  }, [params, loadMore]);
+    loadMore(params)
+  }, [params, loadMore])
 
   const onChangeQuery = useCallback(
     e => {
-      const nextParams = { ...params, query: e.target.value };
-      setParams(nextParams);
-      setSavedState({ ...savedState, searchParams: nextParams });
+      const nextParams = { ...params, query: e.target.value }
+      setParams(nextParams)
+      setSavedState({ ...savedState, searchParams: nextParams })
     },
     [params, setParams, savedState, setSavedState]
-  );
+  )
 
   const onChangeTags = useCallback(
     tags => {
-      const nextParams = { ...params, tags };
-      setParams(nextParams);
-      setSavedState({ ...savedState, searchParams: nextParams });
+      const nextParams = { ...params, tags }
+      setParams(nextParams)
+      setSavedState({ ...savedState, searchParams: nextParams })
     },
     [params, setParams, setSavedState, savedState]
-  );
+  )
 
   const onChangeExpandedTags = useCallback(expandedTags => setSavedState({ ...savedState, expandedTags }), [
     savedState,
     setSavedState
-  ]);
+  ])
 
   return (
     <>
@@ -110,7 +110,7 @@ export default function MediaSourcePanel({
         />
       </AssetPanelContentContainer>
     </>
-  );
+  )
 }
 
 MediaSourcePanel.propTypes = {
@@ -121,7 +121,7 @@ MediaSourcePanel.propTypes = {
   multiselectTags: PropTypes.bool,
   savedState: PropTypes.object,
   setSavedState: PropTypes.func.isRequired
-};
+}
 
 MediaSourcePanel.defaultProps = {
   searchPlaceholder: "Search...",
@@ -130,4 +130,4 @@ MediaSourcePanel.defaultProps = {
     tags: []
   },
   multiselectTags: false
-};
+}

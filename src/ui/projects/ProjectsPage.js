@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import configs from "../../configs";
-import { withApi } from "../contexts/ApiContext";
-import NavBar from "../navigation/NavBar";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import configs from "../../configs"
+import { withApi } from "../contexts/ApiContext"
+import NavBar from "../navigation/NavBar"
 import {
   ProjectGrid,
   ProjectGridContainer,
@@ -10,14 +10,14 @@ import {
   ProjectGridHeaderRow,
   ProjectGridContent,
   ErrorMessage
-} from "./ProjectGrid";
-import { Button } from "../inputs/Button";
-import Footer from "../navigation/Footer";
-import { MediumButton } from "../inputs/Button";
-import { Link } from "react-router-dom";
-import LatestUpdate from "../whats-new/LatestUpdate";
-import { connectMenu, ContextMenu, MenuItem } from "../layout/ContextMenu";
-import styled from "styled-components";
+} from "./ProjectGrid"
+import { Button } from "../inputs/Button"
+import Footer from "../navigation/Footer"
+import { MediumButton } from "../inputs/Button"
+import { Link } from "react-router-dom"
+import LatestUpdate from "../whats-new/LatestUpdate"
+import { connectMenu, ContextMenu, MenuItem } from "../layout/ContextMenu"
+import styled from "styled-components"
 
 export const ProjectsSection = styled.section`
   padding-bottom: 100px;
@@ -35,7 +35,7 @@ export const ProjectsSection = styled.section`
   h2 {
     font-size: 16px;
   }
-`;
+`
 
 export const ProjectsContainer = styled.div`
   display: flex;
@@ -44,7 +44,7 @@ export const ProjectsContainer = styled.div`
   margin: 0 auto;
   max-width: 1200px;
   padding: 0 20px;
-`;
+`
 
 const WelcomeContainer = styled(ProjectsContainer)`
   align-items: center;
@@ -60,27 +60,27 @@ const WelcomeContainer = styled(ProjectsContainer)`
   h2 {
     max-width: 480px;
   }
-`;
+`
 
 export const ProjectsHeader = styled.div`
   margin-bottom: 36px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
+`
 
-const contextMenuId = "project-menu";
+const contextMenuId = "project-menu"
 
 class ProjectsPage extends Component {
   static propTypes = {
     api: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired
-  };
+  }
 
   constructor(props) {
-    super(props);
+    super(props)
 
-    const isAuthenticated = this.props.api.isAuthenticated();
+    const isAuthenticated = this.props.api.isAuthenticated()
 
     this.state = {
       projects: [],
@@ -88,11 +88,11 @@ class ProjectsPage extends Component {
       loading: isAuthenticated,
       isAuthenticated,
       error: null
-    };
+    }
   }
 
   componentDidMount() {
-    document.title = configs.longName();
+    document.title = configs.longName()
 
     // We dont need to load projects if the user isn't logged in
     if (this.state.isAuthenticated) {
@@ -108,19 +108,19 @@ class ProjectsPage extends Component {
               url: `/projects/${project.project_id}`
             })),
             loading: false
-          });
+          })
         })
         .catch(error => {
-          console.error(error);
+          console.error(error)
 
           if (error.response && error.response.status === 401) {
             // User has an invalid auth token. Prompt them to login again.
-            this.props.api.logout();
-            return this.props.history.push("/login", { from: "/projects" });
+            this.props.api.logout()
+            return this.props.history.push("/login", { from: "/projects" })
           }
 
-          this.setState({ error, loading: false });
-        });
+          this.setState({ error, loading: false })
+        })
     }
   }
 
@@ -128,23 +128,23 @@ class ProjectsPage extends Component {
     this.props.api
       .deleteProject(project.project_id)
       .then(() => this.setState({ projects: this.state.projects.filter(p => p.project_id !== project.project_id) }))
-      .catch(error => this.setState({ error }));
-  };
+      .catch(error => this.setState({ error }))
+  }
 
   renderContextMenu = props => {
     return (
       <ContextMenu id={contextMenuId}>
         <MenuItem onClick={e => this.onDeleteProject(props.trigger.project, e)}>Delete Project</MenuItem>
       </ContextMenu>
-    );
-  };
+    )
+  }
 
-  ProjectContextMenu = connectMenu(contextMenuId)(this.renderContextMenu);
+  ProjectContextMenu = connectMenu(contextMenuId)(this.renderContextMenu)
 
   render() {
-    const { error, loading, projects, scenes, isAuthenticated } = this.state;
+    const { error, loading, projects, scenes, isAuthenticated } = this.state
 
-    const ProjectContextMenu = this.ProjectContextMenu;
+    const ProjectContextMenu = this.ProjectContextMenu
 
     return (
       <>
@@ -199,8 +199,8 @@ class ProjectsPage extends Component {
         </main>
         <Footer />
       </>
-    );
+    )
   }
 }
 
-export default withApi(ProjectsPage);
+export default withApi(ProjectsPage)

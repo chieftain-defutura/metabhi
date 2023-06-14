@@ -67,7 +67,7 @@ const theme = {
   inputBackground: "#0A0A0A",
   blueHover: "#0092FF",
   hoverClr: "#252525"
-};
+}
 
 const darkTheme = {
   lato: "'Lato', sans-serif",
@@ -147,7 +147,7 @@ const darkTheme = {
   hover: "rgba(170, 170, 170, 0.2);",
   blueHover: "#0092FF",
   hoverClr: "#dddddd"
-};
+}
 
 theme.chartColors = [
   theme.red,
@@ -167,7 +167,7 @@ theme.chartColors = [
   theme.orange,
   theme.deepOrange,
   theme.brown
-];
+]
 
 darkTheme.chartColors = [
   theme.red,
@@ -187,8 +187,8 @@ darkTheme.chartColors = [
   theme.orange,
   theme.deepOrange,
   theme.brown
-];
+]
 
-export { darkTheme };
+export { darkTheme }
 
-export default theme;
+export default theme

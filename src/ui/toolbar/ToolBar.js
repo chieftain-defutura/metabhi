@@ -1,28 +1,28 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import configs from "../../configs";
-import { showMenu, ContextMenu, MenuItem, SubMenu } from "../layout/ContextMenu";
-import ToolButton from "./ToolButton";
-import { Button } from "../inputs/Button";
-import SelectInput from "../inputs/SelectInput";
-import NumericStepperInput from "../inputs/NumericStepperInput";
-import { TransformMode, SnapMode, TransformPivot } from "../../editor/controls/SpokeControls";
-import { TransformSpace } from "../../editor/Editor";
-import { ArrowsAlt } from "styled-icons/fa-solid/ArrowsAlt";
-import { SyncAlt } from "styled-icons/fa-solid/SyncAlt";
-import { ArrowsAltV } from "styled-icons/fa-solid/ArrowsAltV";
-import { Globe } from "styled-icons/fa-solid/Globe";
-import { Bullseye } from "styled-icons/fa-solid/Bullseye";
-import { Magnet } from "styled-icons/fa-solid/Magnet";
-import { Bars } from "styled-icons/fa-solid/Bars";
-import { Grid } from "styled-icons/boxicons-regular/Grid";
-import { Play } from "styled-icons/fa-solid/Play";
-import styled from "styled-components";
-import styledTheme from "../theme";
-import { InfoTooltip } from "../layout/Tooltip";
-import { Pause } from "styled-icons/fa-solid";
-import DarkModeLightMode from "../../components/DarkModeLightMode";
-import ConnectWalletBtn from "../../components/ConnectWalletBtn";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import configs from "../../configs"
+import { showMenu, ContextMenu, MenuItem, SubMenu } from "../layout/ContextMenu"
+import ToolButton from "./ToolButton"
+import { Button } from "../inputs/Button"
+import SelectInput from "../inputs/SelectInput"
+import NumericStepperInput from "../inputs/NumericStepperInput"
+import { TransformMode, SnapMode, TransformPivot } from "../../editor/controls/SpokeControls"
+import { TransformSpace } from "../../editor/Editor"
+import { ArrowsAlt } from "styled-icons/fa-solid/ArrowsAlt"
+import { SyncAlt } from "styled-icons/fa-solid/SyncAlt"
+import { ArrowsAltV } from "styled-icons/fa-solid/ArrowsAltV"
+import { Globe } from "styled-icons/fa-solid/Globe"
+import { Bullseye } from "styled-icons/fa-solid/Bullseye"
+import { Magnet } from "styled-icons/fa-solid/Magnet"
+import { Bars } from "styled-icons/fa-solid/Bars"
+import { Grid } from "styled-icons/boxicons-regular/Grid"
+import { Play } from "styled-icons/fa-solid/Play"
+import styled from "styled-components"
+import styledTheme from "../theme"
+import { InfoTooltip } from "../layout/Tooltip"
+import { Pause } from "styled-icons/fa-solid"
+import DarkModeLightMode from "../../components/DarkModeLightMode"
+import ConnectWalletBtn from "../../components/ConnectWalletBtn"
 
 const StyledToolbar = styled.div`
   display: flex;
@@ -31,7 +31,7 @@ const StyledToolbar = styled.div`
   height: 48px;
   background: ${props => props.theme.emptyBoxClr};
   user-select: none;
-`;
+`
 
 const ToolButtons = styled.div`
   width: auto;
@@ -42,7 +42,7 @@ const ToolButtons = styled.div`
   gap: 16px;
   // padding: 0 20px;
   background: ${props => props.theme.darkClr};
-`;
+`
 
 const ToolToggles = styled.div`
   width: auto;
@@ -52,12 +52,12 @@ const ToolToggles = styled.div`
   background: ${props => props.theme.emptyBoxClr};
   align-items: center;
   gap: 16px;
-  margin-left: -232px;
-`;
+  margin-left: -100px;
+`
 
 const Spacer = styled.div`
   flex: 1;
-`;
+`
 
 const PublishButton = styled(Button)`
   align-self: center;
@@ -73,17 +73,17 @@ const PublishButton = styled(Button)`
   &:hover {
     color: #fff;
   }
-`;
+`
 
 const ToggleContent = styled.div`
   cursor: pointer;
-`;
+`
 const ToolBotton = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
   padding-right: 16px;
-`;
+`
 
 const snapInputStyles = {
   container: base => ({
@@ -104,7 +104,7 @@ const snapInputStyles = {
       background: "red"
     }
   })
-};
+}
 
 const rightSnapInputStyles = {
   container: base => ({
@@ -127,7 +127,7 @@ const rightSnapInputStyles = {
       borderColor: "red"
     }
   })
-};
+}
 
 const selectInputStyles = {
   container: base => ({
@@ -149,7 +149,7 @@ const selectInputStyles = {
       background: "red"
     }
   })
-};
+}
 
 const StyledToggleButton = styled.div`
   display: flex;
@@ -160,20 +160,20 @@ const StyledToggleButton = styled.div`
   background: ${props => props.theme.toolbarClr};
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
-`;
+`
 
 function ToggleButton({ tooltip, children, ...rest }) {
   return (
     <InfoTooltip info={tooltip}>
       <StyledToggleButton {...rest}>{children}</StyledToggleButton>
     </InfoTooltip>
-  );
+  )
 }
 
 ToggleButton.propTypes = {
   tooltip: PropTypes.string,
   children: PropTypes.node
-};
+}
 
 const ToolbarInputGroup = styled.div`
   display: flex;
@@ -183,7 +183,7 @@ const ToolbarInputGroup = styled.div`
   // border: 1px solid ${props => props.theme.border};
   // border-radius: 4px;
   margin: 0 4px;
-`;
+`
 
 const ToolbarNumericStepperInput = styled(NumericStepperInput)`
   width: 86px;
@@ -207,21 +207,21 @@ const ToolbarNumericStepperInput = styled(NumericStepperInput)`
       border-left-width: 0;
     }
   }
-`;
+`
 
 const SelectInputLine = styled.div`
   margin-right: 2px;
-`;
+`
 
 const GlobeIcon = styled.div`
   svg {
     color: ${props => props.theme.svgIconClr};
   }
-`;
+`
 
 const WalletConnect = styled.div`
   margin-top: 9px;
-`;
+`
 
 const translationSnapOptions = [
   { label: "0.1m", value: 0.1 },
@@ -231,7 +231,7 @@ const translationSnapOptions = [
   { label: "1m", value: 1 },
   { label: "2m", value: 2 },
   { label: "4m", value: 4 }
-];
+]
 
 const rotationSnapOptions = [
   { label: "1°", value: 1 },
@@ -241,18 +241,18 @@ const rotationSnapOptions = [
   { label: "30°", value: 30 },
   { label: "45°", value: 45 },
   { label: "90°", value: 90 }
-];
+]
 
 const transformPivotOptions = [
   { label: "Selection", value: TransformPivot.Selection },
   { label: "Center", value: TransformPivot.Center },
   { label: "Bottom", value: TransformPivot.Bottom }
-];
+]
 
 const transformSpaceOptions = [
   { label: "Selection", value: TransformSpace.LocalSelection },
   { label: "World", value: TransformSpace.World }
-];
+]
 
 export default class ToolBar extends Component {
   static propTypes = {
@@ -261,74 +261,74 @@ export default class ToolBar extends Component {
     onPublish: PropTypes.func,
     onOpenScene: PropTypes.func,
     isPublishedScene: PropTypes.bool
-  };
+  }
 
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       editorInitialized: false,
       menuOpen: false
-    };
+    }
   }
 
   componentDidMount() {
-    const editor = this.props.editor;
-    editor.addListener("initialized", this.onEditorInitialized);
-    editor.addListener("playModeChanged", this.onForceUpdate);
-    editor.addListener("settingsChanged", this.onForceUpdate);
+    const editor = this.props.editor
+    editor.addListener("initialized", this.onEditorInitialized)
+    editor.addListener("playModeChanged", this.onForceUpdate)
+    editor.addListener("settingsChanged", this.onForceUpdate)
   }
 
   onEditorInitialized = () => {
-    const editor = this.props.editor;
-    editor.spokeControls.addListener("transformModeChanged", this.onForceUpdate);
-    editor.spokeControls.addListener("transformSpaceChanged", this.onForceUpdate);
-    editor.spokeControls.addListener("transformPivotChanged", this.onForceUpdate);
-    editor.spokeControls.addListener("snapSettingsChanged", this.onForceUpdate);
-    editor.addListener("gridHeightChanged", this.onForceUpdate);
-    editor.addListener("gridVisibilityChanged", this.onForceUpdate);
-    this.setState({ editorInitialized: true });
-  };
+    const editor = this.props.editor
+    editor.spokeControls.addListener("transformModeChanged", this.onForceUpdate)
+    editor.spokeControls.addListener("transformSpaceChanged", this.onForceUpdate)
+    editor.spokeControls.addListener("transformPivotChanged", this.onForceUpdate)
+    editor.spokeControls.addListener("snapSettingsChanged", this.onForceUpdate)
+    editor.addListener("gridHeightChanged", this.onForceUpdate)
+    editor.addListener("gridVisibilityChanged", this.onForceUpdate)
+    this.setState({ editorInitialized: true })
+  }
 
   componentWillUnmount() {
-    const editor = this.props.editor;
-    editor.removeListener("initialized", this.onEditorInitialized);
+    const editor = this.props.editor
+    editor.removeListener("initialized", this.onEditorInitialized)
 
     if (editor.spokeControls) {
-      editor.spokeControls.removeListener("transformModeChanged", this.onForceUpdate);
-      editor.spokeControls.removeListener("transformSpaceChanged", this.onForceUpdate);
-      editor.spokeControls.removeListener("transformPivotChanged", this.onForceUpdate);
-      editor.spokeControls.removeListener("snapSettingsChanged", this.onForceUpdate);
-      editor.removeListener("gridHeightChanged", this.onForceUpdate);
-      editor.removeListener("gridVisibilityChanged", this.onForceUpdate);
-      editor.removeListener("playModeChanged", this.onForceUpdate);
-      editor.removeListener("settingsChanged", this.onForceUpdate);
+      editor.spokeControls.removeListener("transformModeChanged", this.onForceUpdate)
+      editor.spokeControls.removeListener("transformSpaceChanged", this.onForceUpdate)
+      editor.spokeControls.removeListener("transformPivotChanged", this.onForceUpdate)
+      editor.spokeControls.removeListener("snapSettingsChanged", this.onForceUpdate)
+      editor.removeListener("gridHeightChanged", this.onForceUpdate)
+      editor.removeListener("gridVisibilityChanged", this.onForceUpdate)
+      editor.removeListener("playModeChanged", this.onForceUpdate)
+      editor.removeListener("settingsChanged", this.onForceUpdate)
     }
   }
 
   onForceUpdate = () => {
-    this.forceUpdate();
-  };
+    this.forceUpdate()
+  }
 
   onMenuSelected = e => {
     if (!this.state.menuOpen) {
-      const x = 0;
-      const y = e.currentTarget.offsetHeight;
+      const x = 0
+      const y = e.currentTarget.offsetHeight
       showMenu({
         position: { x, y },
         target: e.currentTarget,
         id: "menu"
-      });
+      })
 
-      this.setState({ menuOpen: true });
-      window.addEventListener("mousedown", this.onWindowClick);
+      this.setState({ menuOpen: true })
+      window.addEventListener("mousedown", this.onWindowClick)
     }
-  };
+  }
 
   onWindowClick = () => {
-    window.removeEventListener("mousedown", this.onWindowClick);
-    this.setState({ menuOpen: false });
-  };
+    window.removeEventListener("mousedown", this.onWindowClick)
+    this.setState({ menuOpen: false })
+  }
 
   renderMenu = menu => {
     if (!menu.items || menu.items.length === 0) {
@@ -337,81 +337,81 @@ export default class ToolBar extends Component {
           {menu.name}
           {menu.hotkey && <div>{menu.hotkey}</div>}
         </MenuItem>
-      );
+      )
     } else {
       return (
         <SubMenu key={menu.name} title={menu.name} hoverDelay={0}>
           {menu.items.map(item => {
-            return this.renderMenu(item);
+            return this.renderMenu(item)
           })}
         </SubMenu>
-      );
+      )
     }
-  };
+  }
 
   onSelectTranslate = () => {
-    this.props.editor.spokeControls.setTransformMode(TransformMode.Translate);
-  };
+    this.props.editor.spokeControls.setTransformMode(TransformMode.Translate)
+  }
 
   onSelectRotate = () => {
-    this.props.editor.spokeControls.setTransformMode(TransformMode.Rotate);
-  };
+    this.props.editor.spokeControls.setTransformMode(TransformMode.Rotate)
+  }
 
   onSelectScale = () => {
-    this.props.editor.spokeControls.setTransformMode(TransformMode.Scale);
-  };
+    this.props.editor.spokeControls.setTransformMode(TransformMode.Scale)
+  }
 
   onToggleTransformSpace = () => {
-    this.props.editor.spokeControls.toggleTransformSpace();
-  };
+    this.props.editor.spokeControls.toggleTransformSpace()
+  }
 
   onChangeTransformPivot = transformPivot => {
-    this.props.editor.spokeControls.setTransformPivot(transformPivot);
-  };
+    this.props.editor.spokeControls.setTransformPivot(transformPivot)
+  }
 
   onToggleTransformPivot = () => {
-    this.props.editor.spokeControls.changeTransformPivot();
-  };
+    this.props.editor.spokeControls.changeTransformPivot()
+  }
 
   onToggleSnapMode = () => {
-    this.props.editor.spokeControls.toggleSnapMode();
-  };
+    this.props.editor.spokeControls.toggleSnapMode()
+  }
 
   onChangeTranslationSnap = translationSnap => {
-    this.props.editor.spokeControls.setTranslationSnap(parseFloat(translationSnap));
-    this.props.editor.spokeControls.setSnapMode(SnapMode.Grid);
-  };
+    this.props.editor.spokeControls.setTranslationSnap(parseFloat(translationSnap))
+    this.props.editor.spokeControls.setSnapMode(SnapMode.Grid)
+  }
 
   onChangeScaleSnap = scaleSnap => {
-    this.props.editor.spokeControls.setScaleSnap(scaleSnap);
-  };
+    this.props.editor.spokeControls.setScaleSnap(scaleSnap)
+  }
 
   onChangeRotationSnap = rotationSnap => {
-    this.props.editor.spokeControls.setRotationSnap(parseFloat(rotationSnap));
-    this.props.editor.spokeControls.setSnapMode(SnapMode.Grid);
-  };
+    this.props.editor.spokeControls.setRotationSnap(parseFloat(rotationSnap))
+    this.props.editor.spokeControls.setSnapMode(SnapMode.Grid)
+  }
 
   onChangeGridHeight = value => {
-    this.props.editor.setGridHeight(value);
-  };
+    this.props.editor.setGridHeight(value)
+  }
 
   onToggleGridVisible = () => {
-    this.props.editor.toggleGridVisible();
-  };
+    this.props.editor.toggleGridVisible()
+  }
 
   onTogglePlayMode = () => {
     if (this.props.editor.playing) {
-      this.props.editor.leavePlayMode();
+      this.props.editor.leavePlayMode()
     } else {
-      this.props.editor.enterPlayMode();
+      this.props.editor.enterPlayMode()
     }
-  };
+  }
 
   render() {
-    const { editorInitialized, menuOpen } = this.state;
+    const { editorInitialized, menuOpen } = this.state
 
     if (!editorInitialized) {
-      return <StyledToolbar />;
+      return <StyledToolbar />
     }
 
     const {
@@ -421,7 +421,7 @@ export default class ToolBar extends Component {
       snapMode,
       translationSnap,
       rotationSnap
-    } = this.props.editor.spokeControls;
+    } = this.props.editor.spokeControls
 
     return (
       <StyledToolbar>
@@ -570,11 +570,11 @@ export default class ToolBar extends Component {
           </WalletConnect>
           <ContextMenu id="menu">
             {this.props.menu.map(menu => {
-              return this.renderMenu(menu);
+              return this.renderMenu(menu)
             })}
           </ContextMenu>
         </ToolBotton>
       </StyledToolbar>
-    );
+    )
   }
 }

@@ -1,15 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { useLocation, matchPath } from "react-router-dom";
-import configs from "./configs";
+import React from "react"
+import PropTypes from "prop-types"
+import { useLocation, matchPath } from "react-router-dom"
+import configs from "./configs"
 
-const telemetryEnabled = configs.GA_TRACKING_ID && window.ga;
+const telemetryEnabled = configs.GA_TRACKING_ID && window.ga
 
 export function initTelemetry() {
   if (window.ga && configs.GA_TRACKING_ID) {
-    window.ga("create", configs.GA_TRACKING_ID, "auto");
+    window.ga("create", configs.GA_TRACKING_ID, "auto")
   } else {
-    window.ga = () => {};
+    window.ga = () => {}
   }
 }
 
@@ -18,35 +18,35 @@ export function trackEvent(eventAction, eventValue) {
     `Telemetry ${telemetryEnabled ? "enabled" : "disabled"} | Event: ${eventAction} ${
       eventValue !== undefined ? "Value: " + eventValue : ""
     }`
-  );
-  window.ga("send", { hitType: "event", eventCategory: "Spoke", eventAction, eventValue });
+  )
+  window.ga("send", { hitType: "event", eventCategory: "Spoke", eventAction, eventValue })
 }
 
 export function Telemetry({ overridePage, overrideTitle }) {
-  const location = useLocation();
+  const location = useLocation()
 
   React.useEffect(() => {
-    let overridePage, overrideTitle;
+    let overridePage, overrideTitle
 
     if (matchPath(location.pathname, { path: "/projects/:projectId" })) {
-      overridePage = "/projects/editor";
-      overrideTitle = "Editor";
+      overridePage = "/projects/editor"
+      overrideTitle = "Editor"
     }
 
-    const page = `/spoke${overridePage || location.pathname}`;
-    const title = overrideTitle ? "Spoke by Mozilla | " + overrideTitle : document.title;
+    const page = `/spoke${overridePage || location.pathname}`
+    const title = overrideTitle ? "Spoke by Mozilla | " + overrideTitle : document.title
 
-    console.info(`Telemetry ${telemetryEnabled ? "enabled" : "disabled"} | Navigated to: ${page}`);
+    console.info(`Telemetry ${telemetryEnabled ? "enabled" : "disabled"} | Navigated to: ${page}`)
 
     if (telemetryEnabled) {
-      window.ga("set", { page, title });
-      window.ga("send", "pageview");
+      window.ga("set", { page, title })
+      window.ga("send", "pageview")
     }
-  }, [location, overridePage, overrideTitle]);
+  }, [location, overridePage, overrideTitle])
 
-  return null;
+  return null
 }
 
 Telemetry.propTypes = {
   match: PropTypes.object
-};
+}

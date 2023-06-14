@@ -1,55 +1,54 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withApi } from "../ui/contexts/ApiContext";
-import { trackEvent } from "../telemetry";
-
-import AuthEmailSentMessage from "./AuthEmailSentMessage";
-import AuthForm from "./AuthForm";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { withApi } from "../ui/contexts/ApiContext"
+import { trackEvent } from "../telemetry"
+import AuthEmailSentMessage from "./AuthEmailSentMessage"
+import AuthForm from "./AuthForm"
 
 class AuthContainer extends Component {
   static propTypes = {
     api: PropTypes.object.isRequired,
     onSuccess: PropTypes.func,
     onChange: PropTypes.func
-  };
+  }
 
   state = {
     error: null,
     emailSent: false,
     email: null,
     abortController: null
-  };
+  }
 
   onSubmit = email => {
     if (email.trim().length === 0) {
-      return;
+      return
     }
 
-    const abortController = new AbortController();
+    const abortController = new AbortController()
 
     this.props.api
       .authenticate(email, abortController.signal)
       .then(this.onSuccess)
-      .catch(this.onError);
+      .catch(this.onError)
 
-    const nextState = { emailSent: true, email, abortController };
+    const nextState = { emailSent: true, email, abortController }
 
     if (this.props.onChange) {
-      this.props.onChange(nextState);
+      this.props.onChange(nextState)
     }
 
-    trackEvent("Login Submitted");
+    trackEvent("Login Submitted")
 
-    this.setState(nextState);
-  };
+    this.setState(nextState)
+  }
 
   onSuccess = (...args) => {
-    trackEvent("Login Successful");
+    trackEvent("Login Successful")
 
     if (this.props.onSuccess) {
-      this.props.onSuccess(...args);
+      this.props.onSuccess(...args)
     }
-  };
+  }
 
   onError = err => {
     const nextState = {
@@ -57,40 +56,40 @@ class AuthContainer extends Component {
       email: null,
       error: err.message || "Error signing in. Please try again.",
       abortController: null
-    };
-
-    if (this.props.onChange) {
-      this.props.onChange(nextState);
     }
 
-    trackEvent("Login Error");
+    if (this.props.onChange) {
+      this.props.onChange(nextState)
+    }
 
-    this.setState(nextState);
-  };
+    trackEvent("Login Error")
+
+    this.setState(nextState)
+  }
 
   onCancel = () => {
-    const nextState = { emailSent: false, abortController: null };
+    const nextState = { emailSent: false, abortController: null }
 
     if (this.state.abortController) {
-      this.state.abortController.abort();
+      this.state.abortController.abort()
     }
 
     if (this.props.onChange) {
-      this.props.onChange(nextState);
+      this.props.onChange(nextState)
     }
 
-    this.setState(nextState);
+    this.setState(nextState)
 
-    trackEvent("Login Canceled");
-  };
+    trackEvent("Login Canceled")
+  }
 
   render() {
     if (this.state.emailSent) {
-      return <AuthEmailSentMessage email={this.state.email} onCancel={this.onCancel} />;
+      return <AuthEmailSentMessage email={this.state.email} onCancel={this.onCancel} />
     }
 
-    return <AuthForm error={this.state.error} onSubmit={this.onSubmit} />;
+    return <AuthForm error={this.state.error} onSubmit={this.onSubmit} />
   }
 }
 
-export default withApi(AuthContainer);
+export default withApi(AuthContainer)

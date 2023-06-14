@@ -1,10 +1,15 @@
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Button, SecondaryButton } from "../inputs/Button"
-import { nftAbi } from "../../api/NftAbi/nftAbi"
+// import nftAbi from "../../api/NftAbi/nftAbi.json"
 import { useWeb3React } from "@web3-react/core"
 import styled from "styled-components"
+import Web3 from "web3"
+// import { ethers } from "ethers"
+import axios from "axios"
+import { ERC721Abi } from "../../api/NftAbi/ERC721Abi"
 // import { Web3Storage } from "web3.storage"
+import Loading from "../Loading"
 
 const DialogContainer = styled.form`
   display: flex;
@@ -15,7 +20,7 @@ const DialogContainer = styled.form`
   max-width: 800px;
   min-width: 400px;
   min-height: 150px;
-  max-height: 80vh;
+  // max-height: 80vh;
 `
 
 const DialogHeader = styled.div`
@@ -106,51 +111,32 @@ export default function Dialog({
   children,
   ...rest
 }) {
-  const { account, active, library } = useWeb3React()
+  const { account, library } = useWeb3React()
   const [objectCID, setObjectCID] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  console.log("loading", isLoading)
+
   console.log("account", account)
 
-  const mintNftAddress = "0x2bcd90c44679e246b72De8f2be76b4332a46c85c".toLowerCase()
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("https://shrram.xyz:443")
+      console.log("response.data", response.data)
+    } catch (error) {
+      console.error("Error:", error)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  const mintNftAddress = "0x30E9fEF957036ACf9468D61922F4A837EC0eF169".toLowerCase()
 
   const onSubmitForm = useCallback(
     async e => {
-      // e.preventDefault()
-
       if (!onConfirm) return
       onConfirm(e)
-      if (!account || !library.provider) return
-
-      try {
-        const token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDhmMTBiYjIxQTFlNTE1MmVlZEJBNjEwMTk1NTdlNmIyMkVBMDhBMDEiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2ODM3OTc0MzU0MTcsIm5hbWUiOiJmdW5naWJsZXoifQ.XRneiYEVsMUm_Nsjp62CqIo18PBkwt61DzoooVhS0k8"
-
-        const storage = new Web3Storage({ token: token })
-
-        const obj = {
-          name: "evalues.name",
-          image: "https://hubs.local:9090/529a103e-a660-4e7b-8178-d6f0c3edeb8e"
-        }
-
-        console.log(obj)
-        const blob = new Blob([JSON.stringify(obj)], {
-          type: "application/json"
-        })
-        const Objectfiles = [new File([blob], "object.json")]
-        const objectCid = await storage.put(Objectfiles)
-        const objectres = await storage.get(objectCid)
-        if (!objectres) return
-        const files = await objectres.files()
-        for (const file of files) {
-          setObjectCID(file.cid)
-        }
-
-        const mintContract = new ethers.Contract(mintNftAddress, nftAbi, library.provider)
-        const tx = await mintContract.mint(account, objectCID)
-        await tx.wait()
-      } catch (error) {
-        console.log("Error sending File to IPFS:")
-        console.log(error)
-      }
     },
     [onConfirm, objectCID]
   )
@@ -158,33 +144,35 @@ export default function Dialog({
   const onsubmit = async () => {
     if (!account || !library.provider) return
 
+    onCancel()
+
     try {
-      const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDhmMTBiYjIxQTFlNTE1MmVlZEJBNjEwMTk1NTdlNmIyMkVBMDhBMDEiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2ODM3OTc0MzU0MTcsIm5hbWUiOiJmdW5naWJsZXoifQ.XRneiYEVsMUm_Nsjp62CqIo18PBkwt61DzoooVhS0k8"
-
-      // const storage = new Web3Storage({ token: token })
-
-      const obj = {
-        name: "evalues.name",
-        image: "https://hubs.local:9090/529a103e-a660-4e7b-8178-d6f0c3edeb8e"
-      }
-
-      console.log(obj)
-      const blob = new Blob([JSON.stringify(obj)], {
-        type: "application/json"
+      setIsLoading(true)
+      const newData = { name: "subject", image: "ac0826c6-5713-427d-8357-802c5711d0d4" }
+      const resData = await axios({
+        method: "post",
+        url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
+        data: newData,
+        headers: {
+          pinata_api_key: "e791f4722a928786f3a4",
+          pinata_secret_api_key: "061e40a53c59f57788841539c4068ea4456329ad31bfc08418fbfd2329640df7",
+          "Content-Type": "application/json"
+        }
       })
-      const Objectfiles = [new File([blob], "object.json")]
-      const objectCid = await storage.put(Objectfiles)
-      const objectres = await storage.get(objectCid)
-      if (!objectres) return
-      const files = await objectres.files()
-      for (const file of files) {
-        setObjectCID(file.cid)
-      }
+      const JsonHash = resData.data.IpfsHash
 
-      const mintContract = new ethers.Contract(mintNftAddress, nftAbi, library.provider)
-      const tx = await mintContract.mint(account, objectCID)
-      await tx.wait()
+      const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
+      console.log(dataHash)
+
+      const web3 = new Web3(new Web3(library.provider))
+
+      const mintContract = new web3.eth.Contract(ERC721Abi, mintNftAddress)
+      console.log(mintContract)
+      console.log(ERC721Abi)
+      const tx = await mintContract.methods.mint(account, dataHash).send({ from: account })
+      console.log("tx", tx)
+
+      setIsLoading(false)
     } catch (error) {
       console.log("Error sending File to IPFS:")
       console.log(error)
@@ -207,19 +195,18 @@ export default function Dialog({
               </Button>
             )}
             {onConfirm && (
-              <Button className="save-btn" type="submit" onClick={tag === "form" ? null : onConfirm}>
-                {confirmLabel}
-              </Button>
+              <>
+                <Button className="save-btn" type="submit" onClick={tag === "form" ? null : onConfirm}>
+                  {confirmLabel}
+                </Button>
+                <Button className="save-btn" type="submit" onClick={onsubmit}>
+                  Mint
+                </Button>
+              </>
             )}
-            {/* <Button className="save-btn" type="submit" onClick={tag === "form" ? null : onConfirm}>
-              save
-            </Button> */}
           </DialogBottomNav>
         )}
       </DialogContainer>
-      {/* <Button className="save-btn" type="submit" onClick={onsubmit}>
-        save
-      </Button> */}
     </>
   )
 }
