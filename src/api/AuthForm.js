@@ -149,7 +149,6 @@ const LoginForm = ({ error, onSubmit }) => {
     e.preventDefault()
 
     if (!account) return
-    if (localStorage.getItem("token")) return
 
     try {
       const { data } = await axios.post("https://node-reticulum.onrender.com/auth/register", {
