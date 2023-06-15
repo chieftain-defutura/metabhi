@@ -208,9 +208,11 @@ const ConnectWalletBtn = () => {
   const getData = useCallback(async () => {
     try {
       console.log("localStorage", localStorage.getItem("token"))
+      if (!localStorage.getItem("token")) return
+
       const response = await axios.get("https://node-reticulum.onrender.com/auth/status", {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
         }
       })
 

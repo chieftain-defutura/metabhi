@@ -139,6 +139,7 @@ export default class Project extends EventEmitter {
       channel.on("auth_credentials", ({ credentials: token }) => {
         localStorage.setItem(LOCAL_STORE_KEY, JSON.stringify({ credentials: { email, token } }))
         this.emit("authentication-changed", true)
+        window.location.href = "/"
         resolve()
       })
     )
