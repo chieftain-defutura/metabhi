@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
-import { Redirect } from "react-router-dom";
-import { ApiContext } from "../contexts/ApiContext";
-import NavBar from "../navigation/NavBar";
-import Footer from "../navigation/Footer";
-import styled from "styled-components";
+import React, { useContext } from "react"
+import { Redirect } from "react-router-dom"
+import { ApiContext } from "../contexts/ApiContext"
+import NavBar from "../navigation/NavBar"
+import Footer from "../navigation/Footer"
+import styled from "styled-components"
 
 const LoginSection = styled.section`
   padding: 100px 0;
-`;
+`
 
 const LoginContainer = styled.div`
   display: flex;
@@ -18,16 +18,16 @@ const LoginContainer = styled.div`
   background: ${props => props.theme.darkClr};
   color: ${props => props.theme.text};
   border-radius: 8px;
-`;
+`
 
 export default function LoginPage() {
-  const api = useContext(ApiContext);
+  const api = useContext(ApiContext)
 
   if (api.isAuthenticated()) {
-    return <Redirect to="/projects" />;
+    return <Redirect to="/dashboard/recent" />
   }
 
-  const AuthContainer = api.getAuthContainer();
+  const AuthContainer = api.getAuthContainer()
 
   return (
     <>
@@ -41,5 +41,5 @@ export default function LoginPage() {
       </main>
       <Footer />
     </>
-  );
+  )
 }

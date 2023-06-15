@@ -1,7 +1,7 @@
-import React, { useCallback, useState, useContext } from "react";
-import PropTypes from "prop-types";
-import ScrollToTop from "../router/ScrollToTop";
-import NavBar from "../navigation/NavBar";
+import React, { useCallback, useState, useContext } from "react"
+import PropTypes from "prop-types"
+import ScrollToTop from "../router/ScrollToTop"
+import NavBar from "../navigation/NavBar"
 import {
   ProjectGrid,
   ProjectGridContainer,
@@ -12,45 +12,45 @@ import {
   SearchInput,
   ProjectGridContent,
   ErrorMessage
-} from "./ProjectGrid";
-import Footer from "../navigation/Footer";
-import PrimaryLink from "../inputs/PrimaryLink";
-import { Button } from "../inputs/Button";
-import { ProjectsSection, ProjectsContainer, ProjectsHeader } from "./ProjectsPage";
-import { ApiContext } from "../contexts/ApiContext";
-import { Link } from "react-router-dom";
-import InfiniteScroll from "react-infinite-scroller";
-import usePaginatedSearch from "./usePaginatedSearch";
+} from "./ProjectGrid"
+import Footer from "../navigation/Footer"
+import PrimaryLink from "../inputs/PrimaryLink"
+import { Button } from "../inputs/Button"
+import { ProjectsSection, ProjectsContainer, ProjectsHeader } from "./ProjectsPage"
+import { ApiContext } from "../contexts/ApiContext"
+import { Link } from "react-router-dom"
+import InfiniteScroll from "react-infinite-scroller"
+import usePaginatedSearch from "./usePaginatedSearch"
 
 export default function CreateProjectPage({ history, location }) {
-  const api = useContext(ApiContext);
+  const api = useContext(ApiContext)
 
-  const queryParams = new URLSearchParams(location.search);
+  const queryParams = new URLSearchParams(location.search)
 
   const [params, setParams] = useState({
     source: "scene_listings",
     filter: queryParams.get("filter") || "featured-remixable",
     q: queryParams.get("q") || ""
-  });
+  })
 
   const updateParams = useCallback(
     nextParams => {
-      const search = new URLSearchParams();
+      const search = new URLSearchParams()
 
       for (const name in nextParams) {
         if (name === "source" || !nextParams[name]) {
-          continue;
+          continue
         }
 
-        search.set(name, nextParams[name]);
+        search.set(name, nextParams[name])
       }
 
-      history.push(`/projects/create?${search}`);
+      history.push(`/projects/create?${search}`)
 
-      setParams(nextParams);
+      setParams(nextParams)
     },
     [history]
-  );
+  )
 
   const onChangeQuery = useCallback(
     value => {
@@ -58,46 +58,43 @@ export default function CreateProjectPage({ history, location }) {
         source: "scene_listings",
         filter: "remixable",
         q: value
-      });
+      })
     },
     [updateParams]
-  );
+  )
 
   const onSetFeaturedRemixable = useCallback(() => {
     updateParams({
       ...params,
       filter: "featured-remixable",
       q: ""
-    });
-  }, [updateParams, params]);
+    })
+  }, [updateParams, params])
 
   const onSetAll = useCallback(() => {
     updateParams({
       ...params,
       filter: "remixable",
       q: ""
-    });
-  }, [updateParams, params]);
+    })
+  }, [updateParams, params])
 
   const onSelectScene = useCallback(
     scene => {
-      const search = new URLSearchParams();
-      search.set("sceneId", scene.id);
-      history.push(`/projects/new?${search}`);
+      const search = new URLSearchParams()
+      search.set("sceneId", scene.id)
+      history.push(`/projects/new?${search}`)
     },
     [history]
-  );
+  )
 
-  const { loading, error, entries, hasMore, loadMore } = usePaginatedSearch(
-    `${api.apiURL}/api/v1/media/search`,
-    params
-  );
+  const { loading, error, entries, hasMore, loadMore } = usePaginatedSearch(`${api.apiURL}/api/v1/media/search`, params)
 
   const filteredEntries = entries.map(result => ({
     ...result,
     url: `/projects/new?sceneId=${result.id}`,
     thumbnail_url: result && result.images && result.images.preview && result.images.preview.url
-  }));
+  }))
 
   return (
     <>
@@ -107,7 +104,7 @@ export default function CreateProjectPage({ history, location }) {
           <ProjectsContainer>
             <ProjectsHeader>
               <h1>New Project</h1>
-              <PrimaryLink to="/projects">Back to projects</PrimaryLink>
+              <PrimaryLink to="/dashboard/recent">Back to projects</PrimaryLink>
             </ProjectsHeader>
             <ProjectGridContainer>
               <ProjectGridHeader>
@@ -158,10 +155,10 @@ export default function CreateProjectPage({ history, location }) {
       </main>
       <Footer />
     </>
-  );
+  )
 }
 
 CreateProjectPage.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired
-};
+}

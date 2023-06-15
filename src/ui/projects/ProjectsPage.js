@@ -116,7 +116,7 @@ class ProjectsPage extends Component {
           if (error.response && error.response.status === 401) {
             // User has an invalid auth token. Prompt them to login again.
             this.props.api.logout()
-            return this.props.history.push("/login", { from: "/projects" })
+            return this.props.history.push("/login", { from: "/dashboard/recent" })
           }
 
           this.setState({ error, loading: false })

@@ -244,7 +244,7 @@ function CreateScenePage({ match, api }) {
           abortController.signal,
           sceneId
         )
-        .then(() => history.push("/projects"))
+        .then(() => history.push("/dashboard/recent"))
         .catch(e => {
           setIsUploading(false)
           setError(e.message)
