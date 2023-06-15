@@ -10,6 +10,7 @@ import axios from "axios"
 import { ERC721Abi } from "../../api/NftAbi/ERC721Abi"
 // import { Web3Storage } from "web3.storage"
 import Loading from "../Loading"
+import ConnectWalletBtn from "../../components/ConnectWalletBtn"
 
 const DialogContainer = styled.form`
   display: flex;
@@ -194,14 +195,20 @@ export default function Dialog({
                 {cancelLabel}
               </Button>
             )}
-            {onConfirm && (
+            {!account ? (
+              <ConnectWalletBtn />
+            ) : (
               <>
-                <Button className="save-btn" type="submit" onClick={tag === "form" ? null : onConfirm}>
-                  {confirmLabel}
-                </Button>
-                <Button className="save-btn" type="submit" onClick={onsubmit}>
-                  Mint
-                </Button>
+                {onConfirm && (
+                  <>
+                    <Button className="save-btn" type="submit" onClick={tag === "form" ? null : onConfirm}>
+                      {confirmLabel}
+                    </Button>
+                    <Button className="save-btn" type="submit" onClick={onsubmit}>
+                      Mint
+                    </Button>
+                  </>
+                )}
               </>
             )}
           </DialogBottomNav>
