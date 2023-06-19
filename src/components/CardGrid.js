@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { AiOutlineStar } from "react-icons/ai"
 import PenFile from "../assets/pen-file-svg.png"
+import { Link } from "react-router-dom"
 
 const CardGridWrapper = styled.div`
   padding: 24px 40px;
@@ -81,8 +82,8 @@ const CardGrid = ({ mappedProjects }) => {
     <CardGridWrapper>
       {mappedProjects.map((f, index) => {
         return (
-          <a href={`https://hubs.local:9090/projects/${f.project_id}`}>
-            <GridContent key={index}>
+          <Link to={`${window.location.origin}/projects/${f.project_id}`} key={index}>
+            <GridContent>
               <CardGridBox>
                 <img src={f.thumbnail_url} alt="img-url" />
               </CardGridBox>
@@ -102,7 +103,7 @@ const CardGrid = ({ mappedProjects }) => {
                 </Profile>
               </CardGridUnTitle>
             </GridContent>
-          </a>
+          </Link>
         )
       })}
     </CardGridWrapper>

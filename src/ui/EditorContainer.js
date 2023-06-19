@@ -924,7 +924,9 @@ class EditorContainer extends Component {
                       </Resizeable> */}
                       {/* <AssetsPanel /> */}
 
-                      <PropertiesPanelContainer />
+                      <Resizeable axis="y">
+                        <PropertiesPanelContainer />
+                      </Resizeable>
                     </Resizeable>
                   </WorkspaceContainer>
                   <Modal

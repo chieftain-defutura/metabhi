@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
 
 export const ListItem = styled.li`
   display: flex;
@@ -29,13 +29,13 @@ export const ListItem = styled.li`
     // background-color: ${props => props.theme.bluePressed};
     color: ${props => props.theme.text};
   }
-`;
+`
 
 const ListItemIcon = styled.div`
   width: 12px;
   height: 12px;
   margin-right: 4px;
-`;
+`
 
 export function IconListItem({ iconComponent, children, ...rest }) {
   return (
@@ -43,15 +43,16 @@ export function IconListItem({ iconComponent, children, ...rest }) {
       <ListItemIcon as={iconComponent} />
       {children}
     </ListItem>
-  );
+  )
 }
 
 IconListItem.propTypes = {
   iconComponent: PropTypes.object.isRequired,
   children: PropTypes.node
-};
+}
 
 export const List = styled.ul`
   height: 100%;
   overflow-y: auto;
-`;
+  width: auto;
+`

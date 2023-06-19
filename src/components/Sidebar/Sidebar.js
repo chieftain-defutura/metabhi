@@ -1,13 +1,13 @@
-import React from "react";
-import styled from "styled-components";
-import GrayIcon from "../../assets/gray.svg";
-import WhiteIcon from "../../assets/white.svg";
-import { BiTime } from "react-icons/bi";
-import { CgTemplate } from "react-icons/cg";
-import { BsFileEarmark } from "react-icons/bs";
-import { AiOutlineStar } from "react-icons/ai";
-import { AiOutlinePlus } from "react-icons/ai";
-import { NavLink } from "react-router-dom";
+import React from "react"
+import styled from "styled-components"
+import GrayIcon from "../../assets/gray.svg"
+import WhiteIcon from "../../assets/white.svg"
+import { BiTime } from "react-icons/bi"
+import { CgTemplate } from "react-icons/cg"
+import { BsFileEarmark } from "react-icons/bs"
+import { AiOutlineStar } from "react-icons/ai"
+import { AiOutlinePlus } from "react-icons/ai"
+import { NavLink } from "react-router-dom"
 
 const SidebarWrapper = styled.div`
   height: calc(100vh - 77px);
@@ -31,7 +31,7 @@ const SidebarWrapper = styled.div`
   a.active {
     color: #0092ff;
   }
-`;
+`
 
 const RecentContent = styled.div`
   display: flex;
@@ -66,7 +66,7 @@ const RecentContent = styled.div`
   &.borderBottom {
     margin-bottom: 8px;
   }
-`;
+`
 const Teams = styled.div`
   padding: 16px 21px;
   border-top: 1px solid ${props => props.theme.borderStyleClr};
@@ -76,7 +76,7 @@ const Teams = styled.div`
     font-size: 14px;
     font-weight: 700;
   }
-`;
+`
 
 const Sidebar = () => {
   return (
@@ -98,7 +98,7 @@ const Sidebar = () => {
         </NavLink>
       </div>
 
-      <RecentContent className="borderStyle">
+      {/* <RecentContent className="borderStyle">
         <BsFileEarmark size={16} />
         <h4>Draft</h4>
       </RecentContent>
@@ -125,9 +125,9 @@ const Sidebar = () => {
       <RecentContent>
         <img src={WhiteIcon} alt="WhiteIcon" />
         <h4>Company</h4>
-      </RecentContent>
+      </RecentContent> */}
     </SidebarWrapper>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar

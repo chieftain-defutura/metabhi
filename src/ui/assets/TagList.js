@@ -47,7 +47,8 @@ const TagContent = styled.div`
   padding-left: ${props => props.depth * 20}px;
   color: ${props => props.theme.text};
   padding: 14px 4px;
-  background-color: ${props => (props.selected ? props.theme.selected : "transparent")};
+  backgroung-color: ${props => props.lightDarkClr};
+  // background-color: ${props => (props.selected ? props.theme.selected : "transparent")};
 
   :hover,
   :focus {
