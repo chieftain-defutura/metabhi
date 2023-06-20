@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import React from "react"
 import styled from "styled-components"
 import { AiOutlineStar } from "react-icons/ai"
@@ -82,7 +84,7 @@ const CardGrid = ({ mappedProjects }) => {
     <CardGridWrapper>
       {mappedProjects.map((f, index) => {
         return (
-          <Link to={`${window.location.origin}/projects/${f.project_id}`} key={index}>
+          <Link to={`/projects/${f.project_id}`} key={index}>
             <GridContent>
               <CardGridBox>
                 <img src={f.thumbnail_url} alt="img-url" />
