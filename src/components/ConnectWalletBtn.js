@@ -180,6 +180,7 @@ const ConnectWalletBtn = () => {
     try {
       const token = localStorage.getItem("token")
       if (!account) {
+        localStorage.removeItem("token")
         throw new Error("Wallet not connected")
       } else if (account && !token) {
         const { data: datas } = await axios.post("https://node-reticulum.onrender.com/auth/login", {
