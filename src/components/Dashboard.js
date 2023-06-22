@@ -1,15 +1,16 @@
-import React, { useState, useCallback, useContext, useEffect } from "react"
+import React, { useState, useCallback, useEffect, useContext } from "react"
 import styled from "styled-components"
 import CardGrid from "./CardGrid"
 import ListGrid from "./ListGrid"
+import { ApiContext } from "../ui/contexts/ApiContext"
 import { TbMenu2 } from "react-icons/tb"
 import { RxDashboard } from "react-icons/rx"
 import { AiOutlineFileAdd } from "react-icons/ai"
 import { AiOutlinePlus } from "react-icons/ai"
 import { TbFileImport } from "react-icons/tb"
-import { ApiContext } from "../ui/contexts/ApiContext"
 import { Link } from "react-router-dom"
 import configs from "../configs"
+import axios from "axios"
 
 const DashboardWrapper = styled.div`
   margin-top: 75px;
@@ -87,31 +88,6 @@ const NewFilePara = styled.div`
   }
 `
 
-const Recently = styled.div`
-  padding: 22px 40px;
-  border-bottom: 1px solid ${props => props.theme.borderStyleClr};
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  h3 {
-    font-weight: 500;
-    font-size: 14px;
-  }
-`
-
-const DropDown = styled.div`
-  display: flex;
-  gap: 12px;
-
-  h4 {
-    color: ${props => props.theme.gray};
-    font-size: 18px;
-    margin-top: 20px;
-  }
-`
-
 const DropDownContent = styled.div`
   h3 {
     font-weight: 500;
@@ -144,22 +120,6 @@ const MenuBox = styled.div`
   border-radius: 5px;
 `
 
-const ToolbarInputGroup = styled.div`
-  margin-top: 20px;
-
-  select {
-    border: none;
-    outline: none;
-    background: transparent;
-    color: ${props => props.theme.text};
-    width: 115px;
-  }
-  option {
-    background: #000000;
-    color: #fff;
-    font-size: 17px;
-  }
-`
 const RecentlyContent = styled.div`
   display: flex;
   align-items: center;
@@ -167,33 +127,6 @@ const RecentlyContent = styled.div`
   padding: 16px 40px;
   border-bottom: 1px solid ${props => props.theme.borderStyleClr};
 `
-const selectInputStyles = {
-  container: base => ({
-    ...base,
-    width: "128px",
-    height: "150px"
-  }),
-  control: base => ({
-    ...base,
-    background: "#111111",
-    minHeight: "60px",
-    borderTopLeftRadius: "0px",
-    borderBottomLeftRadius: "0px",
-    position: "absolute",
-    top: "0px",
-    width: "100%",
-    borderWidth: "0px",
-    cursor: "pointer",
-    outline: "none",
-    boxShadow: "none",
-    padding: "5px 0px"
-  })
-}
-
-const FilesOption = {
-  AllFiles: "All files",
-  DesignFiles: "Design files"
-}
 
 const RETICULUM_SERVER = configs.RETICULUM_SERVER || document.location.hostname
 
@@ -204,6 +137,7 @@ const Dashboard = () => {
   const [gridToggle, setGridToggle] = useState("GridIcon")
   const queryParams = new URLSearchParams(location.search)
   const [mappedProjects, setMappedProjects] = useState([])
+  const [hubsToken, setHubsToken] = useState(null)
 
   const [params, setParams] = useState({
     source: "scene_listings",
@@ -211,29 +145,46 @@ const Dashboard = () => {
     q: queryParams.get("q") || ""
   })
 
-  const updateParams = useCallback(
-    nextParams => {
-      const search = new URLSearchParams()
+  const updateParams = useCallback(nextParams => {
+    const search = new URLSearchParams()
 
-      for (const name in nextParams) {
-        if (name === "source" || !nextParams[name]) {
-          continue
-        }
-
-        search.set(name, nextParams[name])
+    for (const name in nextParams) {
+      if (name === "source" || !nextParams[name]) {
+        continue
       }
 
-      history.push(`/projects/create?${search}`)
+      search.set(name, nextParams[name])
+    }
 
-      setParams(nextParams)
-    },
-    [history]
-  )
+    history.push(`/projects/create?${search}`)
 
-  const getToken = () => {
+    setParams(nextParams)
+  }, [])
+
+  const sendMagicLink = useCallback(async () => {
+    try {
+      const response = await axios.get("https://node-reticulum.onrender.com/auth/status", {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+        }
+      })
+
+      const data = response.data
+      const email = data.data.email
+      const abortController = new AbortController()
+      await api.authenticate(email, abortController.signal)
+      alert("Magic link has been set to your email")
+    } catch (err) {
+      console.error("Error while logging in", err)
+    }
+  }, [api])
+
+  const getToken = useCallback(async () => {
     const value = localStorage.getItem(LOCAL_STORE_KEY)
 
     if (!value) {
+      await sendMagicLink()
+      setHubsToken(false)
       throw new Error("Not authenticated")
     }
 
@@ -244,58 +195,44 @@ const Dashboard = () => {
     }
 
     return store.credentials.token
-  }
+  }, [sendMagicLink])
+
+  const dataGet = useCallback(async () => {
+    try {
+      const token = await getToken()
+
+      const headers = {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`
+      }
+
+      const response = await fetch(`https://${RETICULUM_SERVER}/api/v1/projects`, { headers })
+
+      const json = await response.json()
+
+      if (!Array.isArray(json.projects)) {
+        throw new Error(`Error fetching projects: ${json.error || "Unknown error."}`)
+      }
+
+      const mappedData = json.projects.map(project => {
+        return {
+          name: project.name,
+          thumbnail_url: project.thumbnail_url,
+          project_id: project.project_id
+        }
+      })
+
+      setMappedProjects(mappedData)
+    } catch (error) {
+      console.error(error)
+    }
+  }, [getToken])
 
   useEffect(() => {
-    const dataGet = async () => {
-      try {
-        const token = getToken()
-
-        console.log("token", token)
-
-        const headers = {
-          "content-type": "application/json",
-          authorization: `Bearer ${token}`
-        }
-
-        console.log("RETICULUM_SERVER", RETICULUM_SERVER)
-
-        const response = await fetch(`https://${RETICULUM_SERVER}/api/v1/projects`, { headers })
-
-        console.log("response", response)
-
-        const json = await response.json()
-
-        if (!Array.isArray(json.projects)) {
-          throw new Error(`Error fetching projects: ${json.error || "Unknown error."}`)
-        }
-
-        console.log("json.projects", json.projects)
-
-        const mappedData = json.projects.map(project => {
-          console.log("Project Name:", project.name)
-          console.log("Thumbnail url:", project.thumbnail_url)
-          console.log("Project_id:", project.project_id)
-
-          return {
-            name: project.name,
-            thumbnail_url: project.thumbnail_url,
-            project_id: project.project_id
-          }
-        })
-
-        console.log("mappedData", mappedData)
-
-        setMappedProjects(mappedData)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
     dataGet()
-  }, [])
+  }, [dataGet])
 
-  const onSetAll = useCallback(() => {
+  useCallback(() => {
     updateParams({
       ...params,
       filter: "remixable",
@@ -362,8 +299,18 @@ const Dashboard = () => {
         </RecentlyContent>
       </DashboardWrapper>
 
-      {gridToggle === "GridIcon" && <CardGrid mappedProjects={mappedProjects} />}
-      {gridToggle === "MenuIcon" && <ListGrid mappedProjects={mappedProjects} />}
+      {!JSON.parse(localStorage.getItem("token")) ? (
+        "Connect wallet to get the projects"
+      ) : JSON.parse(localStorage.getItem("token")) && hubsToken === false ? (
+        <button style={{ border: "none", outline: "none", padding: "8px 32px", background: "#0092ff" }} type="button">
+          Send Magic Link
+        </button>
+      ) : (
+        <>
+          {gridToggle === "GridIcon" && <CardGrid mappedProjects={mappedProjects} />}
+          {gridToggle === "MenuIcon" && <ListGrid mappedProjects={mappedProjects} />}
+        </>
+      )}
     </>
   )
 }
