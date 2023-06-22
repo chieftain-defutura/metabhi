@@ -1,34 +1,34 @@
-import { useState, useCallback, useEffect, useRef } from "react";
-import { useFetch } from "use-http";
+import { useState, useCallback, useEffect, useRef } from "react"
+import { useFetch } from "use-http"
 
 export default function usePaginatedSearch(path, queryParams, options = {}) {
-  const urlRef = useRef();
+  const urlRef = useRef()
 
   if (!urlRef.current) {
-    urlRef.current = new URL(path, window.location);
+    urlRef.current = new URL(path, window.location)
 
     for (const name in queryParams) {
       if (Object.prototype.hasOwnProperty.call(queryParams, name)) {
-        urlRef.current.searchParams.set(name, queryParams[name]);
+        urlRef.current.searchParams.set(name, queryParams[name])
       }
     }
   }
 
-  const [href, setHref] = useState(urlRef.current.href);
+  const [href, setHref] = useState(urlRef.current.href)
 
   useEffect(() => {
-    urlRef.current = new URL(path, window.location);
+    urlRef.current = new URL(path, window.location)
 
     for (const name in queryParams) {
       if (Object.prototype.hasOwnProperty.call(queryParams, name)) {
-        urlRef.current.searchParams.set(name, queryParams[name]);
+        urlRef.current.searchParams.set(name, queryParams[name])
       }
     }
 
-    setHref(urlRef.current.href);
-  }, [path, urlRef, queryParams]);
+    setHref(urlRef.current.href)
+  }, [path, urlRef, queryParams])
 
-  const cursor = urlRef.current.searchParams.get("cursor");
+  const cursor = urlRef.current.searchParams.get("cursor")
 
   const {
     loading,
@@ -46,27 +46,27 @@ export default function usePaginatedSearch(path, queryParams, options = {}) {
       },
       onNewData: (data, newData) => {
         if (!cursor) {
-          return newData;
+          return newData
         } else {
           return {
             entries: [...data.entries, ...newData.entries],
             meta: newData.meta
-          };
+          }
         }
       },
       data: { entries: [], meta: { next_cursor: null } }
     },
     [href]
-  );
+  )
 
   const loadMore = useCallback(() => {
     if (next_cursor) {
-      urlRef.current.searchParams.set("cursor", next_cursor);
-      setHref(urlRef.current.href);
+      urlRef.current.searchParams.set("cursor", next_cursor)
+      setHref(urlRef.current.href)
     }
-  }, [urlRef, next_cursor]);
+  }, [urlRef, next_cursor])
 
-  const hasMore = next_cursor && cursor !== next_cursor;
+  const hasMore = next_cursor && cursor !== next_cursor
 
-  return { loading, error, entries: !cursor && loading ? [] : entries, loadMore, hasMore };
+  return { loading, error, entries: !cursor && loading ? [] : entries, loadMore, hasMore }
 }

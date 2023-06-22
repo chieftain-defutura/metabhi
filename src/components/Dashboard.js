@@ -195,14 +195,8 @@ const FilesOption = {
   DesignFiles: "Design files"
 }
 
-const transformPivotOptions = [
-  { label: "All files", value: FilesOption.AllFiles },
-  { label: "Design files", value: FilesOption.DesignFiles }
-]
-
 const RETICULUM_SERVER = configs.RETICULUM_SERVER || document.location.hostname
 
-console.log("Reticulum", RETICULUM_SERVER)
 const LOCAL_STORE_KEY = "___hubs_store"
 
 const Dashboard = () => {
@@ -324,26 +318,28 @@ const Dashboard = () => {
             </div>
           </WelComeContent>
           <NewFileContent>
-            <NewFile>
-              <Link to="/projects/new">
+            <Link to="/projects/new">
+              <NewFile>
                 <NewFilePara>
                   <AiOutlineFileAdd size={24} />
                   <p>New file</p>
                 </NewFilePara>
-              </Link>
-              <div>
-                <AiOutlinePlus size={16} />
-              </div>
-            </NewFile>
-            <NewFile style={{ marginTop: "24px" }}>
-              <NewFilePara>
-                <TbFileImport size={24} />
-                <p>Import file</p>
-              </NewFilePara>
-              <div>
-                <AiOutlinePlus size={18} />
-              </div>
-            </NewFile>
+                <div>
+                  <AiOutlinePlus size={16} />
+                </div>
+              </NewFile>
+            </Link>
+            <Link to="/projects/new">
+              <NewFile style={{ marginTop: "24px" }}>
+                <NewFilePara>
+                  <TbFileImport size={24} />
+                  <p>Import file</p>
+                </NewFilePara>
+                <div>
+                  <AiOutlinePlus size={18} />
+                </div>
+              </NewFile>
+            </Link>
           </NewFileContent>
         </WelComeWrapper>
 

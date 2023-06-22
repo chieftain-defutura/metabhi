@@ -1,6 +1,8 @@
 import React from "react"
 import styled from "styled-components"
 import { AiOutlineStar } from "react-icons/ai"
+import { Link } from "react-router-dom"
+import PenFile from "../assets/pen-file-svg.png"
 
 const ListGridWrapper = styled.div`
   margin: 24px 40px;
@@ -22,7 +24,13 @@ const ListGridContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
+  padding: 12px 18px;
+  margin-top: 12px;
+  cursor: pointer;
+  transition: all 0.5s ease-out;
+  &:hover {
+    background: ${props => props.theme.borderStyle};
+  }
 `
 
 const ListGridContent = styled.div`
@@ -35,35 +43,17 @@ const ListGridContent = styled.div`
   }
   p {
     font-size: 14px;
-    font-weight: 400;
-    color: ${props => props.theme.lightGray};
+    font-weight: bold;
+    color: ${props => props.theme.text};
   }
 `
 
 const Profile = styled.div`
-  width: 24px;
-  height: 24px;
-  background: ${props => props.theme.text};
-  border-radius: 2px;
-`
-
-const Minutes = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 100px;
-  padding-right: 30px;
-
-  p {
-    font-size: 12px;
-    color: ${props => props.theme.lightGray};
+  img {
+    width: 32px;
+    height: 28px;
+    object-fit: cover;
   }
-`
-
-const Circle = styled.div`
-  width: 24px;
-  height: 24px;
-  background: #f6851b;
-  border-radius: 50%;
 `
 
 const ListGrid = ({ mappedProjects }) => {
@@ -75,17 +65,20 @@ const ListGrid = ({ mappedProjects }) => {
       </ListGridHead>
       {mappedProjects.map((f, index) => {
         return (
-          <ListGridContainer key={index}>
-            <ListGridContent>
-              <AiOutlineStar size={18} />
-              <Profile></Profile>
-              <p>{f.name}</p>
-            </ListGridContent>
-            <Minutes>
-              {/* <p>{f.minutes}</p> */}
-              <Circle></Circle>
-            </Minutes>
-          </ListGridContainer>
+          <Link to={`/projects/${f.project_id}`} key={index}>
+            <ListGridContainer>
+              <ListGridContent>
+                <AiOutlineStar size={18} />
+                <Profile>
+                  <img src={f.thumbnail_url} alt="img-url" />
+                </Profile>
+                <p>{f.name}</p>
+              </ListGridContent>
+              <div>
+                <img src={PenFile} alt="PenFile" width={22} />
+              </div>
+            </ListGridContainer>
+          </Link>
         )
       })}
     </ListGridWrapper>

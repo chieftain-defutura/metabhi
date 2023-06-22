@@ -38,6 +38,7 @@ const CardGridUnTitle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 50px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 `
@@ -82,7 +83,7 @@ const CardGrid = ({ mappedProjects }) => {
     <CardGridWrapper>
       {mappedProjects.map((f, index) => {
         return (
-          <Link to={`${window.location.origin}/projects/${f.project_id}`} key={index}>
+          <Link to={`/projects/${f.project_id}`} key={index}>
             <GridContent>
               <CardGridBox>
                 <img src={f.thumbnail_url} alt="img-url" />

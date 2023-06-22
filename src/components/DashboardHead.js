@@ -211,26 +211,28 @@ const DashboardHead = () => {
             </div>
           </WelComeContent>
           <NewFileContent>
-            <NewFile>
-              <Link to="/projects/new">
+            <Link to="/projects/new">
+              <NewFile>
                 <NewFilePara>
                   <AiOutlineFileAdd size={24} />
                   <p>New file</p>
                 </NewFilePara>
-              </Link>
-              <div>
-                <AiOutlinePlus size={16} />
-              </div>
-            </NewFile>
-            <NewFile style={{ marginTop: "24px" }}>
-              <NewFilePara>
-                <TbFileImport size={24} />
-                <p>Import file</p>
-              </NewFilePara>
-              <div>
-                <AiOutlinePlus size={16} />
-              </div>
-            </NewFile>
+                <div>
+                  <AiOutlinePlus size={16} />
+                </div>
+              </NewFile>
+            </Link>
+            <Link to="/projects/new">
+              <NewFile style={{ marginTop: "24px" }}>
+                <NewFilePara>
+                  <TbFileImport size={24} />
+                  <p>Import file</p>
+                </NewFilePara>
+                <div>
+                  <AiOutlinePlus size={16} />
+                </div>
+              </NewFile>
+            </Link>
           </NewFileContent>
         </WelComeWrapper>
 

@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { showMenu } from "../layout/ContextMenu";
-import { MenuButton } from "../inputs/Button";
-import StylableContextMenuTrigger from "./StylableContextMenuTrigger";
-import { EllipsisV } from "styled-icons/fa-solid/EllipsisV";
-import PenFile from "../../assets/pen-file-svg.png";
-import { AiOutlineStar } from "react-icons/ai";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { Link } from "react-router-dom"
+import styled from "styled-components"
+import { showMenu } from "../layout/ContextMenu"
+import { MenuButton } from "../inputs/Button"
+import StylableContextMenuTrigger from "./StylableContextMenuTrigger"
+import { EllipsisV } from "styled-icons/fa-solid/EllipsisV"
+import PenFile from "../../assets/pen-file-svg.png"
+import { AiOutlineStar } from "react-icons/ai"
 
 function collectMenuProps({ project }) {
-  return { project };
+  return { project }
 }
 
 const StyledProjectGridItem = styled(Link)`
@@ -27,7 +27,7 @@ const StyledProjectGridItem = styled(Link)`
     color: inherit;
     box-shadow: rgba(69, 68, 68, 0.3) 0px 8px 24px;
   }
-`;
+`
 
 const Pill = styled.i`
   position: absolute;
@@ -38,7 +38,7 @@ const Pill = styled.i`
   color: white;
   border-radius: 6px;
   text-align: center;
-`;
+`
 
 const StyledContextMenuTrigger = styled(StylableContextMenuTrigger)`
   display: flex;
@@ -46,7 +46,7 @@ const StyledContextMenuTrigger = styled(StylableContextMenuTrigger)`
   flex: 1;
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
-`;
+`
 
 const TitleContainer = styled.div`
   // display: flex;
@@ -66,7 +66,7 @@ const TitleContainer = styled.div`
       height: 1em;
     }
   }
-`;
+`
 
 const ThumbnailContainer = styled.div`
   display: flex;
@@ -77,7 +77,7 @@ const ThumbnailContainer = styled.div`
   overflow: hidden;
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
-`;
+`
 
 const Thumbnail = styled.div`
   display: flex;
@@ -86,7 +86,7 @@ const Thumbnail = styled.div`
   background-position: 50%;
   background-repeat: no-repeat;
   background-image: url(${props => props.src});
-`;
+`
 
 const Col = styled.div`
   display: flex;
@@ -95,12 +95,12 @@ const Col = styled.div`
   p {
     color: ${props => props.theme.text2};
   }
-`;
+`
 
 const Column = styled.div`
   display: flex;
   justify-content: space-between;
-`;
+`
 
 const Star = styled.div`
   margin-top: 8px;
@@ -108,12 +108,12 @@ const Star = styled.div`
     width: 18px;
     height: 18px;
   }
-`;
+`
 
 const UntitleHead = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   img {
     width: 24px;
     height: 24px;
@@ -128,20 +128,39 @@ const UntitleHead = styled.div`
     color: ${props => props.theme.lightGray};
     font-weight: 400;
   }
-`;
+`
+
+const ListGridItem = styled.div`
+  padding: 12px 18px;
+  margin-top: 12px;
+  cursor: pointer;
+  transition: all 0.5s ease-out;
+  &:hover {
+    background: ${props => props.theme.borderStyle};
+  }
+`
+
+const Image = styled.div`
+  img {
+    width: 32px;
+    height: 28px;
+    object-fit: cover;
+  }
+`
 
 export class ProjectGridItem extends Component {
   static propTypes = {
     contextMenuId: PropTypes.string,
-    project: PropTypes.object.isRequired
-  };
+    project: PropTypes.object.isRequired,
+    isGrid: PropTypes.bool
+  }
 
   onShowMenu = event => {
-    event.preventDefault();
-    event.stopPropagation();
+    event.preventDefault()
+    event.stopPropagation()
 
-    const x = event.clientX || (event.touches && event.touches[0].pageX);
-    const y = event.clientY || (event.touches && event.touches[0].pageY);
+    const x = event.clientX || (event.touches && event.touches[0].pageX)
+    const y = event.clientY || (event.touches && event.touches[0].pageY)
     showMenu({
       position: { x, y },
       target: event.currentTarget,
@@ -149,12 +168,14 @@ export class ProjectGridItem extends Component {
       data: {
         project: this.props.project
       }
-    });
-  };
+    })
+  }
 
   render() {
-    const { project, contextMenuId } = this.props;
-    const creatorAttribution = project.attributions && project.attributions.creator;
+    const { project, contextMenuId, isGrid } = this.props
+    const creatorAttribution = project.attributions && project.attributions.creator
+
+    console.log("isGrid", isGrid)
 
     const content = (
       <>
@@ -174,10 +195,7 @@ export class ProjectGridItem extends Component {
               <AiOutlineStar size={16} />
             </Star>
           </Column>
-          {/* <Col>
-            <h3>{project.name}</h3>
-            {creatorAttribution && <p>{creatorAttribution}</p>}
-          </Col> */}
+
           {contextMenuId && (
             <MenuButton onClick={this.onShowMenu}>
               <EllipsisV />
@@ -185,7 +203,40 @@ export class ProjectGridItem extends Component {
           )}
         </TitleContainer>
       </>
-    );
+    )
+
+    if (!isGrid) {
+      return (
+        <Link to={project.url}>
+          {/* <ThumbnailContainer>{project.thumbnail_url && <Thumbnail src={project.thumbnail_url} />}</ThumbnailContainer> */}
+          <ListGridItem>
+            <Column>
+              <UntitleHead>
+                <Star>
+                  <AiOutlineStar size={16} />
+                </Star>
+                <Image>
+                  <img src={project.thumbnail_url} />
+                </Image>
+                <div>
+                  <h4>{project.name}</h4>
+                  {creatorAttribution && <p>{creatorAttribution}</p>}
+                </div>
+              </UntitleHead>
+              <div>
+                <img src={PenFile} alt="PenFile" width={22} />
+              </div>
+            </Column>
+
+            {contextMenuId && (
+              <MenuButton onClick={this.onShowMenu}>
+                <EllipsisV />
+              </MenuButton>
+            )}
+          </ListGridItem>
+        </Link>
+      )
+    }
 
     if (contextMenuId) {
       return (
@@ -194,15 +245,16 @@ export class ProjectGridItem extends Component {
             {content}
           </StyledContextMenuTrigger>
         </StyledProjectGridItem>
-      );
+      )
     } else {
-      return <StyledProjectGridItem to={project.url}>{content}</StyledProjectGridItem>;
+      return <StyledProjectGridItem to={project.url}>{content}</StyledProjectGridItem>
     }
   }
 }
 
 export function ProjectGridSceneItem({ scene }) {
-  const creatorAttribution = scene.attributions && scene.attributions.creator;
+  const creatorAttribution = scene.attributions && scene.attributions.creator
+
   return (
     <StyledProjectGridItem to={scene.url}>
       <ThumbnailContainer>{scene.screenshot_url && <Thumbnail src={scene.screenshot_url} />}</ThumbnailContainer>
@@ -214,9 +266,9 @@ export function ProjectGridSceneItem({ scene }) {
         <Pill>GLB</Pill>
       </TitleContainer>
     </StyledProjectGridItem>
-  );
+  )
 }
 
 ProjectGridSceneItem.propTypes = {
   scene: PropTypes.object.isRequired
-};
+}

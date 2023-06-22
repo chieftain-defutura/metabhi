@@ -9,8 +9,6 @@ import { AiOutlinePlus } from "react-icons/ai"
 import { TbMenu2 } from "react-icons/tb"
 import { RxDashboard } from "react-icons/rx"
 import PropTypes from "prop-types"
-import CardGrid from "./CardGrid"
-import ListGrid from "./ListGrid"
 import { Link } from "react-router-dom"
 import { AiOutlineFileAdd } from "react-icons/ai"
 import { TbFileImport } from "react-icons/tb"
@@ -187,75 +185,7 @@ const LOCAL_STORE_KEY = "___hubs_store"
 
 export default function CardTemplate({ history, location }) {
   const api = useContext(ApiContext)
-  const [gridToggle, setGridToggle] = useState("")
-  const [mappedProjects, setMappedProjects] = useState([])
-
-  const getToken = () => {
-    const value = localStorage.getItem(LOCAL_STORE_KEY)
-
-    if (!value) {
-      throw new Error("Not authenticated")
-    }
-
-    const store = JSON.parse(value)
-
-    if (!store || !store.credentials || !store.credentials.token) {
-      throw new Error("Not authenticated")
-    }
-
-    return store.credentials.token
-  }
-
-  useEffect(() => {
-    const dataGet = async () => {
-      try {
-        const token = getToken()
-
-        console.log("token", token)
-
-        const headers = {
-          "content-type": "application/json",
-          authorization: `Bearer ${token}`
-        }
-
-        console.log("RETICULUM_SERVER", RETICULUM_SERVER)
-
-        const response = await fetch(`https://${RETICULUM_SERVER}/api/v1/projects`, { headers })
-
-        console.log("response", response)
-
-        const json = await response.json()
-
-        if (!Array.isArray(json.projects)) {
-          throw new Error(`Error fetching projects: ${json.error || "Unknown error."}`)
-        }
-
-        console.log("json.projects", json.projects)
-
-        const mappedData = json.projects.map(project => {
-          console.log("Project Name:", project.name)
-          console.log("Thumbnail url:", project.thumbnail_url)
-          console.log("Project_id:", project.project_id)
-
-          return {
-            name: project.name,
-            thumbnail_url: project.thumbnail_url,
-            project_id: project.project_id
-          }
-        })
-
-        console.log("mappedData", mappedData)
-
-        setMappedProjects(mappedData)
-
-        // return json.projects
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    dataGet()
-  }, [])
+  const [isGrid, setIsGrid] = useState(true)
 
   const queryParams = new URLSearchParams(location.search)
 
@@ -311,6 +241,10 @@ export default function CardTemplate({ history, location }) {
     })
   }, [updateParams, params])
 
+  useEffect(() => {
+    setTimeout(() => {}, 2000)
+  }, [])
+
   const onSelectScene = useCallback(
     scene => {
       const search = new URLSearchParams()
@@ -342,26 +276,28 @@ export default function CardTemplate({ history, location }) {
             </div>
           </WelComeContent>
           <NewFileContent>
-            <NewFile>
-              <Link to="/projects/new">
+            <Link to="/projects/new">
+              <NewFile>
                 <NewFilePara>
                   <AiOutlineFileAdd size={24} />
                   <p>New file</p>
                 </NewFilePara>
-              </Link>
-              <div>
-                <AiOutlinePlus size={16} />
-              </div>
-            </NewFile>
-            <NewFile style={{ marginTop: "24px" }}>
-              <NewFilePara>
-                <TbFileImport size={24} />
-                <p>Import file</p>
-              </NewFilePara>
-              <div>
-                <AiOutlinePlus size={22} />
-              </div>
-            </NewFile>
+                <div>
+                  <AiOutlinePlus size={16} />
+                </div>
+              </NewFile>
+            </Link>
+            <Link to="/projects/new">
+              <NewFile style={{ marginTop: "24px" }}>
+                <NewFilePara>
+                  <TbFileImport size={24} />
+                  <p>Import file</p>
+                </NewFilePara>
+                <div>
+                  <AiOutlinePlus size={22} />
+                </div>
+              </NewFile>
+            </Link>
           </NewFileContent>
         </WelComeWrapper>
 
@@ -376,13 +312,13 @@ export default function CardTemplate({ history, location }) {
             </div>
           </DropDownContent>
           <MenuIcons>
-            <div onClick={() => setGridToggle("GridIcon")}>
-              <MenuBox style={{ border: gridToggle === "GridIcon" ? "1px solid #777777" : "inherit" }}>
+            <div onClick={() => setIsGrid(true)}>
+              <MenuBox style={{ border: isGrid ? "1px solid #777777" : "inherit" }}>
                 <RxDashboard size={26} />
               </MenuBox>
             </div>
-            <div onClick={() => setGridToggle("MenuIcon")}>
-              <MenuBox style={{ border: gridToggle !== "MenuIcon" ? "inherit" : "1px solid #777777" }}>
+            <div onClick={() => setIsGrid(false)}>
+              <MenuBox style={{ border: !isGrid ? "1px solid #777777" : "inherit" }}>
                 <TbMenu2 size={26} />
               </MenuBox>
             </div>
@@ -391,36 +327,33 @@ export default function CardTemplate({ history, location }) {
       </DashboardWrapper>
 
       <div>
-        {gridToggle === "GridIcon" && <CardGrid mappedProjects={mappedProjects} />}
-        {gridToggle === "MenuIcon" && <ListGrid mappedProjects={mappedProjects} />}
-        {gridToggle === "" && (
-          <ProjectGridContainer>
-            <ProjectTemplateCards>
-              <ProjectGridContent>
-                <ScrollToTop />
-                {error && <ErrorMessage>{error.message}</ErrorMessage>}
-                {!error && (
-                  <InfiniteScroll
-                    initialLoad={false}
-                    pageStart={0}
-                    loadMore={loadMore}
-                    hasMore={hasMore}
-                    threshold={100}
-                    useWindow={true}
-                  >
-                    <ProjectGrid
-                      projects={filteredEntries}
-                      newProjectPath="/dashboard/template"
-                      newProjectLabel="New Empty Project"
-                      onSelectProject={onSelectScene}
-                      loading={loading}
-                    />
-                  </InfiniteScroll>
-                )}
-              </ProjectGridContent>
-            </ProjectTemplateCards>
-          </ProjectGridContainer>
-        )}
+        <ProjectGridContainer>
+          <ProjectTemplateCards>
+            <ProjectGridContent>
+              <ScrollToTop />
+              {error && <ErrorMessage>{error.message}</ErrorMessage>}
+              {!error && (
+                <InfiniteScroll
+                  initialLoad={false}
+                  pageStart={0}
+                  loadMore={loadMore}
+                  hasMore={hasMore}
+                  threshold={100}
+                  useWindow={true}
+                >
+                  <ProjectGrid
+                    projects={filteredEntries}
+                    newProjectPath="/dashboard/template"
+                    newProjectLabel="New Empty Project"
+                    onSelectProject={onSelectScene}
+                    loading={loading}
+                    isGrid={isGrid}
+                  />
+                </InfiniteScroll>
+              )}
+            </ProjectGridContent>
+          </ProjectTemplateCards>
+        </ProjectGridContainer>
       </div>
     </>
   )
