@@ -179,7 +179,7 @@ const ConnectWalletBtn = () => {
   const createData = useCallback(async () => {
     try {
       const token = localStorage.getItem("token")
-      if (!account) {
+      if (!account && !token) {
         localStorage.removeItem("token")
         throw new Error("Wallet not connected")
       } else if (account && !token) {
