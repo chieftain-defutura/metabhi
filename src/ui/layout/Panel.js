@@ -35,7 +35,6 @@ export const PanelToolbar = styled.div`
   height: 40px;
   align-items: center;
   padding: 13px 24px;
-  border-bottom: 1px solid rgba(119, 119, 119, 0.2);
   border-top: 1px solid rgba(119, 119, 119, 0.2);
   color: ${props => (props.selected || props.focused ? props.theme.text : props.theme.text2)};
 

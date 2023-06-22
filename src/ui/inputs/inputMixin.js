@@ -1,4 +1,4 @@
-import { css } from "styled-components";
+import { css } from "styled-components"
 
 export default css`
   background-color: ${props => props.theme.inputBackground};
@@ -20,4 +20,4 @@ export default css`
     background-color: ${props => props.theme.disabled};
     color: ${props => props.theme.disabledText};
   }
-`;
+`

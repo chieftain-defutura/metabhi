@@ -20,6 +20,7 @@ import { AllFileTypes } from "../assets/fileTypes"
 import NodeIssuesIcon from "./NodeIssuesIcon"
 import { Resizeable } from "../layout/Resizeable"
 import AssetsPanel from "../assets/AssetsPanel"
+import { AssetsPanelToolbar } from "../assets/AssetsPanel"
 
 const uploadOptions = {
   multiple: true,
@@ -74,7 +75,7 @@ const TreeNodeContainer = styled.div`
   overflow: hidden;
   background: ${props => props.theme.grayClr};
   padding: 12px 24px;
-  margin:5px 0;
+  // margin:5px 0;
   // background-color: ${treeNodeBackgroundColor};
   border-bottom: 1px solid ${props => (props.root ? props.theme.borderStyle : "none")};
   
@@ -144,6 +145,7 @@ const TreeNodeLabel = styled.div`
 
 const PanelItemContent = styled.div`
   display: flex;
+  border-bottom: 1px solid rgba(119, 119, 119, 0.2);
 `
 
 function borderStyle({ isOver, canDrop, position }) {

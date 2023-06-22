@@ -17,7 +17,7 @@ const AssetsPanelToolbarContainer = styled.div`
   display: flex;
   min-height: 32px;
   // width: 182%;
-  background-color: ${props => props.theme.toolbar};
+  background-color: ${props => props.theme.emptyBoxClr};
   align-items: center;
   padding: 4px 8px;
   justify-content: space-between;
@@ -26,7 +26,7 @@ const AssetsPanelToolbarContainer = styled.div`
 
 export const AssetPanelToolbarContent = styled(Row)`
   flex: 1;
-  align-items: flex-end;
+  // align-items: flex-end;
 
   & > * {
     margin-left: 16px;
@@ -143,7 +143,7 @@ export default function AssetsPanel() {
           {openSavedState && (
             <Source>
               {SourceComponent && !selectedSource.toggle && (
-                <div style={{ width: "300px" }}>
+                <div style={{ width: "299px" }}>
                   <SourceComponent
                     key={selectedSource.id}
                     source={selectedSource.src}

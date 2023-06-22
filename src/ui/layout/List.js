@@ -55,4 +55,5 @@ export const List = styled.ul`
   height: 100%;
   overflow-y: auto;
   width: auto;
+  margin-top: -32px;
 `
