@@ -179,8 +179,7 @@ const ConnectWalletBtn = () => {
   const createData = useCallback(async () => {
     try {
       const token = localStorage.getItem("token")
-      if (!account && !token) {
-        localStorage.removeItem("token")
+      if (!account) {
         throw new Error("Wallet not connected")
       } else if (account && !token) {
         const { data: datas } = await axios.post("https://node-reticulum.onrender.com/auth/login", {
