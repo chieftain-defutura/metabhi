@@ -1,6 +1,6 @@
-import React, { useCallback, useState, useEffect } from "react"
+import React, { useCallback, useState } from "react"
 import PropTypes from "prop-types"
-import { Button, SecondaryButton } from "../inputs/Button"
+import { Button } from "../inputs/Button"
 // import nftAbi from "../../api/NftAbi/nftAbi.json"
 import { useWeb3React } from "@web3-react/core"
 import styled from "styled-components"
@@ -9,7 +9,6 @@ import Web3 from "web3"
 import axios from "axios"
 import { ERC721Abi } from "../../api/NftAbi/ERC721Abi"
 // import { Web3Storage } from "web3.storage"
-import Loading from "../Loading"
 import ConnectWalletBtn from "../../components/ConnectWalletBtn"
 
 const DialogContainer = styled.form`
@@ -113,24 +112,8 @@ export default function Dialog({
   ...rest
 }) {
   const { account, library } = useWeb3React()
-  const [objectCID, setObjectCID] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  console.log("loading", isLoading)
-
-  console.log("account", account)
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get("https://shrram.xyz:443")
-      console.log("response.data", response.data)
-    } catch (error) {
-      console.error("Error:", error)
-    }
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
+  const [objectCID] = useState("")
+  const [, setIsLoading] = useState(false)
 
   const mintNftAddress = "0x30E9fEF957036ACf9468D61922F4A837EC0eF169".toLowerCase()
 

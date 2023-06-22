@@ -1,10 +1,9 @@
-import React, { Component, useState } from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
 import configs from "../configs"
 import styled from "styled-components"
 import Input from "../ui/inputs/Input"
 import { useWeb3React } from "@web3-react/core"
-import { useHistory } from "react-router-dom"
 import axios from "axios"
 
 // import MetaMaskLogo from "../assets/MetaMask-logo.png"
@@ -54,10 +53,6 @@ const FormInput = styled(Input)`
 
 const ErrorMessage = styled.p`
   color: ${props => props.theme.red};
-  margin-bottom: 20px;
-`
-
-const LegalText = styled.p`
   margin-bottom: 20px;
 `
 
@@ -143,7 +138,6 @@ const LegalText = styled.p`
 const LoginForm = ({ error, onSubmit }) => {
   const [email, setEmail] = useState("")
   const { account } = useWeb3React()
-  const history = useHistory()
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -151,13 +145,11 @@ const LoginForm = ({ error, onSubmit }) => {
     if (!account) return
 
     try {
-      const { data } = await axios.post("https://node-reticulum.onrender.com/auth/register", {
+      await axios.post("https://node-reticulum.onrender.com/auth/register", {
         wallet: account,
         email: email
       })
-      console.log("datas", data)
       onSubmit(email)
-      console.log("email", email)
 
       // history.push("/dashboard/recent")
     } catch (error) {

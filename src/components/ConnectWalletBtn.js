@@ -178,23 +178,25 @@ const ConnectWalletBtn = () => {
 
   const createData = useCallback(async () => {
     try {
-      if (!account) return
+      const token = localStorage.getItem("token")
+      if (!account) {
+        throw new Error("Wallet not connected")
+      } else if (account && !token) {
+        const { data: datas } = await axios.post("https://node-reticulum.onrender.com/auth/login", {
+          wallet: account
+        })
 
-      const { data: datas } = await axios.post("https://node-reticulum.onrender.com/auth/login", {
-        wallet: account
-      })
-      console.log("data", datas)
-
-      if (datas.data === null) {
-        history.push("/login")
-        return
+        if (datas.data === null) {
+          history.push("/login")
+          return
+        }
+        localStorage.setItem("token", JSON.stringify(datas.data))
       }
-      localStorage.setItem("token", JSON.stringify(datas.data))
       // history.push("/dashboard/recent")
     } catch (error) {
       console.log(error)
     }
-  }, [account])
+  }, [account, history])
 
   useEffect(() => {
     createData()
@@ -207,7 +209,6 @@ const ConnectWalletBtn = () => {
 
   const getData = useCallback(async () => {
     try {
-      console.log("localStorage", localStorage.getItem("token"))
       if (!localStorage.getItem("token")) return
 
       const response = await axios.get("https://node-reticulum.onrender.com/auth/status", {
@@ -216,8 +217,7 @@ const ConnectWalletBtn = () => {
         }
       })
 
-      const data = response.data
-      console.log("datas", data)
+      response.data
     } catch (error) {
       console.error(error)
     }
