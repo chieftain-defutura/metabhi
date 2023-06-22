@@ -1,75 +1,77 @@
-import { useState, useEffect } from "react";
-import { useWeb3React } from "@web3-react/core";
+import { useState, useEffect } from "react"
+import { useWeb3React } from "@web3-react/core"
 
-import { Injected } from "./connectors";
+import { Injected } from "./connectors"
 
 export function useEagerConnect() {
-  const { activate, active } = useWeb3React();
+  const { activate, active } = useWeb3React()
 
-  const [tried, setTried] = useState(false);
+  const [tried, setTried] = useState(false)
 
   useEffect(() => {
     Injected.isAuthorized().then(isAuthorized => {
       if (isAuthorized) {
         activate(Injected, undefined, true).catch(() => {
-          setTried(true);
-        });
+          setTried(true)
+        })
       } else {
-        setTried(true);
+        setTried(true)
       }
-    });
+    })
 
     //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // intentionally only running on mount (make sure it's only mounted once :))
+  }, []) // intentionally only running on mount (make sure it's only mounted once :))
 
   // if the connection worked, wait until we get confirmation of that to flip the flag
   useEffect(() => {
     if (!tried && active) {
-      setTried(true);
+      setTried(true)
     }
-  }, [tried, active]);
+  }, [tried, active])
 
-  return tried;
+  return tried
 }
 
 export function useInactiveListener(suppress = false) {
-  const { active, error, activate } = useWeb3React();
+  const { active, error, activate } = useWeb3React()
 
   useEffect(() => {
-    const { ethereum } = window;
+    const { ethereum } = window
     if (ethereum && ethereum.on && !active && !error && !suppress) {
       const handleConnect = () => {
-        console.log("Handling 'connect' event");
-        activate(Injected);
-      };
+        console.log("Handling 'connect' event")
+        activate(Injected)
+      }
       const handleChainChanged = chainId => {
-        console.log("Handling 'chainChanged' event with payload", chainId);
-        activate(Injected);
-      };
+        console.log("Handling 'chainChanged' event with payload", chainId)
+        activate(Injected)
+      }
       const handleAccountsChanged = accounts => {
-        console.log("Handling 'accountsChanged' event with payload", accounts);
+        console.log("Handling 'accountsChanged' event with payload", accounts)
         if (accounts.length > 0) {
-          activate(Injected);
+          activate(Injected)
+        } else {
+          localStorage.removeItem("token")
         }
-      };
+      }
       const handleNetworkChanged = networkId => {
-        console.log("Handling 'networkChanged' event with payload", networkId);
-        activate(Injected);
-      };
+        console.log("Handling 'networkChanged' event with payload", networkId)
+        activate(Injected)
+      }
 
-      ethereum.on("connect", handleConnect);
-      ethereum.on("chainChanged", handleChainChanged);
-      ethereum.on("accountsChanged", handleAccountsChanged);
-      ethereum.on("networkChanged", handleNetworkChanged);
+      ethereum.on("connect", handleConnect)
+      ethereum.on("chainChanged", handleChainChanged)
+      ethereum.on("accountsChanged", handleAccountsChanged)
+      ethereum.on("networkChanged", handleNetworkChanged)
 
       return () => {
         if (ethereum.removeListener) {
-          ethereum.removeListener("connect", handleConnect);
-          ethereum.removeListener("chainChanged", handleChainChanged);
-          ethereum.removeListener("accountsChanged", handleAccountsChanged);
-          ethereum.removeListener("networkChanged", handleNetworkChanged);
+          ethereum.removeListener("connect", handleConnect)
+          ethereum.removeListener("chainChanged", handleChainChanged)
+          ethereum.removeListener("accountsChanged", handleAccountsChanged)
+          ethereum.removeListener("networkChanged", handleNetworkChanged)
         }
-      };
+      }
     }
-  }, [active, error, suppress, activate]);
+  }, [active, error, suppress, activate])
 }
