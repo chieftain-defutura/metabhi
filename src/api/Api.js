@@ -21,8 +21,6 @@ const resolveMediaCache = new Map()
 
 const RETICULUM_SERVER = configs.RETICULUM_SERVER || document.location.hostname
 
-console.log("Reticulum", RETICULUM_SERVER)
-
 // thanks to https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding
 function b64EncodeUnicode(str) {
   // first we use encodeURIComponent to get percent-encoded UTF-8, then we convert the percent-encodings
@@ -115,7 +113,6 @@ export default class Project extends EventEmitter {
   async authenticate(email, signal) {
     const reticulumServer = RETICULUM_SERVER
     const socketUrl = `wss://${reticulumServer}/socket`
-    console.log("socketUrl", socketUrl)
     const socket = new Socket(socketUrl, { params: { session_id: uuid() } })
     socket.connect()
 
@@ -205,8 +202,6 @@ export default class Project extends EventEmitter {
     }
 
     const response = await this.fetch(`https://${RETICULUM_SERVER}/api/v1/projects`, { headers })
-
-    console.log("responsive", response)
 
     const json = await response.json()
 

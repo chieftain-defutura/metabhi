@@ -107,8 +107,6 @@ const SearchFilter = () => {
     q: queryParams.get("q") || ""
   })
 
-  console.log("mappedProjects", mappedProjects)
-
   const getToken = () => {
     const value = localStorage.getItem(LOCAL_STORE_KEY)
 
@@ -131,18 +129,12 @@ const SearchFilter = () => {
 
       const token = getToken()
 
-      console.log("token", token)
-
       const headers = {
         "content-type": "application/json",
         authorization: `Bearer ${token}`
       }
 
-      console.log("RETICULUM_SERVER", RETICULUM_SERVER)
-
       const response = await fetch(`https://${RETICULUM_SERVER}/api/v1/projects`, { headers })
-
-      console.log("response", response)
 
       const json = await response.json()
 
@@ -150,13 +142,7 @@ const SearchFilter = () => {
         throw new Error(`Error fetching projects: ${json.error || "Unknown error."}`)
       }
 
-      console.log("json.projects", json.projects)
-
       const mappedData = json.projects.map(project => {
-        console.log("Project Name:", project.name)
-        console.log("Thumbnail url:", project.thumbnail_url)
-        console.log("Project_id:", project.project_id)
-
         return {
           name: project.name,
           thumbnail_url: project.thumbnail_url,
@@ -166,8 +152,6 @@ const SearchFilter = () => {
 
       setMappedProjects(mappedData)
       setHasData(mappedData.length > 0)
-
-      console.log("mappedData", mappedData)
 
       setMappedProjects(mappedData)
 
@@ -222,8 +206,6 @@ const SearchFilter = () => {
     url: `/projects/new?sceneId=${result.id}`,
     thumbnail_url: result && result.images && result.images.preview && result.images.preview.url
   }))
-
-  console.log("filteredEntries", filteredEntries)
 
   return (
     <SearchContainer>
