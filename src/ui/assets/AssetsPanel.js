@@ -19,7 +19,7 @@ const AssetsPanelToolbarContainer = styled.div`
   min-height: 32px;
   background-color: ${props => props.theme.emptyBoxClr};
   align-items: center;
-  padding: 4px 8px;
+  padding: 8px;
   justify-content: space-between;
   border-bottom: 1px solid ${props => props.theme.panel};
 `

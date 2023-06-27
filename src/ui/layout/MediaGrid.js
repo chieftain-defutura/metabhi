@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
 
 const MediaGridItemContainer = styled.div`
   position: relative;
@@ -11,10 +11,8 @@ const MediaGridItemContainer = styled.div`
   overflow: hidden;
   user-select: none;
   text-decoration: none;
-  // width:50%;
   border-radius: ${props => props.borderRadius};
   background-color: ${props => props.theme.box};
-
   border: 2px solid ${props => (props.selected ? props.theme.selected : "transparent")};
   cursor: pointer;
 
@@ -35,18 +33,18 @@ const MediaGridItemContainer = styled.div`
   :active {
     border-color: ${props => props.theme.selected};
   }
-`;
+`
 
 MediaGridItemContainer.propTypes = {
   aspectRatio: PropTypes.number.isRequired,
   borderRadius: PropTypes.number.isRequired,
   selected: PropTypes.bool
-};
+}
 
 MediaGridItemContainer.defaultProps = {
   aspectRatio: 1,
   borderRadius: 6
-};
+}
 
 const MediaGridItemContent = styled.div`
   display: flex;
@@ -56,7 +54,7 @@ const MediaGridItemContent = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-`;
+`
 
 const MediaGridItemThumbnailImage = styled.div`
   display: flex;
@@ -64,12 +62,12 @@ const MediaGridItemThumbnailImage = styled.div`
   background-size: cover;
   background-position: 50%;
   background-repeat: no-repeat;
-`;
+`
 
 const MediaGridItemThumbnailVideo = styled.video`
   display: flex;
   flex: 1;
-`;
+`
 
 const MediaGridItemIconContainer = styled.div`
   display: flex;
@@ -88,19 +86,20 @@ const MediaGridItemIconContainer = styled.div`
     overflow: hidden;
     width: 100%;
   }
-`;
+`
 
 const MediaGridItemLabelContainer = styled.div`
   padding-top: 4px;
-  display: flex;
-  justify-content: center;
-`;
+  // display: flex;
+  // justify-content: center;
+`
 
 const MediaGridItemLabel = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-`;
+  text-align: center;
+`
 
 export function VideoMediaGridItem({ label, src, ...rest }) {
   return (
@@ -114,13 +113,13 @@ export function VideoMediaGridItem({ label, src, ...rest }) {
         <MediaGridItemLabel>{label}</MediaGridItemLabel>
       </MediaGridItemLabelContainer>
     </>
-  );
+  )
 }
 
 VideoMediaGridItem.propTypes = {
   src: PropTypes.string,
   label: PropTypes.string
-};
+}
 
 export function ImageMediaGridItem({ label, src, ...rest }) {
   return (
@@ -134,13 +133,13 @@ export function ImageMediaGridItem({ label, src, ...rest }) {
         <MediaGridItemLabel>{label}</MediaGridItemLabel>
       </MediaGridItemLabelContainer>
     </>
-  );
+  )
 }
 
 ImageMediaGridItem.propTypes = {
   src: PropTypes.string,
   label: PropTypes.string
-};
+}
 
 export function IconMediaGridItem({ label, iconComponent: IconComponent, ...rest }) {
   return (
@@ -156,29 +155,28 @@ export function IconMediaGridItem({ label, iconComponent: IconComponent, ...rest
         <MediaGridItemLabel>{label}</MediaGridItemLabel>
       </MediaGridItemLabelContainer>
     </>
-  );
+  )
 }
 
 IconMediaGridItem.propTypes = {
   iconComponent: PropTypes.object,
   label: PropTypes.string
-};
+}
 
 export const MediaGrid = styled.div`
   display: grid;
   grid-gap: ${props => props.gap};
-  width: 100%;
-  // grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   padding: ${props => props.gap};
-  margin-bottom:100px;
-`;
+  margin-bottom: 100px;
+`
 
 MediaGrid.propTypes = {
   gap: PropTypes.string.isRequired,
   minWidth: PropTypes.string.isRequired
-};
+}
 
 MediaGrid.defaultProps = {
   gap: "20px",
   minWidth: "100px"
-};
+}
