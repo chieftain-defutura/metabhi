@@ -144,12 +144,9 @@ const LoginForm = ({ error, onSubmit }) => {
   const { account } = useWeb3React()
   const { user } = useContext(UserContext)
 
-  console.log("user:", user)
-
   useEffect(() => {
     if (user) {
       if (localStorage.getItem("token") && !localStorage.getItem(LOCAL_STORE_KEY)) {
-        console.log(user.email)
         onSubmit(user.email)
       }
     }

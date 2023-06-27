@@ -5,7 +5,6 @@ import PreviewDialog from "../ui/dialogs/PreviewDialog"
 import { Button } from "../ui/inputs/Button"
 
 export default function PublishedSceneDialog({ onCancel, sceneName, sceneUrl, screenshotUrl, ...props }) {
-  console.log("sceneUrl", screenshotUrl)
   return (
     <PreviewDialog imageSrc={screenshotUrl} title="Scene Published" {...props}>
       <h1>{sceneName}</h1>

@@ -192,7 +192,6 @@ const PublishDialog = props => {
       // const fileName = "example-file.txt"
 
       const file = await convertBlobUrlToFile(screenshotUrl, "demo")
-      console.log("file", file)
       const formData = new FormData()
       formData.append("file", file)
 
@@ -206,8 +205,6 @@ const PublishDialog = props => {
           pinata_secret_api_key: "061e40a53c59f57788841539c4068ea4456329ad31bfc08418fbfd2329640df7"
         }
       })
-
-      console.log("imageResData", imageResData)
 
       const newData = { name: name, image: imageResData.data.IpfsHash }
       const resData = await axios({
@@ -228,8 +225,6 @@ const PublishDialog = props => {
       const web3 = new Web3(new Web3(library.provider))
 
       const mintContract = new web3.eth.Contract(ERC721Abi, mintNftAddress)
-      console.log(mintContract)
-      console.log(ERC721Abi)
       const tx = await mintContract.methods.mint(account, JsonHash).send({ from: account })
       console.log("tx", tx)
 
@@ -252,8 +247,6 @@ const PublishDialog = props => {
 
     props.onPublish(publishState)
   }
-
-  console.log("ScreenShotUrl", screenshotUrl, "name", name)
 
   return (
     <PreviewDialog
