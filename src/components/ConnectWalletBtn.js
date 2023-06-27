@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react"
+import React, { useState, useEffect, useRef, useCallback, useContext } from "react"
 import styled from "styled-components"
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core"
 import { Injected } from "../ui/connectors"
@@ -8,7 +8,11 @@ import { TiTick } from "react-icons/ti"
 import { TbCopy } from "react-icons/tb"
 import { Link, useHistory } from "react-router-dom"
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector"
+import { UserContext } from "../ui/contexts/UserContext"
+import configs from "../configs"
+import { Socket } from "phoenix"
 import axios from "axios"
+import e from "cors"
 
 export const walletconnect = new WalletConnectConnector({
   rpc: {
@@ -128,12 +132,16 @@ const WrongButton = styled.div`
   cursor: pointer;
   color: #fff;
 `
+const RETICULUM_SERVER = configs.RETICULUM_SERVER || document.location.hostname
+const LOCAL_STORE_KEY = "___hubs_store"
 
 const ConnectWalletBtn = () => {
   const { activate, account, deactivate, error } = useWeb3React()
   const [copied, setCopied] = useState(false)
   const [walletOpen, setWalletOpen] = useState(false)
   const [wrongNetwork, setWrongNetwork] = useState(false)
+  const { setUser } = useContext(UserContext)
+
   const history = useHistory()
 
   const WalletToggle = () => {
@@ -176,12 +184,54 @@ const ConnectWalletBtn = () => {
     }
   }, [copied, parent])
 
+  const authenticate = async (email, signal) => {
+    const reticulumServer = RETICULUM_SERVER
+    const socketUrl = `wss://${reticulumServer}/socket`
+    console.log("socketUrl", socketUrl)
+    const socket = new Socket(socketUrl, { params: { session_id: uuid() } })
+    socket.connect()
+
+    const channel = socket.channel(`auth:${uuid()}`)
+
+    const onAbort = () => socket.disconnect()
+
+    signal.addEventListener("abort", onAbort)
+
+    await new Promise((resolve, reject) =>
+      channel
+        .join()
+        .receive("ok", resolve)
+        .receive("error", err => {
+          signal.removeEventListener("abort", onAbort)
+          reject(err)
+        })
+    )
+
+    const authComplete = new Promise(resolve =>
+      channel.on("auth_credentials", ({ credentials: token }) => {
+        localStorage.setItem(LOCAL_STORE_KEY, JSON.stringify({ credentials: { email, token } }))
+        this.emit("authentication-changed", true)
+        window.location.href = "/"
+        resolve()
+      })
+    )
+
+    channel.push("auth_request", { email, origin: "spoke" })
+
+    signal.removeEventListener("abort", onAbort)
+
+    return authComplete
+  }
+
   const createData = useCallback(async () => {
     try {
       const token = localStorage.getItem("token")
+
       if (!account) {
-        throw new Error("Wallet not connected")
-      } else if (account && !token) {
+        return
+      }
+
+      if (account && !token) {
         const { data: datas } = await axios.post("https://node-reticulum.onrender.com/auth/login", {
           wallet: account
         })
@@ -190,22 +240,45 @@ const ConnectWalletBtn = () => {
           history.push("/login")
           return
         }
+
         localStorage.setItem("token", JSON.stringify(datas.data))
+
+        const response = await axios.get("https://node-reticulum.onrender.com/auth/status", {
+          headers: {
+            Authorization: `Bearer ${datas.data}`
+          }
+        })
+
+        setUser(response.data.data)
+
+        if (!localStorage.getItem(LOCAL_STORE_KEY)) {
+          history.push("/login")
+          return
+        }
+
+        console.log("response.data", response.data)
+      } else {
+        const response = await axios.get("https://node-reticulum.onrender.com/auth/status", {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(token)}`
+          }
+        })
+
+        setUser(response.data.data)
+
+        if (!localStorage.getItem(LOCAL_STORE_KEY)) {
+          history.push("/login")
+          return
+        }
       }
-      // history.push("/dashboard/recent")
     } catch (error) {
       console.log(error)
     }
-  }, [account, history])
+  }, [account])
 
   useEffect(() => {
     createData()
   }, [createData])
-
-  const displayAccount = account => {
-    const slicedAccount = account && account.slice(0, 6) + "..." + account.slice(-6)
-    return slicedAccount
-  }
 
   const getData = useCallback(async () => {
     try {
@@ -217,7 +290,8 @@ const ConnectWalletBtn = () => {
         }
       })
 
-      response.data
+      const email = response.data
+      console.log("responseDataEmail", email)
     } catch (error) {
       console.error(error)
     }
@@ -255,6 +329,11 @@ const ConnectWalletBtn = () => {
         console.error("Error adding Gather Testnet:", error)
       }
     }
+  }
+
+  const displayAccount = account => {
+    const slicedAccount = account && account.slice(0, 6) + "..." + account.slice(-6)
+    return slicedAccount
   }
 
   return (

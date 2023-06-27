@@ -23,6 +23,7 @@ import { InfoTooltip } from "../layout/Tooltip"
 import { Pause } from "styled-icons/fa-solid"
 import DarkModeLightMode from "../../components/DarkModeLightMode"
 import ConnectWalletBtn from "../../components/ConnectWalletBtn"
+import Loader from "../../components/Loader"
 
 const StyledToolbar = styled.div`
   display: flex;
@@ -424,157 +425,161 @@ export default class ToolBar extends Component {
     } = this.props.editor.spokeControls
 
     return (
-      <StyledToolbar>
-        <ToolButtons>
-          <ToolButton icon={Bars} onClick={this.onMenuSelected} selected={menuOpen} id="menu" />
-          <ToolButton
-            id="translate-button"
-            tooltip="[T] Translate"
-            icon={ArrowsAlt}
-            onClick={this.onSelectTranslate}
-            selected={transformMode === TransformMode.Translate}
-          />
-          <ToolButton
-            id="rotate-button"
-            tooltip="[R] Rotate"
-            icon={SyncAlt}
-            onClick={this.onSelectRotate}
-            selected={transformMode === TransformMode.Rotate}
-          />
-          <ToolButton
-            id="scale-button"
-            tooltip="[Y] Scale"
-            icon={ArrowsAltV}
-            onClick={this.onSelectScale}
-            selected={transformMode === TransformMode.Scale}
-          />
-        </ToolButtons>
-        <ToolToggles>
-          <ToolbarInputGroup id="transform-space">
-            <InfoTooltip info="[Z] Toggle Transform Space" position="bottom">
-              <ToggleButton onClick={this.onToggleTransformSpace}>
+      <>
+        <StyledToolbar>
+          <ToolButtons>
+            <ToolButton icon={Bars} onClick={this.onMenuSelected} selected={menuOpen} id="menu" />
+            <ToolButton
+              id="translate-button"
+              tooltip="[T] Translate"
+              icon={ArrowsAlt}
+              onClick={this.onSelectTranslate}
+              selected={transformMode === TransformMode.Translate}
+            />
+            <ToolButton
+              id="rotate-button"
+              tooltip="[R] Rotate"
+              icon={SyncAlt}
+              onClick={this.onSelectRotate}
+              selected={transformMode === TransformMode.Rotate}
+            />
+            <ToolButton
+              id="scale-button"
+              tooltip="[Y] Scale"
+              icon={ArrowsAltV}
+              onClick={this.onSelectScale}
+              selected={transformMode === TransformMode.Scale}
+            />
+          </ToolButtons>
+          <ToolToggles>
+            <ToolbarInputGroup id="transform-space">
+              <InfoTooltip info="[Z] Toggle Transform Space" position="bottom">
+                <ToggleButton onClick={this.onToggleTransformSpace}>
+                  <GlobeIcon>
+                    <Globe size={12} />
+                  </GlobeIcon>
+                </ToggleButton>
+              </InfoTooltip>
+
+              <SelectInput
+                styles={selectInputStyles}
+                onChange={this.onChangeTransformSpace}
+                options={transformSpaceOptions}
+                value={transformSpace}
+              />
+            </ToolbarInputGroup>
+            <ToolbarInputGroup id="transform-pivot">
+              <ToggleButton onClick={this.onToggleTransformPivot} tooltip="[X] Toggle Transform Pivot">
                 <GlobeIcon>
-                  <Globe size={12} />
+                  <Bullseye size={12} />
                 </GlobeIcon>
               </ToggleButton>
-            </InfoTooltip>
-
-            <SelectInput
-              styles={selectInputStyles}
-              onChange={this.onChangeTransformSpace}
-              options={transformSpaceOptions}
-              value={transformSpace}
-            />
-          </ToolbarInputGroup>
-          <ToolbarInputGroup id="transform-pivot">
-            <ToggleButton onClick={this.onToggleTransformPivot} tooltip="[X] Toggle Transform Pivot">
-              <GlobeIcon>
-                <Bullseye size={12} />
-              </GlobeIcon>
-            </ToggleButton>
-            <SelectInput
-              styles={selectInputStyles}
-              onChange={this.onChangeTransformPivot}
-              options={transformPivotOptions}
-              value={transformPivot}
-            />
-          </ToolbarInputGroup>
-          <ToolbarInputGroup id="transform-snap">
-            <ToggleButton
-              value={snapMode === SnapMode.Grid}
-              onClick={this.onToggleSnapMode}
-              tooltip={"[C] Toggle Snap Mode"}
-            >
-              <GlobeIcon>
-                <Magnet size={12} />
-              </GlobeIcon>
-            </ToggleButton>
-            <SelectInputLine>
               <SelectInput
-                styles={snapInputStyles}
-                onChange={this.onChangeTranslationSnap}
-                options={translationSnapOptions}
-                value={translationSnap}
-                placeholder={translationSnap + "m"}
-                formatCreateLabel={value => "Custom: " + value + "m"}
+                styles={selectInputStyles}
+                onChange={this.onChangeTransformPivot}
+                options={transformPivotOptions}
+                value={transformPivot}
+              />
+            </ToolbarInputGroup>
+            <ToolbarInputGroup id="transform-snap">
+              <ToggleButton
+                value={snapMode === SnapMode.Grid}
+                onClick={this.onToggleSnapMode}
+                tooltip={"[C] Toggle Snap Mode"}
+              >
+                <GlobeIcon>
+                  <Magnet size={12} />
+                </GlobeIcon>
+              </ToggleButton>
+              <SelectInputLine>
+                <SelectInput
+                  styles={snapInputStyles}
+                  onChange={this.onChangeTranslationSnap}
+                  options={translationSnapOptions}
+                  value={translationSnap}
+                  placeholder={translationSnap + "m"}
+                  formatCreateLabel={value => "Custom: " + value + "m"}
+                  isValidNewOption={value => value.trim() !== "" && !isNaN(value)}
+                  creatable
+                />
+              </SelectInputLine>
+              <SelectInput
+                styles={rightSnapInputStyles}
+                onChange={this.onChangeRotationSnap}
+                options={rotationSnapOptions}
+                value={rotationSnap}
+                placeholder={rotationSnap + "°"}
+                formatCreateLabel={value => "Custom: " + value + "°"}
                 isValidNewOption={value => value.trim() !== "" && !isNaN(value)}
                 creatable
               />
-            </SelectInputLine>
-            <SelectInput
-              styles={rightSnapInputStyles}
-              onChange={this.onChangeRotationSnap}
-              options={rotationSnapOptions}
-              value={rotationSnap}
-              placeholder={rotationSnap + "°"}
-              formatCreateLabel={value => "Custom: " + value + "°"}
-              isValidNewOption={value => value.trim() !== "" && !isNaN(value)}
-              creatable
-            />
-          </ToolbarInputGroup>
-          <ToolbarInputGroup id="transform-grid">
-            <ToggleButton onClick={this.onToggleGridVisible} tooltip="Toggle Grid Visibility">
-              <GlobeIcon>
-                <Grid size={16} />
-              </GlobeIcon>
-            </ToggleButton>
-            <ToolbarNumericStepperInput
-              value={this.props.editor.grid.position.y}
-              onChange={this.onChangeGridHeight}
-              precision={0.01}
-              smallStep={0.25}
-              mediumStep={1.5}
-              largeStep={4.5}
-              unit="m"
-              incrementTooltip="[-] Increment Grid Height"
-              decrementTooltip="[=] Decrement Grid Height"
-            />
-          </ToolbarInputGroup>
-          {this.props.editor.settings.enableExperimentalFeatures && (
-            <ToolbarInputGroup id="preview">
-              <ToggleButton
-                onClick={this.onTogglePlayMode}
-                tooltip={this.props.editor.playing ? "Stop Previewing Scene" : "Preview Scene"}
-              >
-                {this.props.editor.playing ? (
-                  <GlobeIcon>
-                    <Pause size={14} />
-                  </GlobeIcon>
-                ) : (
-                  <GlobeIcon>
-                    <Play size={14} />
-                  </GlobeIcon>
-                )}
-              </ToggleButton>
             </ToolbarInputGroup>
-          )}
-        </ToolToggles>
-        {/* <Spacer /> */}
+            <ToolbarInputGroup id="transform-grid">
+              <ToggleButton onClick={this.onToggleGridVisible} tooltip="Toggle Grid Visibility">
+                <GlobeIcon>
+                  <Grid size={16} />
+                </GlobeIcon>
+              </ToggleButton>
+              <ToolbarNumericStepperInput
+                value={this.props.editor.grid.position.y}
+                onChange={this.onChangeGridHeight}
+                precision={0.01}
+                smallStep={0.25}
+                mediumStep={1.5}
+                largeStep={4.5}
+                unit="m"
+                incrementTooltip="[-] Increment Grid Height"
+                decrementTooltip="[=] Decrement Grid Height"
+              />
+            </ToolbarInputGroup>
+            {this.props.editor.settings.enableExperimentalFeatures && (
+              <ToolbarInputGroup id="preview">
+                <ToggleButton
+                  onClick={this.onTogglePlayMode}
+                  tooltip={this.props.editor.playing ? "Stop Previewing Scene" : "Preview Scene"}
+                >
+                  {this.props.editor.playing ? (
+                    <GlobeIcon>
+                      <Pause size={14} />
+                    </GlobeIcon>
+                  ) : (
+                    <GlobeIcon>
+                      <Play size={14} />
+                    </GlobeIcon>
+                  )}
+                </ToggleButton>
+              </ToolbarInputGroup>
+            )}
+          </ToolToggles>
+          {/* <Spacer /> */}
 
-        <ToolBotton>
-          {this.props.isPublishedScene && (
-            <PublishButton onClick={this.props.onOpenScene}>
-              {configs.isMoz() ? "Open in Hubs" : "Open Scene"}
+          <ToolBotton>
+            {this.props.isPublishedScene && (
+              <PublishButton onClick={this.props.onOpenScene}>
+                {configs.isMoz() ? "Open in Hubs" : "Open Scene"}
+              </PublishButton>
+            )}
+
+            <ToggleContent>
+              <DarkModeLightMode />
+            </ToggleContent>
+            {/* <DarkModeToggleButton /> */}
+            <PublishButton id="publish-button" onClick={this.props.onPublish} style={{ borderRadius: "2px" }}>
+              {configs.isMoz() ? "Publish to Hubs..." : "Publish Scene..."}
             </PublishButton>
-          )}
 
-          <ToggleContent>
-            <DarkModeLightMode />
-          </ToggleContent>
-          {/* <DarkModeToggleButton /> */}
-          <PublishButton id="publish-button" onClick={this.props.onPublish} style={{ borderRadius: "2px" }}>
-            {configs.isMoz() ? "Publish to Hubs..." : "Publish Scene..."}
-          </PublishButton>
-          <WalletConnect>
-            <ConnectWalletBtn />
-          </WalletConnect>
-          <ContextMenu id="menu">
-            {this.props.menu.map(menu => {
-              return this.renderMenu(menu)
-            })}
-          </ContextMenu>
-        </ToolBotton>
-      </StyledToolbar>
+            <WalletConnect>
+              <ConnectWalletBtn />
+            </WalletConnect>
+            <ContextMenu id="menu">
+              {this.props.menu.map(menu => {
+                return this.renderMenu(menu)
+              })}
+            </ContextMenu>
+          </ToolBotton>
+        </StyledToolbar>
+        <Loader />
+      </>
     )
   }
 }

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useState, useContext } from "react"
 import PropTypes from "prop-types"
 import { Button } from "../inputs/Button"
 // import nftAbi from "../../api/NftAbi/nftAbi.json"
@@ -10,6 +10,7 @@ import axios from "axios"
 import { ERC721Abi } from "../../api/NftAbi/ERC721Abi"
 // import { Web3Storage } from "web3.storage"
 import ConnectWalletBtn from "../../components/ConnectWalletBtn"
+import { TransactionContext } from "../contexts/TransactionContext"
 
 const DialogContainer = styled.form`
   display: flex;
@@ -108,12 +109,13 @@ export default function Dialog({
   onConfirm,
   confirmLabel,
   bottomNav,
+  onSubmit,
   children,
   ...rest
 }) {
   const { account, library } = useWeb3React()
   const [objectCID] = useState("")
-  const [, setIsLoading] = useState(false)
+  const { setLoading } = useContext(TransactionContext)
 
   const mintNftAddress = "0x30E9fEF957036ACf9468D61922F4A837EC0eF169".toLowerCase()
 
@@ -125,43 +127,43 @@ export default function Dialog({
     [onConfirm, objectCID]
   )
 
-  const onsubmit = async () => {
-    if (!account || !library.provider) return
+  // const onsubmit = async () => {
+  //   if (!account || !library.provider) return
 
-    onCancel()
+  //   onCancel()
 
-    try {
-      setIsLoading(true)
-      const newData = { name: "subject", image: "ac0826c6-5713-427d-8357-802c5711d0d4" }
-      const resData = await axios({
-        method: "post",
-        url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
-        data: newData,
-        headers: {
-          pinata_api_key: "e791f4722a928786f3a4",
-          pinata_secret_api_key: "061e40a53c59f57788841539c4068ea4456329ad31bfc08418fbfd2329640df7",
-          "Content-Type": "application/json"
-        }
-      })
-      const JsonHash = resData.data.IpfsHash
+  //   try {
+  //     setLoading(true)
+  //     const newData = { name: name, image: screenshotUrl }
+  //     const resData = await axios({
+  //       method: "post",
+  //       url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
+  //       data: newData,
+  //       headers: {
+  //         pinata_api_key: "e791f4722a928786f3a4",
+  //         pinata_secret_api_key: "061e40a53c59f57788841539c4068ea4456329ad31bfc08418fbfd2329640df7",
+  //         "Content-Type": "application/json"
+  //       }
+  //     })
+  //     const JsonHash = resData.data.IpfsHash
 
-      const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
-      console.log(dataHash)
+  //     const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
+  //     console.log(dataHash)
 
-      const web3 = new Web3(new Web3(library.provider))
+  //     const web3 = new Web3(new Web3(library.provider))
 
-      const mintContract = new web3.eth.Contract(ERC721Abi, mintNftAddress)
-      console.log(mintContract)
-      console.log(ERC721Abi)
-      const tx = await mintContract.methods.mint(account, dataHash).send({ from: account })
-      console.log("tx", tx)
+  //     const mintContract = new web3.eth.Contract(ERC721Abi, mintNftAddress)
+  //     console.log(mintContract)
+  //     console.log(ERC721Abi)
+  //     const tx = await mintContract.methods.mint(account, dataHash).send({ from: account })
+  //     console.log("tx", tx)
 
-      setIsLoading(false)
-    } catch (error) {
-      console.log("Error sending File to IPFS:")
-      console.log(error)
-    }
-  }
+  //     setIsLoading(false)
+  //   } catch (error) {
+  //     console.log("Error sending File to IPFS:")
+  //     console.log(error)
+  //   }
+  // }
 
   return (
     <>
@@ -187,7 +189,7 @@ export default function Dialog({
                     <Button className="save-btn" type="submit" onClick={tag === "form" ? null : onConfirm}>
                       {confirmLabel}
                     </Button>
-                    <Button className="save-btn" type="submit" onClick={onsubmit}>
+                    <Button className="save-btn" type="submit" onClick={onSubmit}>
                       Mint
                     </Button>
                   </>

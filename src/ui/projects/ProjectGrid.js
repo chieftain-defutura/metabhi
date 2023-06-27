@@ -42,6 +42,7 @@ const ListGridItem = styled.div`
 `
 
 export function ProjectGrid({ newProjectPath, newProjectLabel, projects, scenes, contextMenuId, loading, isGrid }) {
+  console.log(projects)
   if (!isGrid) {
     return (
       <ListGridItem>

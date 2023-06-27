@@ -1,14 +1,18 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import PropTypes from "prop-types"
 import configs from "../configs"
 import styled from "styled-components"
 import Input from "../ui/inputs/Input"
 import { useWeb3React } from "@web3-react/core"
+import { UserContext } from "../ui/contexts/UserContext"
 import axios from "axios"
+import { useEffect } from "react"
 
 // import MetaMaskLogo from "../assets/MetaMask-logo.png"
 // import ConnectWalletBtn from "../components/ConnectWalletBtn"
 // import { PRIVACY, TERMS } from "../constants";
+
+const LOCAL_STORE_KEY = "___hubs_store"
 
 const StyledAuthForm = styled.form`
   display: flex;
@@ -138,6 +142,18 @@ const ErrorMessage = styled.p`
 const LoginForm = ({ error, onSubmit }) => {
   const [email, setEmail] = useState("")
   const { account } = useWeb3React()
+  const { user } = useContext(UserContext)
+
+  console.log("user:", user)
+
+  useEffect(() => {
+    if (user) {
+      if (localStorage.getItem("token") && !localStorage.getItem(LOCAL_STORE_KEY)) {
+        console.log(user.email)
+        onSubmit(user.email)
+      }
+    }
+  }, [user])
 
   const handleSubmit = async e => {
     e.preventDefault()

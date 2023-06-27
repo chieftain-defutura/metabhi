@@ -20,6 +20,7 @@ import { AllFileTypes } from "../assets/fileTypes"
 import NodeIssuesIcon from "./NodeIssuesIcon"
 import { Resizeable } from "../layout/Resizeable"
 import AssetsPanel from "../assets/AssetsPanel"
+import { PopupContext } from "../contexts/PopupContext"
 import { AssetsPanelToolbar } from "../assets/AssetsPanel"
 
 const uploadOptions = {
@@ -587,6 +588,8 @@ export default function HierarchyPanel() {
     setNodes(Array.from(treeWalker(editor, expandedNodes)))
   }, [editor, expandedNodes])
 
+  const { popupToggle, setPopupToggle } = useContext(PopupContext)
+
   const expandNode = useCallback(
     node => {
       setExpandedNodes({ ...expandedNodes, [node.id]: true })
@@ -871,20 +874,20 @@ export default function HierarchyPanel() {
           title="Hierarchy"
           icon={ProjectDiagram}
           style={{ cursor: "pointer" }}
-          onClick={() => setHierarchyToggle("Hierarchy")}
+          onClick={() => setPopupToggle(false)}
         />
 
         <Panel
           id="hierarchy-panel"
           title="Element"
           icon={ProjectDiagram}
-          onClick={() => setHierarchyToggle("Element")}
+          onClick={() => setPopupToggle(true)}
           style={{ cursor: "pointer" }}
         />
       </PanelItemContent>
 
       <div style={{ display: "flex", width: "100%", height: "100%" }}>
-        {hierarchyToggle === "Hierarchy" && (
+        {popupToggle === false ? (
           <>
             <PanelContainer>
               {editor.scene && (
@@ -931,8 +934,7 @@ export default function HierarchyPanel() {
               <MenuItem onClick={onCollapseAllNodes}>Collapse All</MenuItem>
             </ContextMenu>
           </>
-        )}
-        {hierarchyToggle === "Element" && (
+        ) : (
           <Resizeable axis="y">
             <AssetsPanel />
           </Resizeable>

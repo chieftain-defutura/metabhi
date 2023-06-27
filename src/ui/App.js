@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from "react"
+import React, { useState, useEffect, Suspense, useContext } from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import configs from "../configs"
 import GlobalStyle from "./GlobalStyle"
@@ -25,6 +25,9 @@ import Layouts from "../components/Layouts"
 import CardTemplate from "../components/CardTemplate"
 import Dashboard from "../components/Dashboard"
 import { useEagerConnect } from "./useEagerConnect"
+import { PopupContextProvider } from "./contexts/PopupContext"
+import { UserContextProvider } from "./contexts/UserContext"
+import { TransactionContextProvider } from "./contexts/TransactionContext"
 
 const EditorContainer = React.lazy(() =>
   import(/* webpackChunkName: "project-page", webpackPrefetch: true */ "./EditorContainer")
@@ -37,6 +40,7 @@ const PackageKitPage = React.lazy(() =>
 const BaseApp = ({ api }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(api.isAuthenticated())
   const { isDarkMode, setIsDarkMode } = React.useContext(ThemeContext)
+
   useEagerConnect()
 
   useEffect(() => {
@@ -90,6 +94,7 @@ const BaseApp = ({ api }) => {
                   </Route>
 
                   <Route render={() => <Error message="Page not found." />} />
+                  {/* <Route path="/popup" component={ElementPopap} /> */}
                 </Switch>
               </Column>
               <Telemetry />
@@ -109,7 +114,13 @@ const App = ({ api }) => {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <ThemeContextProvider>
-        <BaseApp api={api} />
+        <PopupContextProvider>
+          <UserContextProvider>
+            <TransactionContextProvider>
+              <BaseApp api={api} />
+            </TransactionContextProvider>
+          </UserContextProvider>
+        </PopupContextProvider>
       </ThemeContextProvider>
     </Web3ReactProvider>
   )

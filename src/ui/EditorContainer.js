@@ -39,6 +39,8 @@ import { List } from "./layout/List"
 
 import defaultTemplateUrl from "./../assets/templates/crater.spoke"
 import tutorialTemplateUrl from "./../assets/templates/tutorial.spoke"
+import ElementPopap from "../components/ElementPopap"
+import PopupParent from "../components/PopupParent"
 
 // import { TERMS, PRIVACY } from "../constants";
 
@@ -897,6 +899,7 @@ class EditorContainer extends Component {
 
     const toolbarMenu = this.generateToolbarMenu()
     const isPublishedScene = !!this.getSceneId()
+
     return (
       <StyledEditorContainer id="editor-container">
         <SettingsContextProvider value={settingsContext}>
@@ -914,18 +917,13 @@ class EditorContainer extends Component {
                   />
                   <WorkspaceContainer>
                     <Resizeable axis="x" initialSizes={[0.18, 0.64, 0.2]} onChange={this.onResize}>
-                      {/* <Resizeable axis="y" initialSizes={[0.5, 0.5]}> */}
                       <div style={{ width: "100%" }}>
                         <HierarchyPanelContainer />
                       </div>
                       <ViewportPanelContainer />
-                      {/* <Resizeable axis="y">
-                        <AssetsPanel />
-                      </Resizeable> */}
-                      {/* <AssetsPanel /> */}
 
                       <Resizeable axis="y">
-                        <PropertiesPanelContainer />
+                        <PopupParent />
                       </Resizeable>
                     </Resizeable>
                   </WorkspaceContainer>

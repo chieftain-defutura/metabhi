@@ -12,6 +12,7 @@ import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
 import { AiOutlineFileAdd } from "react-icons/ai"
 import { TbFileImport } from "react-icons/tb"
+import axios from "axios"
 import configs from "../configs"
 
 const ProjectTemplateCards = styled.div`
@@ -181,11 +182,15 @@ const RecentlyContent = styled.div`
 const RETICULUM_SERVER = configs.RETICULUM_SERVER || document.location.hostname
 
 console.log("Reticulum", RETICULUM_SERVER)
-const LOCAL_STORE_KEY = "___hubs_store"
 
 export default function CardTemplate({ history, location }) {
   const api = useContext(ApiContext)
   const [isGrid, setIsGrid] = useState(true)
+  const [loading, setLoading] = useState(true)
+  const [hasMore, setHasMore] = useState(false)
+  const [nextCursor, setNextCursor] = useState(null)
+  const [error, setError] = useState()
+  const [newEntries, setNewEntries] = useState([])
 
   const queryParams = new URLSearchParams(location.search)
 
@@ -194,6 +199,64 @@ export default function CardTemplate({ history, location }) {
     filter: queryParams.get("filter") || "featured-remixable",
     q: queryParams.get("q") || ""
   })
+
+  const handleGetData = useCallback(async () => {
+    try {
+      setLoading(true)
+      const { data } = await axios.get("https://dev.reticulum.io/api/v1/media/search", { params: params })
+      console.log(data)
+
+      setHasMore(Boolean(data.meta.next_cursor))
+      setNextCursor(data.meta.next_cursor)
+
+      if (params.filter === "featured-remixable") {
+        setNewEntries(e => [
+          ...e,
+          ...data.entries.map(result => ({
+            ...result,
+            url: `/dashboard/template?sceneId=${result.id}`,
+            thumbnail_url: result && result.images && result.images.preview && result.images.preview.url
+          }))
+        ])
+      } else if (hasMore) {
+        setNewEntries(e => {
+          const newData = [
+            ...e,
+            ...data.entries.map(result => ({
+              ...result,
+              url: `/dashboard/template?sceneId=${result.id}`,
+              thumbnail_url: result && result.images && result.images.preview && result.images.preview.url
+            }))
+          ]
+
+          // Remove duplicates
+          const uniqueData = newData.filter((entry, index) => {
+            const firstIndex = newData.findIndex(e => e.id === entry.id)
+            return firstIndex === index
+          })
+
+          return uniqueData
+        })
+      } else {
+        setNewEntries(e => [
+          ...data.entries.map(result => ({
+            ...result,
+            url: `/dashboard/template?sceneId=${result.id}`,
+            thumbnail_url: result && result.images && result.images.preview && result.images.preview.url
+          }))
+        ])
+      }
+    } catch (error) {
+      console.log(error)
+      setError(error)
+    } finally {
+      setLoading(false)
+    }
+  }, [params])
+
+  useEffect(() => {
+    handleGetData()
+  }, [handleGetData])
 
   const updateParams = useCallback(
     nextParams => {
@@ -241,10 +304,6 @@ export default function CardTemplate({ history, location }) {
     })
   }, [updateParams, params])
 
-  useEffect(() => {
-    setTimeout(() => {}, 2000)
-  }, [])
-
   const onSelectScene = useCallback(
     scene => {
       const search = new URLSearchParams()
@@ -254,13 +313,25 @@ export default function CardTemplate({ history, location }) {
     [history]
   )
 
-  const { loading, error, entries, hasMore, loadMore } = usePaginatedSearch(`${api.apiURL}/api/v1/media/search`, params)
+  const loadMore = () => {
+    console.log("loadmore", hasMore)
+    if (hasMore) {
+      updateParams({
+        ...params,
+        filter: "remixable",
+        q: "",
+        cursor: nextCursor
+      })
+    }
+  }
 
-  const filteredEntries = entries.map(result => ({
-    ...result,
-    url: `/dashboard/template?sceneId=${result.id}`,
-    thumbnail_url: result && result.images && result.images.preview && result.images.preview.url
-  }))
+  // const { loading, error, entries, hasMore, loadMore } = usePaginatedSearch(`${api.apiURL}/api/v1/media/search`, params)
+
+  // const filteredEntries = newEntries.map(result => ({
+  //   ...result,
+  //   url: `/dashboard/template?sceneId=${result.id}`,
+  //   thumbnail_url: result && result.images && result.images.preview && result.images.preview.url
+  // }))
   return (
     <>
       <DashboardWrapper>
@@ -342,7 +413,7 @@ export default function CardTemplate({ history, location }) {
                   useWindow={true}
                 >
                   <ProjectGrid
-                    projects={filteredEntries}
+                    projects={newEntries}
                     newProjectPath="/dashboard/template"
                     newProjectLabel="New Empty Project"
                     onSelectProject={onSelectScene}

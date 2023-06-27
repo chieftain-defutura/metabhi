@@ -93,6 +93,7 @@ const SearchFilter = () => {
   const [openDropDown, setOpenDropDown] = useState(false)
   const [mappedProjects, setMappedProjects] = useState([])
   const [loading, setLoading] = useState(false)
+  const [hasData, setHasData] = useState(true)
   const location = useLocation()
   const history = useHistory()
 
@@ -163,6 +164,9 @@ const SearchFilter = () => {
         }
       })
 
+      setMappedProjects(mappedData)
+      setHasData(mappedData.length > 0)
+
       console.log("mappedData", mappedData)
 
       setMappedProjects(mappedData)
@@ -211,30 +215,6 @@ const SearchFilter = () => {
     [updateParams, params]
   )
 
-  // const onSetFeaturedRemixable = useCallback(() => {
-  //   updateParams({
-  //     ...params,
-  //     filter: "featured-remixable",
-  //     q: ""
-  //   })
-  // }, [updateParams, params])
-
-  // const onSetAll = useCallback(() => {
-  //   updateParams({
-  //     ...params,
-  //     filter: "remixable",
-  //     q: ""
-  //   })
-  // }, [updateParams, params])
-
-  // const onSelectScene = useCallback(
-  //   scene => {
-  //     const search = new URLSearchParams()
-  //     search.set("sceneId", scene.id)
-  //     history.push(`/projects/new?${search}`)
-  //   },
-  //   [history]
-  // )
   const { entries } = usePaginatedSearch(`${api.apiURL}/api/v1/media/search`, params)
 
   const filteredEntries = entries.map(result => ({
@@ -261,7 +241,7 @@ const SearchFilter = () => {
               <LoadingContent>
                 <p>Loading...</p>
               </LoadingContent>
-            ) : (
+            ) : hasData ? (
               [...filteredEntries, ...mappedProjects].map((item, index) => (
                 <Link to={`/projects/${item.id || item.project_id}`} key={index}>
                   <SearchContent>
@@ -274,6 +254,10 @@ const SearchFilter = () => {
                   </SearchContent>
                 </Link>
               ))
+            ) : (
+              <LoadingContent>
+                <p>No data available.</p>
+              </LoadingContent>
             )}
           </DropDown>
         )}
