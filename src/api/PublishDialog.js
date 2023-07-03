@@ -127,7 +127,7 @@
 //   }
 // }
 
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import PropTypes from "prop-types"
 import configs from "../configs"
 import PreviewDialog from "../ui/dialogs/PreviewDialog"
@@ -138,6 +138,7 @@ import { useWeb3React } from "@web3-react/core"
 import Web3 from "web3"
 import axios from "axios"
 import { ERC721Abi } from "./NftAbi/ERC721Abi"
+import { CONTRACTS } from "./contracts"
 import { TransactionContext } from "../ui/contexts/TransactionContext"
 
 const PublishDialog = props => {
@@ -145,16 +146,19 @@ const PublishDialog = props => {
   const [creatorAttribution, setCreatorAttribution] = useState("")
   const [allowRemixing, setAllowRemixing] = useState(false)
   const [allowPromotion, setAllowPromotion] = useState(false)
+  const [mintNftAddress, setMintNftAddress] = useState("0x30E9fEF957036ACf9468D61922F4A837EC0eF169".toLowerCase())
   const { setLoading } = useContext(TransactionContext)
-  const { account, library } = useWeb3React()
+  const { account, library, chainId } = useWeb3React()
 
   const { onCancel, screenshotUrl, contentAttributions } = props
-
-  const mintNftAddress = "0x30E9fEF957036ACf9468D61922F4A837EC0eF169".toLowerCase()
 
   const onChangeName = event => {
     setName(event)
   }
+
+  useEffect(() => {
+    setMintNftAddress((CONTRACTS[chainId] || "0x30E9fEF957036ACf9468D61922F4A837EC0eF169").toLowerCase())
+  }, [chainId])
 
   const onChangeCreatorAttribution = event => {
     setCreatorAttribution(event)
