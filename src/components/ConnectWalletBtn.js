@@ -12,7 +12,29 @@ import { UserContext } from "../ui/contexts/UserContext"
 import configs from "../configs"
 import { Socket } from "phoenix"
 import axios from "axios"
-import e from "cors"
+import { init, useConnectWallet } from "@web3-onboard/react"
+import injectedModule from "@web3-onboard/injected-wallets"
+// import { ethers } from "ethers"
+
+const apiKey = "1730eff0-9d50-4382-a3fe-89f0d34a2070"
+
+const injected = injectedModule()
+
+const infuraKey = "<INFURA_KEY>"
+const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
+
+init({
+  apiKey,
+  wallets: [injected],
+  chains: [
+    {
+      id: "0x1",
+      token: "ETH",
+      label: "Ethereum Mainnet",
+      rpcUrl
+    }
+  ]
+})
 
 export const walletconnect = new WalletConnectConnector({
   rpc: {
@@ -141,6 +163,13 @@ const ConnectWalletBtn = () => {
   const [walletOpen, setWalletOpen] = useState(false)
   const [wrongNetwork, setWrongNetwork] = useState(false)
   const { setUser } = useContext(UserContext)
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
+
+  let ethersProvider
+
+  if (wallet) {
+    ethersProvider = new ethers.providers.Web3Provider(wallet.provider, "any")
+  }
 
   const history = useHistory()
 
@@ -339,6 +368,9 @@ const ConnectWalletBtn = () => {
   return (
     <div>
       <WalletConnectContainer>
+        <button disabled={connecting} onClick={() => (wallet ? disconnect(wallet) : connect())}>
+          {connecting ? "connecting" : wallet ? "disconnect" : "connect"}
+        </button>
         <WalletButtons>
           {account ? (
             <WalletConnectAddr onClick={WalletToggle}>
