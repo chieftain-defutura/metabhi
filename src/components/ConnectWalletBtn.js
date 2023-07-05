@@ -8,6 +8,8 @@ import { TiTick } from "react-icons/ti"
 import { TbCopy } from "react-icons/tb"
 import { Link, useHistory } from "react-router-dom"
 import { UserContext } from "../ui/contexts/UserContext"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
+import { useAccount } from "wagmi"
 // import configs from "../configs"
 import axios from "axios"
 
@@ -124,12 +126,12 @@ const WrongButton = styled.div`
 const LOCAL_STORE_KEY = "___hubs_store"
 
 const ConnectWalletBtn = () => {
-  const { activate, account, deactivate, error } = useWeb3React()
+  const { active, account, deactivate, error } = useWeb3React()
   const [copied, setCopied] = useState(false)
   const [walletOpen, setWalletOpen] = useState(false)
   const [wrongNetwork, setWrongNetwork] = useState(false)
   const { setUser } = useContext(UserContext)
-
+  const accounts = useAccount()
   const history = useHistory()
 
   const WalletToggle = () => {
@@ -211,8 +213,36 @@ const ConnectWalletBtn = () => {
   //   return authComplete
   // }
 
+  // const handleAccountChange = async () => {
+  //   const { data: datas } = await axios.post("https://node-reticulum.onrender.com/auth/login", {
+  //     wallet: account
+  //   })
+
+  //   if (datas.data === null) {
+  //     history.push("/login")
+  //     return
+  //   }
+
+  //   localStorage.setItem("token", JSON.stringify(datas.data))
+
+  //   const response = await axios.get("https://node-reticulum.onrender.com/auth/status", {
+  //     headers: {
+  //       Authorization: `Bearer ${datas.data}`
+  //     }
+  //   })
+
+  //   setUser(response.data.data)
+  // }
+
+  // useEffect(() => {
+  //   if (active) {
+  //     handleAccountChange()
+  //   }
+  // }, [])
+
   const createData = useCallback(async () => {
     try {
+      console.log("account", account)
       const token = localStorage.getItem("token")
 
       if (!account) {
@@ -241,6 +271,7 @@ const ConnectWalletBtn = () => {
 
         if (!localStorage.getItem(LOCAL_STORE_KEY)) {
           history.push("/login")
+
           return
         }
 
@@ -256,6 +287,7 @@ const ConnectWalletBtn = () => {
 
         if (!localStorage.getItem(LOCAL_STORE_KEY)) {
           history.push("/login")
+
           return
         }
       }
@@ -326,6 +358,8 @@ const ConnectWalletBtn = () => {
 
   return (
     <div>
+      <ConnectButton />
+      <div>{accounts.isConnected && `Account ${accounts.address} is now connected!`}</div>
       <WalletConnectContainer>
         <WalletButtons>
           {account ? (
