@@ -28,6 +28,28 @@ import { useEagerConnect } from "./useEagerConnect"
 import { PopupContextProvider } from "./contexts/PopupContext"
 import { UserContextProvider } from "./contexts/UserContext"
 import { TransactionContextProvider } from "./contexts/TransactionContext"
+import { Web3OnboardProvider, init } from "@web3-onboard/react"
+import injectedModule from "@web3-onboard/injected-wallets"
+
+const INFURA_KEY = ""
+const ethereumRopsten = {
+  id: "0x3",
+  token: "rETH",
+  label: "Ethereum Ropsten",
+  rpcUrl: `https://ropsten.infura.io/v3/${INFURA_KEY}`
+}
+
+const chains = [ethereumRopsten]
+const wallets = [injectedModule()]
+const web3Onboard = init({
+  wallets,
+  chains,
+  appMetadata: {
+    name: "Web3-Onboard Demo",
+    icon: "<svg>App Icon</svg>",
+    description: "A demo of Web3-Onboard."
+  }
+})
 
 const EditorContainer = React.lazy(() =>
   import(/* webpackChunkName: "project-page", webpackPrefetch: true */ "./EditorContainer")
@@ -117,7 +139,9 @@ const App = ({ api }) => {
         <PopupContextProvider>
           <UserContextProvider>
             <TransactionContextProvider>
-              <BaseApp api={api} />
+              <Web3OnboardProvider web3Onboard={web3Onboard}>
+                <BaseApp api={api} />
+              </Web3OnboardProvider>
             </TransactionContextProvider>
           </UserContextProvider>
         </PopupContextProvider>

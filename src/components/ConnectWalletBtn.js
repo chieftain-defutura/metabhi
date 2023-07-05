@@ -7,43 +7,9 @@ import { CopyToClipboard } from "react-copy-to-clipboard"
 import { TiTick } from "react-icons/ti"
 import { TbCopy } from "react-icons/tb"
 import { Link, useHistory } from "react-router-dom"
-import { WalletConnectConnector } from "@web3-react/walletconnect-connector"
 import { UserContext } from "../ui/contexts/UserContext"
-import configs from "../configs"
-import { Socket } from "phoenix"
+// import configs from "../configs"
 import axios from "axios"
-import { init, useConnectWallet } from "@web3-onboard/react"
-import injectedModule from "@web3-onboard/injected-wallets"
-// import { ethers } from "ethers"
-
-const apiKey = "1730eff0-9d50-4382-a3fe-89f0d34a2070"
-
-const injected = injectedModule()
-
-const infuraKey = "<INFURA_KEY>"
-const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
-
-init({
-  apiKey,
-  wallets: [injected],
-  chains: [
-    {
-      id: "0x1",
-      token: "ETH",
-      label: "Ethereum Mainnet",
-      rpcUrl
-    }
-  ]
-})
-
-export const walletconnect = new WalletConnectConnector({
-  rpc: {
-    1: "https://mainnet.infura.io/v3/ec03b8dcd95348149519e0be7ac5098e"
-  },
-  bridge: "https://bridge.walletconnect.org",
-  qrcode: true,
-  pollingInterval: 12000
-})
 
 const WalletConnectContainer = styled.div`
   position: relative;
@@ -154,7 +120,7 @@ const WrongButton = styled.div`
   cursor: pointer;
   color: #fff;
 `
-const RETICULUM_SERVER = configs.RETICULUM_SERVER || document.location.hostname
+// const RETICULUM_SERVER = configs.RETICULUM_SERVER || document.location.hostname
 const LOCAL_STORE_KEY = "___hubs_store"
 
 const ConnectWalletBtn = () => {
@@ -163,13 +129,6 @@ const ConnectWalletBtn = () => {
   const [walletOpen, setWalletOpen] = useState(false)
   const [wrongNetwork, setWrongNetwork] = useState(false)
   const { setUser } = useContext(UserContext)
-  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
-
-  let ethersProvider
-
-  if (wallet) {
-    ethersProvider = new ethers.providers.Web3Provider(wallet.provider, "any")
-  }
 
   const history = useHistory()
 
@@ -213,44 +172,44 @@ const ConnectWalletBtn = () => {
     }
   }, [copied, parent])
 
-  const authenticate = async (email, signal) => {
-    const reticulumServer = RETICULUM_SERVER
-    const socketUrl = `wss://${reticulumServer}/socket`
-    console.log("socketUrl", socketUrl)
-    const socket = new Socket(socketUrl, { params: { session_id: uuid() } })
-    socket.connect()
+  // const authenticate = async (email, signal) => {
+  //   const reticulumServer = RETICULUM_SERVER
+  //   const socketUrl = `wss://${reticulumServer}/socket`
+  //   console.log("socketUrl", socketUrl)
+  //   const socket = new Socket(socketUrl, { params: { session_id: uuid() } })
+  //   socket.connect()
 
-    const channel = socket.channel(`auth:${uuid()}`)
+  //   const channel = socket.channel(`auth:${uuid()}`)
 
-    const onAbort = () => socket.disconnect()
+  //   const onAbort = () => socket.disconnect()
 
-    signal.addEventListener("abort", onAbort)
+  //   signal.addEventListener("abort", onAbort)
 
-    await new Promise((resolve, reject) =>
-      channel
-        .join()
-        .receive("ok", resolve)
-        .receive("error", err => {
-          signal.removeEventListener("abort", onAbort)
-          reject(err)
-        })
-    )
+  //   await new Promise((resolve, reject) =>
+  //     channel
+  //       .join()
+  //       .receive("ok", resolve)
+  //       .receive("error", err => {
+  //         signal.removeEventListener("abort", onAbort)
+  //         reject(err)
+  //       })
+  //   )
 
-    const authComplete = new Promise(resolve =>
-      channel.on("auth_credentials", ({ credentials: token }) => {
-        localStorage.setItem(LOCAL_STORE_KEY, JSON.stringify({ credentials: { email, token } }))
-        this.emit("authentication-changed", true)
-        window.location.href = "/"
-        resolve()
-      })
-    )
+  //   const authComplete = new Promise(resolve =>
+  //     channel.on("auth_credentials", ({ credentials: token }) => {
+  //       localStorage.setItem(LOCAL_STORE_KEY, JSON.stringify({ credentials: { email, token } }))
+  //       this.emit("authentication-changed", true)
+  //       window.location.href = "/"
+  //       resolve()
+  //     })
+  //   )
 
-    channel.push("auth_request", { email, origin: "spoke" })
+  //   channel.push("auth_request", { email, origin: "spoke" })
 
-    signal.removeEventListener("abort", onAbort)
+  //   signal.removeEventListener("abort", onAbort)
 
-    return authComplete
-  }
+  //   return authComplete
+  // }
 
   const createData = useCallback(async () => {
     try {
@@ -368,9 +327,6 @@ const ConnectWalletBtn = () => {
   return (
     <div>
       <WalletConnectContainer>
-        <button disabled={connecting} onClick={() => (wallet ? disconnect(wallet) : connect())}>
-          {connecting ? "connecting" : wallet ? "disconnect" : "connect"}
-        </button>
         <WalletButtons>
           {account ? (
             <WalletConnectAddr onClick={WalletToggle}>
@@ -386,7 +342,6 @@ const ConnectWalletBtn = () => {
               <WalletConnect onClick={() => activate(Injected)}>Connect Wallet</WalletConnect>
             </div>
           )}
-          {/* <WalletConnect onClick={() => activate(walletconnect)}>Connect Wallet wc</WalletConnect> */}
         </WalletButtons>
 
         <div ref={parent} style={{ marginTop: "10px" }}>
