@@ -8,9 +8,6 @@ import { TiTick } from "react-icons/ti"
 import { TbCopy } from "react-icons/tb"
 import { Link, useHistory } from "react-router-dom"
 import { UserContext } from "../ui/contexts/UserContext"
-import { ConnectButton } from "@rainbow-me/rainbowkit"
-import { useAccount } from "wagmi"
-// import configs from "../configs"
 import axios from "axios"
 
 const WalletConnectContainer = styled.div`
@@ -122,16 +119,15 @@ const WrongButton = styled.div`
   cursor: pointer;
   color: #fff;
 `
-// const RETICULUM_SERVER = configs.RETICULUM_SERVER || document.location.hostname
 const LOCAL_STORE_KEY = "___hubs_store"
 
 const ConnectWalletBtn = () => {
-  const { active, account, deactivate, error } = useWeb3React()
+  const { activate, account, deactivate, error } = useWeb3React()
   const [copied, setCopied] = useState(false)
   const [walletOpen, setWalletOpen] = useState(false)
   const [wrongNetwork, setWrongNetwork] = useState(false)
   const { setUser } = useContext(UserContext)
-  const accounts = useAccount()
+  // const accounts = useAccount()
   const history = useHistory()
 
   const WalletToggle = () => {
@@ -174,82 +170,25 @@ const ConnectWalletBtn = () => {
     }
   }, [copied, parent])
 
-  // const authenticate = async (email, signal) => {
-  //   const reticulumServer = RETICULUM_SERVER
-  //   const socketUrl = `wss://${reticulumServer}/socket`
-  //   console.log("socketUrl", socketUrl)
-  //   const socket = new Socket(socketUrl, { params: { session_id: uuid() } })
-  //   socket.connect()
-
-  //   const channel = socket.channel(`auth:${uuid()}`)
-
-  //   const onAbort = () => socket.disconnect()
-
-  //   signal.addEventListener("abort", onAbort)
-
-  //   await new Promise((resolve, reject) =>
-  //     channel
-  //       .join()
-  //       .receive("ok", resolve)
-  //       .receive("error", err => {
-  //         signal.removeEventListener("abort", onAbort)
-  //         reject(err)
-  //       })
-  //   )
-
-  //   const authComplete = new Promise(resolve =>
-  //     channel.on("auth_credentials", ({ credentials: token }) => {
-  //       localStorage.setItem(LOCAL_STORE_KEY, JSON.stringify({ credentials: { email, token } }))
-  //       this.emit("authentication-changed", true)
-  //       window.location.href = "/"
-  //       resolve()
-  //     })
-  //   )
-
-  //   channel.push("auth_request", { email, origin: "spoke" })
-
-  //   signal.removeEventListener("abort", onAbort)
-
-  //   return authComplete
-  // }
-
-  // const handleAccountChange = async () => {
-  //   const { data: datas } = await axios.post("https://node-reticulum.onrender.com/auth/login", {
-  //     wallet: account
-  //   })
-
-  //   if (datas.data === null) {
-  //     history.push("/login")
-  //     return
-  //   }
-
-  //   localStorage.setItem("token", JSON.stringify(datas.data))
-
-  //   const response = await axios.get("https://node-reticulum.onrender.com/auth/status", {
-  //     headers: {
-  //       Authorization: `Bearer ${datas.data}`
-  //     }
-  //   })
-
-  //   setUser(response.data.data)
-  // }
-
-  // useEffect(() => {
-  //   if (active) {
-  //     handleAccountChange()
-  //   }
-  // }, [])
-
   const createData = useCallback(async () => {
     try {
       console.log("account", account)
-      const token = localStorage.getItem("token")
 
       if (!account) {
         return
       }
 
-      if (account && !token) {
+      const storedAccount = localStorage.getItem("account") ? JSON.parse(localStorage.getItem("account")) : null
+      if (storedAccount && storedAccount !== account) {
+        console.log("removed")
+        localStorage.removeItem("token")
+        localStorage.removeItem(LOCAL_STORE_KEY)
+      }
+
+      localStorage.setItem("account", JSON.stringify(account))
+      const token = localStorage.getItem("token")
+
+      if (!token) {
         const { data: datas } = await axios.post("https://node-reticulum.onrender.com/auth/login", {
           wallet: account
         })
@@ -300,27 +239,6 @@ const ConnectWalletBtn = () => {
     createData()
   }, [createData])
 
-  const getData = useCallback(async () => {
-    try {
-      if (!localStorage.getItem("token")) return
-
-      const response = await axios.get("https://node-reticulum.onrender.com/auth/status", {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
-        }
-      })
-
-      const email = response.data
-      console.log("responseDataEmail", email)
-    } catch (error) {
-      console.error(error)
-    }
-  }, [])
-
-  useEffect(() => {
-    getData()
-  }, [getData])
-
   const addGatherTestnet = async () => {
     try {
       await window.ethereum.request({
@@ -358,8 +276,6 @@ const ConnectWalletBtn = () => {
 
   return (
     <div>
-      <ConnectButton />
-      <div>{accounts.isConnected && `Account ${accounts.address} is now connected!`}</div>
       <WalletConnectContainer>
         <WalletButtons>
           {account ? (

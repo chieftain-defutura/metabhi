@@ -30,9 +30,6 @@ import { UserContextProvider } from "./contexts/UserContext"
 import { TransactionContextProvider } from "./contexts/TransactionContext"
 // import { Web3OnboardProvider, init } from "@web3-onboard/react"
 // import injectedModule from "@web3-onboard/injected-wallets"
-import { chain, configureChains, createClient, WagmiConfig } from "wagmi"
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit"
-import { publicProvider } from "wagmi/providers/public"
 
 const EditorContainer = React.lazy(() =>
   import(/* webpackChunkName: "project-page", webpackPrefetch: true */ "./EditorContainer")
@@ -111,43 +108,9 @@ const BaseApp = ({ api }) => {
   )
 }
 
-export const gather = {
-  id: 0x153c099c,
-  name: "Gather Testnet",
-  network: "Gather Testnet",
-  nativeCurrency: {
-    decimals: 18,
-    name: "Gather Testnet",
-    symbol: "GTH"
-  },
-  rpcUrls: {
-    public: { http: ["https://testnet.gather.network"] },
-    default: { http: ["https://testnet.gather.network"] }
-  },
-  blockExplorers: {
-    etherscan: {
-      name: "SnowTrace",
-      url: "https://testnet-explorer.gather.network/"
-    },
-    default: { name: "SnowTrace", url: "https://testnet-explorer.gather.network/" }
-  }
+function getLibrary(provider) {
+  return new Web3Provider(provider)
 }
-
-const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygonMumbai, chain.goerli, gather],
-  [publicProvider()]
-)
-
-const { connectors } = getDefaultWallets({
-  appName: "metabhi",
-  chains
-})
-
-const wagmiClient = createClient({
-  autoConnect: true,
-  provider,
-  connectors
-})
 
 const App = ({ api }) => {
   return (
@@ -156,11 +119,7 @@ const App = ({ api }) => {
         <PopupContextProvider>
           <UserContextProvider>
             <TransactionContextProvider>
-              <WagmiConfig client={wagmiClient}>
-                <RainbowKitProvider chains={chains}>
-                  <BaseApp api={api} />
-                </RainbowKitProvider>
-              </WagmiConfig>
+              <BaseApp api={api} />
             </TransactionContextProvider>
           </UserContextProvider>
         </PopupContextProvider>

@@ -31,6 +31,8 @@ const CardGridBox = styled.div`
   img {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    height: fit-content;
+    width: 100%;
   }
 `
 
