@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect, Suspense, useContext } from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import configs from "../configs"
@@ -16,7 +17,7 @@ import LogoutPage from "./auth/LogoutPage"
 import ProjectsPage from "./projects/ProjectsPage"
 import CreateProjectPage from "./projects/CreateProjectPage"
 import CreateScenePage from "./projects/CreateScenePage"
-import { Web3Provider } from "@ethersproject/providers"
+// import { Web3Provider } from "@ethersproject/providers"
 import { Web3ReactProvider } from "@web3-react/core"
 import { ThemeProvider } from "styled-components"
 import { Column } from "./layout/Flex"
@@ -44,9 +45,13 @@ const PackageKitPage = React.lazy(() =>
 
 const BaseApp = ({ api }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(api.isAuthenticated())
-  const { isDarkMode, setIsDarkMode } = React.useContext(ThemeContext)
+  const { isDarkMode, setIsDarkMode } = useContext(ThemeContext)
 
   useEagerConnect()
+
+  const handleAuthenticationChange = isAuthenticated => {
+    setIsAuthenticated(isAuthenticated)
+  }
 
   useEffect(() => {
     api.addListener("authentication-changed", handleAuthenticationChange)
@@ -63,10 +68,6 @@ const BaseApp = ({ api }) => {
       api.removeListener("authentication-changed", handleAuthenticationChange)
     }
   }, [api])
-
-  const handleAuthenticationChange = isAuthenticated => {
-    setIsAuthenticated(isAuthenticated)
-  }
 
   return (
     <>
@@ -151,6 +152,7 @@ const wagmiClient = createClient({
 
 const App = ({ api }) => {
   return (
+    // eslint-disable-next-line no-undef
     <Web3ReactProvider getLibrary={getLibrary}>
       <ThemeContextProvider>
         <PopupContextProvider>

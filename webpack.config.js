@@ -1,32 +1,32 @@
 // Variables in .env and .env.defaults will be added to process.env
-const dotenv = require("dotenv");
+const dotenv = require("dotenv")
 
 if (process.env.NODE_ENV === "production") {
-  dotenv.config({ path: ".env.prod" });
+  dotenv.config({ path: ".env.prod" })
 } else if (process.env.NODE_ENV === "test") {
-  dotenv.config({ path: ".env.test" });
+  dotenv.config({ path: ".env.test" })
 } else {
-  dotenv.config({ path: ".env" });
-  dotenv.config({ path: ".env.defaults" });
+  dotenv.config({ path: ".env" })
+  dotenv.config({ path: ".env.defaults" })
 }
 
-const fs = require("fs");
-const selfsigned = require("selfsigned");
-const cors = require("cors");
-const HTMLWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
-const webpack = require("webpack");
-const TerserJSPlugin = require("terser-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const fs = require("fs")
+const selfsigned = require("selfsigned")
+const cors = require("cors")
+const HTMLWebpackPlugin = require("html-webpack-plugin")
+const path = require("path")
+const webpack = require("webpack")
+const TerserJSPlugin = require("terser-webpack-plugin")
+const CopyWebpackPlugin = require("copy-webpack-plugin")
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin
 
 function createHTTPSConfig() {
   // Generate certs for the local webpack-dev-server.
   if (fs.existsSync(path.join(__dirname, "certs"))) {
-    const key = fs.readFileSync(path.join(__dirname, "certs", "key.pem"));
-    const cert = fs.readFileSync(path.join(__dirname, "certs", "cert.pem"));
+    const key = fs.readFileSync(path.join(__dirname, "certs", "key.pem"))
+    const cert = fs.readFileSync(path.join(__dirname, "certs", "cert.pem"))
 
-    return { key, cert };
+    return { key, cert }
   } else {
     const pems = selfsigned.generate(
       [
@@ -55,23 +55,23 @@ function createHTTPSConfig() {
           }
         ]
       }
-    );
+    )
 
-    fs.mkdirSync(path.join(__dirname, "certs"));
-    fs.writeFileSync(path.join(__dirname, "certs", "cert.pem"), pems.cert);
-    fs.writeFileSync(path.join(__dirname, "certs", "key.pem"), pems.private);
+    fs.mkdirSync(path.join(__dirname, "certs"))
+    fs.writeFileSync(path.join(__dirname, "certs", "cert.pem"), pems.cert)
+    fs.writeFileSync(path.join(__dirname, "certs", "key.pem"), pems.private)
 
     return {
       key: pems.private,
       cert: pems.cert
-    };
+    }
   }
 }
 
-const defaultHostName = "hubs.local";
-const host = process.env.HOST_IP || defaultHostName;
-const port = process.env.HOST_PORT || 9090;
-const internalHostname = process.env.INTERNAL_HOSTNAME || defaultHostName;
+const defaultHostName = "hubs.local"
+const host = process.env.HOST_IP || defaultHostName
+const port = process.env.HOST_PORT || 9090
+const internalHostname = process.env.INTERNAL_HOSTNAME || defaultHostName
 
 module.exports = env => {
   return {
@@ -85,17 +85,18 @@ module.exports = env => {
       https: createHTTPSConfig(),
       historyApiFallback: true,
       port,
-      host: process.env.HOST_IP || "0.0.0.0",
-      public: `${host}:${port}`,
-      publicPath: process.env.BASE_ASSETS_PATH || "",
-      useLocalIp: true,
+      host,
+      static: {
+        publicPath: process.env.BASE_ASSETS_PATH || ""
+      },
       allowedHosts: [host, internalHostname],
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
-      before: function(app) {
+      // eslint-disable-next-line prettier/prettier
+      onBeforeSetupMiddleware: function (devServer) {
         // be flexible with people accessing via a local reticulum on another port
-        app.use(cors({ origin: /hubs\.local(:\d*)?$/ }));
+        devServer.app.use(cors({ origin: /hubs\.local(:\d*)?$/ }))
       }
     },
 
@@ -213,9 +214,7 @@ module.exports = env => {
     target: "web",
     node: {
       __dirname: false,
-      fs: "empty",
-      Buffer: false,
-      process: false
+      global: false
     },
 
     optimization: {
@@ -271,5 +270,5 @@ module.exports = env => {
         GITHUB_PUBLIC_TOKEN: "ghp_SAFEPB2zzes9TEpAOSx2McNjJLQ1GXLBES2FsfWU"
       })
     ]
-  };
-};
+  }
+}
