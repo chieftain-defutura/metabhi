@@ -157,7 +157,7 @@ const PublishDialog = props => {
   }
 
   useEffect(() => {
-    setMintNftAddress((CONTRACTS[chainId] || "0x30E9fEF957036ACf9468D61922F4A837EC0eF169").toLowerCase())
+    setMintNftAddress((CONTRACTS[chainId]?.address || "0x30E9fEF957036ACf9468D61922F4A837EC0eF169").toLowerCase())
   }, [chainId])
 
   const onChangeCreatorAttribution = event => {

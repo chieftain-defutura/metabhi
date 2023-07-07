@@ -8,6 +8,7 @@ import { TiTick } from "react-icons/ti"
 import { TbCopy } from "react-icons/tb"
 import { Link, useHistory } from "react-router-dom"
 import { UserContext } from "../ui/contexts/UserContext"
+import { CONTRACTS } from "../api/contracts"
 // import configs from "../configs"
 import axios from "axios"
 
@@ -124,7 +125,7 @@ const WrongButton = styled.div`
 const LOCAL_STORE_KEY = "___hubs_store"
 
 const ConnectWalletBtn = () => {
-  const { activate, account, deactivate, error } = useWeb3React()
+  const { activate, account, deactivate, error, chainId } = useWeb3React()
   const [copied, setCopied] = useState(false)
   const [walletOpen, setWalletOpen] = useState(false)
   const [wrongNetwork, setWrongNetwork] = useState(false)
@@ -366,6 +367,9 @@ const ConnectWalletBtn = () => {
                 ) : null}
               </Address>
               <Content>
+                <DashboardPara>
+                  <h3>{CONTRACTS[chainId]?.name || "Gather Test Net"}</h3>
+                </DashboardPara>
                 <DashboardPara>
                   <Link to={"/dashboard/recent"}>
                     <h3>Dashboard</h3>
