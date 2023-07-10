@@ -1,36 +1,36 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import NodeEditor from "./NodeEditor";
-import InputGroup from "../inputs/InputGroup";
-import ColorInput from "../inputs/ColorInput";
-import NumericInputGroup from "../inputs/NumericInputGroup";
-import LightShadowProperties from "./LightShadowProperties";
-import { Lightbulb } from "styled-icons/fa-solid/Lightbulb";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import NodeEditor from "./NodeEditor"
+import InputGroup from "../inputs/InputGroup"
+import ColorInput from "../inputs/ColorInput"
+import NumericInputGroup from "../inputs/NumericInputGroup"
+import LightShadowProperties from "./LightShadowProperties"
+import { Lightbulb } from "styled-icons/fa-solid/Lightbulb"
 
 export default class PointLightNodeEditor extends Component {
   static propTypes = {
     editor: PropTypes.object,
     node: PropTypes.object
-  };
+  }
 
-  static iconComponent = Lightbulb;
+  static iconComponent = Lightbulb
 
-  static description = "A light which emits in all directions from a single point.";
+  static description = "A light which emits in all directions from a single point."
 
   onChangeColor = color => {
-    this.props.editor.setPropertySelected("color", color);
-  };
+    this.props.editor.setPropertySelected("color", color)
+  }
 
   onChangeIntensity = intensity => {
-    this.props.editor.setPropertySelected("intensity", intensity);
-  };
+    this.props.editor.setPropertySelected("intensity", intensity)
+  }
 
   onChangeRange = range => {
-    this.props.editor.setPropertySelected("range", range);
-  };
+    this.props.editor.setPropertySelected("range", range)
+  }
 
   render() {
-    const { node, editor } = this.props;
+    const { node, editor } = this.props
 
     return (
       <NodeEditor {...this.props} description={PointLightNodeEditor.description}>
@@ -59,6 +59,6 @@ export default class PointLightNodeEditor extends Component {
         />
         <LightShadowProperties node={node} editor={editor} />
       </NodeEditor>
-    );
+    )
   }
 }

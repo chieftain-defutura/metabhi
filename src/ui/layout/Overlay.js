@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 const Overlay = styled.div`
   position: fixed;
@@ -7,6 +7,6 @@ const Overlay = styled.div`
   top: 0;
   bottom: 0;
   pointer-events: ${props => props.pointerEvents || "inherit"};
-`;
+`
 
-export default Overlay;
+export default Overlay

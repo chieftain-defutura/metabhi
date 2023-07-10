@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import PropTypes from "prop-types"
 import configs from "../configs"
 import styled from "styled-components"
@@ -6,7 +6,6 @@ import Input from "../ui/inputs/Input"
 import { useWeb3React } from "@web3-react/core"
 import { UserContext } from "../ui/contexts/UserContext"
 import axios from "axios"
-import { useEffect } from "react"
 
 // import MetaMaskLogo from "../assets/MetaMask-logo.png"
 // import ConnectWalletBtn from "../components/ConnectWalletBtn"
@@ -150,7 +149,7 @@ const LoginForm = ({ error, onSubmit }) => {
         onSubmit(user.email)
       }
     }
-  }, [user])
+  }, [user, onSubmit])
 
   const handleSubmit = async e => {
     e.preventDefault()

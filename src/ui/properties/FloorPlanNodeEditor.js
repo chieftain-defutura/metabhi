@@ -1,21 +1,21 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import NodeEditor from "./NodeEditor";
-import InputGroup from "../inputs/InputGroup";
-import BooleanInput from "../inputs/BooleanInput";
-import NumericInputGroup from "../inputs/NumericInputGroup";
-import { PropertiesPanelButton } from "../inputs/Button";
-import ProgressDialog from "../dialogs/ProgressDialog";
-import ErrorDialog from "../dialogs/ErrorDialog";
-import { withDialog } from "../contexts/DialogContext";
-import { withSettings } from "../contexts/SettingsContext";
-import { ShoePrints } from "styled-icons/fa-solid/ShoePrints";
-import { NavMeshMode } from "../../editor/nodes/FloorPlanNode";
-import SelectInput from "../inputs/SelectInput";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import NodeEditor from "./NodeEditor"
+import InputGroup from "../inputs/InputGroup"
+import BooleanInput from "../inputs/BooleanInput"
+import NumericInputGroup from "../inputs/NumericInputGroup"
+import { PropertiesPanelButton } from "../inputs/Button"
+import ProgressDialog from "../dialogs/ProgressDialog"
+import ErrorDialog from "../dialogs/ErrorDialog"
+import { withDialog } from "../contexts/DialogContext"
+import { withSettings } from "../contexts/SettingsContext"
+import { ShoePrints } from "styled-icons/fa-solid/ShoePrints"
+import { NavMeshMode } from "../../editor/nodes/FloorPlanNode"
+import SelectInput from "../inputs/SelectInput"
 
-import ModelInput from "../inputs/ModelInput";
+import ModelInput from "../inputs/ModelInput"
 
-import styled from "styled-components";
+import styled from "styled-components"
 
 const NavMeshModeOptions = [
   {
@@ -26,16 +26,18 @@ const NavMeshModeOptions = [
     label: "Custom",
     value: NavMeshMode.Custom
   }
-];
+]
 
 export const InputFloorSection = styled.div`
   display: flex;
   flex-direction: row;
   border-bottom: 1px solid ${props => props.theme.borderStyleClr};
-`;
+`
+
 export const InputFloor = styled.div`
   border-bottom: 1px solid ${props => props.theme.borderStyleClr};
-`;
+`
+
 class FloorPlanNodeEditor extends Component {
   static propTypes = {
     hideDialog: PropTypes.func.isRequired,
@@ -43,59 +45,59 @@ class FloorPlanNodeEditor extends Component {
     editor: PropTypes.object,
     settings: PropTypes.object.isRequired,
     node: PropTypes.object
-  };
+  }
 
-  static iconComponent = ShoePrints;
+  static iconComponent = ShoePrints
 
-  static description = "Sets the walkable surface area in your scene.";
+  static description = "Sets the walkable surface area in your scene."
 
   constructor(props) {
-    super(props);
-    const createPropSetter = propName => value => this.props.editor.setPropertySelected(propName, value);
-    this.onChangeAutoCellSize = createPropSetter("autoCellSize");
-    this.onChangeCellSize = createPropSetter("cellSize");
-    this.onChangeCellHeight = createPropSetter("cellHeight");
-    this.onChangeAgentHeight = createPropSetter("agentHeight");
-    this.onChangeAgentRadius = createPropSetter("agentRadius");
-    this.onChangeAgentMaxClimb = createPropSetter("agentMaxClimb");
-    this.onChangeAgentMaxSlope = createPropSetter("agentMaxSlope");
-    this.onChangeRegionMinSize = createPropSetter("regionMinSize");
-    this.onChangeMaxTriangles = createPropSetter("maxTriangles");
-    this.onChangeForceTrimesh = createPropSetter("forceTrimesh");
-    this.onChangeNavMeshMode = createPropSetter("navMeshMode");
-    this.onChangeNavMeshSrc = createPropSetter("navMeshSrc");
+    super(props)
+    const createPropSetter = propName => value => this.props.editor.setPropertySelected(propName, value)
+    this.onChangeAutoCellSize = createPropSetter("autoCellSize")
+    this.onChangeCellSize = createPropSetter("cellSize")
+    this.onChangeCellHeight = createPropSetter("cellHeight")
+    this.onChangeAgentHeight = createPropSetter("agentHeight")
+    this.onChangeAgentRadius = createPropSetter("agentRadius")
+    this.onChangeAgentMaxClimb = createPropSetter("agentMaxClimb")
+    this.onChangeAgentMaxSlope = createPropSetter("agentMaxSlope")
+    this.onChangeRegionMinSize = createPropSetter("regionMinSize")
+    this.onChangeMaxTriangles = createPropSetter("maxTriangles")
+    this.onChangeForceTrimesh = createPropSetter("forceTrimesh")
+    this.onChangeNavMeshMode = createPropSetter("navMeshMode")
+    this.onChangeNavMeshSrc = createPropSetter("navMeshSrc")
   }
 
   onRegenerate = async () => {
-    const abortController = new AbortController();
+    const abortController = new AbortController()
 
     this.props.showDialog(ProgressDialog, {
       title: "Generating Floor Plan",
       message: "Generating floor plan...",
       cancelable: true,
       onCancel: () => abortController.abort()
-    });
+    })
 
     try {
-      await this.props.node.generate(abortController.signal);
-      this.props.hideDialog();
+      await this.props.node.generate(abortController.signal)
+      this.props.hideDialog()
     } catch (error) {
       if (error.aborted) {
-        this.props.hideDialog();
-        return;
+        this.props.hideDialog()
+        return
       }
 
-      console.error(error);
+      console.error(error)
       this.props.showDialog(ErrorDialog, {
         title: "Error Generating Floor Plan",
         message: error.message || "There was an unknown error.",
         error
-      });
+      })
     }
-  };
+  }
 
   render() {
-    const { node, settings } = this.props;
+    const { node, settings } = this.props
 
     return (
       <NodeEditor {...this.props} description={FloorPlanNodeEditor.description}>
@@ -228,11 +230,11 @@ class FloorPlanNodeEditor extends Component {
         )}
         <PropertiesPanelButton onClick={this.onRegenerate}>Regenerate</PropertiesPanelButton>
       </NodeEditor>
-    );
+    )
   }
 }
 
-const FloorPlanNodeEditorContainer = withDialog(withSettings(FloorPlanNodeEditor));
-FloorPlanNodeEditorContainer.iconComponent = FloorPlanNodeEditor.iconComponent;
-FloorPlanNodeEditorContainer.description = FloorPlanNodeEditor.description;
-export default FloorPlanNodeEditorContainer;
+const FloorPlanNodeEditorContainer = withDialog(withSettings(FloorPlanNodeEditor))
+FloorPlanNodeEditorContainer.iconComponent = FloorPlanNodeEditor.iconComponent
+FloorPlanNodeEditorContainer.description = FloorPlanNodeEditor.description
+export default FloorPlanNodeEditorContainer

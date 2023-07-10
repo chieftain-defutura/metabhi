@@ -1,64 +1,65 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import NodeEditor from "./NodeEditor";
-import InputGroup from "../inputs/InputGroup";
-import NumericInputGroup from "../inputs/NumericInputGroup";
-import RadianNumericInputGroup from "../inputs/RadianNumericInputGroup";
-import CompoundNumericInput from "../inputs/CompoundNumericInput";
-import { Cloud } from "styled-icons/fa-solid/Cloud";
-import styled from "styled-components";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import NodeEditor from "./NodeEditor"
+import InputGroup from "../inputs/InputGroup"
+import NumericInputGroup from "../inputs/NumericInputGroup"
+import RadianNumericInputGroup from "../inputs/RadianNumericInputGroup"
+import CompoundNumericInput from "../inputs/CompoundNumericInput"
+import { Cloud } from "styled-icons/fa-solid/Cloud"
+import styled from "styled-components"
 
-const hoursToRadians = hours => hours / 24;
-const radiansToHours = rads => rads * 24;
+const hoursToRadians = hours => hours / 24
+const radiansToHours = rads => rads * 24
 
 export const NumberSkyInput = styled.div`
   border-bottom: 1px solid ${props => props.theme.borderStyleClr};
-`;
+`
+
 export default class SkyboxNodeEditor extends Component {
   static propTypes = {
     editor: PropTypes.object,
     node: PropTypes.object
-  };
+  }
 
-  static iconComponent = Cloud;
+  static iconComponent = Cloud
 
   static description =
-    "Creates a visualization of an open sky and atmosphere around your scene. Also used as the environment map for your scene.";
+    "Creates a visualization of an open sky and atmosphere around your scene. Also used as the environment map for your scene."
 
   onChangeTurbidity = turbidity => {
-    this.props.editor.setPropertySelected("turbidity", turbidity);
-  };
+    this.props.editor.setPropertySelected("turbidity", turbidity)
+  }
 
   onChangeRayleigh = rayleigh => {
-    this.props.editor.setPropertySelected("rayleigh", rayleigh);
-  };
+    this.props.editor.setPropertySelected("rayleigh", rayleigh)
+  }
 
   onChangeLuminance = luminance => {
-    this.props.editor.setPropertySelected("luminance", luminance);
-  };
+    this.props.editor.setPropertySelected("luminance", luminance)
+  }
 
   onChangeMieCoefficient = mieCoefficient => {
-    this.props.editor.setPropertySelected("mieCoefficient", mieCoefficient);
-  };
+    this.props.editor.setPropertySelected("mieCoefficient", mieCoefficient)
+  }
 
   onChangeMieDirectionalG = mieDirectionalG => {
-    this.props.editor.setPropertySelected("mieDirectionalG", mieDirectionalG);
-  };
+    this.props.editor.setPropertySelected("mieDirectionalG", mieDirectionalG)
+  }
 
   onChangeInclination = inclination => {
-    this.props.editor.setPropertySelected("inclination", inclination);
-  };
+    this.props.editor.setPropertySelected("inclination", inclination)
+  }
 
   onChangeAzimuth = azimuth => {
-    this.props.editor.setPropertySelected("azimuth", azimuth);
-  };
+    this.props.editor.setPropertySelected("azimuth", azimuth)
+  }
 
   onChangeDistance = distance => {
-    this.props.editor.setPropertySelected("distance", distance);
-  };
+    this.props.editor.setPropertySelected("distance", distance)
+  }
 
   render() {
-    const node = this.props.node;
+    const node = this.props.node
 
     return (
       <NodeEditor description={SkyboxNodeEditor.description} {...this.props}>
@@ -133,6 +134,6 @@ export default class SkyboxNodeEditor extends Component {
           </InputGroup>
         </NumberSkyInput>
       </NodeEditor>
-    );
+    )
   }
 }

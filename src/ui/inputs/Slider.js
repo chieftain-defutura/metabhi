@@ -1,6 +1,6 @@
-import React from "react";
-import RCSlider from "rc-slider/es/Slider";
-import { createGlobalStyle } from "styled-components";
+import React from "react"
+import RCSlider from "rc-slider/es/Slider"
+import { createGlobalStyle } from "styled-components"
 
 const SliderGlobalStyles = createGlobalStyle`
   .rc-slider {
@@ -69,7 +69,7 @@ const SliderGlobalStyles = createGlobalStyle`
       cursor: not-allowed!important;
     }
   }
-`;
+`
 
 export default function Slider(props) {
   return (
@@ -77,5 +77,5 @@ export default function Slider(props) {
       <RCSlider {...props} />
       <SliderGlobalStyles />
     </>
-  );
+  )
 }

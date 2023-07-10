@@ -17,7 +17,6 @@ import LogoutPage from "./auth/LogoutPage"
 import ProjectsPage from "./projects/ProjectsPage"
 import CreateProjectPage from "./projects/CreateProjectPage"
 import CreateScenePage from "./projects/CreateScenePage"
-// import { Web3Provider } from "@ethersproject/providers"
 import { Web3ReactProvider } from "@web3-react/core"
 import { ThemeProvider } from "styled-components"
 import { Column } from "./layout/Flex"
@@ -29,11 +28,29 @@ import { useEagerConnect } from "./useEagerConnect"
 import { PopupContextProvider } from "./contexts/PopupContext"
 import { UserContextProvider } from "./contexts/UserContext"
 import { TransactionContextProvider } from "./contexts/TransactionContext"
-// import { Web3OnboardProvider, init } from "@web3-onboard/react"
-// import injectedModule from "@web3-onboard/injected-wallets"
-import { chain, configureChains, createClient, WagmiConfig } from "wagmi"
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit"
-import { publicProvider } from "wagmi/providers/public"
+import { Web3Provider } from "@ethersproject/providers"
+import { w3mConnectors, w3mProvider } from "@web3modal/ethereum"
+import { configureChains, createClient } from "wagmi"
+import { avalancheFuji } from "wagmi/chains"
+import { Web3Modal } from "@web3modal/react"
+import { EthereumClient } from "@web3modal/ethereum"
+import { WagmiConfig } from "wagmi"
+import { fiveIre, gather, moonbaseAlpha, telos } from "../components/ChainList"
+
+export const chains = [avalancheFuji, gather, telos, moonbaseAlpha, fiveIre]
+
+export const projectId = "ae701bd4d326c38547d537ac81c3461b"
+
+const { provider } = configureChains(chains, [w3mProvider({ projectId })])
+const wagmiClient = createClient({
+  autoConnect: true,
+  connectors: w3mConnectors({ projectId, version: 1, chains }),
+  provider
+})
+
+///
+
+// import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit"
 
 const EditorContainer = React.lazy(() =>
   import(/* webpackChunkName: "project-page", webpackPrefetch: true */ "./EditorContainer")
@@ -67,7 +84,7 @@ const BaseApp = ({ api }) => {
     return () => {
       api.removeListener("authentication-changed", handleAuthenticationChange)
     }
-  }, [api])
+  }, [api, setIsDarkMode])
 
   return (
     <>
@@ -112,43 +129,89 @@ const BaseApp = ({ api }) => {
   )
 }
 
-export const gather = {
-  id: 0x153c099c,
-  name: "Gather Testnet",
-  network: "Gather Testnet",
-  nativeCurrency: {
-    decimals: 18,
-    name: "Gather Testnet",
-    symbol: "GTH"
-  },
-  rpcUrls: {
-    public: { http: ["https://testnet.gather.network"] },
-    default: { http: ["https://testnet.gather.network"] }
-  },
-  blockExplorers: {
-    etherscan: {
-      name: "SnowTrace",
-      url: "https://testnet-explorer.gather.network/"
-    },
-    default: { name: "SnowTrace", url: "https://testnet-explorer.gather.network/" }
-  }
+// const projectId = "9c7d246e2cd8e826a8cc11a9eeb49f1b"
+
+// const { chains, provider } = configureChains([mainnet, polygon, optimism, gather], [publicProvider()])
+
+// const { connectors } = getDefaultWallets({
+//   appName: "metabhi",
+//   projectId,
+//   chains
+// })
+
+// const wagmiClient = createConfig({
+//   autoConnect: true,
+//   provider,
+//   connectors
+// })
+
+// const { chains, provider } = configureChains(
+//   [chain.mainnet, chain.polygonMumbai, chain.goerli],
+//   [alchemyProvider({ apiKey: "wKstaSi0DT5-HkVuN4qFlq5f_V1R7RBZ" })],
+//   [publicProvider()]
+// )
+
+// const { connectors } = getDefaultWallets({
+//   appName: "Test web3 app",
+//   chains
+// })
+
+// const wagmiClient = createClient({
+//   autoConnect: true,
+//   provider,
+//   connectors
+// })
+
+///
+
+// const { chains, publicClient, webSocketPublicClient } = configureChains(
+//   [chain.mainnet],
+//   [alchemyProvider({ apiKey: "wKstaSi0DT5-HkVuN4qFlq5f_V1R7RBZ" }), publicProvider()]
+// )
+
+// const config = createClient({
+//   autoConnect: true,
+//   connectors: [
+//     new MetaMaskConnector({ chains }),
+//     new CoinbaseWalletConnector({
+//       chains,
+//       options: {
+//         appName: "wagmi"
+//       }
+//     }),
+//     new WalletConnectConnector({
+//       chains,
+//       options: {
+//         projectId: "ae701bd4d326c38547d537ac81c3461b"
+//       }
+//     }),
+//     new InjectedConnector({
+//       chains,
+//       options: {
+//         name: "Injected",
+//         shimDisconnect: true
+//       }
+//     })
+//   ],
+//   publicClient,
+//   webSocketPublicClient
+// })
+///
+
+function getLibrary(provider) {
+  return new Web3Provider(provider)
 }
 
-const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygonMumbai, chain.goerli, gather],
-  [publicProvider()]
-)
+// const { chains, provider, webSocketProvider } = configureChains([chain.goerli], [publicProvider()])
 
-const { connectors } = getDefaultWallets({
-  appName: "metabhi",
-  chains
-})
+// const client = createClient({
+//   autoConnect: true,
+//   provider,
+//   webSocketProvider,
+//   connectors: [new InjectedConnector()]
+// })
 
-const wagmiClient = createClient({
-  autoConnect: true,
-  provider,
-  connectors
-})
+const ethereumClient = new EthereumClient(wagmiClient, chains)
 
 const App = ({ api }) => {
   return (
@@ -159,14 +222,15 @@ const App = ({ api }) => {
           <UserContextProvider>
             <TransactionContextProvider>
               <WagmiConfig client={wagmiClient}>
-                <RainbowKitProvider chains={chains}>
-                  <BaseApp api={api} />
-                </RainbowKitProvider>
+                {/* <RainbowKitProvider chains={chains}> */}
+                <BaseApp api={api} />
+                {/* </RainbowKitProvider> */}
               </WagmiConfig>
             </TransactionContextProvider>
           </UserContextProvider>
         </PopupContextProvider>
       </ThemeContextProvider>
+      <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
     </Web3ReactProvider>
   )
 }

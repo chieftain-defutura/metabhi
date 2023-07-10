@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import PropTypes from "prop-types";
-import Select from "react-select";
-import CreatableSelect from "react-select/creatable";
-import { ThemeContext } from "../contexts/ThemeContext";
+import React, { useContext } from "react"
+import PropTypes from "prop-types"
+import Select from "react-select"
+import CreatableSelect from "react-select/creatable"
+import { ThemeContext } from "../contexts/ThemeContext"
 
 const staticStyle = {
   container: base => ({
@@ -69,7 +69,7 @@ const staticStyle = {
     ...base,
     color: isFocused ? "grey" : "white"
   })
-};
+}
 
 export default function SelectInput({
   value,
@@ -86,15 +86,15 @@ export default function SelectInput({
     ? value
     : options.find(o => {
         if (o === null) {
-          return o;
+          return o
         } else if (o.value && o.value.equals) {
-          return o.value.equals(value);
+          return o.value.equals(value)
         } else {
-          return o.value === value;
+          return o.value === value
         }
-      }) || null;
+      }) || null
 
-  const { isDarkMode } = useContext(ThemeContext);
+  const { isDarkMode } = useContext(ThemeContext)
 
   const dynamicStyle = {
     ...staticStyle,
@@ -131,9 +131,9 @@ export default function SelectInput({
       backgroundColor: isDarkMode ? "#111111" : "#eeeeee",
       color: isDarkMode ? "#fff" : "#252525"
     })
-  };
+  }
 
-  const Component = creatable ? CreatableSelect : Select;
+  const Component = creatable ? CreatableSelect : Select
 
   return (
     <Component
@@ -147,16 +147,16 @@ export default function SelectInput({
         if (Array.isArray(option)) {
           onChange(
             option.filter(item => {
-              return item.value >= 0;
+              return item.value >= 0
             })
-          );
+          )
         } else {
-          onChange(option && option.value, option);
+          onChange(option && option.value, option)
         }
       }}
       isDisabled={disabled}
     />
-  );
+  )
 }
 
 SelectInput.defaultProps = {
@@ -164,7 +164,7 @@ SelectInput.defaultProps = {
   placeholder: "Select...",
   optionNotFoundPlaceholder: "Error",
   onChange: () => {}
-};
+}
 
 SelectInput.propTypes = {
   value: PropTypes.any,
@@ -180,4 +180,4 @@ SelectInput.propTypes = {
   error: PropTypes.bool,
   disabled: PropTypes.bool,
   creatable: PropTypes.bool
-};
+}

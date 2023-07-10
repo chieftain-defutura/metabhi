@@ -123,7 +123,6 @@ const Buttons = styled.div`
 export default function OnboardingDialog({
   children,
   backgroundImage,
-  videoSrc,
   steps,
   curStepIdx,
   prevStep,

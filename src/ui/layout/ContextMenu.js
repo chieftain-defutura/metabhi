@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from "react"
+import PropTypes from "prop-types"
 import {
   connectMenu as _connectMenu,
   ContextMenu as ReactContextMenu,
@@ -7,18 +7,18 @@ import {
   showMenu as _showMenu,
   SubMenu as _SubMenu,
   ContextMenuTrigger as _ContextMenuTrigger
-} from "react-contextmenu";
-import { createGlobalStyle } from "styled-components";
+} from "react-contextmenu"
+import { createGlobalStyle } from "styled-components"
 
-export const connectMenu = _connectMenu;
+export const connectMenu = _connectMenu
 
-export const MenuItem = _MenuItem;
+export const MenuItem = _MenuItem
 
-export const showMenu = _showMenu;
+export const showMenu = _showMenu
 
-export const SubMenu = _SubMenu;
+export const SubMenu = _SubMenu
 
-export const ContextMenuTrigger = _ContextMenuTrigger;
+export const ContextMenuTrigger = _ContextMenuTrigger
 
 export const ContextMenuStyles = createGlobalStyle`
   .react-contextmenu {
@@ -88,7 +88,7 @@ export const ContextMenuStyles = createGlobalStyle`
     content: "▸";
     vertical-align: middle;
   }
-`;
+`
 
 export function ContextMenu({ children, ...rest }) {
   return (
@@ -96,9 +96,9 @@ export function ContextMenu({ children, ...rest }) {
       <ReactContextMenu {...rest}>{children}</ReactContextMenu>
       <ContextMenuStyles />
     </>
-  );
+  )
 }
 
 ContextMenu.propTypes = {
   children: PropTypes.node
-};
+}

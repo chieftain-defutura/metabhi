@@ -6,12 +6,12 @@ import Panel from "../layout/Panel"
 import styled from "styled-components"
 import { SlidersH } from "styled-icons/fa-solid/SlidersH"
 import TransformPropertyGroup from "./TransformPropertyGroup"
-import NameInputGroup from "./NameInputGroup"
+// import NameInputGroup from "./NameInputGroup"
 import InputGroup from "../inputs/InputGroup"
 import BooleanInput from "../inputs/BooleanInput"
-import DarkModeToggleButton from "../ToggleButton"
-import { ToggleButton } from "../Toggle"
-import Toggle from "../Toggle"
+// import DarkModeToggleButton from "../ToggleButton"
+// import { ToggleButton } from "../Toggle"
+// import Toggle from "../Toggle"
 
 const StyledNodeEditor = styled.div`
   display: flex;

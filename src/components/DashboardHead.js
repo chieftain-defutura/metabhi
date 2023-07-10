@@ -87,29 +87,6 @@ const NewFilePara = styled.div`
   }
 `
 
-const Recently = styled.div`
-  padding: 22px 40px;
-  border-bottom: 1px solid ${props => props.theme.borderStyleClr};
-  height: 150px;
-
-  h3 {
-    font-weight: 500;
-    font-size: 14px;
-    margin-bottom: 18px;
-  }
-`
-
-const DropDown = styled.div`
-  display: flex;
-  gap: 12px;
-
-  h4 {
-    color: ${props => props.theme.gray};
-    font-size: 18px;
-    margin-top: 20px;
-  }
-`
-
 const DropDownContent = styled.div`
   h3 {
     font-weight: 500;
@@ -138,22 +115,6 @@ const MenuIcons = styled.div`
   }
 `
 
-const ToolbarInputGroup = styled.div`
-  margin-top: 20px;
-
-  select {
-    border: none;
-    outline: none;
-    background: transparent;
-    color: ${props => props.theme.text};
-    width: 115px;
-  }
-  option {
-    background: #000000;
-    color: #fff;
-    font-size: 17px;
-  }
-`
 const RecentlyContent = styled.div`
   display: flex;
   align-items: center;
@@ -162,38 +123,7 @@ const RecentlyContent = styled.div`
   border-bottom: 1px solid ${props => props.theme.borderStyleClr};
 `
 
-const selectInputStyles = {
-  container: base => ({
-    ...base,
-    width: "128px",
-    height: "150px"
-  }),
-  control: base => ({
-    ...base,
-    background: "#111111",
-    minHeight: "60px",
-    borderTopLeftRadius: "0px",
-    borderBottomLeftRadius: "0px",
-    position: "absolute",
-    top: "0px",
-    width: "100%",
-    borderWidth: "0px",
-    cursor: "pointer",
-    outline: "none",
-    boxShadow: "none",
-    padding: "5px 0px"
-  })
-}
-
-const FilesOption = {
-  AllFiles: "All files",
-  DesignFiles: "Design files"
-}
-
-const transformPivotOptions = [
-  { label: "All files", value: FilesOption.AllFiles },
-  { label: "Design files", value: FilesOption.DesignFiles }
-]
+const MenuBox = styled.div``
 
 const DashboardHead = () => {
   return (
@@ -241,13 +171,13 @@ const DashboardHead = () => {
             <h3>Recently viewed</h3>
           </DropDownContent>
           <MenuIcons>
-            <div onClick={() => setGridToggle("GridIcon")}>
-              <MenuBox style={{ border: gridToggle === "GridIcon" ? "1px solid #777777" : "inherit" }}>
+            <div>
+              <MenuBox>
                 <RxDashboard size={26} />
               </MenuBox>
             </div>
-            <div onClick={() => setGridToggle("MenuIcon")}>
-              <MenuBox style={{ border: gridToggle !== "MenuIcon" ? "inherit" : "1px solid #777777" }}>
+            <div>
+              <MenuBox>
                 <TbMenu2 size={26} />
               </MenuBox>
             </div>

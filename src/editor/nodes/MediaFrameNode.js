@@ -7,8 +7,8 @@ import {
   Mesh,
   Vector3,
   DoubleSide
-} from "three";
-import EditorNodeMixin from "./EditorNodeMixin";
+} from "three"
+import EditorNodeMixin from "./EditorNodeMixin"
 
 export const MediaType = {
   ALL: "all",
@@ -17,19 +17,19 @@ export const MediaType = {
   IMAGE: "image",
   VIDEO: "video",
   PDF: "pdf"
-};
+}
 
 export default class MediaFrameNode extends EditorNodeMixin(Object3D) {
-  static componentName = "media-frame";
+  static componentName = "media-frame"
 
-  static nodeName = "Media Frame";
+  static nodeName = "Media Frame"
 
-  static _geometry = new BoxBufferGeometry();
+  static _geometry = new BoxBufferGeometry()
 
   constructor(editor) {
-    super(editor);
+    super(editor)
 
-    this.mediaType = MediaType.ALL_2D;
+    this.mediaType = MediaType.ALL_2D
 
     const box = new Mesh(
       MediaFrameNode._geometry,
@@ -66,51 +66,51 @@ export default class MediaFrameNode extends EditorNodeMixin(Object3D) {
           `,
         side: DoubleSide
       })
-    );
+    )
 
-    const previewMaterial = new MeshBasicMaterial();
-    previewMaterial.side = DoubleSide;
-    previewMaterial.transparent = true;
-    previewMaterial.opacity = 0.5;
+    const previewMaterial = new MeshBasicMaterial()
+    previewMaterial.side = DoubleSide
+    previewMaterial.transparent = true
+    previewMaterial.opacity = 0.5
 
-    const previewMesh = new Mesh(new PlaneBufferGeometry(1, 1, 1, 1), previewMaterial);
-    box.add(previewMesh);
+    const previewMesh = new Mesh(new PlaneBufferGeometry(1, 1, 1, 1), previewMaterial)
+    box.add(previewMesh)
 
-    previewMesh.layers.set(1);
-    box.layers.set(1);
+    previewMesh.layers.set(1)
+    box.layers.set(1)
 
-    this.helper = box;
-    this.add(box);
+    this.helper = box
+    this.add(box)
 
-    this.onDeselect();
+    this.onDeselect()
   }
 
   onSelect() {
-    this.helper.material.uniforms.opacity.value = 1.0;
+    this.helper.material.uniforms.opacity.value = 1.0
   }
 
   onDeselect() {
-    this.helper.material.uniforms.opacity.value = 0.5;
+    this.helper.material.uniforms.opacity.value = 0.5
   }
 
   copy(source, recursive = true) {
     if (recursive) {
-      this.remove(this.helper);
+      this.remove(this.helper)
     }
 
-    this.mediaType = source.mediaType;
+    this.mediaType = source.mediaType
 
-    super.copy(source, recursive);
+    super.copy(source, recursive)
 
     if (recursive) {
-      const helperIndex = source.children.findIndex(child => child === source.helper);
+      const helperIndex = source.children.findIndex(child => child === source.helper)
 
       if (helperIndex !== -1) {
-        this.helper = this.children[helperIndex];
+        this.helper = this.children[helperIndex]
       }
     }
 
-    return this;
+    return this
   }
 
   serialize() {
@@ -118,27 +118,27 @@ export default class MediaFrameNode extends EditorNodeMixin(Object3D) {
       "media-frame": {
         mediaType: this.mediaType
       }
-    });
+    })
   }
 
   static async deserialize(editor, json) {
-    const node = await super.deserialize(editor, json);
-    const mediaFrame = json.components.find(c => c.name === "media-frame");
-    node.mediaType = mediaFrame.props.mediaType;
-    return node;
+    const node = await super.deserialize(editor, json)
+    const mediaFrame = json.components.find(c => c.name === "media-frame")
+    node.mediaType = mediaFrame.props.mediaType
+    return node
   }
 
   prepareForExport() {
-    super.prepareForExport();
-    this.remove(this.helper);
+    super.prepareForExport()
+    this.remove(this.helper)
     this.addGLTFComponent("media-frame", {
       mediaType: this.mediaType,
       bounds: new Vector3().copy(this.scale)
-    });
+    })
     // We use scale to configure bounds, we don't actually want to set the node's scale
-    this.scale.setScalar(1);
+    this.scale.setScalar(1)
     this.addGLTFComponent("networked", {
       id: this.uuid
-    });
+    })
   }
 }

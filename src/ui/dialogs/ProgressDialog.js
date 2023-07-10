@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Dialog from "./Dialog";
-import ProgressBar from "../inputs/ProgressBar";
-import styled from "styled-components";
+import React from "react"
+import PropTypes from "prop-types"
+import Dialog from "./Dialog"
+import ProgressBar from "../inputs/ProgressBar"
+import styled from "styled-components"
 
 const ProgressContainer = styled.div`
   color: ${props => props.theme.text2};
@@ -12,12 +12,12 @@ const ProgressContainer = styled.div`
   /* This forces firefox to give the contents a proper height. */
   overflow: hidden;
   padding: 8px;
-`;
+`
 
 const ProgressMessage = styled.div`
   padding-bottom: 24px;
   white-space: pre;
-`;
+`
 
 export default function ProgressDialog({ message, onConfirm, cancelable, onCancel, ...props }) {
   return (
@@ -27,7 +27,7 @@ export default function ProgressDialog({ message, onConfirm, cancelable, onCance
         <ProgressBar />
       </ProgressContainer>
     </Dialog>
-  );
+  )
 }
 
 ProgressDialog.propTypes = {
@@ -37,11 +37,11 @@ ProgressDialog.propTypes = {
   cancelLabel: PropTypes.string,
   onCancel: PropTypes.func,
   onConfirm: PropTypes.func
-};
+}
 
 ProgressDialog.defaultProps = {
   title: "Loading...",
   message: "Loading...",
   cancelable: false,
   cancelLabel: "Cancel"
-};
+}

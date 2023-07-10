@@ -26,11 +26,11 @@ const GridContent = styled.div`
 `
 
 const CardGridBox = styled.div`
-  object-fit: cover;
-  height: 170px;
   img {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    height: 172px;
+    width: 100%;
   }
 `
 

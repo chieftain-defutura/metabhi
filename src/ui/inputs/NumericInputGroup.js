@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { InputGroupHeader, InputGroupContainer, InputGroupContent, InputGroupInfo, OptionalGroup } from "./InputGroup";
-import Scrubber from "./Scrubber";
-import NumericInput from "./NumericInput";
-import ResetButton from "./ResetButton";
-import BooleanInput from "./BooleanInput";
-import { PropertyLabel } from "./PropertyLabel";
+import React from "react"
+import PropTypes from "prop-types"
+import { InputGroupHeader, InputGroupContainer, InputGroupContent, InputGroupInfo, OptionalGroup } from "./InputGroup"
+import Scrubber from "./Scrubber"
+import NumericInput from "./NumericInput"
+import ResetButton from "./ResetButton"
+import BooleanInput from "./BooleanInput"
+import { PropertyLabel } from "./PropertyLabel"
 
 export default function NumericInputGroup({
   name,
@@ -19,7 +19,7 @@ export default function NumericInputGroup({
   onReset,
   ...rest
 }) {
-  const { displayPrecision, ...scrubberProps } = rest;
+  const { displayPrecision, ...scrubberProps } = rest
   return (
     <InputGroupContainer>
       <InputGroupHeader>
@@ -37,7 +37,7 @@ export default function NumericInputGroup({
         {onReset && <ResetButton disabled={!reset} onClick={onReset} />}
       </InputGroupContent>
     </InputGroupContainer>
-  );
+  )
 }
 
 NumericInputGroup.propTypes = {
@@ -50,4 +50,4 @@ NumericInputGroup.propTypes = {
   onEnable: PropTypes.func,
   onReset: PropTypes.func,
   reset: PropTypes.bool
-};
+}

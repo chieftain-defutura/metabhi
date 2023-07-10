@@ -1,10 +1,10 @@
-import React, { useRef, useCallback } from "react";
-import PropTypes from "prop-types";
-import NumericInput from "./NumericInput";
-import styled from "styled-components";
-import { CaretLeft } from "styled-icons/boxicons-regular/CaretLeft";
-import { CaretRight } from "styled-icons/boxicons-regular/CaretRight";
-import { InfoTooltip } from "../layout/Tooltip";
+import React, { useRef, useCallback } from "react"
+import PropTypes from "prop-types"
+import NumericInput from "./NumericInput"
+import styled from "styled-components"
+import { CaretLeft } from "styled-icons/boxicons-regular/CaretLeft"
+import { CaretRight } from "styled-icons/boxicons-regular/CaretRight"
+import { InfoTooltip } from "../layout/Tooltip"
 
 const StepperInputContainer = styled.div`
   display: flex;
@@ -17,7 +17,7 @@ const StepperInputContainer = styled.div`
     border-right-width: 0;
     border-radius: 0;
   }
-`;
+`
 
 const StepperButton = styled.button`
   display: flex;
@@ -45,18 +45,18 @@ const StepperButton = styled.button`
   :active {
     background-color: ${props => props.theme.blue};
   }
-`;
+`
 
 export default function NumericStepperInput({ style, className, decrementTooltip, incrementTooltip, ...rest }) {
-  const inputRef = useRef();
+  const inputRef = useRef()
 
   const onDecrement = useCallback(() => {
-    inputRef.current.decrement();
-  }, [inputRef]);
+    inputRef.current.decrement()
+  }, [inputRef])
 
   const onIncrement = useCallback(() => {
-    inputRef.current.increment();
-  }, [inputRef]);
+    inputRef.current.increment()
+  }, [inputRef])
 
   return (
     <StepperInputContainer style={style} className={className}>
@@ -72,7 +72,7 @@ export default function NumericStepperInput({ style, className, decrementTooltip
         </StepperButton>
       </InfoTooltip>
     </StepperInputContainer>
-  );
+  )
 }
 
 NumericStepperInput.propTypes = {
@@ -80,4 +80,4 @@ NumericStepperInput.propTypes = {
   className: PropTypes.string,
   decrementTooltip: PropTypes.string,
   incrementTooltip: PropTypes.string
-};
+}

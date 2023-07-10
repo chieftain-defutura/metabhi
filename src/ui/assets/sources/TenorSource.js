@@ -1,15 +1,15 @@
-import VideoMediaSource from "../VideoMediaSource";
-import { ItemTypes } from "../../dnd";
-import VideoNode from "../../../editor/nodes/VideoNode";
+import VideoMediaSource from "../VideoMediaSource"
+import { ItemTypes } from "../../dnd"
+import VideoNode from "../../../editor/nodes/VideoNode"
 
 export default class TenorSource extends VideoMediaSource {
   constructor(api) {
-    super(api);
-    this.id = "tenor";
-    this.name = "Tenor GIFs";
-    this.searchPlaceholder = "Search GIFs...";
-    this.searchLegalCopy = "Search by Tenor";
-    this.privacyPolicyUrl = "https://tenor.com/legal-privacy";
+    super(api)
+    this.id = "tenor"
+    this.name = "Tenor GIFs"
+    this.searchPlaceholder = "Search GIFs..."
+    this.searchLegalCopy = "Search by Tenor"
+    this.privacyPolicyUrl = "https://tenor.com/legal-privacy"
   }
 
   async search(params, cursor, abortSignal) {
@@ -21,7 +21,7 @@ export default class TenorSource extends VideoMediaSource {
       },
       cursor,
       abortSignal
-    );
+    )
 
     return {
       results: results.map(result => ({
@@ -39,6 +39,6 @@ export default class TenorSource extends VideoMediaSource {
       suggestions,
       nextCursor,
       hasMore: !!nextCursor
-    };
+    }
   }
 }

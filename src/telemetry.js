@@ -48,5 +48,7 @@ export function Telemetry({ overridePage, overrideTitle }) {
 }
 
 Telemetry.propTypes = {
-  match: PropTypes.object
+  match: PropTypes.object,
+  overridePage: PropTypes.string,
+  overrideTitle: PropTypes.string
 }

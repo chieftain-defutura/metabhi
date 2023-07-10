@@ -1,20 +1,20 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-import spokeLogo from "../../assets/spoke-logo.png";
-import landingVideoMp4 from "../../assets/video/SpokePromo.mp4";
-import landingVideoWebm from "../../assets/video/SpokePromo.webm";
-import NavBar from "../navigation/NavBar";
-import Footer from "../navigation/Footer";
-import Callout from "./Callout";
-import { Link } from "react-router-dom";
-import { LargeButton } from "../inputs/Button";
-import benches from "../../assets/landing/benches.jpg";
-import editor from "../../assets/landing/environment-editor.jpg";
-import meeting from "../../assets/landing/meeting.jpg";
+import React, { Component } from "react"
+import styled from "styled-components"
+import spokeLogo from "../../assets/spoke-logo.png"
+import landingVideoMp4 from "../../assets/video/SpokePromo.mp4"
+import landingVideoWebm from "../../assets/video/SpokePromo.webm"
+import NavBar from "../navigation/NavBar"
+import Footer from "../navigation/Footer"
+import Callout from "./Callout"
+import { Link } from "react-router-dom"
+import { LargeButton } from "../inputs/Button"
+import benches from "../../assets/landing/benches.jpg"
+import editor from "../../assets/landing/environment-editor.jpg"
+import meeting from "../../assets/landing/meeting.jpg"
 
 const Section = styled.section`
   padding: 100px 0;
-`;
+`
 
 const HeroContainer = styled.div`
   display: grid;
@@ -30,7 +30,7 @@ const HeroContainer = styled.div`
     grid-template-columns: 1fr;
     grid-gap: 20px;
   }
-`;
+`
 
 const HeroLeft = styled.div`
   font-size: 12px;
@@ -55,7 +55,7 @@ const HeroLeft = styled.div`
   @media (max-width: 800px) {
     font-size: 8px;
   }
-`;
+`
 
 const LogoContainer = styled.div`
   position: relative;
@@ -69,14 +69,14 @@ const LogoContainer = styled.div`
     font-weight: bold;
     font-size: 3em;
   }
-`;
+`
 
 const HeroRight = styled.div`
   video {
     border-radius: 8px;
     background-color: ${props => props.theme.panel};
   }
-`;
+`
 
 const CalloutContainer = styled.div`
   display: grid;
@@ -89,7 +89,7 @@ const CalloutContainer = styled.div`
   @media (max-width: 960px) {
     grid-template-columns: 1fr;
   }
-`;
+`
 
 export default class LandingPage extends Component {
   render() {
@@ -151,6 +151,6 @@ export default class LandingPage extends Component {
         </main>
         <Footer />
       </>
-    );
+    )
   }
 }

@@ -1,36 +1,36 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import configs from "../../configs";
-import OnboardingContainer from "./OnboardingContainer";
-import OnboardingDialog from "./OnboardingDialog";
-import OnboardingPopover from "./OnboardingPopover";
-import { withEditor } from "../contexts/EditorContext";
-import Icon from "../inputs/Icon";
-import lmbIcon from "../../assets/onboarding/lmb.svg";
-import rmbIcon from "../../assets/onboarding/rmb.svg";
-import wasdIcon from "../../assets/onboarding/wasd.svg";
-import HotkeyDescription from "./HotkeyDescription";
-import { withApi } from "../contexts/ApiContext";
-import { Button } from "../inputs/Button";
-import Well from "../layout/Well";
-import { cmdOrCtrlString } from "../utils";
-import { Link } from "react-router-dom";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import configs from "../../configs"
+import OnboardingContainer from "./OnboardingContainer"
+import OnboardingDialog from "./OnboardingDialog"
+import OnboardingPopover from "./OnboardingPopover"
+import { withEditor } from "../contexts/EditorContext"
+import Icon from "../inputs/Icon"
+import lmbIcon from "../../assets/onboarding/lmb.svg"
+import rmbIcon from "../../assets/onboarding/rmb.svg"
+import wasdIcon from "../../assets/onboarding/wasd.svg"
+import HotkeyDescription from "./HotkeyDescription"
+import { withApi } from "../contexts/ApiContext"
+import { Button } from "../inputs/Button"
+import Well from "../layout/Well"
+import { cmdOrCtrlString } from "../utils"
+import { Link } from "react-router-dom"
 
 /* eslint-disable react/prop-types */
 
 class CreateModelPopover extends Component {
   componentDidMount() {
     // TODO: Check if object was added
-    this.props.editor.setSource("sketchfab");
-    this.props.editor.addListener("sceneGraphChanged", this.onObjectAdded);
+    this.props.editor.setSource("sketchfab")
+    this.props.editor.addListener("sceneGraphChanged", this.onObjectAdded)
   }
 
   onObjectAdded = () => {
-    this.props.nextStep();
-  };
+    this.props.nextStep()
+  }
 
   componentWillUnmount() {
-    this.props.editor.removeListener("sceneGraphChanged", this.onObjectAdded);
+    this.props.editor.removeListener("sceneGraphChanged", this.onObjectAdded)
   }
 
   render() {
@@ -38,23 +38,23 @@ class CreateModelPopover extends Component {
       <OnboardingPopover target="#assets-panel" {...this.props} disableNext>
         Add a model to your scene by clicking on it.
       </OnboardingPopover>
-    );
+    )
   }
 }
 
-const WrappedCreateModelPopover = withEditor(CreateModelPopover);
+const WrappedCreateModelPopover = withEditor(CreateModelPopover)
 
 class SaveProjectDialog extends Component {
   componentDidMount() {
-    this.props.api.addListener("project-saving", this.onProjectSaving);
+    this.props.api.addListener("project-saving", this.onProjectSaving)
   }
 
   onProjectSaving = () => {
-    this.props.nextStep();
-  };
+    this.props.nextStep()
+  }
 
   componentWillUnmount() {
-    this.props.api.removeListener("project-saving", this.onProjectSaving);
+    this.props.api.removeListener("project-saving", this.onProjectSaving)
   }
 
   render() {
@@ -73,23 +73,23 @@ class SaveProjectDialog extends Component {
           </HotkeyDescription>
         </Well>
       </OnboardingDialog>
-    );
+    )
   }
 }
 
-const WrappedSaveProjectDialog = withApi(SaveProjectDialog);
+const WrappedSaveProjectDialog = withApi(SaveProjectDialog)
 
 class SaveProjectPopover extends Component {
   componentDidMount() {
-    this.props.api.addListener("project-saved", this.onProjectSaved);
+    this.props.api.addListener("project-saved", this.onProjectSaved)
   }
 
   onProjectSaved = () => {
-    this.props.nextStep();
-  };
+    this.props.nextStep()
+  }
 
   componentWillUnmount() {
-    this.props.api.removeListener("project-saved", this.onProjectSaved);
+    this.props.api.removeListener("project-saved", this.onProjectSaved)
   }
 
   render() {
@@ -103,23 +103,23 @@ class SaveProjectPopover extends Component {
           </HotkeyDescription>
         </Well>
       </OnboardingPopover>
-    );
+    )
   }
 }
 
-const WrappedSaveProjectPopover = withApi(SaveProjectPopover);
+const WrappedSaveProjectPopover = withApi(SaveProjectPopover)
 
 class PublishScenePopover extends Component {
   componentDidMount() {
-    this.props.api.addListener("project-published", this.onScenePublished);
+    this.props.api.addListener("project-published", this.onScenePublished)
   }
 
   onScenePublished = () => {
-    this.props.nextStep();
-  };
+    this.props.nextStep()
+  }
 
   componentWillUnmount() {
-    this.props.api.removeListener("project-published", this.onScenePublishing);
+    this.props.api.removeListener("project-published", this.onScenePublishing)
   }
 
   render() {
@@ -127,11 +127,11 @@ class PublishScenePopover extends Component {
       <OnboardingPopover target="#publish-button" {...this.props} position="bottom" disablePrev disableNext>
         Click to publish your scene.
       </OnboardingPopover>
-    );
+    )
   }
 }
 
-const WrappedPublishScenePopover = withApi(PublishScenePopover);
+const WrappedPublishScenePopover = withApi(PublishScenePopover)
 
 const steps = [
   {
@@ -142,7 +142,7 @@ const steps = [
           <h1>Welcome{configs.isMoz() ? " to Spoke" : ""}</h1>
           <p>In this tutorial we&#39;ll go over how to create and publish a scene.</p>
         </OnboardingDialog>
-      );
+      )
     }
   },
   {
@@ -166,7 +166,7 @@ const steps = [
             </HotkeyDescription>
           </Well>
         </OnboardingPopover>
-      );
+      )
     }
   },
   {
@@ -191,7 +191,7 @@ const steps = [
             </HotkeyDescription>
           </Well>
         </OnboardingPopover>
-      );
+      )
     }
   },
   {
@@ -214,7 +214,7 @@ const steps = [
             </HotkeyDescription>
           </Well>
         </OnboardingPopover>
-      );
+      )
     }
   },
   {
@@ -229,7 +229,7 @@ const steps = [
             </HotkeyDescription>
           </Well>
         </OnboardingPopover>
-      );
+      )
     }
   },
   {
@@ -247,7 +247,7 @@ const steps = [
             </HotkeyDescription>
           </Well>
         </OnboardingPopover>
-      );
+      )
     }
   },
   {
@@ -265,7 +265,7 @@ const steps = [
             </HotkeyDescription>
           </Well>
         </OnboardingPopover>
-      );
+      )
     }
   },
   {
@@ -280,7 +280,7 @@ const steps = [
             </HotkeyDescription>
           </Well>
         </OnboardingPopover>
-      );
+      )
     }
   },
   {
@@ -301,7 +301,7 @@ const steps = [
             </HotkeyDescription>
           </Well>
         </OnboardingPopover>
-      );
+      )
     }
   },
 
@@ -319,7 +319,7 @@ const steps = [
             </HotkeyDescription>
           </Well>
         </OnboardingPopover>
-      );
+      )
     }
   },
 
@@ -338,7 +338,7 @@ const steps = [
             </HotkeyDescription>
           </Well>
         </OnboardingPopover>
-      );
+      )
     }
   },
 
@@ -359,7 +359,7 @@ const steps = [
             </HotkeyDescription>
           </Well>
         </OnboardingPopover>
-      );
+      )
     }
   },
 
@@ -370,7 +370,7 @@ const steps = [
           Additional object properties can be set in the properties panel. This includes things like shadows, light
           color, and more.
         </OnboardingPopover>
-      );
+      )
     }
   },
   {
@@ -390,7 +390,7 @@ const steps = [
             the click of a button.
           </p>
         </OnboardingDialog>
-      );
+      )
     }
   },
   {
@@ -411,16 +411,16 @@ const steps = [
             My Projects
           </Button>
         </OnboardingDialog>
-      );
+      )
     }
   }
-];
+]
 
 export default function Onboarding({ onFinish, onSkip }) {
-  return <OnboardingContainer steps={steps} onFinish={() => onFinish("Continue")} onSkip={onSkip} />;
+  return <OnboardingContainer steps={steps} onFinish={() => onFinish("Continue")} onSkip={onSkip} />
 }
 
 Onboarding.propTypes = {
   onFinish: PropTypes.func.isRequired,
   onSkip: PropTypes.func.isRequired
-};
+}

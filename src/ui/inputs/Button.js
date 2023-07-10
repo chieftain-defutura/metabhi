@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const Button = styled.button.attrs(props => ({
   type: props.type || "button"
@@ -40,19 +40,19 @@ export const Button = styled.button.attrs(props => ({
       border: 1px solid ${props => props.theme.blue};
     }
   }
-`;
+`
 
 export const MediumButton = styled(Button)`
   line-height: 1em;
   height: 3em;
   padding: 1em;
-`;
+`
 
 export const LargeButton = styled(Button)`
   min-height: 24px;
   padding: 1em 2em;
   font-size: 1.5em;
-`;
+`
 
 export const SecondaryButton = styled(Button)`
   background-color: ${props => props.theme.hover};
@@ -74,7 +74,7 @@ export const SecondaryButton = styled(Button)`
       background-color: transparent;
     }
   }
-`;
+`
 
 export const MenuButton = styled(Button)`
   background-color: transparent;
@@ -97,7 +97,7 @@ export const MenuButton = styled(Button)`
       background-color: transparent;
     }
   }
-`;
+`
 
 export const PropertiesPanelButton = styled(Button)`
   align-self: center;
@@ -106,4 +106,4 @@ export const PropertiesPanelButton = styled(Button)`
   margin: 18px 0;
   width: 200px;
   font-weigth: 700;
-`;
+`

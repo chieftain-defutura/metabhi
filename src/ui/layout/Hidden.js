@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 const Hidden = styled.div`
   display: none;
-`;
+`
 
-export default Hidden;
+export default Hidden

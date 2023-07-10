@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react"
+import PropTypes from "prop-types"
 
 export const PopupContext = React.createContext()
 
@@ -93,4 +94,8 @@ export function PopupContextProvider({ children }) {
       {children}
     </PopupContext.Provider>
   )
+}
+
+PopupContextProvider.propTypes = {
+  children: PropTypes.node.isRequired
 }

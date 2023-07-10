@@ -1,4 +1,4 @@
-import { ExporterExtension } from "./ExporterExtension";
+import { ExporterExtension } from "./ExporterExtension"
 
 export class LightmapExporterExtension extends ExporterExtension {
   onRegister() {
@@ -8,16 +8,16 @@ export class LightmapExporterExtension extends ExporterExtension {
       (material, materialDef) => {
         if (material.lightMap) {
           if (materialDef.extensions === undefined) {
-            materialDef.extensions = {};
+            materialDef.extensions = {}
           }
           materialDef.extensions.MOZ_lightmap = {
             index: this.exporter.processTexture(material.lightMap),
             texCoord: 1,
             intensity: material.lightMapIntensity
-          };
-          this.exporter.extensionsUsed.MOZ_lightmap = true;
+          }
+          this.exporter.extensionsUsed.MOZ_lightmap = true
         }
       }
-    );
+    )
   }
 }

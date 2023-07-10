@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
 
 const StatsContainer = styled.div`
   position: absolute;
@@ -20,10 +20,10 @@ const StatsContainer = styled.div`
   ul {
     margin: 8px 4px;
   }
-`;
+`
 
 export default function Stats({ editor }) {
-  const [info, setInfo] = useState(0);
+  const [info, setInfo] = useState(0)
 
   useEffect(() => {
     editor.renderer.onUpdateStats = info => {
@@ -37,14 +37,14 @@ export default function Stats({ editor }) {
           triangles: info.render.triangles,
           points: info.render.points,
           lines: info.render.lines
-        });
+        })
       }
-    };
+    }
 
     return () => {
-      editor.renderer.onUpdateStats = undefined;
-    };
-  }, [editor]);
+      editor.renderer.onUpdateStats = undefined
+    }
+  }, [editor])
 
   return (
     <StatsContainer>
@@ -72,9 +72,9 @@ export default function Stats({ editor }) {
         </ul>
       )}
     </StatsContainer>
-  );
+  )
 }
 
 Stats.propTypes = {
   editor: PropTypes.object
-};
+}

@@ -1,8 +1,8 @@
-import React, { useCallback, useContext, useMemo } from "react";
-import PropTypes from "prop-types";
-import styled, { ThemeContext } from "styled-components";
-import { ExclamationTriangle } from "styled-icons/fa-solid/ExclamationTriangle";
-import Tooltip from "../layout/Tooltip";
+import React, { useCallback, useContext, useMemo } from "react"
+import PropTypes from "prop-types"
+import styled, { ThemeContext } from "styled-components"
+import { ExclamationTriangle } from "styled-icons/fa-solid/ExclamationTriangle"
+import Tooltip from "../layout/Tooltip"
 
 const IssuesTooltipContainer = styled.div`
   display: inline-block;
@@ -29,14 +29,14 @@ const IssuesTooltipContainer = styled.div`
     font-family: "Lucida Console", Monaco, monospace;
     font-size: 12px;
   }
-`;
+`
 
 const IssueIcon = styled(ExclamationTriangle)`
   color: ${props => props.color};
-`;
+`
 
 export default function NodeIssuesIcon({ node }) {
-  const theme = useContext(ThemeContext);
+  const theme = useContext(ThemeContext)
 
   const severityToColor = useMemo(
     () => ({
@@ -44,7 +44,7 @@ export default function NodeIssuesIcon({ node }) {
       error: theme.red
     }),
     [theme]
-  );
+  )
 
   const renderInfo = useCallback(() => {
     return (
@@ -56,19 +56,19 @@ export default function NodeIssuesIcon({ node }) {
               <li key={i}>
                 <IssueIcon size={12} color={severityToColor[issue.severity]} /> {issue.message}
               </li>
-            );
+            )
           })}
         </ul>
       </IssuesTooltipContainer>
-    );
-  }, [node, severityToColor]);
+    )
+  }, [node, severityToColor])
 
-  let maxSeverity = "warning";
+  let maxSeverity = "warning"
 
   for (const issue of node.issues) {
     if (issue.severity === "error") {
-      maxSeverity = "error";
-      break;
+      maxSeverity = "error"
+      break
     }
   }
 
@@ -76,9 +76,9 @@ export default function NodeIssuesIcon({ node }) {
     <Tooltip renderContent={renderInfo}>
       <IssueIcon size={14} color={severityToColor[maxSeverity]} />
     </Tooltip>
-  );
+  )
 }
 
 NodeIssuesIcon.propTypes = {
   node: PropTypes.object.isRequired
-};
+}

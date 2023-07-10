@@ -56,9 +56,9 @@ const ToolToggles = styled.div`
   margin-left: -100px;
 `
 
-const Spacer = styled.div`
-  flex: 1;
-`
+// const Spacer = styled.div`
+//   flex: 1;
+// `
 
 const PublishButton = styled(Button)`
   align-self: center;

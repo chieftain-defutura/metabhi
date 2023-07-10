@@ -1,7 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import NavBar from "../../ui/navigation/NavBar";
-import Sidebar from "../Sidebar/Sidebar";
+import React from "react"
+import styled from "styled-components"
+import NavBar from "../../ui/navigation/NavBar"
+import Sidebar from "../Sidebar/Sidebar"
+import PropTypes from "prop-types"
 
 const Header = styled.div`
   position: fixed;
@@ -9,11 +10,11 @@ const Header = styled.div`
   left: 0;
   right: 0;
   z-index: 1;
-`;
+`
 
 const LayoutWrapper = styled.div`
   display: flex;
-`;
+`
 
 const LayoutChildren = styled.div`
   overflow-y: auto;
@@ -25,7 +26,7 @@ const LayoutChildren = styled.div`
   &::-webkit-scrollbar {
     width: 5px;
   }
-`;
+`
 
 const Layout = ({ children }) => {
   return (
@@ -38,7 +39,11 @@ const Layout = ({ children }) => {
         <LayoutChildren>{children}</LayoutChildren>
       </LayoutWrapper>
     </>
-  );
-};
+  )
+}
 
-export default Layout;
+Layout.propTypes = {
+  children: PropTypes.node.isRequired
+}
+
+export default Layout

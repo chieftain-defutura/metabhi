@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import mozillaLogo from "../../assets/mozilla-logo.png";
-import styled from "styled-components";
-import configs from "../../configs";
-import { TERMS, PRIVACY } from "../../constants";
+import React, { Component } from "react"
+import { Link } from "react-router-dom"
+import mozillaLogo from "../../assets/mozilla-logo.png"
+import styled from "styled-components"
+import configs from "../../configs"
+import { TERMS, PRIVACY } from "../../constants"
 
 const StyledFooter = styled.footer`
   display: flex;
@@ -26,7 +26,7 @@ const StyledFooter = styled.footer`
       width: auto;
     }
   }
-`;
+`
 
 const NavList = styled.ul`
   display: flex;
@@ -38,7 +38,7 @@ const NavList = styled.ul`
     flex-direction: row;
     align-items: flex-end;
   }
-`;
+`
 
 const NavListItem = styled.li`
   display: flex;
@@ -56,7 +56,7 @@ const NavListItem = styled.li`
     margin: 0;
     display: ${props => (props.mobileOnly ? "none" : "flex")};
   }
-`;
+`
 
 export default class Footer extends Component {
   render() {
@@ -110,6 +110,6 @@ export default class Footer extends Component {
           </NavList>
         </nav>
       </StyledFooter>
-    );
+    )
   }
 }

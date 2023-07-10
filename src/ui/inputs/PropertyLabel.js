@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const PropertyLabel = styled.label`
   ${props =>
@@ -8,5 +8,4 @@ export const PropertyLabel = styled.label`
     `font-weight: 400;
       color: ${props.theme.text}
     `}
-    
-`;
+`

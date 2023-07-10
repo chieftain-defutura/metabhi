@@ -214,19 +214,17 @@ const Dashboard = () => {
         throw new Error(`Error fetching projects: ${json.error || "Unknown error."}`)
       }
 
-      const mappedData = json.projects.map(project => {
-        return {
-          name: project.name,
-          thumbnail_url: project.thumbnail_url,
-          project_id: project.project_id
-        }
-      })
+      const mappedData = json.projects.map(project => ({
+        name: project.name,
+        thumbnail_url: project.thumbnail_url,
+        project_id: project.project_id
+      }))
 
       setMappedProjects(mappedData)
     } catch (error) {
       console.error(error)
     }
-  }, [])
+  }, [getToken])
 
   useEffect(() => {
     dataGet()

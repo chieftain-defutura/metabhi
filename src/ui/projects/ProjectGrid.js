@@ -89,7 +89,8 @@ ProjectGrid.propTypes = {
   scenes: PropTypes.arrayOf(PropTypes.object),
   newProjectPath: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   newProjectLabel: PropTypes.string,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  isGrid: PropTypes.isGrid
 }
 
 export const ProjectGridContainer = styled.div`

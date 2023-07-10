@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import NodeEditor from "./NodeEditor";
-import { StreetView } from "styled-icons/fa-solid/StreetView";
-import InputGroup from "../inputs/InputGroup";
-import BooleanInput from "../inputs/BooleanInput";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import NodeEditor from "./NodeEditor"
+import { StreetView } from "styled-icons/fa-solid/StreetView"
+import InputGroup from "../inputs/InputGroup"
+import BooleanInput from "../inputs/BooleanInput"
 
 const messages = {
   "waypoint.label-canBeSpawnPoint": "Spawn Point",
@@ -24,7 +24,7 @@ const messages = {
     "Avatars will move as close as they can to this waypoint but will not leave the ground",
   "waypoint.description-willMaintainInitialOrientation":
     "Instead of rotating to face the same direction as the waypoint, users will maintain the orientation they started with before they teleported"
-};
+}
 
 const propertyNames = [
   "canBeSpawnPoint",
@@ -34,28 +34,28 @@ const propertyNames = [
   "willDisableTeleporting",
   "snapToNavMesh",
   "willMaintainInitialOrientation"
-];
+]
 
 export default class WayPointNodeEditor extends Component {
   static propTypes = {
     editor: PropTypes.object,
     node: PropTypes.object
-  };
+  }
 
-  static iconComponent = StreetView;
+  static iconComponent = StreetView
 
-  static description = "A point people can teleport to.\n";
+  static description = "A point people can teleport to.\n"
 
   constructor(props) {
-    super(props);
+    super(props)
     const createPropSetter = propName => value => {
-      return this.props.editor.setPropertySelected(propName, value);
-    };
-    this.setters = new Map(propertyNames.map(name => [name, createPropSetter(name)]));
+      return this.props.editor.setPropertySelected(propName, value)
+    }
+    this.setters = new Map(propertyNames.map(name => [name, createPropSetter(name)]))
   }
 
   render() {
-    const { node } = this.props;
+    const { node } = this.props
     return (
       <NodeEditor description={WayPointNodeEditor.description} {...this.props}>
         {propertyNames.map(name => (
@@ -68,6 +68,6 @@ export default class WayPointNodeEditor extends Component {
           </InputGroup>
         ))}
       </NodeEditor>
-    );
+    )
   }
 }

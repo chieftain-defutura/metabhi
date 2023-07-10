@@ -5,7 +5,7 @@ import configs from "../configs"
 import { Link } from "react-router-dom"
 import usePaginatedSearch from "../ui/projects/usePaginatedSearch"
 import { ApiContext } from "../ui/contexts/ApiContext"
-import { useLocation, useHistory } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 const SearchInput = styled.div`
   width: 100%;
@@ -95,7 +95,6 @@ const SearchFilter = () => {
   const [loading, setLoading] = useState(false)
   const [hasData, setHasData] = useState(true)
   const location = useLocation()
-  const history = useHistory()
 
   const api = useContext(ApiContext)
 
@@ -123,45 +122,87 @@ const SearchFilter = () => {
     return store.credentials.token
   }
 
-  const dataGet = async () => {
-    try {
-      setLoading(true)
+  // const dataGet = async () => {
+  //   try {
+  //     setLoading(true)
 
-      const token = getToken()
+  //     const token = getToken()
 
-      const headers = {
-        "content-type": "application/json",
-        authorization: `Bearer ${token}`
-      }
+  //     const headers = {
+  //       "content-type": "application/json",
+  //       authorization: `Bearer ${token}`
+  //     }
 
-      const response = await fetch(`https://${RETICULUM_SERVER}/api/v1/projects`, { headers })
+  //     const response = await fetch(`https://${RETICULUM_SERVER}/api/v1/projects`, { headers })
 
-      const json = await response.json()
+  //     const json = await response.json()
 
-      if (!Array.isArray(json.projects)) {
-        throw new Error(`Error fetching projects: ${json.error || "Unknown error."}`)
-      }
+  //     if (!Array.isArray(json.projects)) {
+  //       throw new Error(`Error fetching projects: ${json.error || "Unknown error."}`)
+  //     }
 
-      const mappedData = json.projects.map(project => {
-        return {
-          name: project.name,
-          thumbnail_url: project.thumbnail_url,
-          project_id: project.project_id
-        }
-      })
+  //     const mappedData = json.projects.map(project => {
+  //       return {
+  //         name: project.name,
+  //         thumbnail_url: project.thumbnail_url,
+  //         project_id: project.project_id
+  //       }
+  //     })
 
-      setMappedProjects(mappedData)
-      setHasData(mappedData.length > 0)
+  //     setMappedProjects(mappedData)
+  //     setHasData(mappedData.length > 0)
 
-      setMappedProjects(mappedData)
+  //     setMappedProjects(mappedData)
 
-      setLoading(false)
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  //     setLoading(false)
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   if (openDropDown) {
+  //     dataGet()
+  //   }
+  // }, [openDropDown, dataGet])
 
   useEffect(() => {
+    const dataGet = async () => {
+      try {
+        setLoading(true)
+
+        const token = getToken()
+
+        const headers = {
+          "content-type": "application/json",
+          authorization: `Bearer ${token}`
+        }
+
+        const response = await fetch(`https://${RETICULUM_SERVER}/api/v1/projects`, { headers })
+
+        const json = await response.json()
+
+        if (!Array.isArray(json.projects)) {
+          throw new Error(`Error fetching projects: ${json.error || "Unknown error."}`)
+        }
+
+        const mappedData = json.projects.map(project => {
+          return {
+            name: project.name,
+            thumbnail_url: project.thumbnail_url,
+            project_id: project.project_id
+          }
+        })
+
+        setMappedProjects(mappedData)
+        setHasData(mappedData.length > 0)
+
+        setLoading(false)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
     if (openDropDown) {
       dataGet()
     }
@@ -171,22 +212,19 @@ const SearchFilter = () => {
     setValue(searchTerm)
   }
 
-  const updateParams = useCallback(
-    nextParams => {
-      const search = new URLSearchParams()
+  const updateParams = useCallback(nextParams => {
+    const search = new URLSearchParams()
 
-      for (const name in nextParams) {
-        if (name === "source" || !nextParams[name]) {
-          continue
-        }
-
-        search.set(name, nextParams[name])
+    for (const name in nextParams) {
+      if (name === "source" || !nextParams[name]) {
+        continue
       }
 
-      setParams(nextParams)
-    },
-    [history]
-  )
+      search.set(name, nextParams[name])
+    }
+
+    setParams(nextParams)
+  }, [])
 
   const onChangeQuery = useCallback(
     value => {
@@ -196,7 +234,7 @@ const SearchFilter = () => {
         q: value.target.value
       })
     },
-    [updateParams, params]
+    [updateParams]
   )
 
   const { entries } = usePaginatedSearch(`${api.apiURL}/api/v1/media/search`, params)

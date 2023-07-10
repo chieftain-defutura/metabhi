@@ -1,5 +1,5 @@
-import { Mesh, Color, PlaneBufferGeometry, ShaderMaterial, DoubleSide, Plane, Vector3 } from "three";
-import { addIsHelperFlag } from "./utils";
+import { Mesh, Color, PlaneBufferGeometry, ShaderMaterial, DoubleSide, Plane, Vector3 } from "three"
+import { addIsHelperFlag } from "./utils"
 
 /**
  * Original Author: Fyrestar
@@ -22,7 +22,7 @@ void main() {
 
       gl_Position.z -= 0.01;
 }
-`;
+`
 
 const fragmentShader = `
 varying vec3 worldPosition;
@@ -52,16 +52,16 @@ void main() {
 
   if ( gl_FragColor.a <= 0.0 ) discard;
 }
-`;
+`
 
 export default class SpokeInfiniteGridHelper extends Mesh {
   constructor(size1, size2, color, distance) {
-    color = color || new Color("white");
-    size1 = size1 || 1;
-    size2 = size2 || 10;
-    distance = distance || 8000;
+    color = color || new Color("white")
+    size1 = size1 || 1
+    size2 = size2 || 10
+    distance = distance || 8000
 
-    const geometry = new PlaneBufferGeometry(2, 2, 1, 1);
+    const geometry = new PlaneBufferGeometry(2, 2, 1, 1)
 
     const material = new ShaderMaterial({
       side: DoubleSide,
@@ -87,45 +87,45 @@ export default class SpokeInfiniteGridHelper extends Mesh {
       extensions: {
         derivatives: true
       }
-    });
+    })
 
-    super(geometry, material);
+    super(geometry, material)
 
-    this.name = "SpokeInfiniteGridHelper";
-    this.layers.set(1);
-    addIsHelperFlag(this);
-    this.frustumCulled = false;
-    this.plane = new Plane(this.up);
+    this.name = "SpokeInfiniteGridHelper"
+    this.layers.set(1)
+    addIsHelperFlag(this)
+    this.frustumCulled = false
+    this.plane = new Plane(this.up)
 
-    this.intersectionPointWorld = new Vector3();
+    this.intersectionPointWorld = new Vector3()
 
     this.intersection = {
       distance: 0,
       point: this.intersectionPointWorld,
       object: this
-    };
+    }
   }
 
   setSize(size) {
-    this.material.uniforms.uSize1.value = size;
-    this.material.uniforms.uSize2.value = size * 10;
+    this.material.uniforms.uSize1.value = size
+    this.material.uniforms.uSize2.value = size * 10
   }
 
   raycast(raycaster, intersects) {
-    const point = new Vector3();
-    const intersection = raycaster.ray.intersectPlane(this.plane, point);
+    const point = new Vector3()
+    const intersection = raycaster.ray.intersectPlane(this.plane, point)
 
-    if (intersection === null) return null;
+    if (intersection === null) return null
 
-    this.intersectionPointWorld.copy(point);
-    this.intersectionPointWorld.applyMatrix4(this.matrixWorld);
+    this.intersectionPointWorld.copy(point)
+    this.intersectionPointWorld.applyMatrix4(this.matrixWorld)
 
-    const distance = raycaster.ray.origin.distanceTo(this.intersectionPointWorld);
+    const distance = raycaster.ray.origin.distanceTo(this.intersectionPointWorld)
 
-    if (distance < raycaster.near || distance > raycaster.far) return null;
+    if (distance < raycaster.near || distance > raycaster.far) return null
 
-    this.intersection.distance = distance;
+    this.intersection.distance = distance
 
-    intersects.push(this.intersection);
+    intersects.push(this.intersection)
   }
 }

@@ -1,11 +1,11 @@
-import React from "react";
-import styled from "styled-components";
+import React from "react"
+import styled from "styled-components"
 
 const DarkModeContainer = styled.div`
   // margin-top: -2px;
   // padding-left: 54px;
   // background: ${props => props.theme.lightDarkClr};
-`;
+`
 const StyledInput = styled.input`
   width: 0;
   height: 0;
@@ -21,7 +21,7 @@ const StyledInput = styled.input`
   &::checked + label + Background {
     background: #242424;
   }
-`;
+`
 
 const DarkModeLabel = styled.label`
   width: 46px;
@@ -48,14 +48,14 @@ const DarkModeLabel = styled.label`
   &:active::after {
     width: 16px;
   }
-`;
+`
 
 const Background = styled.div`
   background: #fff;
   z-index: -100;
   position: absolute;
   transition: 0.3s;
-`;
+`
 
 const DarkModeToggleButton = () => {
   return (
@@ -68,7 +68,7 @@ const DarkModeToggleButton = () => {
       </DarkModeLabel>
       <Background></Background>
     </DarkModeContainer>
-  );
-};
+  )
+}
 
-export default DarkModeToggleButton;
+export default DarkModeToggleButton

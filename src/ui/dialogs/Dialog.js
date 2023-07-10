@@ -1,16 +1,9 @@
-import React, { useCallback, useState, useContext } from "react"
+import React, { useCallback } from "react"
 import PropTypes from "prop-types"
 import { Button } from "../inputs/Button"
-// import nftAbi from "../../api/NftAbi/nftAbi.json"
 import { useWeb3React } from "@web3-react/core"
 import styled from "styled-components"
-import Web3 from "web3"
-// import { ethers } from "ethers"
-import axios from "axios"
-import { ERC721Abi } from "../../api/NftAbi/ERC721Abi"
-// import { Web3Storage } from "web3.storage"
 import ConnectWalletBtn from "../../components/ConnectWalletBtn"
-import { TransactionContext } from "../contexts/TransactionContext"
 
 const DialogContainer = styled.form`
   display: flex;
@@ -21,7 +14,6 @@ const DialogContainer = styled.form`
   max-width: 800px;
   min-width: 400px;
   min-height: 150px;
-  // max-height: 80vh;
 `
 
 const DialogHeader = styled.div`
@@ -113,57 +105,15 @@ export default function Dialog({
   children,
   ...rest
 }) {
-  const { account, library } = useWeb3React()
-  const [objectCID] = useState("")
-  const { setLoading } = useContext(TransactionContext)
-
-  const mintNftAddress = "0x30E9fEF957036ACf9468D61922F4A837EC0eF169".toLowerCase()
+  const { account } = useWeb3React()
 
   const onSubmitForm = useCallback(
     async e => {
       if (!onConfirm) return
       onConfirm(e)
     },
-    [onConfirm, objectCID]
+    [onConfirm]
   )
-
-  // const onsubmit = async () => {
-  //   if (!account || !library.provider) return
-
-  //   onCancel()
-
-  //   try {
-  //     setLoading(true)
-  //     const newData = { name: name, image: screenshotUrl }
-  //     const resData = await axios({
-  //       method: "post",
-  //       url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
-  //       data: newData,
-  //       headers: {
-  //         pinata_api_key: "e791f4722a928786f3a4",
-  //         pinata_secret_api_key: "061e40a53c59f57788841539c4068ea4456329ad31bfc08418fbfd2329640df7",
-  //         "Content-Type": "application/json"
-  //       }
-  //     })
-  //     const JsonHash = resData.data.IpfsHash
-
-  //     const dataHash = `https://gateway.pinata.cloud/ipfs/${JsonHash}`
-  //     console.log(dataHash)
-
-  //     const web3 = new Web3(new Web3(library.provider))
-
-  //     const mintContract = new web3.eth.Contract(ERC721Abi, mintNftAddress)
-  //     console.log(mintContract)
-  //     console.log(ERC721Abi)
-  //     const tx = await mintContract.methods.mint(account, dataHash).send({ from: account })
-  //     console.log("tx", tx)
-
-  //     setIsLoading(false)
-  //   } catch (error) {
-  //     console.log("Error sending File to IPFS:")
-  //     console.log(error)
-  //   }
-  // }
 
   return (
     <>
@@ -211,6 +161,7 @@ Dialog.propTypes = {
   onConfirm: PropTypes.func,
   confirmLabel: PropTypes.string.isRequired,
   bottomNav: PropTypes.node,
+  onSubmit: PropTypes.func,
   children: PropTypes.node
 }
 

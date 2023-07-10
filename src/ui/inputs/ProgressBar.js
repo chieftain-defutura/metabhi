@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from "react"
+import styled from "styled-components"
 
 const ProgressBarContainer = styled.div`
   height: 20px;
@@ -72,7 +72,7 @@ const ProgressBarContainer = styled.div`
       background-position: 50px 50px;
     }
   }
-`;
+`
 
 export default function ProgressBar() {
   return (
@@ -81,5 +81,5 @@ export default function ProgressBar() {
         <span />
       </span>
     </ProgressBarContainer>
-  );
+  )
 }

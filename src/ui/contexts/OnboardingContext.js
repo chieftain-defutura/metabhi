@@ -1,5 +1,5 @@
-import React from "react";
+import React from "react"
 
-export const OnboardingContext = React.createContext({ enabled: false });
+export const OnboardingContext = React.createContext({ enabled: false })
 
-export const OnboardingContextProvider = OnboardingContext.Provider;
+export const OnboardingContextProvider = OnboardingContext.Provider

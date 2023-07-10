@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import SpokeLogo from "./SpokeLogo";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import SpokeLogo from "./SpokeLogo"
+import { Link } from "react-router-dom"
+import styled from "styled-components"
 
 const StyledError = styled.div`
   display: flex;
@@ -17,12 +17,12 @@ const StyledError = styled.div`
   svg {
     margin-bottom: 20px;
   }
-`;
+`
 
 export default class Error extends Component {
   static propTypes = {
     message: PropTypes.node
-  };
+  }
 
   render() {
     return (
@@ -32,6 +32,6 @@ export default class Error extends Component {
         </Link>
         {this.props.message}
       </StyledError>
-    );
+    )
   }
 }

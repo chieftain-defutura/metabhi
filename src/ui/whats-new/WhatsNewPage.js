@@ -1,20 +1,20 @@
-import React, { Component } from "react";
-import InfiniteScroll from "react-infinite-scroller";
-import styled from "styled-components";
+import React, { Component } from "react"
+import InfiniteScroll from "react-infinite-scroller"
+import styled from "styled-components"
 
-import NavBar from "../navigation/NavBar";
-import Loading from "../Loading";
-import { getUpdates } from "./whats-new-utils";
+import NavBar from "../navigation/NavBar"
+import Loading from "../Loading"
+import { getUpdates } from "./whats-new-utils"
 
 const WhatsNewContainer = styled.main`
   display: flex;
   align-items: center;
-`;
+`
 
-const width = 800;
-const contentWidth = 650;
-const margin = width - contentWidth;
-const breakpoint = `(max-width: ${width}px)`;
+const width = 800
+const contentWidth = 650
+const margin = width - contentWidth
+const breakpoint = `(max-width: ${width}px)`
 
 const WhatsNewContent = styled.div`
   max-width: ${width}px;
@@ -23,13 +23,13 @@ const WhatsNewContent = styled.div`
     width: 100%;
     padding: 0 1em;
   }
-`;
+`
 
 const WhatsNewTitle = styled.h1`
   font-size: 36px;
   text-align: center;
   margin: 1em 0 1.5em 0;
-`;
+`
 
 const Update = styled.article`
   margin-bottom: 1em;
@@ -37,11 +37,11 @@ const Update = styled.article`
   a {
     text-decoration: none;
   }
-`;
+`
 
 const Header = styled.div`
   margin-bottom: 0.5em;
-`;
+`
 
 const Date = styled.h2`
   display: inline-block;
@@ -63,7 +63,7 @@ const Date = styled.h2`
     display: block;
     text-align: left;
   }
-`;
+`
 
 const Title = styled.h2`
   display: inline-block;
@@ -72,7 +72,7 @@ const Title = styled.h2`
   @media ${breakpoint} {
     width: auto;
   }
-`;
+`
 
 const Body = styled.p`
   margin-left: ${margin}px;
@@ -88,51 +88,51 @@ const Body = styled.p`
   @media ${breakpoint} {
     margin-left: 0;
   }
-`;
+`
 
 export default class WhatsNewPage extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       updates: [],
       hasMore: true
-    };
+    }
 
-    this.updatesIterator = getUpdates(30);
+    this.updatesIterator = getUpdates(30)
   }
 
   onLoadMore = async () => {
-    const { value: updates, done } = await this.updatesIterator.next();
+    const { value: updates, done } = await this.updatesIterator.next()
 
-    let nextUpdates;
+    let nextUpdates
 
     if (updates) {
-      let currentDate;
+      let currentDate
 
       // Blank out duplicate dates
       for (const update of updates) {
         if (update.formattedMergedAt === currentDate) {
-          update.formattedMergedAt = null;
+          update.formattedMergedAt = null
         } else {
-          currentDate = update.formattedMergedAt;
+          currentDate = update.formattedMergedAt
         }
       }
 
-      nextUpdates = [...this.state.updates, ...updates];
+      nextUpdates = [...this.state.updates, ...updates]
     } else {
-      nextUpdates = this.state.updates;
+      nextUpdates = this.state.updates
     }
 
-    this.setState({ updates: nextUpdates, hasMore: !done });
-  };
+    this.setState({ updates: nextUpdates, hasMore: !done })
+  }
 
   render() {
     const loader = (
       <div key="loader">
         <Loading message="Loading Updates..." />
       </div>
-    );
+    )
     return (
       <>
         <NavBar />
@@ -155,12 +155,12 @@ export default class WhatsNewPage extends Component {
                     */}
                     <Body dangerouslySetInnerHTML={{ __html: update.formattedBody }} />
                   </Update>
-                );
+                )
               })}
             </InfiniteScroll>
           </WhatsNewContent>
         </WhatsNewContainer>
       </>
-    );
+    )
   }
 }

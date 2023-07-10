@@ -1,74 +1,74 @@
-import { Object3D, BoxBufferGeometry, Material, Mesh, BoxHelper } from "three";
-import EditorNodeMixin from "./EditorNodeMixin";
+import { Object3D, BoxBufferGeometry, Material, Mesh, BoxHelper } from "three"
+import EditorNodeMixin from "./EditorNodeMixin"
 
 export default class BoxColliderNode extends EditorNodeMixin(Object3D) {
-  static componentName = "box-collider";
+  static componentName = "box-collider"
 
-  static nodeName = "Box Collider";
+  static nodeName = "Box Collider"
 
-  static _geometry = new BoxBufferGeometry();
+  static _geometry = new BoxBufferGeometry()
 
-  static _material = new Material();
+  static _material = new Material()
 
   static async deserialize(editor, json) {
-    const node = await super.deserialize(editor, json);
+    const node = await super.deserialize(editor, json)
 
-    node.walkable = !!json.components.find(c => c.name === "walkable");
+    node.walkable = !!json.components.find(c => c.name === "walkable")
 
-    return node;
+    return node
   }
 
   constructor(editor) {
-    super(editor);
+    super(editor)
 
-    const boxMesh = new Mesh(BoxColliderNode._geometry, BoxColliderNode._material);
-    const box = new BoxHelper(boxMesh, 0x00ff00);
-    box.layers.set(1);
-    this.helper = box;
-    this.add(box);
-    this.walkable = false;
+    const boxMesh = new Mesh(BoxColliderNode._geometry, BoxColliderNode._material)
+    const box = new BoxHelper(boxMesh, 0x00ff00)
+    box.layers.set(1)
+    this.helper = box
+    this.add(box)
+    this.walkable = false
   }
 
   copy(source, recursive = true) {
     if (recursive) {
-      this.remove(this.helper);
+      this.remove(this.helper)
     }
 
-    super.copy(source, recursive);
+    super.copy(source, recursive)
 
     if (recursive) {
-      const helperIndex = source.children.indexOf(source.helper);
+      const helperIndex = source.children.indexOf(source.helper)
 
       if (helperIndex !== -1) {
-        const boxMesh = new Mesh(BoxColliderNode._geometry, BoxColliderNode._material);
-        const box = new BoxHelper(boxMesh, 0x00ff00);
-        box.layers.set(1);
-        this.helper = box;
-        box.parent = this;
-        this.children.splice(helperIndex, 1, box);
+        const boxMesh = new Mesh(BoxColliderNode._geometry, BoxColliderNode._material)
+        const box = new BoxHelper(boxMesh, 0x00ff00)
+        box.layers.set(1)
+        this.helper = box
+        box.parent = this
+        this.children.splice(helperIndex, 1, box)
       }
     }
 
-    this.walkable = source.walkable;
+    this.walkable = source.walkable
 
-    return this;
+    return this
   }
 
   serialize() {
     const components = {
       "box-collider": {}
-    };
-
-    if (this.walkable) {
-      components.walkable = {};
     }
 
-    return super.serialize(components);
+    if (this.walkable) {
+      components.walkable = {}
+    }
+
+    return super.serialize(components)
   }
 
   prepareForExport() {
-    super.prepareForExport();
-    this.remove(this.helper);
+    super.prepareForExport()
+    this.remove(this.helper)
     this.addGLTFComponent("box-collider", {
       // TODO: Remove exporting these properties. They are already included in the transform props.
       position: this.position,
@@ -78,6 +78,6 @@ export default class BoxColliderNode extends EditorNodeMixin(Object3D) {
         z: this.rotation.z
       },
       scale: this.scale
-    });
+    })
   }
 }

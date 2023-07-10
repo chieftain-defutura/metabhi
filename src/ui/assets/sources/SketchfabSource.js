@@ -1,11 +1,11 @@
-import ModelMediaSource from "../ModelMediaSource";
-import { TransformPivot } from "../../../editor/controls/SpokeControls";
+import ModelMediaSource from "../ModelMediaSource"
+import { TransformPivot } from "../../../editor/controls/SpokeControls"
 
 export default class SketchfabSource extends ModelMediaSource {
   constructor(api) {
-    super(api);
-    this.id = "sketchfab";
-    this.name = "Sketchfab";
+    super(api)
+    this.id = "sketchfab"
+    this.name = "Sketchfab"
     this.tags = [
       {
         disabled: true,
@@ -535,10 +535,10 @@ export default class SketchfabSource extends ModelMediaSource {
           }
         ]
       }
-    ];
+    ]
 
-    this.searchLegalCopy = "Search by Sketchfab";
-    this.privacyPolicyUrl = "https://sketchfab.com/privacy";
-    this.transformPivot = TransformPivot.Bottom;
+    this.searchLegalCopy = "Search by Sketchfab"
+    this.privacyPolicyUrl = "https://sketchfab.com/privacy"
+    this.transformPivot = TransformPivot.Bottom
   }
 }

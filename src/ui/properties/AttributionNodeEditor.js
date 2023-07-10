@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import InputGroup from "../inputs/InputGroup"
 import StringInput from "../inputs/StringInput"
-import Collapsible from "../inputs/Collapsible"
+// import Collapsible from "../inputs/Collapsible"
 
 export default class AttributionNodeEditor extends Component {
   static propTypes = {
@@ -25,7 +25,7 @@ export default class AttributionNodeEditor extends Component {
   }
 
   render() {
-    const { name, node } = this.props
+    const { node } = this.props
 
     return (
       <>

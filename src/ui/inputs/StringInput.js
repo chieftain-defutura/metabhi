@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import Input from "./Input";
+import React, { useState, useEffect, useCallback, useRef } from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import Input from "./Input"
 
 const StyledStringInput = styled(Input)`
   display: flex;
@@ -11,20 +11,20 @@ const StyledStringInput = styled(Input)`
   outline: none;
   border-radius: 5px;
   margin-top: 15px;
-`;
+`
 
 const StringInput = React.forwardRef(({ onChange, ...rest }, ref) => (
   <StyledStringInput onChange={e => onChange(e.target.value, e)} {...rest} ref={ref} />
-));
+))
 
-StringInput.displayName = "StringInput";
+StringInput.displayName = "StringInput"
 
 StringInput.defaultProps = {
   value: "",
   onChange: () => {},
   type: "text",
   required: false
-};
+}
 
 StringInput.propTypes = {
   className: PropTypes.string,
@@ -33,40 +33,40 @@ StringInput.propTypes = {
   required: PropTypes.bool,
   placeholder: PropTypes.string,
   onChange: PropTypes.func
-};
+}
 
-export default StringInput;
+export default StringInput
 
 const DropContainer = styled.div`
   display: flex;
   width: 100%;
-`;
+`
 
 export const ControlledStringInput = React.forwardRef(({ onChange, value, ...rest }, ref) => {
-  const inputRef = useRef();
+  const inputRef = useRef()
 
-  const [tempValue, setTempValue] = useState(value);
+  const [tempValue, setTempValue] = useState(value)
 
   const onKeyUp = useCallback(e => {
     if (e.key === "Enter" || e.key === "Escape") {
-      inputRef.current.blur();
+      inputRef.current.blur()
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
-    setTempValue(value);
-  }, [value]);
+    setTempValue(value)
+  }, [value])
 
   const onBlur = useCallback(() => {
-    onChange(tempValue);
-  }, [onChange, tempValue]);
+    onChange(tempValue)
+  }, [onChange, tempValue])
 
   const onChangeValue = useCallback(
     e => {
-      setTempValue(e.target.value);
+      setTempValue(e.target.value)
     },
     [setTempValue]
-  );
+  )
 
   return (
     <DropContainer ref={ref}>
@@ -79,17 +79,17 @@ export const ControlledStringInput = React.forwardRef(({ onChange, value, ...res
         {...rest}
       />
     </DropContainer>
-  );
-});
+  )
+})
 
-ControlledStringInput.displayName = "ControlledStringInput";
+ControlledStringInput.displayName = "ControlledStringInput"
 
 ControlledStringInput.defaultProps = {
   value: "",
   onChange: () => {},
   type: "text",
   required: false
-};
+}
 
 ControlledStringInput.propTypes = {
   className: PropTypes.string,
@@ -98,4 +98,4 @@ ControlledStringInput.propTypes = {
   required: PropTypes.bool,
   placeholder: PropTypes.string,
   onChange: PropTypes.func
-};
+}

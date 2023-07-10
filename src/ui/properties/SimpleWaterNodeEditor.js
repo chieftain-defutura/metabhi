@@ -1,64 +1,64 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import NodeEditor from "./NodeEditor";
-import { Water } from "styled-icons/fa-solid/Water";
-import NumericInputGroup from "../inputs/NumericInputGroup";
-import ColorInput from "../inputs/ColorInput";
-import InputGroup from "../inputs/InputGroup";
-import Vector2Input from "../inputs/Vector2Input";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import NodeEditor from "./NodeEditor"
+import { Water } from "styled-icons/fa-solid/Water"
+import NumericInputGroup from "../inputs/NumericInputGroup"
+import ColorInput from "../inputs/ColorInput"
+import InputGroup from "../inputs/InputGroup"
+import Vector2Input from "../inputs/Vector2Input"
 
 export default class SimpleWaterNodeEditor extends Component {
   static propTypes = {
     editor: PropTypes.object,
     node: PropTypes.object
-  };
+  }
 
-  static iconComponent = Water;
+  static iconComponent = Water
 
-  static description = "Renders a water plane.";
+  static description = "Renders a water plane."
 
   onChangeColor = color => {
-    this.props.editor.setPropertySelected("color", color);
-  };
+    this.props.editor.setPropertySelected("color", color)
+  }
 
   onChangeOpacity = opacity => {
-    this.props.editor.setPropertySelected("opacity", opacity);
-  };
+    this.props.editor.setPropertySelected("opacity", opacity)
+  }
 
   onChangeTideHeight = tideHeight => {
-    this.props.editor.setPropertySelected("tideHeight", tideHeight);
-  };
+    this.props.editor.setPropertySelected("tideHeight", tideHeight)
+  }
 
   onChangeTideScale = tideScale => {
-    this.props.editor.setPropertySelected("tideScale", tideScale);
-  };
+    this.props.editor.setPropertySelected("tideScale", tideScale)
+  }
 
   onChangeTideSpeed = tideSpeed => {
-    this.props.editor.setPropertySelected("tideSpeed", tideSpeed);
-  };
+    this.props.editor.setPropertySelected("tideSpeed", tideSpeed)
+  }
 
   onChangeWaveHeight = waveHeight => {
-    this.props.editor.setPropertySelected("waveHeight", waveHeight);
-  };
+    this.props.editor.setPropertySelected("waveHeight", waveHeight)
+  }
 
   onChangeWaveScale = waveScale => {
-    this.props.editor.setPropertySelected("waveScale", waveScale);
-  };
+    this.props.editor.setPropertySelected("waveScale", waveScale)
+  }
 
   onChangeWaveSpeed = waveSpeed => {
-    this.props.editor.setPropertySelected("waveSpeed", waveSpeed);
-  };
+    this.props.editor.setPropertySelected("waveSpeed", waveSpeed)
+  }
 
   onChangeRipplesScale = ripplesScale => {
-    this.props.editor.setPropertySelected("ripplesScale", ripplesScale);
-  };
+    this.props.editor.setPropertySelected("ripplesScale", ripplesScale)
+  }
 
   onChangeRipplesSpeed = ripplesSpeed => {
-    this.props.editor.setPropertySelected("ripplesSpeed", ripplesSpeed);
-  };
+    this.props.editor.setPropertySelected("ripplesSpeed", ripplesSpeed)
+  }
 
   render() {
-    const node = this.props.node;
+    const node = this.props.node
 
     return (
       <NodeEditor {...this.props} description={SimpleWaterNodeEditor.description}>
@@ -146,6 +146,6 @@ export default class SimpleWaterNodeEditor extends Component {
           onChange={this.onChangeRipplesScale}
         />
       </NodeEditor>
-    );
+    )
   }
 }

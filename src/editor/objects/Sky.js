@@ -9,9 +9,9 @@ import {
   BackSide,
   Mesh,
   UniformsLib
-} from "three";
-import { PMREMGenerator } from "three/examples/jsm/pmrem/PMREMGenerator";
-import { PMREMCubeUVPacker } from "three/examples/jsm/pmrem/PMREMCubeUVPacker";
+} from "three"
+import { PMREMGenerator } from "three/examples/jsm/pmrem/PMREMGenerator"
+import { PMREMCubeUVPacker } from "three/examples/jsm/pmrem/PMREMCubeUVPacker"
 
 /**
  * @author zz85 / https://github.com/zz85
@@ -105,7 +105,7 @@ void main() {
 
   #include <fog_vertex>
 }
-`;
+`
 
 const fragmentShader = `
 #include <common>
@@ -211,7 +211,7 @@ void main() {
 
   #include <fog_fragment>
 }
-`;
+`
 
 export default class Sky extends Object3D {
   static shader = {
@@ -228,12 +228,12 @@ export default class Sky extends Object3D {
     ]),
     vertexShader,
     fragmentShader
-  };
+  }
 
-  static _geometry = new BoxBufferGeometry(1, 1, 1);
+  static _geometry = new BoxBufferGeometry(1, 1, 1)
 
   constructor() {
-    super();
+    super()
 
     const material = new ShaderMaterial({
       fragmentShader: Sky.shader.fragmentShader,
@@ -241,143 +241,143 @@ export default class Sky extends Object3D {
       uniforms: UniformsUtils.clone(Sky.shader.uniforms),
       side: BackSide,
       fog: true
-    });
+    })
 
-    this.skyScene = new Scene();
-    this.cubeCamera = new CubeCamera(1, 100000, 512);
-    this.skyScene.add(this.cubeCamera);
+    this.skyScene = new Scene()
+    this.cubeCamera = new CubeCamera(1, 100000, 512)
+    this.skyScene.add(this.cubeCamera)
 
-    this.sky = new Mesh(Sky._geometry, material);
-    this.sky.name = "Sky";
-    this.add(this.sky);
+    this.sky = new Mesh(Sky._geometry, material)
+    this.sky.name = "Sky"
+    this.add(this.sky)
 
-    this._inclination = 0;
-    this._azimuth = 0.15;
-    this._distance = 8000;
-    this.updateSunPosition();
+    this._inclination = 0
+    this._azimuth = 0.15
+    this._distance = 8000
+    this.updateSunPosition()
   }
 
   get turbidity() {
-    return this.sky.material.uniforms.turbidity.value;
+    return this.sky.material.uniforms.turbidity.value
   }
 
   set turbidity(value) {
-    this.sky.material.uniforms.turbidity.value = value;
+    this.sky.material.uniforms.turbidity.value = value
   }
 
   get rayleigh() {
-    return this.sky.material.uniforms.rayleigh.value;
+    return this.sky.material.uniforms.rayleigh.value
   }
 
   set rayleigh(value) {
-    this.sky.material.uniforms.rayleigh.value = value;
+    this.sky.material.uniforms.rayleigh.value = value
   }
 
   get luminance() {
-    return this.sky.material.uniforms.luminance.value;
+    return this.sky.material.uniforms.luminance.value
   }
 
   set luminance(value) {
-    this.sky.material.uniforms.luminance.value = value;
+    this.sky.material.uniforms.luminance.value = value
   }
 
   get mieCoefficient() {
-    return this.sky.material.uniforms.mieCoefficient.value;
+    return this.sky.material.uniforms.mieCoefficient.value
   }
 
   set mieCoefficient(value) {
-    this.sky.material.uniforms.mieCoefficient.value = value;
+    this.sky.material.uniforms.mieCoefficient.value = value
   }
 
   get mieDirectionalG() {
-    return this.sky.material.uniforms.mieDirectionalG.value;
+    return this.sky.material.uniforms.mieDirectionalG.value
   }
 
   set mieDirectionalG(value) {
-    this.sky.material.uniforms.mieDirectionalG.value = value;
+    this.sky.material.uniforms.mieDirectionalG.value = value
   }
 
   get inclination() {
-    return this._inclination;
+    return this._inclination
   }
 
   set inclination(value) {
-    this._inclination = value;
-    this.updateSunPosition();
+    this._inclination = value
+    this.updateSunPosition()
   }
 
   get azimuth() {
-    return this._azimuth;
+    return this._azimuth
   }
 
   set azimuth(value) {
-    this._azimuth = value;
-    this.updateSunPosition();
+    this._azimuth = value
+    this.updateSunPosition()
   }
 
   get distance() {
-    return this._distance;
+    return this._distance
   }
 
   set distance(value) {
-    this._distance = value;
-    this.updateSunPosition();
+    this._distance = value
+    this.updateSunPosition()
   }
 
   updateSunPosition() {
-    const theta = Math.PI * (this._inclination - 0.5);
-    const phi = 2 * Math.PI * (this._azimuth - 0.5);
+    const theta = Math.PI * (this._inclination - 0.5)
+    const phi = 2 * Math.PI * (this._azimuth - 0.5)
 
-    const distance = this._distance;
+    const distance = this._distance
 
-    const x = distance * Math.cos(phi);
-    const y = distance * Math.sin(phi) * Math.sin(theta);
-    const z = distance * Math.sin(phi) * Math.cos(theta);
+    const x = distance * Math.cos(phi)
+    const y = distance * Math.sin(phi) * Math.sin(theta)
+    const z = distance * Math.sin(phi) * Math.cos(theta)
 
-    this.sky.material.uniforms.sunPosition.value.set(x, y, z).normalize();
-    this.sky.scale.set(distance, distance, distance);
+    this.sky.material.uniforms.sunPosition.value.set(x, y, z).normalize()
+    this.sky.scale.set(distance, distance, distance)
   }
 
   generateEnvironmentMap(renderer) {
-    this.skyScene.add(this.sky);
-    this.cubeCamera.update(renderer, this.skyScene);
-    this.add(this.sky);
-    const vrEnabled = renderer.vr.enabled;
-    renderer.vr.enabled = false;
-    const pmremGenerator = new PMREMGenerator(this.cubeCamera.renderTarget.texture);
-    pmremGenerator.update(renderer);
-    const pmremCubeUVPacker = new PMREMCubeUVPacker(pmremGenerator.cubeLods);
-    pmremCubeUVPacker.update(renderer);
-    renderer.vr.enabled = vrEnabled;
-    pmremGenerator.dispose();
-    pmremCubeUVPacker.dispose();
-    return pmremCubeUVPacker.CubeUVRenderTarget.texture;
+    this.skyScene.add(this.sky)
+    this.cubeCamera.update(renderer, this.skyScene)
+    this.add(this.sky)
+    const vrEnabled = renderer.vr.enabled
+    renderer.vr.enabled = false
+    const pmremGenerator = new PMREMGenerator(this.cubeCamera.renderTarget.texture)
+    pmremGenerator.update(renderer)
+    const pmremCubeUVPacker = new PMREMCubeUVPacker(pmremGenerator.cubeLods)
+    pmremCubeUVPacker.update(renderer)
+    renderer.vr.enabled = vrEnabled
+    pmremGenerator.dispose()
+    pmremCubeUVPacker.dispose()
+    return pmremCubeUVPacker.CubeUVRenderTarget.texture
   }
 
   copy(source, recursive = true) {
     if (recursive) {
-      this.remove(this.sky);
+      this.remove(this.sky)
     }
 
-    super.copy(source, recursive);
+    super.copy(source, recursive)
 
     if (recursive) {
-      const skyIndex = source.children.indexOf(source.sky);
+      const skyIndex = source.children.indexOf(source.sky)
 
       if (skyIndex !== -1) {
-        this.sky = this.children[skyIndex];
+        this.sky = this.children[skyIndex]
       }
     }
 
-    this.turbidity = source.turbidity;
-    this.rayleigh = source.rayleigh;
-    this.luminance = source.luminance;
-    this.mieCoefficient = source.mieCoefficient;
-    this.mieDirectionalG = source.mieDirectionalG;
-    this.inclination = source.inclination;
-    this.azimuth = source.azimuth;
-    this.distance = source.distance;
+    this.turbidity = source.turbidity
+    this.rayleigh = source.rayleigh
+    this.luminance = source.luminance
+    this.mieCoefficient = source.mieCoefficient
+    this.mieDirectionalG = source.mieDirectionalG
+    this.inclination = source.inclination
+    this.azimuth = source.azimuth
+    this.distance = source.distance
 
-    return this;
+    return this
   }
 }

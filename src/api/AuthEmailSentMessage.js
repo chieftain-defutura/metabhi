@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import ProgressBar from "../ui/inputs/ProgressBar";
-import styled from "styled-components";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import ProgressBar from "../ui/inputs/ProgressBar"
+import styled from "styled-components"
 
 const StyledAuthEmailSentMessage = styled.div`
   display: flex;
@@ -18,19 +18,19 @@ const StyledAuthEmailSentMessage = styled.div`
   h2 {
     font-size: 20px;
   }
-`;
+`
 
 export default class AuthEmailSentMessage extends Component {
   static propTypes = {
     email: PropTypes.string.isRequired,
     onCancel: PropTypes.func.isRequired
-  };
+  }
 
   onCancel = e => {
-    e.preventDefault();
-    e.target.blur();
-    this.props.onCancel();
-  };
+    e.preventDefault()
+    e.target.blur()
+    this.props.onCancel()
+  }
 
   render() {
     return (
@@ -45,6 +45,6 @@ export default class AuthEmailSentMessage extends Component {
           </a>
         </div>
       </StyledAuthEmailSentMessage>
-    );
+    )
   }
 }

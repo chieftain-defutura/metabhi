@@ -1,75 +1,75 @@
 export function insertSeparator(children, separatorFn) {
   if (!Array.isArray(children)) {
-    return children;
+    return children
   }
 
-  const length = children.length;
+  const length = children.length
 
   if (length === 1) {
-    return children[0];
+    return children[0]
   }
 
   return children.reduce((acc, item, idx) => {
-    acc.push(item);
+    acc.push(item)
 
     if (idx !== length - 1) {
-      acc.push(separatorFn(idx));
+      acc.push(separatorFn(idx))
     }
 
-    return acc;
-  }, []);
+    return acc
+  }, [])
 }
 
 export function unique(arr, maybeComp) {
-  const set = new Set();
-  const newArr = [];
+  const set = new Set()
+  const newArr = []
 
-  let comp = maybeComp;
+  let comp = maybeComp
 
   if (typeof comp === "undefined") {
-    comp = item => item;
+    comp = item => item
   } else if (typeof comp === "string") {
-    comp = item => item[maybeComp];
+    comp = item => item[maybeComp]
   }
 
   for (const item of arr) {
-    const key = comp(item);
+    const key = comp(item)
 
-    if (set.has(key)) continue;
+    if (set.has(key)) continue
 
-    newArr.push(item);
+    newArr.push(item)
 
-    set.add(key);
+    set.add(key)
   }
 
-  return newArr;
+  return newArr
 }
 
-export const isApple = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+export const isApple = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)
 
-export const cmdOrCtrlString = isApple ? "⌘" : "ctrl";
+export const cmdOrCtrlString = isApple ? "⌘" : "ctrl"
 
 export function getStepSize(event, smallStep, mediumStep, largeStep) {
   if (event.altKey) {
-    return smallStep;
+    return smallStep
   } else if (event.shiftKey) {
-    return largeStep;
+    return largeStep
   }
-  return mediumStep;
+  return mediumStep
 }
 
 export function clamp(value, min, max) {
   if (value < min) {
-    return min;
+    return min
   } else if (value > max) {
-    return max;
+    return max
   }
-  return value;
+  return value
 }
 
 export function toPrecision(value, precision) {
-  const p = 1 / precision;
-  return Math.round(value * p) / p;
+  const p = 1 / precision
+  return Math.round(value * p) / p
 }
 
 // https://stackoverflow.com/a/26188910
@@ -83,17 +83,17 @@ export function camelPad(str) {
       // Look for lower-case letters followed by numbers
       .replace(/([a-zA-Z])(\d)/g, "$1 $2")
       .replace(/^./, function(str) {
-        return str.toUpperCase();
+        return str.toUpperCase()
       })
       // Remove any white space left around the word
       .trim()
-  );
+  )
 }
 
 // https://stackoverflow.com/a/18650828
 export function bytesToSize(bytes) {
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-  if (bytes == 0) return "0 Byte";
-  const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-  return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB"]
+  if (bytes == 0) return "0 Byte"
+  const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)))
+  return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i]
 }

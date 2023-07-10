@@ -21,7 +21,7 @@ import NodeIssuesIcon from "./NodeIssuesIcon"
 import { Resizeable } from "../layout/Resizeable"
 import AssetsPanel from "../assets/AssetsPanel"
 import { PopupContext } from "../contexts/PopupContext"
-import { AssetsPanelToolbar } from "../assets/AssetsPanel"
+// import { AssetsPanelToolbar } from "../assets/AssetsPanel"
 
 const uploadOptions = {
   multiple: true,
@@ -185,8 +185,8 @@ function isAncestor(object, otherObject) {
 
 function TreeNode({
   index,
-  data: { nodes, renamingNode, onToggle, onKeyDown, onMouseDown, onClick, onChangeName, onRenameSubmit, onUpload },
-  style
+  data: { nodes, renamingNode, onToggle, onKeyDown, onMouseDown, onClick, onChangeName, onRenameSubmit, onUpload }
+  // style
 }) {
   const node = nodes[index]
   const { isLeaf, object, depth, selected, active, iconComponent, isExpanded, childIndex, lastChild, enabled } = node
@@ -580,7 +580,7 @@ function* treeWalker(editor, expandedNodes) {
 export default function HierarchyPanel() {
   const editor = useContext(EditorContext)
   const onUpload = useUpload(uploadOptions)
-  const [hierarchyToggle, setHierarchyToggle] = useState("Hierarchy")
+  // const [hierarchyToggle, setHierarchyToggle] = useState("Hierarchy")
   const [renamingNode, setRenamingNode] = useState(null)
   const [expandedNodes, setExpandedNodes] = useState({})
   const [nodes, setNodes] = useState([])
