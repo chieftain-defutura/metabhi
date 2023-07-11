@@ -264,7 +264,7 @@ const Dashboard = () => {
                 </div>
               </NewFile>
             </Link>
-            <Link to="/projects/new">
+            <Link to="/scenes/new">
               <NewFile style={{ marginTop: "24px" }}>
                 <NewFilePara>
                   <TbFileImport size={24} />

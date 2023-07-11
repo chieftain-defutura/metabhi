@@ -4,6 +4,7 @@ import styled from "styled-components"
 // import WhiteIcon from "../../assets/white.svg"
 import { BiTime } from "react-icons/bi"
 import { CgTemplate } from "react-icons/cg"
+import { FiFilm } from "react-icons/fi"
 // import { BsFileEarmark } from "react-icons/bs"
 // import { AiOutlineStar } from "react-icons/ai"
 // import { AiOutlinePlus } from "react-icons/ai"
@@ -94,6 +95,14 @@ const Sidebar = () => {
           <RecentContent>
             <CgTemplate size={16} />
             <h4>Templates</h4>
+          </RecentContent>
+        </NavLink>
+      </div>
+      <div>
+        <NavLink to="/projects">
+          <RecentContent>
+            <FiFilm size={16} />
+            <h4>Scenes</h4>
           </RecentContent>
         </NavLink>
       </div>

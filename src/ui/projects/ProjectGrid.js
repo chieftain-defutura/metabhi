@@ -39,6 +39,15 @@ const StyledProjectGrid = styled.div`
 
 const ListGridItem = styled.div`
   display: grid;
+  // grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  // gap: 28px;
+`
+
+const ScenesFound = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
 `
 
 export function ProjectGrid({ newProjectPath, newProjectLabel, projects, scenes, contextMenuId, loading, isGrid }) {
@@ -47,10 +56,19 @@ export function ProjectGrid({ newProjectPath, newProjectLabel, projects, scenes,
     return (
       <ListGridItem>
         {newProjectPath && !loading && <NewProjectGridItem path={newProjectPath} label={newProjectLabel} />}
-        {scenes &&
+        {scenes?.length === 0 ? (
+          <ScenesFound>
+            <p>No scenes found.</p>
+          </ScenesFound>
+        ) : (
+          scenes?.map(scene => (
+            <ProjectGridSceneItem key={scene.scene_id || scene.id} scene={scene} contextMenuId={contextMenuId} />
+          ))
+        )}
+        {/* {scenes &&
           scenes.map(scene => (
             <ProjectGridSceneItem key={scene.scene_id || scene.id} scene={scene} contextMenuId={contextMenuId} />
-          ))}
+          ))} */}
         {projects.map(project => (
           <ProjectGridItem
             key={project.project_id || project.id}

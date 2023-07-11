@@ -103,13 +103,13 @@ const BaseApp = ({ api }) => {
                   <Route path="/logout" exact component={LogoutPage} />
                   <Route path="/projects/create" exact component={CreateProjectPage} />
                   <RedirectRoute path="/projects/templates" exact to="/projects/create" />
-                  <Route path="/projects" exact component={ProjectsPage} />
                   <Route path="/projects/:projectId" component={EditorContainer} />
                   <Route path="/kits/package" component={PackageKitPage} />
                   <Route path="/scenes/:sceneId" component={CreateScenePage} />
                   <Route>
                     <Layouts>
                       <Switch>
+                        <Route path="/projects" exact component={ProjectsPage} />
                         <Route exact path="/dashboard/recent" component={Dashboard} />
                         <Route path="/dashboard/template" component={CardTemplate} />
                       </Switch>
