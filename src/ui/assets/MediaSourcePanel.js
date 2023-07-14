@@ -89,6 +89,7 @@ export default function MediaSourcePanel({
           />
         )}
       </AssetsPanelToolbar>
+
       <AssetPanelContentContainer>
         {source.tags && (
           <TagList

@@ -19,6 +19,7 @@ export const Button = styled.button.attrs(props => ({
   text-decoration: none;
   padding: 8px 32px;
   font-weight: 700;
+  border: 1px solid ${props => props.theme.blue};
 
   &:hover {
     color: ${props => props.theme.text};

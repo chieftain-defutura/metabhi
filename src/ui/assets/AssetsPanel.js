@@ -28,9 +28,9 @@ export const AssetPanelToolbarContent = styled(Row)`
   flex: 1;
   align-items: flex-end;
 
-  & > * {
-    margin-left: 16px;
-  }
+  // & > * {
+  //   margin-left: 16px;
+  // }
 `
 
 export function AssetsPanelToolbar({ title, children, ...rest }) {
