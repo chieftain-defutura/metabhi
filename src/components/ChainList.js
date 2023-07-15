@@ -72,8 +72,7 @@ export const networks = [
     chainId: `0x${Number(8082).toString(16)}`,
     chain: 8082,
     chainName: "Shardeum Validator Sphinx 1.X",
-    icon:
-      "https://raw.githubusercontent.com/elkfinance/tokens/main/logos/telos/0xD102cE6A4dB07D247fcc28F366A623Df0938CA9E/logo.png",
+    icon: "https://avatars.githubusercontent.com/u/98940804?s=200&v=4",
     name: "shmSphinx",
     nativeCurrency: {
       name: "SHARDEUM",
