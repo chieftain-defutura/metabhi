@@ -128,7 +128,7 @@ const Logout = styled.div`
 const LOCAL_STORE_KEY = "___hubs_store"
 
 const ConnectWalletBtn = () => {
-  const { account, deactivate, error, chainId } = useWeb3React()
+  const { activate, account, deactivate, error, chainId } = useWeb3React()
   const [copied, setCopied] = useState(false)
   const [walletOpen, setWalletOpen] = useState(false)
   const [wrongNetwork, setWrongNetwork] = useState(false)
