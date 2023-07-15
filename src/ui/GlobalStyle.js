@@ -98,6 +98,8 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${props => props.theme.selected};
   }
 
+ 
+
   a {
     color: ${props => props.theme.text};
     text-decoration: none;

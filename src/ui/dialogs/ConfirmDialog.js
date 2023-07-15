@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Dialog from "./Dialog";
+import React from "react"
+import PropTypes from "prop-types"
+import Dialog from "./Dialog"
 
 export default function ConfirmDialog({ message, ...props }) {
-  return <Dialog {...props}>{message}</Dialog>;
+  return <Dialog {...props}>{message}</Dialog>
 }
 
 ConfirmDialog.propTypes = {
@@ -15,8 +15,8 @@ ConfirmDialog.propTypes = {
   onConfirm: PropTypes.func,
   confirmLabel: PropTypes.string.isRequired,
   bottomNav: PropTypes.node
-};
+}
 
 ConfirmDialog.defaultProps = {
   title: "Confirm"
-};
+}

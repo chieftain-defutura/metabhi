@@ -1,12 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
 
 const StyledCallout = styled.div`
   display: flex;
   flex-direction: column;
   align-content: center;
-`;
+`
 
 const ImageContainer = styled.div`
   padding-bottom: 56.25%; /* 16:9 */
@@ -23,7 +23,7 @@ const ImageContainer = styled.div`
     right: 0;
     top: 0;
   }
-`;
+`
 
 const Content = styled.div`
   display: flex;
@@ -39,7 +39,7 @@ const Content = styled.div`
     font-size: 1.1em;
     text-align: center;
   }
-`;
+`
 
 export default function Callout(props) {
   return (
@@ -49,10 +49,10 @@ export default function Callout(props) {
       </ImageContainer>
       <Content>{props.children}</Content>
     </StyledCallout>
-  );
+  )
 }
 
 Callout.propTypes = {
   imageSrc: PropTypes.string,
   children: PropTypes.node
-};
+}

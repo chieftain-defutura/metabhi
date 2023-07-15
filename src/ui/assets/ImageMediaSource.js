@@ -1,13 +1,13 @@
-import { BaseSource } from "./sources/index";
-import { ItemTypes } from "../dnd";
-import ImageSourcePanel from "./ImageSourcePanel";
-import ImageNode from "../../editor/nodes/ImageNode";
+import { BaseSource } from "./sources/index"
+import { ItemTypes } from "../dnd"
+import ImageSourcePanel from "./ImageSourcePanel"
+import ImageNode from "../../editor/nodes/ImageNode"
 
 export default class ImageMediaSource extends BaseSource {
   constructor(api) {
-    super();
-    this.component = ImageSourcePanel;
-    this.api = api;
+    super()
+    this.component = ImageSourcePanel
+    this.api = api
   }
 
   async search(params, cursor, abortSignal) {
@@ -19,7 +19,7 @@ export default class ImageMediaSource extends BaseSource {
       },
       cursor,
       abortSignal
-    );
+    )
 
     return {
       results: results.map(result => ({
@@ -38,6 +38,6 @@ export default class ImageMediaSource extends BaseSource {
       suggestions,
       nextCursor,
       hasMore: !!nextCursor
-    };
+    }
   }
 }

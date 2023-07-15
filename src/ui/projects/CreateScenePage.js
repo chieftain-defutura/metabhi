@@ -20,12 +20,12 @@ const SceneUploadFormContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: row;
-  background-color: ${props => props.theme.panel2};
+  background-color: ${props => props.theme.emptyBoxClr};
   border-radius: 3px;
 `
 
 const InfoBox = styled.div`
-  background-color: ${props => props.theme.panel2};
+  background-color: ${props => props.theme.emptyBoxClr};
   margin-top: 10px;
   padding: 10px;
   border-radius: 3px;
@@ -83,12 +83,14 @@ const LeftContent = styled.div`
   div {
     width: 300px;
     height: 168px;
+    object-fit: contain;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     background-color: ${props => props.theme.panel};
     border-radius: 6px;
+    cursor: pointer;
   }
   input {
     opacity: 0;
@@ -104,8 +106,32 @@ const RightContent = styled.div`
 
   label[type="button"] {
     display: flex;
-    margin-bottom: 0;
-    margin-right: 5px;
+    margin-bottom: 12px;
+    margin-right: 18px;
+  }
+`
+
+const InputTag = styled.div`
+  label {
+    background: ${props => props.theme.darkGray};
+    padding: 12px 18px;
+  }
+  span {
+    margin-top: -12px;
+  }
+`
+
+const ProgressBarLoading = styled.div`
+  width: 400px;
+  margin: 0 auto;
+`
+
+const Update = styled.div`
+  button {
+    border: 1px solid #0092ff;
+    &:hover {
+      color: 0092ff;
+    }
   }
 `
 
@@ -244,7 +270,7 @@ function CreateScenePage({ match, api }) {
           abortController.signal,
           sceneId
         )
-        .then(() => history.push("/dashboard/recent"))
+        .then(() => history.push("/projects"))
         .catch(e => {
           setIsUploading(false)
           setError(e.message)
@@ -263,7 +289,9 @@ function CreateScenePage({ match, api }) {
     error ? (
       <ErrorMessage>{error}</ErrorMessage>
     ) : (
-      <ProgressBar />
+      <ProgressBarLoading>
+        <ProgressBar />
+      </ProgressBarLoading>
     )
   ) : (
     <>
@@ -347,19 +375,27 @@ function CreateScenePage({ match, api }) {
           </FormField>
 
           <FormField>
-            <FileInput
-              label={`${isNew ? "Select scene model file" : "Replace scene model file"} (max ${
-                api.maxUploadSize
-              }mb .glb)`}
-              id="glbFile"
-              type="file"
-              required={isNew}
-              accept=".glb,model/gltf-binary"
-              showSelectedFile
-              onChange={onChangeGlbFile}
-            />
+            <InputTag>
+              <FileInput
+                label={`${isNew ? "Select scene model file" : "Replace scene model file"} (max ${
+                  api.maxUploadSize
+                }mb .glb)`}
+                id="glbFile"
+                type="file"
+                required={isNew}
+                accept=".glb,model/gltf-binary"
+                showSelectedFile
+                onChange={onChangeGlbFile}
+              />
+            </InputTag>
           </FormField>
-          {isUploading ? <ProgressBar /> : <Button type="submit">{isNew ? "Publish" : "Update"}</Button>}
+          {isUploading ? (
+            <ProgressBar />
+          ) : (
+            <Update>
+              <Button type="submit">{isNew ? "Publish" : "Update"}</Button>
+            </Update>
+          )}
           {error && <ErrorMessage>{error}</ErrorMessage>}
         </RightContent>
       </SceneUploadFormContainer>

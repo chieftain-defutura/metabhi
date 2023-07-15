@@ -1,32 +1,32 @@
-import React, { Component } from "react";
-import { Vector3 } from "three";
-import PropTypes from "prop-types";
-import PropertyGroup from "./PropertyGroup";
-import InputGroup from "../inputs/InputGroup";
-import Vector3Input from "../inputs/Vector3Input";
-import EulerInput from "../inputs/EulerInput";
+import React, { Component } from "react"
+import { Vector3 } from "three"
+import PropTypes from "prop-types"
+import PropertyGroup from "./PropertyGroup"
+import InputGroup from "../inputs/InputGroup"
+import Vector3Input from "../inputs/Vector3Input"
+import EulerInput from "../inputs/EulerInput"
 
 export default class TransformPropertyGroup extends Component {
   static propTypes = {
     editor: PropTypes.object,
     node: PropTypes.object
-  };
+  }
 
   constructor(props) {
-    super(props);
-    this.translation = new Vector3();
+    super(props)
+    this.translation = new Vector3()
   }
 
   shouldComponentUpdate(nextProps) {
-    return nextProps.node !== this.props.node;
+    return nextProps.node !== this.props.node
   }
 
   componentDidMount() {
-    this.props.editor.addListener("objectsChanged", this.onObjectsChanged);
+    this.props.editor.addListener("objectsChanged", this.onObjectsChanged)
   }
 
   componentWillUnmount() {
-    this.props.editor.removeListener("objectsChanged", this.onObjectsChanged);
+    this.props.editor.removeListener("objectsChanged", this.onObjectsChanged)
   }
 
   onObjectsChanged = (objects, property) => {
@@ -39,27 +39,27 @@ export default class TransformPropertyGroup extends Component {
           property === "matrix" ||
           property == null)
       ) {
-        this.forceUpdate();
-        return;
+        this.forceUpdate()
+        return
       }
     }
-  };
+  }
 
   onChangePosition = value => {
-    this.translation.subVectors(value, this.props.node.position);
-    this.props.editor.translateSelected(this.translation);
-  };
+    this.translation.subVectors(value, this.props.node.position)
+    this.props.editor.translateSelected(this.translation)
+  }
 
   onChangeRotation = value => {
-    this.props.editor.setRotationSelected(value);
-  };
+    this.props.editor.setRotationSelected(value)
+  }
 
   onChangeScale = value => {
-    this.props.editor.setScaleSelected(value);
-  };
+    this.props.editor.setScaleSelected(value)
+  }
 
   render() {
-    const { node } = this.props;
+    const { node } = this.props
 
     return (
       <PropertyGroup name="Transform">
@@ -86,6 +86,6 @@ export default class TransformPropertyGroup extends Component {
           />
         </InputGroup>
       </PropertyGroup>
-    );
+    )
   }
 }

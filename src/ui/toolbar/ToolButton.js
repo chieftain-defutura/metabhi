@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { InfoTooltip } from "../layout/Tooltip";
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import { InfoTooltip } from "../layout/Tooltip"
 
 const StyledToolButton = styled.button`
   width: 48px;
@@ -20,14 +20,14 @@ const StyledToolButton = styled.button`
     background: ${props => props.theme.hoverClr};
    
   }
-`;
+`
 
 const Icon = styled.div`
   width: 16px;
   height: 16px;
   font-size: 14px;
   color: ${props => props.theme.svgIconClr};
-`;
+`
 
 export default function ToolButton({ id, icon, onClick, selected, tooltip }) {
   return (
@@ -36,7 +36,7 @@ export default function ToolButton({ id, icon, onClick, selected, tooltip }) {
         <Icon as={icon} />
       </StyledToolButton>
     </InfoTooltip>
-  );
+  )
 }
 
 ToolButton.propTypes = {
@@ -45,4 +45,4 @@ ToolButton.propTypes = {
   onClick: PropTypes.func,
   selected: PropTypes.bool,
   tooltip: PropTypes.string
-};
+}

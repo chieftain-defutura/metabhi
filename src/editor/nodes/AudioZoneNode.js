@@ -1,17 +1,17 @@
-import { Material, BoxBufferGeometry, Mesh, BoxHelper } from "three";
-import AudioParams, { AudioElementType } from "../objects/AudioParams";
-import AudioParamsNode from "./AudioParamsNode";
+import { Material, BoxBufferGeometry, Mesh, BoxHelper } from "three"
+import AudioParams, { AudioElementType } from "../objects/AudioParams"
+import AudioParamsNode from "./AudioParamsNode"
 
-const requiredProperties = ["enabled", "inOut", "outIn"];
+const requiredProperties = ["enabled", "inOut", "outIn"]
 
 export default class AudioZoneNode extends AudioParamsNode(AudioParams) {
-  static componentName = "audio-zone";
+  static componentName = "audio-zone"
 
-  static nodeName = "Audio Zone";
+  static nodeName = "Audio Zone"
 
-  static _geometry = new BoxBufferGeometry();
+  static _geometry = new BoxBufferGeometry()
 
-  static _material = new Material();
+  static _material = new Material()
 
   static optionalProperties = {
     "audio-params": [
@@ -25,53 +25,53 @@ export default class AudioZoneNode extends AudioParamsNode(AudioParams) {
       "coneOuterAngle",
       "coneOuterGain"
     ]
-  };
+  }
 
   static async deserialize(editor, json, loadAsync, onError) {
-    const node = await super.deserialize(editor, json, loadAsync, onError);
+    const node = await super.deserialize(editor, json, loadAsync, onError)
 
-    const zoneProps = json.components.find(c => c.name === "audio-zone").props;
+    const zoneProps = json.components.find(c => c.name === "audio-zone").props
 
-    node.enabled = zoneProps.enabled;
-    node.inOut = zoneProps.inOut;
-    node.outIn = zoneProps.outIn;
+    node.enabled = zoneProps.enabled
+    node.inOut = zoneProps.inOut
+    node.outIn = zoneProps.outIn
 
-    return node;
+    return node
   }
 
   constructor(editor) {
-    super(editor, AudioElementType.AUDIO_ZONE);
+    super(editor, AudioElementType.AUDIO_ZONE)
 
-    const boxMesh = new Mesh(AudioZoneNode._geometry, AudioZoneNode._material);
-    const box = new BoxHelper(boxMesh, 0x00ff00);
-    box.layers.set(1);
-    this.helper = box;
-    this.add(box);
-    this.enabled = true;
-    this.inOut = true;
-    this.outIn = true;
+    const boxMesh = new Mesh(AudioZoneNode._geometry, AudioZoneNode._material)
+    const box = new BoxHelper(boxMesh, 0x00ff00)
+    box.layers.set(1)
+    this.helper = box
+    this.add(box)
+    this.enabled = true
+    this.inOut = true
+    this.outIn = true
   }
 
   copy(source, recursive = true) {
     if (recursive) {
-      this.remove(this.helper);
+      this.remove(this.helper)
     }
 
-    super.copy(source, recursive);
+    super.copy(source, recursive)
 
     if (recursive) {
-      const helperIndex = source.children.indexOf(source.helper);
+      const helperIndex = source.children.indexOf(source.helper)
 
       if (helperIndex !== -1) {
-        this.helper = this.children[helperIndex];
+        this.helper = this.children[helperIndex]
       }
     }
 
-    this.enabled = source.enabled;
-    this.inOut = source.inOut;
-    this.outIn = source.outIn;
+    this.enabled = source.enabled
+    this.inOut = source.inOut
+    this.outIn = source.outIn
 
-    return this;
+    return this
   }
 
   serialize() {
@@ -81,17 +81,17 @@ export default class AudioZoneNode extends AudioParamsNode(AudioParams) {
         inOut: this.inOut,
         outIn: this.outIn
       }
-    });
+    })
   }
 
   prepareForExport() {
-    super.prepareForExport();
-    this.remove(this.helper);
+    super.prepareForExport()
+    this.remove(this.helper)
 
     for (const prop of requiredProperties) {
       if (this[prop] === null || this[prop] === undefined) {
-        console.warn(`AudioZone: property "${prop}" is required. Skipping...`);
-        return;
+        console.warn(`AudioZone: property "${prop}" is required. Skipping...`)
+        return
       }
     }
 
@@ -100,6 +100,6 @@ export default class AudioZoneNode extends AudioParamsNode(AudioParams) {
       enabled: this.enabled,
       inOut: this.inOut,
       outIn: this.outIn
-    });
+    })
   }
 }

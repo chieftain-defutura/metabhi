@@ -1,12 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { InfoTooltip } from "../layout/Tooltip";
-import { UndoAlt } from "styled-icons/fa-solid/UndoAlt";
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import { InfoTooltip } from "../layout/Tooltip"
+import { UndoAlt } from "styled-icons/fa-solid/UndoAlt"
 
 const ResetButtonContainer = styled.div`
   margin-left: auto;
-`;
+`
 
 const StyledResetButton = styled.div`
   display: flex;
@@ -34,7 +34,7 @@ const StyledResetButton = styled.div`
     pointer-events: none;
     opacity: 0.3;
   `}
-`;
+`
 
 export default function ResetButton({ tooltip, disabled, children, ...rest }) {
   return (
@@ -45,11 +45,11 @@ export default function ResetButton({ tooltip, disabled, children, ...rest }) {
         </StyledResetButton>
       </InfoTooltip>
     </ResetButtonContainer>
-  );
+  )
 }
 
 ResetButton.propTypes = {
   tooltip: PropTypes.string,
   children: PropTypes.node,
   disabled: PropTypes.bool
-};
+}

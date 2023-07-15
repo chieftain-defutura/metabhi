@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Dialog from "./Dialog";
+import React from "react"
+import PropTypes from "prop-types"
+import Dialog from "./Dialog"
 
 export default function SupportDialog({ onCancel, ...props }) {
   return (
@@ -22,8 +22,8 @@ export default function SupportDialog({ onCancel, ...props }) {
         </p>
       </div>
     </Dialog>
-  );
+  )
 }
 SupportDialog.propTypes = {
   onCancel: PropTypes.func
-};
+}

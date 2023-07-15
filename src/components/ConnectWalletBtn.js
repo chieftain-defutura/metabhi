@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback, useContext } from "react"
 import styled from "styled-components"
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core"
-import { Injected } from "../ui/connectors"
+// import { Injected } from "../ui/connectors"
 import autoAnimate from "@formkit/auto-animate"
 import { CopyToClipboard } from "react-copy-to-clipboard"
 import { TiTick } from "react-icons/ti"
@@ -11,33 +11,35 @@ import { UserContext } from "../ui/contexts/UserContext"
 import { CONTRACTS } from "../api/contracts"
 // import configs from "../configs"
 import axios from "axios"
+import { Web3Button } from "@web3modal/react"
 
 const WalletConnectContainer = styled.div`
   position: relative;
 `
-const WalletButtons = styled.div``
 
-const WalletConnectAddr = styled.div`
-  border: 1px solid #0092ff;
-  border-radius: 2px;
-  padding: 8px 32px;
-  color: ${props => props.theme.text};
-  // margin-right: 24px;
-  cursor: pointer;
-`
+// const WalletButtons = styled.div``
 
-const WalletConnect = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  background: #002bff;
-  padding: 8px 32px;
-  border: 1px solid #002bff;
-  border-radius: 5px;
-  font-size: 12px;
-  cursor: pointer;
-  // margin-right: 24px;
-  color: white;
-`
+// const WalletConnectAddr = styled.div`
+//   border: 1px solid #0092ff;
+//   border-radius: 2px;
+//   padding: 8px 32px;
+//   color: ${props => props.theme.text};
+//   // margin-right: 24px;
+//   cursor: pointer;
+// `
+
+// const WalletConnect = styled.div`
+//   display: flex;
+//   justify-content: flex-end;
+//   background: #002bff;
+//   padding: 8px 32px;
+//   border: 1px solid #002bff;
+//   border-radius: 5px;
+//   font-size: 12px;
+//   cursor: pointer;
+//   // margin-right: 24px;
+//   color: white;
+// `
 const WalletDropDown = styled.div`
   width: 280px;
   height: auto;
@@ -82,6 +84,7 @@ const DashboardPara = styled.div`
     font-size: 14px;
   }
 `
+
 const Logout = styled.div`
   margin-bottom: 14px;
   h4 {
@@ -95,33 +98,33 @@ const Logout = styled.div`
   }
 `
 
-const WalletWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 14px;
-`
-const WalletCircle = styled.div`
-  width: 14px;
-  height: 14px;
-  background: linear-gradient(90deg, #9d630c 0%, #e818ec 100%);
-  border-radius: 50%;
-`
+// const WalletWrapper = styled.div`
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   gap: 8px;
+//   font-size: 14px;
+// `
 
-const WrongButton = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  background: #ff6347;
-  padding: 8px 32px;
-  border: 1px solid rgba(255, 99, 65, 0.3);
-  border-radius: 5px;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  color: #fff;
-`
-// const RETICULUM_SERVER = configs.RETICULUM_SERVER || document.location.hostname
+// const WalletCircle = styled.div`
+//   width: 14px;
+//   height: 14px;
+//   background: linear-gradient(90deg, #9d630c 0%, #e818ec 100%);
+//   border-radius: 50%;
+// `
+
+// const WrongButton = styled.div`
+//   display: flex;
+//   justify-content: flex-end;
+//   background: #ff6347;
+//   padding: 8px 32px;
+//   border: 1px solid rgba(255, 99, 65, 0.3);
+//   border-radius: 5px;
+//   font-size: 12px;
+//   font-weight: 700;
+//   cursor: pointer;
+//   color: #fff;
+// `
 const LOCAL_STORE_KEY = "___hubs_store"
 
 const ConnectWalletBtn = () => {
@@ -130,8 +133,8 @@ const ConnectWalletBtn = () => {
   const [walletOpen, setWalletOpen] = useState(false)
   const [wrongNetwork, setWrongNetwork] = useState(false)
   const { setUser } = useContext(UserContext)
-
   const history = useHistory()
+  console.log(wrongNetwork)
 
   const WalletToggle = () => {
     setWalletOpen(!walletOpen)
@@ -173,54 +176,25 @@ const ConnectWalletBtn = () => {
     }
   }, [copied, parent])
 
-  // const authenticate = async (email, signal) => {
-  //   const reticulumServer = RETICULUM_SERVER
-  //   const socketUrl = `wss://${reticulumServer}/socket`
-  //   console.log("socketUrl", socketUrl)
-  //   const socket = new Socket(socketUrl, { params: { session_id: uuid() } })
-  //   socket.connect()
-
-  //   const channel = socket.channel(`auth:${uuid()}`)
-
-  //   const onAbort = () => socket.disconnect()
-
-  //   signal.addEventListener("abort", onAbort)
-
-  //   await new Promise((resolve, reject) =>
-  //     channel
-  //       .join()
-  //       .receive("ok", resolve)
-  //       .receive("error", err => {
-  //         signal.removeEventListener("abort", onAbort)
-  //         reject(err)
-  //       })
-  //   )
-
-  //   const authComplete = new Promise(resolve =>
-  //     channel.on("auth_credentials", ({ credentials: token }) => {
-  //       localStorage.setItem(LOCAL_STORE_KEY, JSON.stringify({ credentials: { email, token } }))
-  //       this.emit("authentication-changed", true)
-  //       window.location.href = "/"
-  //       resolve()
-  //     })
-  //   )
-
-  //   channel.push("auth_request", { email, origin: "spoke" })
-
-  //   signal.removeEventListener("abort", onAbort)
-
-  //   return authComplete
-  // }
-
   const createData = useCallback(async () => {
     try {
-      const token = localStorage.getItem("token")
+      console.log("account", account)
 
       if (!account) {
         return
       }
 
-      if (account && !token) {
+      const storedAccount = localStorage.getItem("account") ? JSON.parse(localStorage.getItem("account")) : null
+      if (storedAccount && storedAccount !== account) {
+        console.log("removed")
+        localStorage.removeItem("token")
+        localStorage.removeItem(LOCAL_STORE_KEY)
+      }
+
+      localStorage.setItem("account", JSON.stringify(account))
+      const token = localStorage.getItem("token")
+
+      if (!token) {
         const { data: datas } = await axios.post("https://node-reticulum.onrender.com/auth/login", {
           wallet: account
         })
@@ -242,6 +216,7 @@ const ConnectWalletBtn = () => {
 
         if (!localStorage.getItem(LOCAL_STORE_KEY)) {
           history.push("/login")
+
           return
         }
 
@@ -257,68 +232,48 @@ const ConnectWalletBtn = () => {
 
         if (!localStorage.getItem(LOCAL_STORE_KEY)) {
           history.push("/login")
+
           return
         }
       }
     } catch (error) {
       console.log(error)
     }
-  }, [account])
+  }, [account, history, setUser])
 
   useEffect(() => {
     createData()
-  }, [createData])
+  }, [createData, history, setUser])
 
-  const getData = useCallback(async () => {
-    try {
-      if (!localStorage.getItem("token")) return
-
-      const response = await axios.get("https://node-reticulum.onrender.com/auth/status", {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
-        }
-      })
-
-      const email = response.data
-      console.log("responseDataEmail", email)
-    } catch (error) {
-      console.error(error)
-    }
-  }, [])
-
-  useEffect(() => {
-    getData()
-  }, [getData])
-
-  const addGatherTestnet = async () => {
-    try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x153c099c" }]
-      })
-    } catch (error) {
-      console.error("Error activating MetaMask:", error)
-      try {
-        await window.ethereum.request({
-          method: "wallet_addEthereumChain",
-          params: [
-            {
-              chainName: "Gather Testnet",
-              chainId: "0x153c099c",
-              nativeCurrency: {
-                name: "GTH",
-                decimals: 18,
-                symbol: "GTH"
-              },
-              rpcUrls: ["https://testnet.gather.network"]
-            }
-          ]
-        })
-      } catch (error) {
-        console.error("Error adding Gather Testnet:", error)
-      }
-    }
-  }
+  // const addGatherTestnet = async () => {
+  //   try {
+  //     await window.ethereum.request({
+  //       method: "wallet_switchEthereumChain",
+  //       params: [{ chainId: "0x153c099c" }]
+  //     })
+  //   } catch (error) {
+  //     console.error("Error activating MetaMask:", error)
+  //     try {
+  //       await window.ethereum.request({
+  //         method: "wallet_addEthereumChain",
+  //         params: [
+  //           {
+  //             chainName: "Gather Testnet",
+  //             chainId: "0x153c099c",
+  //             nativeCurrency: {
+  //               name: "GTH",
+  //               decimals: 18,
+  //               symbol: "GTH"
+  //             },
+  //             rpcUrls: ["https://testnet.gather.network"]
+  //           }
+  //         ]
+  //       })
+  //     } catch (error) {
+  //       console.error("Error adding Gather Testnet:", error)
+  //     }
+  //   }
+  // }
 
   const displayAccount = account => {
     const slicedAccount = account && account.slice(0, 6) + "..." + account.slice(-6)
@@ -328,7 +283,8 @@ const ConnectWalletBtn = () => {
   return (
     <div>
       <WalletConnectContainer>
-        <WalletButtons>
+        <Web3Button />
+        {/* <WalletButtons>
           {account ? (
             <WalletConnectAddr onClick={WalletToggle}>
               <WalletWrapper>
@@ -343,7 +299,7 @@ const ConnectWalletBtn = () => {
               <WalletConnect onClick={() => activate(Injected)}>Connect Wallet</WalletConnect>
             </div>
           )}
-        </WalletButtons>
+        </WalletButtons> */}
 
         <div ref={parent} style={{ marginTop: "10px" }}>
           {walletOpen && (

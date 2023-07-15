@@ -1,124 +1,124 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import NodeEditor from "./NodeEditor";
-import ColorInput from "../inputs/ColorInput";
-import InputGroup from "../inputs/InputGroup";
-import ImageInput from "../inputs/ImageInput";
-import CompoundNumericInput from "../inputs/CompoundNumericInput";
-import NumericInputGroup from "../inputs/NumericInputGroup";
-import Vector3Input from "../inputs/Vector3Input";
-import SelectInput from "../inputs/SelectInput";
-import * as EasingFunctions from "@mozillareality/easing-functions";
-import { camelPad } from "../utils";
-import { SprayCan } from "styled-icons/fa-solid/SprayCan";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import NodeEditor from "./NodeEditor"
+import ColorInput from "../inputs/ColorInput"
+import InputGroup from "../inputs/InputGroup"
+import ImageInput from "../inputs/ImageInput"
+import CompoundNumericInput from "../inputs/CompoundNumericInput"
+import NumericInputGroup from "../inputs/NumericInputGroup"
+import Vector3Input from "../inputs/Vector3Input"
+import SelectInput from "../inputs/SelectInput"
+import * as EasingFunctions from "@mozillareality/easing-functions"
+import { camelPad } from "../utils"
+import { SprayCan } from "styled-icons/fa-solid/SprayCan"
 
 const CurveOptions = Object.keys(EasingFunctions).map(name => ({
   label: camelPad(name),
   value: name
-}));
+}))
 
 export default class ParticleEmitterNodeEditor extends Component {
   static propTypes = {
     editor: PropTypes.object,
     node: PropTypes.object
-  };
+  }
 
-  static iconComponent = SprayCan;
+  static iconComponent = SprayCan
 
-  static description = "Particle emitter to create particles.";
+  static description = "Particle emitter to create particles."
 
   updateParticles() {
     for (const node of this.props.editor.selected) {
-      node.updateParticles();
+      node.updateParticles()
     }
   }
 
   onChangeColorCurve = colorCurve => {
-    this.props.editor.setPropertySelected("colorCurve", colorCurve);
-  };
+    this.props.editor.setPropertySelected("colorCurve", colorCurve)
+  }
 
   onChangeVelocityCurve = velocityCurve => {
-    this.props.editor.setPropertySelected("velocityCurve", velocityCurve);
-  };
+    this.props.editor.setPropertySelected("velocityCurve", velocityCurve)
+  }
 
   onChangeStartColor = startColor => {
-    this.props.editor.setPropertySelected("startColor", startColor);
-    this.updateParticles();
-  };
+    this.props.editor.setPropertySelected("startColor", startColor)
+    this.updateParticles()
+  }
 
   onChangeMiddleColor = middleColor => {
-    this.props.editor.setPropertySelected("middleColor", middleColor);
-  };
+    this.props.editor.setPropertySelected("middleColor", middleColor)
+  }
 
   onChangeEndColor = endColor => {
-    this.props.editor.setPropertySelected("endColor", endColor);
-  };
+    this.props.editor.setPropertySelected("endColor", endColor)
+  }
 
   onChangeStartOpacity = startOpacity => {
-    this.props.editor.setPropertySelected("startOpacity", startOpacity);
-  };
+    this.props.editor.setPropertySelected("startOpacity", startOpacity)
+  }
 
   onChangeMiddleOpacity = middleOpacity => {
-    this.props.editor.setPropertySelected("middleOpacity", middleOpacity);
-  };
+    this.props.editor.setPropertySelected("middleOpacity", middleOpacity)
+  }
 
   onChangeEndOpacity = endOpacity => {
-    this.props.editor.setPropertySelected("endOpacity", endOpacity);
-  };
+    this.props.editor.setPropertySelected("endOpacity", endOpacity)
+  }
 
   onChangeSrc = src => {
-    this.props.editor.setPropertySelected("src", src);
-  };
+    this.props.editor.setPropertySelected("src", src)
+  }
 
   onChangeSizeCurve = sizeCurve => {
-    this.props.editor.setPropertySelected("sizeCurve", sizeCurve);
-  };
+    this.props.editor.setPropertySelected("sizeCurve", sizeCurve)
+  }
 
   onChangeStartSize = startSize => {
-    this.props.editor.setPropertySelected("startSize", startSize);
-    this.updateParticles();
-  };
+    this.props.editor.setPropertySelected("startSize", startSize)
+    this.updateParticles()
+  }
 
   onChangeEndSize = endSize => {
-    this.props.editor.setPropertySelected("endSize", endSize);
-  };
+    this.props.editor.setPropertySelected("endSize", endSize)
+  }
 
   onChangeSizeRandomness = sizeRandomness => {
-    this.props.editor.setPropertySelected("sizeRandomness", sizeRandomness);
-    this.updateParticles();
-  };
+    this.props.editor.setPropertySelected("sizeRandomness", sizeRandomness)
+    this.updateParticles()
+  }
 
   onChangeStartVelocity = startVelocity => {
-    this.props.editor.setPropertySelected("startVelocity", startVelocity);
-  };
+    this.props.editor.setPropertySelected("startVelocity", startVelocity)
+  }
 
   onChangeEndVelocity = endVelocity => {
-    this.props.editor.setPropertySelected("endVelocity", endVelocity);
-  };
+    this.props.editor.setPropertySelected("endVelocity", endVelocity)
+  }
 
   onChangeAngularVelocity = angularVelocity => {
-    this.props.editor.setPropertySelected("angularVelocity", angularVelocity);
-  };
+    this.props.editor.setPropertySelected("angularVelocity", angularVelocity)
+  }
 
   onChangeParticleCount = particleCount => {
-    this.props.editor.setPropertySelected("particleCount", particleCount);
-    this.updateParticles();
-  };
+    this.props.editor.setPropertySelected("particleCount", particleCount)
+    this.updateParticles()
+  }
 
   onChangeLifetime = lifetime => {
-    this.props.editor.setPropertySelected("lifetime", lifetime);
-    this.updateParticles();
-  };
+    this.props.editor.setPropertySelected("lifetime", lifetime)
+    this.updateParticles()
+  }
 
   onChangeAgeRandomness = ageRandomness => {
-    this.props.editor.setPropertySelected("ageRandomness", ageRandomness);
-    this.updateParticles();
-  };
+    this.props.editor.setPropertySelected("ageRandomness", ageRandomness)
+    this.updateParticles()
+  }
 
   onChangeLifetimeRandomness = lifetimeRandomness => {
-    this.props.editor.setPropertySelected("lifetimeRandomness", lifetimeRandomness);
-    this.updateParticles();
-  };
+    this.props.editor.setPropertySelected("lifetimeRandomness", lifetimeRandomness)
+    this.updateParticles()
+  }
 
   render() {
     return (
@@ -296,6 +296,6 @@ export default class ParticleEmitterNodeEditor extends Component {
           unit="°/s"
         />
       </NodeEditor>
-    );
+    )
   }
 }

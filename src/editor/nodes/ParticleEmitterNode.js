@@ -1,22 +1,22 @@
-import { ParticleEmitter } from "@mozillareality/three-particle-emitter";
-import EditorNodeMixin from "./EditorNodeMixin";
-import defaultParticleUrl from "../../assets/dot.png";
-import DirectionalPlaneHelper from "../helpers/DirectionalPlaneHelper";
-import loadTexture from "../utils/loadTexture";
+import { ParticleEmitter } from "@mozillareality/three-particle-emitter"
+import EditorNodeMixin from "./EditorNodeMixin"
+import defaultParticleUrl from "../../assets/dot.png"
+import DirectionalPlaneHelper from "../helpers/DirectionalPlaneHelper"
+import loadTexture from "../utils/loadTexture"
 
-let defaultParticleSprite = null;
+let defaultParticleSprite = null
 
 export default class ParticleEmitterNode extends EditorNodeMixin(ParticleEmitter) {
-  static componentName = "particle-emitter";
+  static componentName = "particle-emitter"
 
-  static nodeName = "Particle Emitter";
+  static nodeName = "Particle Emitter"
 
   static initialElementProps = {
     src: new URL(defaultParticleUrl, location).href
-  };
+  }
 
   static async deserialize(editor, json, loadAsync, onError) {
-    const node = await super.deserialize(editor, json);
+    const node = await super.deserialize(editor, json)
 
     const {
       src,
@@ -39,114 +39,114 @@ export default class ParticleEmitterNode extends EditorNodeMixin(ParticleEmitter
       ageRandomness,
       lifetime,
       lifetimeRandomness
-    } = json.components.find(c => c.name === "particle-emitter").props;
+    } = json.components.find(c => c.name === "particle-emitter").props
 
-    node.startColor.set(startColor);
-    node.middleColor.set(middleColor);
-    node.endColor.set(endColor);
-    node.startOpacity = startOpacity;
-    node.middleOpacity = middleOpacity;
-    node.endOpacity = endOpacity;
-    node.colorCurve = colorCurve;
-    node.startSize = startSize;
-    node.endSize = endSize;
-    node.sizeRandomness = sizeRandomness;
-    node.ageRandomness = ageRandomness;
-    node.lifetime = lifetime;
-    node.lifetimeRandomness = lifetimeRandomness;
-    node.particleCount = particleCount;
-    node.startVelocity.copy(startVelocity);
-    node.endVelocity.copy(endVelocity);
-    node.sizeCurve = sizeCurve;
-    node.velocityCurve = velocityCurve;
-    node.angularVelocity = angularVelocity;
+    node.startColor.set(startColor)
+    node.middleColor.set(middleColor)
+    node.endColor.set(endColor)
+    node.startOpacity = startOpacity
+    node.middleOpacity = middleOpacity
+    node.endOpacity = endOpacity
+    node.colorCurve = colorCurve
+    node.startSize = startSize
+    node.endSize = endSize
+    node.sizeRandomness = sizeRandomness
+    node.ageRandomness = ageRandomness
+    node.lifetime = lifetime
+    node.lifetimeRandomness = lifetimeRandomness
+    node.particleCount = particleCount
+    node.startVelocity.copy(startVelocity)
+    node.endVelocity.copy(endVelocity)
+    node.sizeCurve = sizeCurve
+    node.velocityCurve = velocityCurve
+    node.angularVelocity = angularVelocity
 
     loadAsync(
       (async () => {
-        await node.load(src, onError);
+        await node.load(src, onError)
       })()
-    );
-    node.updateParticles();
+    )
+    node.updateParticles()
 
-    return node;
+    return node
   }
 
   static async load() {
-    defaultParticleSprite = await loadTexture(defaultParticleUrl);
-    defaultParticleSprite.flipY = false;
+    defaultParticleSprite = await loadTexture(defaultParticleUrl)
+    defaultParticleSprite.flipY = false
   }
 
   constructor(editor) {
-    super(editor, defaultParticleSprite);
-    this.disableOutline = true;
-    this._canonicalUrl = "";
-    this.helper = new DirectionalPlaneHelper();
-    this.helper.visible = false;
-    this.add(this.helper);
+    super(editor, defaultParticleSprite)
+    this.disableOutline = true
+    this._canonicalUrl = ""
+    this.helper = new DirectionalPlaneHelper()
+    this.helper.visible = false
+    this.add(this.helper)
   }
 
   get src() {
-    return this._canonicalUrl;
+    return this._canonicalUrl
   }
 
   set src(value) {
-    this.load(value).catch(console.error);
+    this.load(value).catch(console.error)
   }
 
   async load(src, onError) {
-    const nextSrc = src || "";
+    const nextSrc = src || ""
     if (nextSrc === this._canonicalUrl) {
-      return;
+      return
     }
 
-    this._canonicalUrl = nextSrc;
+    this._canonicalUrl = nextSrc
 
     try {
-      const { accessibleUrl } = await this.editor.api.resolveMedia(src);
-      this.material.uniforms.map.value = await loadTexture(accessibleUrl);
+      const { accessibleUrl } = await this.editor.api.resolveMedia(src)
+      this.material.uniforms.map.value = await loadTexture(accessibleUrl)
     } catch (error) {
       if (onError) {
-        onError(this, error);
+        onError(this, error)
       }
 
-      console.error(error);
+      console.error(error)
     }
 
-    return this;
+    return this
   }
 
   onSelect() {
-    this.helper.visible = true;
+    this.helper.visible = true
   }
 
   onDeselect() {
-    this.helper.visible = false;
+    this.helper.visible = false
   }
 
   onUpdate(dt) {
-    this.update(dt);
+    this.update(dt)
   }
 
   copy(source, recursive = true) {
     if (recursive) {
-      this.remove(this.helper);
+      this.remove(this.helper)
     }
 
-    super.copy(source, recursive);
+    super.copy(source, recursive)
 
     if (recursive) {
-      const helperIndex = source.children.indexOf(source.helper);
+      const helperIndex = source.children.indexOf(source.helper)
 
       if (helperIndex === -1) {
-        throw new Error("Source helper could not be found.");
+        throw new Error("Source helper could not be found.")
       }
 
-      this.helper = this.children[helperIndex];
+      this.helper = this.children[helperIndex]
     }
 
-    this.src = source._canonicalUrl;
+    this.src = source._canonicalUrl
 
-    return this;
+    return this
   }
 
   serialize() {
@@ -173,11 +173,11 @@ export default class ParticleEmitterNode extends EditorNodeMixin(ParticleEmitter
         velocityCurve: this.velocityCurve,
         angularVelocity: this.angularVelocity
       }
-    });
+    })
   }
 
   prepareForExport() {
-    super.prepareForExport();
+    super.prepareForExport()
     this.addGLTFComponent("particle-emitter", {
       src: this._canonicalUrl,
       startColor: this.startColor,
@@ -199,17 +199,17 @@ export default class ParticleEmitterNode extends EditorNodeMixin(ParticleEmitter
       endVelocity: this.endVelocity,
       velocityCurve: this.velocityCurve,
       angularVelocity: this.angularVelocity
-    });
-    this.replaceObject();
+    })
+    this.replaceObject()
   }
 
   getRuntimeResourcesForStats() {
-    const textures = [];
+    const textures = []
 
     if (this.material.uniforms.map.value) {
-      textures.push(this.material.uniforms.map.value);
+      textures.push(this.material.uniforms.map.value)
     }
 
-    return { meshes: [this], materials: [this.material], textures };
+    return { meshes: [this], materials: [this.material], textures }
   }
 }

@@ -1,12 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
 
 const TooltipContainer = styled.div`
   display: flex;
   width: 600px;
   padding: 12px 0;
-`;
+`
 
 const TooltipThumbnailContainer = styled.div`
   display: flex;
@@ -14,7 +14,7 @@ const TooltipThumbnailContainer = styled.div`
   align-items: center;
   width: 200px;
   height: 200px;
-`;
+`
 
 const TooltipContent = styled.div`
   display: flex;
@@ -24,20 +24,20 @@ const TooltipContent = styled.div`
   div {
     margin-top: 8px;
   }
-`;
+`
 
 export default function AssetTooltip({ item }) {
-  let thumbnail;
+  let thumbnail
 
   if (item.thumbnailUrl) {
-    thumbnail = <img src={item.thumbnailUrl} />;
+    thumbnail = <img src={item.thumbnailUrl} />
   } else if (item.videoUrl) {
-    thumbnail = <video src={item.videoUrl} autoPlay muted />;
+    thumbnail = <video src={item.videoUrl} autoPlay muted />
   } else if (item.iconComponent) {
-    const IconComponent = item.iconComponent;
-    thumbnail = <IconComponent size={100} />;
+    const IconComponent = item.iconComponent
+    thumbnail = <IconComponent size={100} />
   } else {
-    thumbnail = <img src={item.src} />;
+    thumbnail = <img src={item.src} />
   }
 
   return (
@@ -49,9 +49,9 @@ export default function AssetTooltip({ item }) {
         {item.description && <div>{item.description}</div>}
       </TooltipContent>
     </TooltipContainer>
-  );
+  )
 }
 
 AssetTooltip.propTypes = {
   item: PropTypes.object
-};
+}

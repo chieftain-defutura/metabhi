@@ -26,11 +26,11 @@ const GridContent = styled.div`
 `
 
 const CardGridBox = styled.div`
-  object-fit: cover;
-  height: 170px;
   img {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    height: 172px;
+    width: 100%;
   }
 `
 
@@ -82,34 +82,35 @@ const Circle = styled.div`
 
 const CardGrid = ({ mappedProjects }) => {
   return (
-    <CardGridWrapper>
-      {mappedProjects.map((f, index) => {
-        return (
-          <Link to={`/projects/${f.project_id}`} key={index}>
-            <GridContent>
-              <CardGridBox>
-                <img src={f.thumbnail_url} alt="img-url" />
-              </CardGridBox>
-              <CardGridUnTitle>
-                <CardGridName>
-                  <div>
-                    <img src={PenFile} alt="penFile" />
-                  </div>
-                  <div>
-                    <h5>{f.name}</h5>
-                    {/* <p>{f.editName}</p> */}
-                  </div>
-                </CardGridName>
-                <Profile>
-                  <Circle></Circle>
-                  <AiOutlineStar size={18} />
-                </Profile>
-              </CardGridUnTitle>
-            </GridContent>
-          </Link>
-        )
-      })}
-    </CardGridWrapper>
+    <div>
+      <CardGridWrapper>
+        {mappedProjects.map((f, index) => {
+          return (
+            <Link to={`/projects/${f.project_id}`} key={index}>
+              <GridContent>
+                <CardGridBox>
+                  <img src={f.thumbnail_url} alt="img-url" />
+                </CardGridBox>
+                <CardGridUnTitle>
+                  <CardGridName>
+                    <div>
+                      <img src={PenFile} alt="penFile" />
+                    </div>
+                    <div>
+                      <h5>{f.name}</h5>
+                    </div>
+                  </CardGridName>
+                  <Profile>
+                    <Circle></Circle>
+                    <AiOutlineStar size={18} />
+                  </Profile>
+                </CardGridUnTitle>
+              </GridContent>
+            </Link>
+          )
+        })}
+      </CardGridWrapper>
+    </div>
   )
 }
 

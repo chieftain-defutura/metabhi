@@ -1,21 +1,21 @@
-import EditorNodeMixin from "./EditorNodeMixin";
-import Sky from "../objects/Sky";
+import EditorNodeMixin from "./EditorNodeMixin"
+import Sky from "../objects/Sky"
 
 export default class SkyboxNode extends EditorNodeMixin(Sky) {
-  static componentName = "skybox";
+  static componentName = "skybox"
 
-  static disableTransform = true;
+  static disableTransform = true
 
-  static ignoreRaycast = true;
+  static ignoreRaycast = true
 
-  static nodeName = "Skybox";
+  static nodeName = "Skybox"
 
   static canAddNode(editor) {
-    return editor.scene.findNodeByType(SkyboxNode) === null;
+    return editor.scene.findNodeByType(SkyboxNode) === null
   }
 
   static async deserialize(editor, json) {
-    const node = await super.deserialize(editor, json);
+    const node = await super.deserialize(editor, json)
 
     const {
       turbidity,
@@ -26,40 +26,40 @@ export default class SkyboxNode extends EditorNodeMixin(Sky) {
       inclination,
       azimuth,
       distance
-    } = json.components.find(c => c.name === "skybox").props;
+    } = json.components.find(c => c.name === "skybox").props
 
-    node.turbidity = turbidity;
-    node.rayleigh = rayleigh;
-    node.luminance = luminance;
-    node.mieCoefficient = mieCoefficient;
-    node.mieDirectionalG = mieDirectionalG;
-    node.inclination = inclination;
-    node.azimuth = azimuth;
-    node.distance = distance;
+    node.turbidity = turbidity
+    node.rayleigh = rayleigh
+    node.luminance = luminance
+    node.mieCoefficient = mieCoefficient
+    node.mieDirectionalG = mieDirectionalG
+    node.inclination = inclination
+    node.azimuth = azimuth
+    node.distance = distance
 
-    return node;
+    return node
   }
 
   onRendererChanged() {
-    this.updateEnvironmentMap();
+    this.updateEnvironmentMap()
   }
 
   onAdd() {
-    this.updateEnvironmentMap();
+    this.updateEnvironmentMap()
   }
 
   onChange() {
-    this.updateEnvironmentMap();
+    this.updateEnvironmentMap()
   }
 
   onRemove() {
-    this.editor.scene.updateEnvironmentMap(null);
+    this.editor.scene.updateEnvironmentMap(null)
   }
 
   updateEnvironmentMap() {
-    const renderer = this.editor.renderer.renderer;
-    const envMap = this.generateEnvironmentMap(renderer);
-    this.editor.scene.updateEnvironmentMap(envMap);
+    const renderer = this.editor.renderer.renderer
+    const envMap = this.generateEnvironmentMap(renderer)
+    this.editor.scene.updateEnvironmentMap(envMap)
   }
 
   serialize() {
@@ -74,11 +74,11 @@ export default class SkyboxNode extends EditorNodeMixin(Sky) {
         azimuth: this.azimuth,
         distance: this.distance
       }
-    });
+    })
   }
 
   prepareForExport() {
-    super.prepareForExport();
+    super.prepareForExport()
     this.addGLTFComponent("skybox", {
       turbidity: this.turbidity,
       rayleigh: this.rayleigh,
@@ -88,11 +88,11 @@ export default class SkyboxNode extends EditorNodeMixin(Sky) {
       inclination: this.inclination,
       azimuth: this.azimuth,
       distance: this.distance
-    });
-    this.replaceObject();
+    })
+    this.replaceObject()
   }
 
   getRuntimeResourcesForStats() {
-    return { meshes: [this.sky], materials: [this.sky.material] };
+    return { meshes: [this.sky], materials: [this.sky.material] }
   }
 }

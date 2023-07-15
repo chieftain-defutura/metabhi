@@ -1,49 +1,49 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import NodeEditor from "./NodeEditor";
-import InputGroup from "../inputs/InputGroup";
-import ColorInput from "../inputs/ColorInput";
-import NumericInputGroup from "../inputs/NumericInputGroup";
-import RadianNumericInputGroup from "../inputs/RadianNumericInputGroup";
-import { Math as _Math } from "three";
-import LightShadowProperties from "./LightShadowProperties";
-import { Bullseye } from "styled-icons/fa-solid/Bullseye";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import NodeEditor from "./NodeEditor"
+import InputGroup from "../inputs/InputGroup"
+import ColorInput from "../inputs/ColorInput"
+import NumericInputGroup from "../inputs/NumericInputGroup"
+import RadianNumericInputGroup from "../inputs/RadianNumericInputGroup"
+import { Math as _Math } from "three"
+import LightShadowProperties from "./LightShadowProperties"
+import { Bullseye } from "styled-icons/fa-solid/Bullseye"
 
-const radToDeg = _Math.radToDeg;
+const radToDeg = _Math.radToDeg
 
 export default class SpotLightNodeEditor extends Component {
   static propTypes = {
     editor: PropTypes.object,
     node: PropTypes.object,
     multiEdit: PropTypes.bool
-  };
+  }
 
-  static iconComponent = Bullseye;
+  static iconComponent = Bullseye
 
-  static description = "A light which emits along a direction, illuminating objects within a cone.";
+  static description = "A light which emits along a direction, illuminating objects within a cone."
 
   onChangeColor = color => {
-    this.props.editor.setPropertySelected("color", color);
-  };
+    this.props.editor.setPropertySelected("color", color)
+  }
 
   onChangeIntensity = intensity => {
-    this.props.editor.setPropertySelected("intensity", intensity);
-  };
+    this.props.editor.setPropertySelected("intensity", intensity)
+  }
 
   onChangeInnerConeAngle = innerConeAngle => {
-    this.props.editor.setPropertySelected("innerConeAngle", innerConeAngle);
-  };
+    this.props.editor.setPropertySelected("innerConeAngle", innerConeAngle)
+  }
 
   onChangeOuterConeAngle = outerConeAngle => {
-    this.props.editor.setPropertySelected("outerConeAngle", outerConeAngle);
-  };
+    this.props.editor.setPropertySelected("outerConeAngle", outerConeAngle)
+  }
 
   onChangeRange = range => {
-    this.props.editor.setPropertySelected("range", range);
-  };
+    this.props.editor.setPropertySelected("range", range)
+  }
 
   render() {
-    const { node, editor } = this.props;
+    const { node, editor } = this.props
 
     return (
       <NodeEditor {...this.props} description={SpotLightNodeEditor.description}>
@@ -94,6 +94,6 @@ export default class SpotLightNodeEditor extends Component {
         />
         <LightShadowProperties node={node} editor={editor} />
       </NodeEditor>
-    );
+    )
   }
 }

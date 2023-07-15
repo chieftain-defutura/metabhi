@@ -1,12 +1,12 @@
-import React, { useCallback, useState, useContext, useEffect } from "react";
-import PropTypes from "prop-types";
-import { PieChart, Pie, Legend, Label, Cell } from "recharts";
-import styled, { ThemeContext } from "styled-components";
-import { PropertiesPanelButton } from "./Button";
-import { validateString } from "@robertlong/gltf-validator";
-import { EditorContext } from "../contexts/EditorContext";
-import Collapsible from "./Collapsible";
-import { bytesToSize } from "../utils";
+import React, { useCallback, useState, useContext, useEffect } from "react"
+import PropTypes from "prop-types"
+import { PieChart, Pie, Label, Cell } from "recharts"
+import styled, { ThemeContext } from "styled-components"
+import { PropertiesPanelButton } from "./Button"
+import { validateString } from "@robertlong/gltf-validator"
+import { EditorContext } from "../contexts/EditorContext"
+import Collapsible from "./Collapsible"
+import { bytesToSize } from "../utils"
 
 const ChartContainer = styled.div`
   // margin: 4px 0;
@@ -14,113 +14,110 @@ const ChartContainer = styled.div`
   // background-color: ${props => props.theme.disabled};
   border-radius: 4px;
   width:100%;
-`;
-   
-const CollapsibleLabel =styled.div`
-background-color: ${props => props.theme.disabled};
-
 `
-export function GLTFFileChart({ node }) {
-  const stats = node.stats;
 
-  let totalSize = stats.jsonSize;
-  const payload = [{ name: "JSON", type: "application/json", size: stats.jsonSize }];
+// const CollapsibleLabel = styled.div`
+//   background-color: ${props => props.theme.disabled};
+// `
+export function GLTFFileChart({ node }) {
+  const stats = node.stats
+
+  let totalSize = stats.jsonSize
+  const payload = [{ name: "JSON", type: "application/json", size: stats.jsonSize }]
 
   for (const key in stats.bufferInfo) {
-    if (!Object.prototype.hasOwnProperty.call(stats.bufferInfo, key)) continue;
-    const item = stats.bufferInfo[key];
-    totalSize += item.size || 0;
-    payload.push(item);
+    if (!Object.prototype.hasOwnProperty.call(stats.bufferInfo, key)) continue
+    const item = stats.bufferInfo[key]
+    totalSize += item.size || 0
+    payload.push(item)
   }
 
   for (const key in stats.textureInfo) {
-    if (!Object.prototype.hasOwnProperty.call(stats.textureInfo, key)) continue;
-    const item = stats.textureInfo[key];
-    totalSize += item.size || 0;
-    payload.push(item);
+    if (!Object.prototype.hasOwnProperty.call(stats.textureInfo, key)) continue
+    const item = stats.textureInfo[key]
+    totalSize += item.size || 0
+    payload.push(item)
   }
 
-  const legendFormatter = useCallback(
-    (value, entry, _index) => {
-      const name = entry.payload.name;
-      const shortenedName = name.length > 15 ? entry.payload.name.substring(0, 12) + "..." : name;
-      return (
-        <span title={name}>{`${shortenedName}: ${bytesToSize(entry.payload.value)} (${Math.round(
-          (entry.payload.value / totalSize) * 100
-        )}%)`}</span>
-      );
-    },
-    [totalSize]
-  );
+  // const legendFormatter = useCallback(
+  //   (value, entry, _index) => {
+  //     const name = entry.payload.name
+  //     const shortenedName = name.length > 15 ? entry.payload.name.substring(0, 12) + "..." : name
+  //     return (
+  //       <span title={name}>{`${shortenedName}: ${bytesToSize(entry.payload.value)} (${Math.round(
+  //         (entry.payload.value / totalSize) * 100
+  //       )}%)`}</span>
+  //     )
+  //   },
+  //   [totalSize]
+  // )
 
-  let height = 240;
+  let height = 240
 
   if (payload.length > 15) {
-    height += (payload.length - 15) * 16;
+    height += (payload.length - 15) * 16
   }
 
-  const theme = useContext(ThemeContext);
-  const count = payload.length;
+  const theme = useContext(ThemeContext)
+  const count = payload.length
 
   const getColor = useCallback(
     itemIndex => {
-      const colors = theme.chartColors;
-      const index = Math.round((itemIndex / count) * colors.length);
-      return colors[index];
+      const colors = theme.chartColors
+      const index = Math.round((itemIndex / count) * colors.length)
+      return colors[index]
     },
     [theme, count]
-  );
+  )
 
   return (
     <>
-    {/* <h1>File</h1> */}
-    <ChartContainer>
-      <PieChart width={175} height={height}>
-        <Pie
-          isAnimationActive={false}
-          data={payload}
-          dataKey="size"
-          cx="50%"
-          cy="50%"
-          innerRadius={60}
-          outerRadius={80}
-        >
-          {payload.map((entry, index) => (
-            <Cell key={index} fill={getColor(index)} stroke={theme.panel2} />
-          ))}
-          <Label fill={theme.text} value={`Total: ${bytesToSize(totalSize)}`} offset={0} position="center" />
-        </Pie>
-        {/* <Legend layout="vertical" align="right" verticalAlign="middle" iconType="rect" formatter={legendFormatter} /> */}
-      </PieChart>
-    </ChartContainer>
+      {/* <h1>File</h1> */}
+      <ChartContainer>
+        <PieChart width={175} height={height}>
+          <Pie
+            isAnimationActive={false}
+            data={payload}
+            dataKey="size"
+            cx="50%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={80}
+          >
+            {payload.map((entry, index) => (
+              <Cell key={index} fill={getColor(index)} stroke={theme.panel2} />
+            ))}
+            <Label fill={theme.text} value={`Total: ${bytesToSize(totalSize)}`} offset={0} position="center" />
+          </Pie>
+          {/* <Legend layout="vertical" align="right" verticalAlign="middle" iconType="rect" formatter={legendFormatter} /> */}
+        </PieChart>
+      </ChartContainer>
     </>
-  );
+  )
 }
 
 GLTFFileChart.propTypes = {
   node: PropTypes.object
-};
+}
 
 const Thumbnail = styled.img`
   width: 64px;
   height: 64px;
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 4px;
-  display:flex;
+  display: flex;
   opacity: 1;
   display: block;
   height: auto;
-  transition: .5s ease;
+  transition: 0.5s ease;
   backface-visibility: hidden;
 
-  :hover{
-  opacity: 0.3;
-  border:2px solid #FFFFFF;
-  border-radius: 5px;
+  :hover {
+    opacity: 0.3;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
   }
-`;
-
-
+`
 
 const ImageItemContainer = styled.ul`
   display: flex;
@@ -143,28 +140,28 @@ const ImageItemContainer = styled.ul`
     background:red;
     padding:12px;
   }
-`;
-const ImageHover = styled.div`
-transition: .5s ease;
-opacity: 0;
-position: relative;
-top:0%;
-left:0;
-padding:12px;
-background:red;
-text-align: center;
-:hover{
-  opacity: 1;
-}
 `
+// const ImageHover = styled.div`
+//   transition: 0.5s ease;
+//   opacity: 0;
+//   position: relative;
+//   top: 0%;
+//   left: 0;
+//   padding: 12px;
+//   background: red;
+//   text-align: center;
+//   :hover {
+//     opacity: 1;
+//   }
+// `
 
 function GLTFTextureItem({ item }) {
   return (
     <>
-    {/* <h1>Textures</h1> */}
-    <ImageItemContainer>
-      <Thumbnail src={item.url} alt={item.name} />
-      {/* <ImageHover>
+      {/* <h1>Textures</h1> */}
+      <ImageItemContainer>
+        <Thumbnail src={item.url} alt={item.name} />
+        {/* <ImageHover>
         <h3>{item.name}</h3>
         <ul>
           <li>
@@ -178,17 +175,17 @@ function GLTFTextureItem({ item }) {
           </li>
         </ul>
       </ImageHover> */}
-    </ImageItemContainer>
+      </ImageItemContainer>
     </>
-  );
+  )
 }
 
 GLTFTextureItem.propTypes = {
   item: PropTypes.object
-};
+}
 
 export function GLTFTextureList({ node }) {
-  const items = Object.values(node.stats.textureInfo);
+  const items = Object.values(node.stats.textureInfo)
 
   return (
     <ul>
@@ -196,12 +193,12 @@ export function GLTFTextureList({ node }) {
         <GLTFTextureItem key={i} item={item} />
       ))}
     </ul>
-  );
+  )
 }
 
 GLTFTextureList.propTypes = {
   node: PropTypes.object
-};
+}
 
 const MeshItemContainer = styled.li`
   display: flex;
@@ -210,37 +207,37 @@ const MeshItemContainer = styled.li`
   padding: 12px;
   background-color: ${props => props.theme.lightDarkClr};
   border-radius: 4px;
-  width:100%;
+  width: 100%;
   h3 {
     font-size: 14px;
     margin-bottom: 4px;
   }
-`;
+`
 function GLTFMeshItem({ item }) {
   return (
-    <>  
-    {/* <h1>Meshes</h1> */}
-    <MeshItemContainer>
-      <h3>{item.name}</h3>
-      <ul>
-        <li>
-          <b>Triangles:</b> {item.triangles}
-        </li>
-        <li>
-          <b>Vertices:</b> {item.vertices}
-        </li>
-      </ul>
-    </MeshItemContainer>
+    <>
+      {/* <h1>Meshes</h1> */}
+      <MeshItemContainer>
+        <h3>{item.name}</h3>
+        <ul>
+          <li>
+            <b>Triangles:</b> {item.triangles}
+          </li>
+          <li>
+            <b>Vertices:</b> {item.vertices}
+          </li>
+        </ul>
+      </MeshItemContainer>
     </>
-  );
+  )
 }
 
 GLTFMeshItem.propTypes = {
   item: PropTypes.object
-};
+}
 
 export function GLTFMeshList({ node }) {
-  const items = Object.values(node.stats.meshInfo);
+  const items = Object.values(node.stats.meshInfo)
 
   return (
     <ul>
@@ -248,65 +245,66 @@ export function GLTFMeshList({ node }) {
         <GLTFMeshItem key={i} item={item} />
       ))}
     </ul>
-  );
+  )
 }
 
 GLTFMeshList.propTypes = {
   node: PropTypes.object
-};
+}
 
 const StatsContainer = styled.ul`
   margin: 8px 0;
   background-color: ${props => props.theme.lightDarkClr};
   border-radius: 4px;
-  padding:12px 24px;
-  display:flex;
-  justify-content:space-evenly;
-  width:100%;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
 
   // align-items:center;
 
   li {
-    padding-bottom:8px;
+    padding-bottom: 8px;
   }
-`;
+`
 
 export function GLTFStats({ node }) {
-  const stats = node.stats;
+  const stats = node.stats
 
   return (
     <>
-    {/* <h1>States</h1> */}
-    <StatsContainer>
-      <div>
-        <li>
-          <b>Nodes:</b> {stats.nodes}
-        </li>
-        <li>
-          <b>Meshes:</b> {stats.meshes}
-        </li>
-        <li>
-          <b>Materials:</b> {stats.materials}
-        </li>
-      </div>
-      <div>
-        <li>
-          <b>Textures:</b> {stats.textures}
-        </li>
-        <li>
-          <b>Triangles:</b> {stats.triangles}
-        </li>
-        <li>
-          <b>Vertices:</b> {stats.vertices}
-        </li>
-      </div>
-    </StatsContainer></>
-  );
+      {/* <h1>States</h1> */}
+      <StatsContainer>
+        <div>
+          <li>
+            <b>Nodes:</b> {stats.nodes}
+          </li>
+          <li>
+            <b>Meshes:</b> {stats.meshes}
+          </li>
+          <li>
+            <b>Materials:</b> {stats.materials}
+          </li>
+        </div>
+        <div>
+          <li>
+            <b>Textures:</b> {stats.textures}
+          </li>
+          <li>
+            <b>Triangles:</b> {stats.triangles}
+          </li>
+          <li>
+            <b>Vertices:</b> {stats.vertices}
+          </li>
+        </div>
+      </StatsContainer>
+    </>
+  )
 }
 
 GLTFStats.propTypes = {
   node: PropTypes.object
-};
+}
 
 const ValidationInfoContainer = styled.div`
   margin: 4px 0;
@@ -316,11 +314,11 @@ const ValidationInfoContainer = styled.div`
   h3 {
     font-size: 14px;
   }
-  ul{
-    display:flex;
-    flex-direction:column;
+  ul {
+    display: flex;
+    flex-direction: column;
   }
-`;
+`
 
 const IssueItemContainer = styled.li`
   margin: 4px 0;
@@ -330,7 +328,7 @@ const IssueItemContainer = styled.li`
   h3 {
     font-size: 14px;
   }
-`;
+`
 
 function IssueItem({ issue }) {
   return (
@@ -341,12 +339,12 @@ function IssueItem({ issue }) {
         On: <code>{issue.pointer}</code>
       </p>
     </IssueItemContainer>
-  );
+  )
 }
 
 IssueItem.propTypes = {
   issue: PropTypes.object
-};
+}
 
 const NoIssues = styled.div`
   width: 100%;
@@ -355,13 +353,13 @@ const NoIssues = styled.div`
   font-size: 14px;
   font-weight: bold;
   margin: 8px 0;
-`;
+`
 
 function IssueList({ label, issues, severity }) {
-  const filteredIssues = issues.filter(issue => issue.severity === severity);
+  const filteredIssues = issues.filter(issue => issue.severity === severity)
 
   if (filteredIssues.length === 0) {
-    return null;
+    return null
   }
 
   return (
@@ -372,42 +370,42 @@ function IssueList({ label, issues, severity }) {
         ))}
       </ul>
     </Collapsible>
-  );
+  )
 }
 
 IssueList.propTypes = {
   label: PropTypes.string,
   severity: PropTypes.number,
   issues: PropTypes.array
-};
+}
 
 export function GLTFValidation({ node }) {
-  const editor = useContext(EditorContext);
-  const [validating, setValidating] = useState(false);
-  const [validation, setValidation] = useState();
+  const editor = useContext(EditorContext)
+  const [validating, setValidating] = useState(false)
+  const [validation, setValidation] = useState()
 
   useEffect(() => {
-    setValidating(false);
-    setValidation();
-  }, [node]);
+    setValidating(false)
+    setValidation()
+  }, [node])
 
   const onValidate = useCallback(() => {
     const validate = async () => {
-      setValidating(true);
+      setValidating(true)
 
       try {
-        const validation = await validateString(JSON.stringify(node.gltfJson));
-        setValidation(validation);
+        const validation = await validateString(JSON.stringify(node.gltfJson))
+        setValidation(validation)
       } catch (error) {
-        console.log(error);
-        editor.emit("error", error);
+        console.log(error)
+        editor.emit("error", error)
       } finally {
-        setValidating(false);
+        setValidating(false)
       }
-    };
+    }
 
-    validate();
-  }, [setValidating, setValidation, editor, node]);
+    validate()
+  }, [setValidating, setValidation, editor, node])
 
   return (
     <>
@@ -474,18 +472,17 @@ export function GLTFValidation({ node }) {
         </PropertiesPanelButton>
       )}
     </>
-  );
+  )
 }
 
 GLTFValidation.propTypes = {
   node: PropTypes.object
-};
+}
 
 export function GLTFInfo({ node }) {
   return (
-    
-      <div style={{width:"100",height:"100"}}>
-       <Collapsible open label="Stats">
+    <div style={{ width: "100", height: "100" }}>
+      <Collapsible open label="Stats">
         <GLTFStats node={node} />
       </Collapsible>
       <Collapsible open label="Files">
@@ -500,11 +497,10 @@ export function GLTFInfo({ node }) {
       <Collapsible open label="Validation">
         <GLTFValidation node={node} />
       </Collapsible>
-      </div>
-    
-  );
+    </div>
+  )
 }
 
 GLTFInfo.propTypes = {
   node: PropTypes.object
-};
+}

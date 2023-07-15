@@ -1,16 +1,16 @@
-import React from "react";
-import { configure, addDecorator, addParameters } from "@storybook/react";
-import { themes } from "@storybook/theming";
+import React from "react"
+import { configure, addDecorator, addParameters } from "@storybook/react"
+import { themes } from "@storybook/theming"
 
 addParameters({
   options: {
     theme: themes.dark
   }
-});
+})
 
-import { ThemeProvider } from "styled-components";
-import GlobalStyle from "../src/ui/GlobalStyle";
-import theme from "../src/ui/theme";
+import { ThemeProvider } from "styled-components"
+import GlobalStyle from "../src/ui/GlobalStyle"
+import theme from "../src/ui/theme"
 
 addDecorator(story => (
   <ThemeProvider theme={theme}>
@@ -19,7 +19,7 @@ addDecorator(story => (
       {story()}
     </>
   </ThemeProvider>
-));
+))
 
 // automatically import all files ending in *.stories.js
-configure([require.context("../src", true, /\.stories\.js$/)], module);
+configure([require.context("../src", true, /\.stories\.js$/)], module)

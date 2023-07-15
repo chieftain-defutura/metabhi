@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
-import PropTypes from "prop-types";
-import styled, { ThemeContext } from "styled-components";
-import Dialog from "./Dialog";
-import { bytesToSize } from "../utils";
+import React, { useContext } from "react"
+import PropTypes from "prop-types"
+import styled, { ThemeContext } from "styled-components"
+import Dialog from "./Dialog"
+import { bytesToSize } from "../utils"
 
 const ColoredText = styled.span`
   color: ${props => props.color};
-`;
+`
 
 const PerformanceItemContainer = styled.li`
   display: flex;
@@ -50,7 +50,7 @@ const PerformanceItemContainer = styled.li`
   p {
     margin: 0;
   }
-`;
+`
 
 function PerformanceCheckItem({ score, scoreColor, title, description, learnMoreUrl, children }) {
   return (
@@ -72,7 +72,7 @@ function PerformanceCheckItem({ score, scoreColor, title, description, learnMore
         </p>
       </div>
     </PerformanceItemContainer>
-  );
+  )
 }
 
 PerformanceCheckItem.propTypes = {
@@ -82,27 +82,27 @@ PerformanceCheckItem.propTypes = {
   children: PropTypes.node,
   description: PropTypes.string.isRequired,
   learnMoreUrl: PropTypes.string.isRequired
-};
+}
 
 const scoreToValue = {
   Low: 0,
   Medium: 1,
   High: 2
-};
+}
 
 export default function PerformanceCheckDialog({ scores, ...rest }) {
-  const theme = useContext(ThemeContext);
+  const theme = useContext(ThemeContext)
 
   const scoreToColor = {
     Low: theme.green,
     Medium: theme.yellow,
     High: theme.red
-  };
+  }
 
   const texturesScore =
     scoreToValue[scores.textures.largeTexturesScore] > scoreToValue[scores.textures.score]
       ? scores.textures.largeTexturesScore
-      : scores.textures.score;
+      : scores.textures.score
 
   return (
     <Dialog {...rest}>
@@ -164,7 +164,7 @@ export default function PerformanceCheckDialog({ scores, ...rest }) {
         </PerformanceCheckItem>
       </ul>
     </Dialog>
-  );
+  )
 }
 
 PerformanceCheckDialog.propTypes = {
@@ -172,10 +172,10 @@ PerformanceCheckDialog.propTypes = {
   tag: PropTypes.string.isRequired,
   onConfirm: PropTypes.func.isRequired,
   confirmLabel: PropTypes.string.isRequired
-};
+}
 
 PerformanceCheckDialog.defaultProps = {
   tag: "div",
   title: "Performance Check",
   confirmLabel: "Publish Scene"
-};
+}

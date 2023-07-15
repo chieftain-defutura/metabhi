@@ -1,66 +1,66 @@
-import { Object3D } from "three";
-import { GLTFLoader } from "../gltf/GLTFLoader";
-import EditorNodeMixin from "./EditorNodeMixin";
-import spawnPointModelUrl from "../../assets/spawn-point.glb";
+import { Object3D } from "three"
+import { GLTFLoader } from "../gltf/GLTFLoader"
+import EditorNodeMixin from "./EditorNodeMixin"
+import spawnPointModelUrl from "../../assets/spawn-point.glb"
 
-let spawnPointHelperModel = null;
+let spawnPointHelperModel = null
 
 export default class SpawnPointNode extends EditorNodeMixin(Object3D) {
-  static componentName = "spawn-point";
+  static componentName = "spawn-point"
 
-  static nodeName = "Spawn Point";
+  static nodeName = "Spawn Point"
 
   static async load() {
-    const { scene } = await new GLTFLoader(spawnPointModelUrl).loadGLTF();
+    const { scene } = await new GLTFLoader(spawnPointModelUrl).loadGLTF()
 
     scene.traverse(child => {
       if (child.isMesh) {
-        child.layers.set(1);
+        child.layers.set(1)
       }
-    });
+    })
 
-    spawnPointHelperModel = scene;
+    spawnPointHelperModel = scene
   }
 
   constructor(editor) {
-    super(editor);
+    super(editor)
 
     if (spawnPointHelperModel) {
-      this.helper = spawnPointHelperModel.clone();
-      this.add(this.helper);
+      this.helper = spawnPointHelperModel.clone()
+      this.add(this.helper)
     } else {
-      console.warn("SpawnPointNode: helper model was not loaded before creating a new SpawnPointNode");
-      this.helper = null;
+      console.warn("SpawnPointNode: helper model was not loaded before creating a new SpawnPointNode")
+      this.helper = null
     }
   }
 
   copy(source, recursive = true) {
     if (recursive) {
-      this.remove(this.helper);
+      this.remove(this.helper)
     }
 
-    super.copy(source, recursive);
+    super.copy(source, recursive)
 
     if (recursive) {
-      const helperIndex = source.children.findIndex(child => child === source.helper);
+      const helperIndex = source.children.findIndex(child => child === source.helper)
 
       if (helperIndex !== -1) {
-        this.helper = this.children[helperIndex];
+        this.helper = this.children[helperIndex]
       }
     }
 
-    return this;
+    return this
   }
 
   serialize() {
     return super.serialize({
       "spawn-point": {}
-    });
+    })
   }
 
   prepareForExport() {
-    super.prepareForExport();
-    this.remove(this.helper);
-    this.addGLTFComponent("spawn-point", {});
+    super.prepareForExport()
+    this.remove(this.helper)
+    this.addGLTFComponent("spawn-point", {})
   }
 }

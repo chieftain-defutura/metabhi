@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import configs from "../configs";
+import React, { Component } from "react"
+import configs from "../configs"
 
 export default class SpokeLogo extends Component {
   render() {
@@ -35,7 +35,7 @@ export default class SpokeLogo extends Component {
           <path d="M0 100.683L4.50523 99.2191L0 73.4316V100.683Z" fill="#003780" />
           <path d="M5.16378 101.206L0.669006 102.659L17.0906 124.746L5.16378 101.206Z" fill="#003780" />
         </svg>
-      );
+      )
     } else {
       return (
         <svg width="150" height="156" viewBox="0 0 150 156" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -44,7 +44,7 @@ export default class SpokeLogo extends Component {
             fill="#2F80ED"
           />
         </svg>
-      );
+      )
     }
   }
 }

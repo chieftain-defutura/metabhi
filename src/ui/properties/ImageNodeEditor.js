@@ -1,30 +1,30 @@
-import React from "react";
-import PropTypes from "prop-types";
-import NodeEditor from "./NodeEditor";
-import InputGroup from "../inputs/InputGroup";
-import StringInput from "../inputs/StringInput";
-import SelectInput from "../inputs/SelectInput";
-import BooleanInput from "../inputs/BooleanInput";
-import NumericInputGroup from "../inputs/NumericInputGroup";
-import { ImageProjection, ImageAlphaMode } from "../../editor/objects/Image";
-import ImageInput from "../inputs/ImageInput";
-import { Image } from "styled-icons/fa-solid/Image";
-import useSetPropertySelected from "./useSetPropertySelected";
-import AttributionNodeEditor from "./AttributionNodeEditor";
+import React from "react"
+import PropTypes from "prop-types"
+import NodeEditor from "./NodeEditor"
+import InputGroup from "../inputs/InputGroup"
+import StringInput from "../inputs/StringInput"
+import SelectInput from "../inputs/SelectInput"
+import BooleanInput from "../inputs/BooleanInput"
+import NumericInputGroup from "../inputs/NumericInputGroup"
+import { ImageProjection, ImageAlphaMode } from "../../editor/objects/Image"
+import ImageInput from "../inputs/ImageInput"
+import { Image } from "styled-icons/fa-solid/Image"
+import useSetPropertySelected from "./useSetPropertySelected"
+import AttributionNodeEditor from "./AttributionNodeEditor"
 
-const mapValue = v => ({ label: v, value: v });
-const imageProjectionOptions = Object.values(ImageProjection).map(mapValue);
-const imageTransparencyOptions = Object.values(ImageAlphaMode).map(mapValue);
+const mapValue = v => ({ label: v, value: v })
+const imageProjectionOptions = Object.values(ImageProjection).map(mapValue)
+const imageTransparencyOptions = Object.values(ImageAlphaMode).map(mapValue)
 
 export default function ImageNodeEditor(props) {
-  const { editor, node } = props;
-  const onChangeSrc = useSetPropertySelected(editor, "src");
-  const onChangeControls = useSetPropertySelected(editor, "controls");
-  const onChangeBillboard = useSetPropertySelected(editor, "billboard");
-  const onChangeProjection = useSetPropertySelected(editor, "projection");
-  const onChangeTransparencyMode = useSetPropertySelected(editor, "alphaMode");
-  const onChangeAlphaCutoff = useSetPropertySelected(editor, "alphaCutoff");
-  const onChangeHref = useSetPropertySelected(editor, "href");
+  const { editor, node } = props
+  const onChangeSrc = useSetPropertySelected(editor, "src")
+  const onChangeControls = useSetPropertySelected(editor, "controls")
+  const onChangeBillboard = useSetPropertySelected(editor, "billboard")
+  const onChangeProjection = useSetPropertySelected(editor, "projection")
+  const onChangeTransparencyMode = useSetPropertySelected(editor, "alphaMode")
+  const onChangeAlphaCutoff = useSetPropertySelected(editor, "alphaCutoff")
+  const onChangeHref = useSetPropertySelected(editor, "href")
 
   return (
     <NodeEditor description={ImageNodeEditor.description} {...props}>
@@ -73,15 +73,15 @@ export default function ImageNodeEditor(props) {
       </InputGroup>
       <AttributionNodeEditor name="Attribution" {...props} />
     </NodeEditor>
-  );
+  )
 }
 
 ImageNodeEditor.propTypes = {
   editor: PropTypes.object,
   node: PropTypes.object,
   multiEdit: PropTypes.bool
-};
+}
 
-ImageNodeEditor.iconComponent = Image;
+ImageNodeEditor.iconComponent = Image
 
-ImageNodeEditor.description = "Dynamically loads an image.";
+ImageNodeEditor.description = "Dynamically loads an image."

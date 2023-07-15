@@ -1,5 +1,5 @@
-import { Mesh, PlaneBufferGeometry, MeshStandardMaterial, MeshPhongMaterial, Vector2, RepeatWrapping } from "three";
-import { SimplexNoise } from "three/examples/jsm/math/SimplexNoise";
+import { Mesh, PlaneBufferGeometry, MeshStandardMaterial, MeshPhongMaterial, Vector2, RepeatWrapping } from "three"
+import { SimplexNoise } from "three/examples/jsm/math/SimplexNoise"
 
 /**
  * SimpleWater
@@ -12,33 +12,33 @@ import { SimplexNoise } from "three/examples/jsm/math/SimplexNoise";
 
 class Octave {
   constructor(speed = new Vector2(1, 1), scale = new Vector2(1, 1), height = 0.0025, alternate = true) {
-    this.speed = speed;
-    this.scale = scale;
-    this.height = height;
-    this.alternate = alternate;
+    this.speed = speed
+    this.scale = scale
+    this.height = height
+    this.alternate = alternate
   }
 }
 
 export default class SimpleWater extends Mesh {
   constructor(normalMap, resolution = 24, lowQuality = false) {
-    const geometry = new PlaneBufferGeometry(10, 10, resolution, resolution);
-    geometry.rotateX(-Math.PI / 2);
+    const geometry = new PlaneBufferGeometry(10, 10, resolution, resolution)
+    geometry.rotateX(-Math.PI / 2)
 
     const waterUniforms = {
       ripplesSpeed: { value: 0.25 },
       ripplesScale: { value: 1 },
       time: { value: 0 }
-    };
+    }
 
-    const materialClass = lowQuality ? MeshPhongMaterial : MeshStandardMaterial;
+    const materialClass = lowQuality ? MeshPhongMaterial : MeshStandardMaterial
 
-    normalMap.wrapS = normalMap.wrapT = RepeatWrapping;
+    normalMap.wrapS = normalMap.wrapT = RepeatWrapping
 
-    const material = new materialClass({ color: 0x0054df, normalMap });
-    material.name = "SimpleWaterMaterial";
+    const material = new materialClass({ color: 0x0054df, normalMap })
+    material.name = "SimpleWaterMaterial"
 
     material.onBeforeCompile = shader => {
-      Object.assign(shader.uniforms, waterUniforms);
+      Object.assign(shader.uniforms, waterUniforms)
 
       shader.vertexShader = shader.vertexShader.replace(
         "#include <fog_pars_vertex>",
@@ -46,7 +46,7 @@ export default class SimpleWater extends Mesh {
         #include <fog_pars_vertex>
         varying vec3 vWPosition;
       `
-      );
+      )
 
       shader.vertexShader = shader.vertexShader.replace(
         "#include <fog_vertex>",
@@ -54,7 +54,7 @@ export default class SimpleWater extends Mesh {
         #include <fog_vertex>
         vWPosition = ( modelMatrix * vec4( transformed, 1.0 ) ).xyz;
       `
-      );
+      )
 
       // getNoise function from https://github.com/mrdoob/three.js/blob/dev/examples/jsm/objects/Water.js
       shader.fragmentShader = shader.fragmentShader.replace(
@@ -82,7 +82,7 @@ export default class SimpleWater extends Mesh {
           return noise / 4.0;
         }
       `
-      );
+      )
 
       // https://github.com/mrdoob/three.js/blob/dev/src/renderers/shaders/ShaderChunk/normalmap_pars_fragment.glsl.js#L20
       shader.fragmentShader = shader.fragmentShader.replace(
@@ -110,148 +110,148 @@ export default class SimpleWater extends Mesh {
 
           normal = normalize( tsn * mapN );
         `
-      );
-    };
-
-    super(geometry, material);
-
-    this.lowQuality = lowQuality;
-    this.waterUniforms = waterUniforms;
-
-    if (lowQuality) {
-      this.material.specular.set(0xffffff);
-    } else {
-      this.receiveShadow = true;
+      )
     }
 
-    this.geometry.attributes.position.dynamic = true;
+    super(geometry, material)
 
-    this.resolution = resolution;
+    this.lowQuality = lowQuality
+    this.waterUniforms = waterUniforms
+
+    if (lowQuality) {
+      this.material.specular.set(0xffffff)
+    } else {
+      this.receiveShadow = true
+    }
+
+    this.geometry.attributes.position.dynamic = true
+
+    this.resolution = resolution
     this.octaves = [
       new Octave(new Vector2(0.5, 0.5), new Vector2(1, 1), 0.01, true),
       new Octave(new Vector2(0.05, 6), new Vector2(1, 20), 0.1, false)
-    ];
+    ]
 
-    this.simplex = new SimplexNoise();
+    this.simplex = new SimplexNoise()
   }
 
   get opacity() {
-    return this.material.opacity;
+    return this.material.opacity
   }
 
   set opacity(value) {
-    this.material.opacity = value;
+    this.material.opacity = value
 
     if (value !== 1) {
-      this.material.transparent = true;
+      this.material.transparent = true
     }
   }
 
   get color() {
-    return this.material.color;
+    return this.material.color
   }
 
   get tideHeight() {
-    return this.octaves[0].height;
+    return this.octaves[0].height
   }
 
   get tideScale() {
-    return this.octaves[0].scale;
+    return this.octaves[0].scale
   }
 
   get tideSpeed() {
-    return this.octaves[0].speed;
+    return this.octaves[0].speed
   }
 
   set tideHeight(value) {
-    this.octaves[0].height = value;
+    this.octaves[0].height = value
   }
 
   get waveHeight() {
-    return this.octaves[1].height;
+    return this.octaves[1].height
   }
 
   set waveHeight(value) {
-    this.octaves[1].height = value;
+    this.octaves[1].height = value
   }
 
   get waveScale() {
-    return this.octaves[1].scale;
+    return this.octaves[1].scale
   }
 
   get waveSpeed() {
-    return this.octaves[1].speed;
+    return this.octaves[1].speed
   }
 
   set ripplesSpeed(value) {
-    this.waterUniforms.ripplesSpeed.value = value;
+    this.waterUniforms.ripplesSpeed.value = value
   }
 
   get ripplesSpeed() {
-    return this.waterUniforms.ripplesSpeed.value;
+    return this.waterUniforms.ripplesSpeed.value
   }
 
   set ripplesScale(value) {
-    this.waterUniforms.ripplesScale.value = value;
+    this.waterUniforms.ripplesScale.value = value
   }
 
   get ripplesScale() {
-    return this.waterUniforms.ripplesScale.value;
+    return this.waterUniforms.ripplesScale.value
   }
 
   update(time) {
-    const positionAttribute = this.geometry.attributes.position;
+    const positionAttribute = this.geometry.attributes.position
 
     for (let x = 0; x <= this.resolution; x++) {
       for (let z = 0; z <= this.resolution; z++) {
-        let y = 0;
+        let y = 0
 
         for (let o = 0; o < this.octaves.length; o++) {
-          const octave = this.octaves[o];
+          const octave = this.octaves[o]
 
           if (octave.alternate) {
             const noise = this.simplex.noise(
               (x * octave.scale.x) / this.resolution,
               (z * octave.scale.y) / this.resolution
-            );
-            y += Math.cos(noise + octave.speed.length() * time) * octave.height;
+            )
+            y += Math.cos(noise + octave.speed.length() * time) * octave.height
           } else {
             const noise =
               this.simplex.noise(
                 (x * octave.scale.x + time * octave.speed.x) / this.resolution,
                 (z * octave.scale.y + time * octave.speed.y) / this.resolution
-              ) - 0.5;
-            y += noise * octave.height;
+              ) - 0.5
+            y += noise * octave.height
           }
         }
 
-        positionAttribute.setY(x * (this.resolution + 1) + z, y);
+        positionAttribute.setY(x * (this.resolution + 1) + z, y)
       }
     }
 
-    this.geometry.computeVertexNormals();
-    positionAttribute.needsUpdate = true;
-    this.waterUniforms.time.value = time;
+    this.geometry.computeVertexNormals()
+    positionAttribute.needsUpdate = true
+    this.waterUniforms.time.value = time
   }
 
   clone(recursive) {
-    return new SimpleWater(this.material.normalMap, this.resolution, this.lowQuality).copy(this, recursive);
+    return new SimpleWater(this.material.normalMap, this.resolution, this.lowQuality).copy(this, recursive)
   }
 
   copy(source, recursive = true) {
-    super.copy(source, recursive);
+    super.copy(source, recursive)
 
-    this.opacity = source.opacity;
-    this.color.copy(source.color);
-    this.tideHeight = source.tideHeight;
-    this.tideScale.copy(source.tideScale);
-    this.tideSpeed.copy(source.tideSpeed);
-    this.waveHeight = source.waveHeight;
-    this.waveScale.copy(source.waveScale);
-    this.waveSpeed.copy(source.waveSpeed);
-    this.ripplesSpeed = source.ripplesSpeed;
-    this.ripplesScale = source.ripplesScale;
+    this.opacity = source.opacity
+    this.color.copy(source.color)
+    this.tideHeight = source.tideHeight
+    this.tideScale.copy(source.tideScale)
+    this.tideSpeed.copy(source.tideSpeed)
+    this.waveHeight = source.waveHeight
+    this.waveScale.copy(source.waveScale)
+    this.waveSpeed.copy(source.waveSpeed)
+    this.ripplesSpeed = source.ripplesSpeed
+    this.ripplesScale = source.ripplesScale
 
-    return this;
+    return this
   }
 }

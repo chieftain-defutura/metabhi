@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect, Suspense, useContext } from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import configs from "../configs"
@@ -16,7 +17,6 @@ import LogoutPage from "./auth/LogoutPage"
 import ProjectsPage from "./projects/ProjectsPage"
 import CreateProjectPage from "./projects/CreateProjectPage"
 import CreateScenePage from "./projects/CreateScenePage"
-import { Web3Provider } from "@ethersproject/providers"
 import { Web3ReactProvider } from "@web3-react/core"
 import { ThemeProvider } from "styled-components"
 import { Column } from "./layout/Flex"
@@ -28,28 +28,29 @@ import { useEagerConnect } from "./useEagerConnect"
 import { PopupContextProvider } from "./contexts/PopupContext"
 import { UserContextProvider } from "./contexts/UserContext"
 import { TransactionContextProvider } from "./contexts/TransactionContext"
-import { Web3OnboardProvider, init } from "@web3-onboard/react"
-import injectedModule from "@web3-onboard/injected-wallets"
+import { Web3Provider } from "@ethersproject/providers"
+import { w3mConnectors, w3mProvider } from "@web3modal/ethereum"
+import { configureChains, createClient } from "wagmi"
+import { avalancheFuji } from "wagmi/chains"
+import { Web3Modal } from "@web3modal/react"
+import { EthereumClient } from "@web3modal/ethereum"
+import { WagmiConfig } from "wagmi"
+import { fiveIre, gather, moonbaseAlpha, telos } from "../components/ChainList"
 
-const INFURA_KEY = ""
-const ethereumRopsten = {
-  id: "0x3",
-  token: "rETH",
-  label: "Ethereum Ropsten",
-  rpcUrl: `https://ropsten.infura.io/v3/${INFURA_KEY}`
-}
+export const chains = [avalancheFuji, gather, telos, moonbaseAlpha, fiveIre]
 
-const chains = [ethereumRopsten]
-const wallets = [injectedModule()]
-const web3Onboard = init({
-  wallets,
-  chains,
-  appMetadata: {
-    name: "Web3-Onboard Demo",
-    icon: "<svg>App Icon</svg>",
-    description: "A demo of Web3-Onboard."
-  }
+export const projectId = "ae701bd4d326c38547d537ac81c3461b"
+
+const { provider } = configureChains(chains, [w3mProvider({ projectId })])
+const wagmiClient = createClient({
+  autoConnect: true,
+  connectors: w3mConnectors({ projectId, version: 1, chains }),
+  provider
 })
+
+///
+
+// import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit"
 
 const EditorContainer = React.lazy(() =>
   import(/* webpackChunkName: "project-page", webpackPrefetch: true */ "./EditorContainer")
@@ -61,9 +62,13 @@ const PackageKitPage = React.lazy(() =>
 
 const BaseApp = ({ api }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(api.isAuthenticated())
-  const { isDarkMode, setIsDarkMode } = React.useContext(ThemeContext)
+  const { isDarkMode, setIsDarkMode } = useContext(ThemeContext)
 
   useEagerConnect()
+
+  const handleAuthenticationChange = isAuthenticated => {
+    setIsAuthenticated(isAuthenticated)
+  }
 
   useEffect(() => {
     api.addListener("authentication-changed", handleAuthenticationChange)
@@ -79,11 +84,7 @@ const BaseApp = ({ api }) => {
     return () => {
       api.removeListener("authentication-changed", handleAuthenticationChange)
     }
-  }, [api])
-
-  const handleAuthenticationChange = isAuthenticated => {
-    setIsAuthenticated(isAuthenticated)
-  }
+  }, [api, setIsDarkMode])
 
   return (
     <>
@@ -102,13 +103,13 @@ const BaseApp = ({ api }) => {
                   <Route path="/logout" exact component={LogoutPage} />
                   <Route path="/projects/create" exact component={CreateProjectPage} />
                   <RedirectRoute path="/projects/templates" exact to="/projects/create" />
-                  <Route path="/projects" exact component={ProjectsPage} />
                   <Route path="/projects/:projectId" component={EditorContainer} />
                   <Route path="/kits/package" component={PackageKitPage} />
                   <Route path="/scenes/:sceneId" component={CreateScenePage} />
                   <Route>
                     <Layouts>
                       <Switch>
+                        <Route path="/projects" exact component={ProjectsPage} />
                         <Route exact path="/dashboard/recent" component={Dashboard} />
                         <Route path="/dashboard/template" component={CardTemplate} />
                       </Switch>
@@ -128,24 +129,108 @@ const BaseApp = ({ api }) => {
   )
 }
 
+// const projectId = "9c7d246e2cd8e826a8cc11a9eeb49f1b"
+
+// const { chains, provider } = configureChains([mainnet, polygon, optimism, gather], [publicProvider()])
+
+// const { connectors } = getDefaultWallets({
+//   appName: "metabhi",
+//   projectId,
+//   chains
+// })
+
+// const wagmiClient = createConfig({
+//   autoConnect: true,
+//   provider,
+//   connectors
+// })
+
+// const { chains, provider } = configureChains(
+//   [chain.mainnet, chain.polygonMumbai, chain.goerli],
+//   [alchemyProvider({ apiKey: "wKstaSi0DT5-HkVuN4qFlq5f_V1R7RBZ" })],
+//   [publicProvider()]
+// )
+
+// const { connectors } = getDefaultWallets({
+//   appName: "Test web3 app",
+//   chains
+// })
+
+// const wagmiClient = createClient({
+//   autoConnect: true,
+//   provider,
+//   connectors
+// })
+
+///
+
+// const { chains, publicClient, webSocketPublicClient } = configureChains(
+//   [chain.mainnet],
+//   [alchemyProvider({ apiKey: "wKstaSi0DT5-HkVuN4qFlq5f_V1R7RBZ" }), publicProvider()]
+// )
+
+// const config = createClient({
+//   autoConnect: true,
+//   connectors: [
+//     new MetaMaskConnector({ chains }),
+//     new CoinbaseWalletConnector({
+//       chains,
+//       options: {
+//         appName: "wagmi"
+//       }
+//     }),
+//     new WalletConnectConnector({
+//       chains,
+//       options: {
+//         projectId: "ae701bd4d326c38547d537ac81c3461b"
+//       }
+//     }),
+//     new InjectedConnector({
+//       chains,
+//       options: {
+//         name: "Injected",
+//         shimDisconnect: true
+//       }
+//     })
+//   ],
+//   publicClient,
+//   webSocketPublicClient
+// })
+///
+
 function getLibrary(provider) {
   return new Web3Provider(provider)
 }
 
+// const { chains, provider, webSocketProvider } = configureChains([chain.goerli], [publicProvider()])
+
+// const client = createClient({
+//   autoConnect: true,
+//   provider,
+//   webSocketProvider,
+//   connectors: [new InjectedConnector()]
+// })
+
+const ethereumClient = new EthereumClient(wagmiClient, chains)
+
 const App = ({ api }) => {
   return (
+    // eslint-disable-next-line no-undef
     <Web3ReactProvider getLibrary={getLibrary}>
       <ThemeContextProvider>
         <PopupContextProvider>
           <UserContextProvider>
             <TransactionContextProvider>
-              <Web3OnboardProvider web3Onboard={web3Onboard}>
+              <WagmiConfig client={wagmiClient}>
+                {/* <RainbowKitProvider chains={chains}> */}
                 <BaseApp api={api} />
-              </Web3OnboardProvider>
+                {/* </RainbowKitProvider> */}
+              </WagmiConfig>
             </TransactionContextProvider>
           </UserContextProvider>
         </PopupContextProvider>
       </ThemeContextProvider>
+      <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
     </Web3ReactProvider>
   )
 }

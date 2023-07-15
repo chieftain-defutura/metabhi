@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import PropTypes from "prop-types"
 
 export const TransactionContext = React.createContext()
 
@@ -7,4 +8,8 @@ export function TransactionContextProvider({ children }) {
   console.log("loading", loading)
 
   return <TransactionContext.Provider value={{ loading, setLoading }}>{children}</TransactionContext.Provider>
+}
+
+TransactionContextProvider.propTypes = {
+  children: PropTypes.node.isRequired
 }

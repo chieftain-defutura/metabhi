@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import InputGroup from "../inputs/InputGroup";
-import SelectInput from "../inputs/SelectInput";
-import NumericInputGroup from "../inputs/NumericInputGroup";
-import CompoundNumericInput from "../inputs/CompoundNumericInput";
+import React from "react"
+import PropTypes from "prop-types"
+import InputGroup from "../inputs/InputGroup"
+import SelectInput from "../inputs/SelectInput"
+import NumericInputGroup from "../inputs/NumericInputGroup"
+import CompoundNumericInput from "../inputs/CompoundNumericInput"
 import {
   AudioType,
   AudioTypeOptions,
@@ -11,17 +11,14 @@ import {
   DistanceModelOptions,
   DistanceModelType,
   SourceType
-} from "../../editor/objects/AudioParams";
-import useOptionalParam from "./useOptionalParam";
-import useSetPropertySelected from "./useSetPropertySelected";
-import BooleanInput from "../inputs/BooleanInput";
-import styled from "styled-components";
-
-
+} from "../../editor/objects/AudioParams"
+import useOptionalParam from "./useOptionalParam"
+import useSetPropertySelected from "./useSetPropertySelected"
+import BooleanInput from "../inputs/BooleanInput"
 
 export default function AudioParamsProperties({ node, editor, multiEdit, sourceType }) {
-  const onChangeOverrideAudioSettings = useSetPropertySelected(editor, "overrideAudioSettings");
-  const isOptional = sourceType === SourceType.AUDIO_ZONE;
+  const onChangeOverrideAudioSettings = useSetPropertySelected(editor, "overrideAudioSettings")
+  const isOptional = sourceType === SourceType.AUDIO_ZONE
   const paramProps = {
     audioType: useOptionalParam(node, editor, "audio-params", "audioType", Defaults[sourceType]["audioType"]),
     gain: useOptionalParam(node, editor, "audio-params", "gain", Defaults[sourceType]["gain"]),
@@ -62,17 +59,16 @@ export default function AudioParamsProperties({ node, editor, multiEdit, sourceT
       "coneOuterGain",
       Defaults[sourceType]["coneOuterGain"]
     )
-  };
+  }
 
   // TODO: Make node audio settings work with multi-edit
 
   return (
     <>
-    
       <InputGroup name="Override Audio Settings">
-      <BooleanInput value={node.overrideAudioSettings} onChange={onChangeOverrideAudioSettings} />
+        <BooleanInput value={node.overrideAudioSettings} onChange={onChangeOverrideAudioSettings} />
       </InputGroup>
-      
+
       {node.overrideAudioSettings && (
         <>
           <InputGroup name="Audio Type" optional={isOptional} {...paramProps.audioType}>
@@ -202,7 +198,7 @@ export default function AudioParamsProperties({ node, editor, multiEdit, sourceT
         </>
       )}
     </>
-  );
+  )
 }
 
 AudioParamsProperties.propTypes = {
@@ -210,4 +206,4 @@ AudioParamsProperties.propTypes = {
   editor: PropTypes.object,
   multiEdit: PropTypes.bool,
   sourceType: PropTypes.number
-};
+}

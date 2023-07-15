@@ -1,9 +1,9 @@
-import React, { useContext, useState, useCallback, useEffect } from "react"
+import React, { useState, useCallback, useEffect } from "react"
 import { ProjectGridContainer, ProjectGridContent, ErrorMessage, ProjectGrid, Filter } from "../ui/projects/ProjectGrid"
 import ScrollToTop from "../ui/router/ScrollToTop"
 import InfiniteScroll from "react-infinite-scroller"
-import usePaginatedSearch from "../ui/projects/usePaginatedSearch"
-import { ApiContext } from "../ui/contexts/ApiContext"
+// import usePaginatedSearch from "../ui/projects/usePaginatedSearch"
+// import { ApiContext } from "../ui/contexts/ApiContext"
 import styled from "styled-components"
 import { AiOutlinePlus } from "react-icons/ai"
 import { TbMenu2 } from "react-icons/tb"
@@ -96,28 +96,28 @@ const NewFilePara = styled.div`
   }
 `
 
-const Recently = styled.div`
-  padding: 22px 40px;
-  border-bottom: 1px solid ${props => props.theme.borderStyleClr};
-  height: 90px;
+// const Recently = styled.div`
+//   padding: 22px 40px;
+//   border-bottom: 1px solid ${props => props.theme.borderStyleClr};
+//   height: 90px;
 
-  h3 {
-    font-weight: 500;
-    font-size: 14px;
-    margin-bottom: 12px;
-  }
-`
-const DropDown = styled.div`
-  // display: flex;
-  // align-items: center;
-  // gap: 12px;
+//   h3 {
+//     font-weight: 500;
+//     font-size: 14px;
+//     margin-bottom: 12px;
+//   }
+// `
+// const DropDown = styled.div`
+//   // display: flex;
+//   // align-items: center;
+//   // gap: 12px;
 
-  h4 {
-    color: ${props => props.theme.gray};
-    font-weight: 500;
-    font-size: 14px;
-  }
-`
+//   h4 {
+//     color: ${props => props.theme.gray};
+//     font-weight: 500;
+//     font-size: 14px;
+//   }
+// `
 const DropDownContent = styled.div`
   h3 {
     font-weight: 500;
@@ -146,22 +146,22 @@ const MenuIcons = styled.div`
   }
 `
 
-const ToolbarInputGroup = styled.div`
-  margin-top: 20px;
+// const ToolbarInputGroup = styled.div`
+//   margin-top: 20px;
 
-  select {
-    border: none;
-    outline: none;
-    background: transparent;
-    color: ${props => props.theme.text};
-    width: 115px;
-  }
-  option {
-    background: #000000;
-    color: #fff;
-    font-size: 17px;
-  }
-`
+//   select {
+//     border: none;
+//     outline: none;
+//     background: transparent;
+//     color: ${props => props.theme.text};
+//     width: 115px;
+//   }
+//   option {
+//     background: #000000;
+//     color: #fff;
+//     font-size: 17px;
+//   }
+// `
 const MenuBox = styled.div`
   border: ${props => props.theme.borderFileClr};
   display: flex;
@@ -184,7 +184,7 @@ const RETICULUM_SERVER = configs.RETICULUM_SERVER || document.location.hostname
 console.log("Reticulum", RETICULUM_SERVER)
 
 export default function CardTemplate({ history, location }) {
-  const api = useContext(ApiContext)
+  // const api = useContext(ApiContext)
   const [isGrid, setIsGrid] = useState(true)
   const [loading, setLoading] = useState(true)
   const [hasMore, setHasMore] = useState(false)
@@ -238,7 +238,7 @@ export default function CardTemplate({ history, location }) {
           return uniqueData
         })
       } else {
-        setNewEntries(e => [
+        setNewEntries([
           ...data.entries.map(result => ({
             ...result,
             url: `/dashboard/template?sceneId=${result.id}`,
@@ -252,7 +252,7 @@ export default function CardTemplate({ history, location }) {
     } finally {
       setLoading(false)
     }
-  }, [params])
+  }, [params, hasMore])
 
   useEffect(() => {
     handleGetData()
@@ -277,24 +277,24 @@ export default function CardTemplate({ history, location }) {
     [history]
   )
 
-  const onChangeQuery = useCallback(
-    value => {
-      updateParams({
-        source: "scene_listings",
-        filter: "remixable",
-        q: value
-      })
-    },
-    [updateParams]
-  )
+  // const onChangeQuery = useCallback(
+  //   value => {
+  //     updateParams({
+  //       source: "scene_listings",
+  //       filter: "remixable",
+  //       q: value
+  //     })
+  //   },
+  //   [updateParams]
+  // )
 
-  const onSetFeaturedRemixable = useCallback(() => {
-    updateParams({
-      ...params,
-      filter: "featured-remixable",
-      q: ""
-    })
-  }, [updateParams, params])
+  // const onSetFeaturedRemixable = useCallback(() => {
+  //   updateParams({
+  //     ...params,
+  //     filter: "featured-remixable",
+  //     q: ""
+  //   })
+  // }, [updateParams, params])
 
   const onSetAll = useCallback(() => {
     updateParams({
@@ -358,7 +358,7 @@ export default function CardTemplate({ history, location }) {
                 </div>
               </NewFile>
             </Link>
-            <Link to="/projects/new">
+            <Link to="/scenes/new">
               <NewFile style={{ marginTop: "24px" }}>
                 <NewFilePara>
                   <TbFileImport size={24} />

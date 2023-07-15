@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { EditorContext } from "../contexts/EditorContext";
-import { useDrop } from "react-dnd";
-import { ItemTypes } from "../dnd";
-import useUpload from "./useUpload";
-import { CloudUploadAlt } from "styled-icons/fa-solid/CloudUploadAlt";
+import React, { useContext } from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import { EditorContext } from "../contexts/EditorContext"
+import { useDrop } from "react-dnd"
+import { ItemTypes } from "../dnd"
+import useUpload from "./useUpload"
+import { CloudUploadAlt } from "styled-icons/fa-solid/CloudUploadAlt"
 
 const DropZoneBackground = styled.div`
   position: absolute;
@@ -25,42 +25,42 @@ const DropZoneBackground = styled.div`
     font-size: 1.5em;
     margin-top: 12px;
   }
-`;
+`
 
 export default function AssetDropZone({ afterUpload, uploadOptions }) {
-  const editor = useContext(EditorContext);
+  const editor = useContext(EditorContext)
 
-  const onUpload = useUpload(uploadOptions);
+  const onUpload = useUpload(uploadOptions)
 
   const [{ canDrop, isOver, isDragging }, onDropTarget] = useDrop({
     accept: [ItemTypes.File],
     drop(item) {
       onUpload(item.files).then(assets => {
         if (assets) {
-          editor.setSource(editor.defaultUploadSource.id);
+          editor.setSource(editor.defaultUploadSource.id)
 
           if (afterUpload) {
-            afterUpload(assets);
+            afterUpload(assets)
           }
         }
-      });
+      })
     },
     collect: monitor => ({
       canDrop: monitor.canDrop(),
       isOver: monitor.isOver(),
       isDragging: monitor.getItem() !== null && monitor.canDrop()
     })
-  });
+  })
 
   return (
     <DropZoneBackground ref={onDropTarget} isDragging={isDragging} canDrop={canDrop} isOver={isOver}>
       <CloudUploadAlt size={48} />
       <h3>Upload Asset</h3>
     </DropZoneBackground>
-  );
+  )
 }
 
 AssetDropZone.propTypes = {
   afterUpload: PropTypes.func,
   uploadOptions: PropTypes.object
-};
+}

@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import inputMixin from "../inputs/inputMixin";
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import inputMixin from "../inputs/inputMixin"
 
 const SearchInputContainer = styled.div`
   display: flex;
@@ -19,20 +19,23 @@ const SearchInputContainer = styled.div`
     display: flex;
     flex: 1;
     max-width: 300px;
+    height: 33px;
+    padding: 15px 8px;
+    font-family: "lato", sans-serif;
   }
-`;
+`
 
-const LegalContainer = styled.div`
-  display: flex;
-  white-space: nowrap;
-  text-indent: 0.5em;
-`;
+// const LegalContainer = styled.div`
+//   display: flex;
+//   white-space: nowrap;
+//   text-indent: 0.5em;
+// `
 
 export default function AssetSearchInput({ legal, privacyPolicyUrl, onChange, ...rest }) {
   return (
     <SearchInputContainer>
       <input placeholder="Search..." onChange={onChange} {...rest} />
-      {legal && (
+      {/* {legal && (
         <LegalContainer>
           {legal}
           {privacyPolicyUrl && (
@@ -44,13 +47,13 @@ export default function AssetSearchInput({ legal, privacyPolicyUrl, onChange, ..
             </>
           )}
         </LegalContainer>
-      )}
+      )} */}
     </SearchInputContainer>
-  );
+  )
 }
 
 AssetSearchInput.propTypes = {
   onChange: PropTypes.func,
   legal: PropTypes.string,
   privacyPolicyUrl: PropTypes.string
-};
+}

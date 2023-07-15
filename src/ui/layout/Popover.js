@@ -1,34 +1,34 @@
-import React, { useRef, useState, useCallback } from "react";
-import PropTypes from "prop-types";
-import Portal from "./Portal";
-import Positioner from "./Positioner";
-import Overlay from "./Overlay";
+import React, { useRef, useState, useCallback } from "react"
+import PropTypes from "prop-types"
+import Portal from "./Portal"
+import Positioner from "./Positioner"
+import Overlay from "./Overlay"
 
 export default function Popover({ children, padding, position, renderContent, disabled, ...rest }) {
-  const popoverTriggerRef = useRef();
-  const [isOpen, setIsOpen] = useState(false);
+  const popoverTriggerRef = useRef()
+  const [isOpen, setIsOpen] = useState(false)
 
   const onOpen = useCallback(() => {
     if (!disabled) {
-      setIsOpen(true);
+      setIsOpen(true)
     }
-  }, [setIsOpen, disabled]);
+  }, [setIsOpen, disabled])
 
   const onClose = useCallback(
     e => {
-      setIsOpen(false);
-      e.stopPropagation();
+      setIsOpen(false)
+      e.stopPropagation()
     },
     [setIsOpen]
-  );
+  )
 
   const onPreventClose = useCallback(e => {
-    e.stopPropagation();
-  }, []);
+    e.stopPropagation()
+  }, [])
 
   const getTargetRef = useCallback(() => {
-    return popoverTriggerRef;
-  }, [popoverTriggerRef]);
+    return popoverTriggerRef
+  }, [popoverTriggerRef])
 
   return (
     <div ref={popoverTriggerRef} onClick={onOpen} {...rest}>
@@ -42,7 +42,7 @@ export default function Popover({ children, padding, position, renderContent, di
         </Portal>
       )}
     </div>
-  );
+  )
 }
 
 Popover.propTypes = {
@@ -51,4 +51,4 @@ Popover.propTypes = {
   padding: PropTypes.number,
   position: PropTypes.string,
   renderContent: PropTypes.func.isRequired
-};
+}

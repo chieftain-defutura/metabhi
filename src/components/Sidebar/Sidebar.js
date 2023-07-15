@@ -1,12 +1,13 @@
 import React from "react"
 import styled from "styled-components"
-import GrayIcon from "../../assets/gray.svg"
-import WhiteIcon from "../../assets/white.svg"
+// import GrayIcon from "../../assets/gray.svg"
+// import WhiteIcon from "../../assets/white.svg"
 import { BiTime } from "react-icons/bi"
 import { CgTemplate } from "react-icons/cg"
-import { BsFileEarmark } from "react-icons/bs"
-import { AiOutlineStar } from "react-icons/ai"
-import { AiOutlinePlus } from "react-icons/ai"
+import { FiFilm } from "react-icons/fi"
+// import { BsFileEarmark } from "react-icons/bs"
+// import { AiOutlineStar } from "react-icons/ai"
+// import { AiOutlinePlus } from "react-icons/ai"
 import { NavLink } from "react-router-dom"
 
 const SidebarWrapper = styled.div`
@@ -67,16 +68,16 @@ const RecentContent = styled.div`
     margin-bottom: 8px;
   }
 `
-const Teams = styled.div`
-  padding: 16px 21px;
-  border-top: 1px solid ${props => props.theme.borderStyleClr};
-  margin-top: 8px;
+// const Teams = styled.div`
+//   padding: 16px 21px;
+//   border-top: 1px solid ${props => props.theme.borderStyleClr};
+//   margin-top: 8px;
 
-  h4 {
-    font-size: 14px;
-    font-weight: 700;
-  }
-`
+//   h4 {
+//     font-size: 14px;
+//     font-weight: 700;
+//   }
+// `
 
 const Sidebar = () => {
   return (
@@ -94,6 +95,14 @@ const Sidebar = () => {
           <RecentContent>
             <CgTemplate size={16} />
             <h4>Templates</h4>
+          </RecentContent>
+        </NavLink>
+      </div>
+      <div>
+        <NavLink to="/projects">
+          <RecentContent>
+            <FiFilm size={16} />
+            <h4>Scenes</h4>
           </RecentContent>
         </NavLink>
       </div>

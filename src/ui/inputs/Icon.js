@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from "react"
+import PropTypes from "prop-types"
 
 export default function Icon(props) {
   return (
@@ -7,7 +7,7 @@ export default function Icon(props) {
       src={props.src}
       style={{ color: props.color, width: props.size, height: props.size, background: props.background }}
     />
-  );
+  )
 }
 
 Icon.propTypes = {
@@ -15,10 +15,10 @@ Icon.propTypes = {
   color: PropTypes.string.isRequired,
   size: PropTypes.number.isRequired,
   background: PropTypes.string.isRequired
-};
+}
 
 Icon.defaultProps = {
   color: "white",
   size: 32,
   background: "rgba(0,0,0,0.5)"
-};
+}

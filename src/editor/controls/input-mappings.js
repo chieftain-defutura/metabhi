@@ -1,25 +1,25 @@
 function requestPointerLockHandler(filter) {
   return {
     handler: (event, input) => {
-      const shouldRequest = filter ? filter(event, input) : true;
+      const shouldRequest = filter ? filter(event, input) : true
 
       if (shouldRequest) {
-        input.canvas.requestPointerLock();
+        input.canvas.requestPointerLock()
       }
     }
-  };
+  }
 }
 
 function exitPointerLockHandler(filter) {
   return {
     handler: (event, input) => {
-      const shouldExit = filter ? filter(event, input) : true;
+      const shouldExit = filter ? filter(event, input) : true
 
       if (shouldExit && document.pointerLockElement === input.canvas) {
-        document.exitPointerLock();
+        document.exitPointerLock()
       }
     }
-  };
+  }
 }
 
 function booleanEventHandler(outputAction) {
@@ -28,7 +28,7 @@ function booleanEventHandler(outputAction) {
     defaultValue: false,
     handler: () => true,
     action: outputAction
-  };
+  }
 }
 
 export const Fly = {
@@ -44,7 +44,7 @@ export const Fly = {
   moveUp: "moveUp",
   moveY: "moveY",
   boost: "boost"
-};
+}
 
 export const Spoke = {
   focus: "focus",
@@ -82,7 +82,7 @@ export const Spoke = {
   rotateRight: "rotateRight",
   incrementGridHeight: "incrementGridHeight",
   decrementGridHeight: "decrementGridHeight"
-};
+}
 
 export const FlyMapping = {
   keyboard: {
@@ -116,7 +116,7 @@ export const FlyMapping = {
       action: Fly.moveZ
     }
   ]
-};
+}
 
 export const SpokeMapping = {
   mouse: {
@@ -180,4 +180,4 @@ export const SpokeMapping = {
       "mod+s": Spoke.saveProject
     }
   }
-};
+}

@@ -1,59 +1,59 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import NodeEditor from "./NodeEditor";
-import InputGroup from "../inputs/InputGroup";
-import BooleanInput from "../inputs/BooleanInput";
-import { DiceD6 } from "styled-icons/fa-solid/DiceD6";
-import AudioParamsProperties from "./AudioParamsProperties";
-import { SourceType } from "../../editor/objects/AudioParams";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import NodeEditor from "./NodeEditor"
+import InputGroup from "../inputs/InputGroup"
+import BooleanInput from "../inputs/BooleanInput"
+import { DiceD6 } from "styled-icons/fa-solid/DiceD6"
+import AudioParamsProperties from "./AudioParamsProperties"
+import { SourceType } from "../../editor/objects/AudioParams"
 
 export default class AudioZoneNodeEditor extends Component {
   static propTypes = {
     editor: PropTypes.object,
     node: PropTypes.object,
     multiEdit: PropTypes.bool
-  };
+  }
 
-  static iconComponent = DiceD6;
+  static iconComponent = DiceD6
 
-  static description = "Defines a 3D area where audio parameters are overriden for contained audio sources.";
+  static description = "Defines a 3D area where audio parameters are overriden for contained audio sources."
 
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       options: []
-    };
+    }
   }
 
   onChangeEnabled = value => {
-    this.props.editor.setPropertySelected("enabled", value);
-  };
+    this.props.editor.setPropertySelected("enabled", value)
+  }
 
   onChangeInOut = value => {
-    this.props.editor.setPropertySelected("inOut", value);
-  };
+    this.props.editor.setPropertySelected("inOut", value)
+  }
 
   onChangeOutIn = value => {
-    this.props.editor.setPropertySelected("outIn", value);
-  };
+    this.props.editor.setPropertySelected("outIn", value)
+  }
 
   componentDidMount() {
-    const options = [];
+    const options = []
 
-    const sceneNode = this.props.editor.scene;
+    const sceneNode = this.props.editor.scene
 
     sceneNode.traverse(o => {
       if (o.isNode && o !== sceneNode) {
-        options.push({ label: o.name, value: o.uuid, nodeName: o.nodeName });
+        options.push({ label: o.name, value: o.uuid, nodeName: o.nodeName })
       }
-    });
+    })
 
-    this.setState({ options });
+    this.setState({ options })
   }
 
   render() {
-    const { node } = this.props;
+    const { node } = this.props
 
     return (
       <NodeEditor description={AudioZoneNodeEditor.description} {...this.props}>
@@ -74,6 +74,6 @@ export default class AudioZoneNodeEditor extends Component {
         </InputGroup>
         <AudioParamsProperties sourceType={SourceType.AUDIO_ZONE} {...this.props} />
       </NodeEditor>
-    );
+    )
   }
 }

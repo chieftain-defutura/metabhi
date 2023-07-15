@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 const Well = styled.div`
   display: flex;
@@ -7,8 +7,8 @@ const Well = styled.div`
   border-radius: 5px;
   padding: 12px 14px;
   margin: 8px;
-`;
+`
 
-Well.displayName = "Well";
+Well.displayName = "Well"
 
-export default Well;
+export default Well

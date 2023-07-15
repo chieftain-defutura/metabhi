@@ -1,12 +1,12 @@
-import React from "react";
-import { VerticalScrollContainer } from "./Flex";
-import { List, ListItem, IconListItem } from "./List";
-import { Plus } from "styled-icons/fa-solid/Plus";
+import React from "react"
+import { VerticalScrollContainer } from "./Flex"
+import { List, ListItem, IconListItem } from "./List"
+import { Plus } from "styled-icons/fa-solid/Plus"
 
 export default {
   title: "List",
   component: List
-};
+}
 
 export const list = () => (
   <VerticalScrollContainer height={320}>
@@ -16,7 +16,7 @@ export const list = () => (
       ))}
     </List>
   </VerticalScrollContainer>
-);
+)
 
 export const iconListItem = () => (
   <VerticalScrollContainer height={320}>
@@ -31,4 +31,4 @@ export const iconListItem = () => (
       ))}
     </List>
   </VerticalScrollContainer>
-);
+)

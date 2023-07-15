@@ -1,20 +1,20 @@
-import React, { useCallback } from "react";
-import PropTypes from "prop-types";
-import Portal from "./Portal";
-import Positioner from "./Positioner";
-import useHover from "../hooks/useHover";
-import styled from "styled-components";
+import React, { useCallback } from "react"
+import PropTypes from "prop-types"
+import Portal from "./Portal"
+import Positioner from "./Positioner"
+import useHover from "../hooks/useHover"
+import styled from "styled-components"
 
 const StyledTooltip = styled.div`
   display: inherit;
-`;
+`
 
 export default function Tooltip({ children, padding, position, renderContent, disabled, ...rest }) {
-  const [hoverRef, isHovered] = useHover();
+  const [hoverRef, isHovered] = useHover()
 
   const getTargetRef = useCallback(() => {
-    return hoverRef;
-  }, [hoverRef]);
+    return hoverRef
+  }, [hoverRef])
 
   return (
     <StyledTooltip ref={hoverRef} {...rest}>
@@ -27,7 +27,7 @@ export default function Tooltip({ children, padding, position, renderContent, di
         </Portal>
       )}
     </StyledTooltip>
-  );
+  )
 }
 
 Tooltip.propTypes = {
@@ -36,7 +36,7 @@ Tooltip.propTypes = {
   padding: PropTypes.number,
   position: PropTypes.string,
   renderContent: PropTypes.func.isRequired
-};
+}
 
 export const TooltipContainer = styled.div`
   display: inline-block;
@@ -53,21 +53,21 @@ export const TooltipContainer = styled.div`
   text-align: center;
   white-space: pre-wrap;
 }
-`;
+`
 
 export function InfoTooltip({ info, children, ...rest }) {
   if (!info) {
-    return <div {...rest}>{children}</div>;
+    return <div {...rest}>{children}</div>
   }
 
   return (
     <Tooltip {...rest} renderContent={() => <TooltipContainer>{info}</TooltipContainer>}>
       {children}
     </Tooltip>
-  );
+  )
 }
 
 InfoTooltip.propTypes = {
   children: PropTypes.node,
   info: PropTypes.string
-};
+}

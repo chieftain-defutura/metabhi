@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import NodeEditor from "./NodeEditor";
-import InputGroup from "../inputs/InputGroup";
-import StringInput from "../inputs/StringInput";
-import { AlignCenter } from "styled-icons/fa-solid/AlignCenter";
-import SelectInput from "../inputs/SelectInput";
-import NumericInputGroup from "../inputs/NumericInputGroup";
-import ColorInput from "../inputs/ColorInput";
-import Vector2Input from "../inputs/Vector2Input";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import NodeEditor from "./NodeEditor"
+import InputGroup from "../inputs/InputGroup"
+import StringInput from "../inputs/StringInput"
+import { AlignCenter } from "styled-icons/fa-solid/AlignCenter"
+import SelectInput from "../inputs/SelectInput"
+import NumericInputGroup from "../inputs/NumericInputGroup"
+import ColorInput from "../inputs/ColorInput"
+import Vector2Input from "../inputs/Vector2Input"
 
 const textAlignments = [
   {
@@ -26,7 +26,7 @@ const textAlignments = [
     label: "justify",
     value: "justify"
   }
-];
+]
 
 const xAnchors = [
   {
@@ -41,7 +41,7 @@ const xAnchors = [
     label: "center",
     value: "center"
   }
-];
+]
 
 const yAnchors = [
   {
@@ -64,7 +64,7 @@ const yAnchors = [
     label: "bottom",
     value: "bottom"
   }
-];
+]
 
 const overflowWraps = [
   {
@@ -75,7 +75,7 @@ const overflowWraps = [
     label: "break-word",
     value: "break-word"
   }
-];
+]
 
 const whiteSpaces = [
   {
@@ -86,48 +86,48 @@ const whiteSpaces = [
     label: "nowrap",
     value: "nowrap"
   }
-];
+]
 
 export default class TroikaTextNodeEditor extends Component {
   static propTypes = {
     editor: PropTypes.object,
     node: PropTypes.object,
     multiEdit: PropTypes.bool
-  };
+  }
 
-  static iconComponent = AlignCenter;
+  static iconComponent = AlignCenter
 
-  static description = "Creates a 3D text element using the troika-three-text library.";
+  static description = "Creates a 3D text element using the troika-three-text library."
 
   constructor(props) {
-    super(props);
+    super(props)
 
     // TODO: determine proper use of UI component state
     this.state = {
       options: []
-    };
+    }
   }
 
   componentDidMount() {
-    const options = [];
+    const options = []
 
-    const sceneNode = this.props.editor.scene;
+    const sceneNode = this.props.editor.scene
 
     sceneNode.traverse(o => {
       if (o.isNode && o !== sceneNode) {
-        options.push({ label: o.name, value: o.uuid, nodeName: o.nodeName });
+        options.push({ label: o.name, value: o.uuid, nodeName: o.nodeName })
       }
-    });
+    })
 
-    this.setState({ options });
+    this.setState({ options })
   }
 
   onChangeProperty = (property, value) => {
-    this.props.editor.setPropertySelected(property, value);
-  };
+    this.props.editor.setPropertySelected(property, value)
+  }
 
   render() {
-    const { node } = this.props;
+    const { node } = this.props
 
     return (
       <NodeEditor description={TroikaTextNodeEditor.description} {...this.props}>
@@ -135,7 +135,7 @@ export default class TroikaTextNodeEditor extends Component {
           <StringInput
             value={node.text}
             onChange={value => {
-              this.onChangeProperty("text", value);
+              this.onChangeProperty("text", value)
             }}
           />
         </InputGroup>
@@ -149,7 +149,7 @@ export default class TroikaTextNodeEditor extends Component {
           largeStep={1}
           value={node.fontSize}
           onChange={value => {
-            this.onChangeProperty("fontSize", value);
+            this.onChangeProperty("fontSize", value)
           }}
           unit="m"
         />
@@ -158,7 +158,7 @@ export default class TroikaTextNodeEditor extends Component {
           <ColorInput
             value={node.color}
             onChange={value => {
-              this.onChangeProperty("color", value);
+              this.onChangeProperty("color", value)
             }}
           />
         </InputGroup>
@@ -172,7 +172,7 @@ export default class TroikaTextNodeEditor extends Component {
           largeStep={0.1}
           value={node.maxWidth}
           onChange={value => {
-            this.onChangeProperty("maxWidth", value);
+            this.onChangeProperty("maxWidth", value)
           }}
           unit="m"
         />
@@ -186,7 +186,7 @@ export default class TroikaTextNodeEditor extends Component {
           largeStep={0.1}
           value={node.letterSpacing}
           onChange={value => {
-            this.onChangeProperty("letterSpacing", value);
+            this.onChangeProperty("letterSpacing", value)
           }}
           unit="m"
         />
@@ -198,7 +198,7 @@ export default class TroikaTextNodeEditor extends Component {
             largeStep={0.25}
             value={node.clipRectMin}
             onChange={value => {
-              this.onChangeProperty("clipRectMin", value);
+              this.onChangeProperty("clipRectMin", value)
             }}
           />
         </InputGroup>
@@ -210,7 +210,7 @@ export default class TroikaTextNodeEditor extends Component {
             largeStep={0.25}
             value={node.clipRectMax}
             onChange={value => {
-              this.onChangeProperty("clipRectMax", value);
+              this.onChangeProperty("clipRectMax", value)
             }}
           />
         </InputGroup>
@@ -224,7 +224,7 @@ export default class TroikaTextNodeEditor extends Component {
           largeStep={0.1}
           value={node.lineHeight}
           onChange={value => {
-            this.onChangeProperty("lineHeight", value);
+            this.onChangeProperty("lineHeight", value)
           }}
           unit="x"
         />
@@ -238,7 +238,7 @@ export default class TroikaTextNodeEditor extends Component {
             options={textAlignments}
             value={node.textAlign}
             onChange={value => {
-              this.onChangeProperty("textAlign", value);
+              this.onChangeProperty("textAlign", value)
             }}
           />
         </InputGroup>
@@ -252,7 +252,7 @@ export default class TroikaTextNodeEditor extends Component {
             options={xAnchors}
             value={node.anchorX}
             onChange={value => {
-              this.onChangeProperty("anchorX", value);
+              this.onChangeProperty("anchorX", value)
             }}
           />
           <SelectInput
@@ -260,7 +260,7 @@ export default class TroikaTextNodeEditor extends Component {
             options={yAnchors}
             value={node.anchorY}
             onChange={value => {
-              this.onChangeProperty("anchorY", value);
+              this.onChangeProperty("anchorY", value)
             }}
           />
         </InputGroup>
@@ -273,7 +273,7 @@ export default class TroikaTextNodeEditor extends Component {
             options={overflowWraps}
             value={node.overflowWrap}
             onChange={value => {
-              this.onChangeProperty("overflowWrap", value);
+              this.onChangeProperty("overflowWrap", value)
             }}
           />
         </InputGroup>
@@ -287,7 +287,7 @@ export default class TroikaTextNodeEditor extends Component {
           largeStep={1}
           value={node.textIndent}
           onChange={value => {
-            this.onChangeProperty("textIndent", value);
+            this.onChangeProperty("textIndent", value)
           }}
           unit="m"
         />
@@ -301,7 +301,7 @@ export default class TroikaTextNodeEditor extends Component {
           largeStep={5}
           value={node.curveRadius}
           onChange={value => {
-            this.onChangeProperty("curveRadius", value);
+            this.onChangeProperty("curveRadius", value)
           }}
           unit="m"
         />
@@ -314,7 +314,7 @@ export default class TroikaTextNodeEditor extends Component {
             options={whiteSpaces}
             value={node.whiteSpace}
             onChange={value => {
-              this.onChangeProperty("whiteSpace", value);
+              this.onChangeProperty("whiteSpace", value)
             }}
           />
         </InputGroup>
@@ -326,7 +326,7 @@ export default class TroikaTextNodeEditor extends Component {
           <ColorInput
             value={node.strokeColor}
             onChange={value => {
-              this.onChangeProperty("strokeColor", value);
+              this.onChangeProperty("strokeColor", value)
             }}
           />
         </InputGroup>
@@ -341,7 +341,7 @@ export default class TroikaTextNodeEditor extends Component {
           largeStep={10}
           value={node.strokeWidth}
           onChange={value => {
-            this.onChangeProperty("strokeWidth", value);
+            this.onChangeProperty("strokeWidth", value)
           }}
           unit="0-1"
         />
@@ -356,11 +356,11 @@ export default class TroikaTextNodeEditor extends Component {
           largeStep={0.1}
           value={node.strokeOpacity}
           onChange={value => {
-            this.onChangeProperty("strokeOpacity", value);
+            this.onChangeProperty("strokeOpacity", value)
           }}
           unit="0-1"
         />
       </NodeEditor>
-    );
+    )
   }
 }

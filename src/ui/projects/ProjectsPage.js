@@ -2,31 +2,22 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import configs from "../../configs"
 import { withApi } from "../contexts/ApiContext"
+import { ProjectGridSceneItem } from "./ProjectGridItem"
 import NavBar from "../navigation/NavBar"
-import {
-  ProjectGrid,
-  ProjectGridContainer,
-  ProjectGridHeader,
-  ProjectGridHeaderRow,
-  ProjectGridContent,
-  ErrorMessage
-} from "./ProjectGrid"
-import { Button } from "../inputs/Button"
+import { ProjectGridContainer, ProjectGridContent, ErrorMessage } from "./ProjectGrid"
 import Footer from "../navigation/Footer"
-import { MediumButton } from "../inputs/Button"
-import { Link } from "react-router-dom"
 import LatestUpdate from "../whats-new/LatestUpdate"
 import { connectMenu, ContextMenu, MenuItem } from "../layout/ContextMenu"
 import styled from "styled-components"
 
 export const ProjectsSection = styled.section`
-  padding-bottom: 100px;
+  // padding-bottom: 100px;
   display: flex;
   flex: ${props => (props.flex === undefined ? 1 : props.flex)};
 
-  &:first-child {
-    padding-top: 100px;
-  }
+  // &:first-child {
+  //   padding-top: 100px;
+  // }
 
   h1 {
     font-size: 36px;
@@ -41,32 +32,46 @@ export const ProjectsContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 0 20px;
+  // margin: 0 auto;
+  // max-width: 1200px;
+  // padding: 0 20px;
 `
 
-const WelcomeContainer = styled(ProjectsContainer)`
-  align-items: center;
+// const WelcomeContainer = styled(ProjectsContainer)`
+//   align-items: center;
 
-  & > * {
-    text-align: center;
-  }
+//   & > * {
+//     text-align: center;
+//   }
 
-  & > *:not(:first-child) {
-    margin-top: 20px;
-  }
+//   & > *:not(:first-child) {
+//     margin-top: 20px;
+//   }
 
-  h2 {
-    max-width: 480px;
-  }
+//   h2 {
+//     max-width: 480px;
+//   }
+// `
+
+const ScenesFound = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
 `
 
 export const ProjectsHeader = styled.div`
-  margin-bottom: 36px;
+  // margin-bottom: 36px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 24px 40px;
+`
+
+const ListGridItem = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 28px;
 `
 
 const contextMenuId = "project-menu"
@@ -151,45 +156,44 @@ class ProjectsPage extends Component {
         <NavBar />
         <main>
           {!isAuthenticated || (projects.length === 0 && !loading) ? (
-            <ProjectsSection flex={0}>
-              <WelcomeContainer>
-                <h1>Welcome{configs.isMoz() ? " to Spoke" : ""}</h1>
-                <h2>
-                  If you&#39;re new here we recommend going through the tutorial. Otherwise, jump right in and create a
-                  project from scratch or from one of our templates.
-                </h2>
-                <MediumButton as={Link} to="/projects/tutorial">
-                  Start Tutorial
-                </MediumButton>
-              </WelcomeContainer>
-            </ProjectsSection>
+            <ProjectsSection></ProjectsSection>
           ) : (
             <LatestUpdate />
           )}
           <ProjectsSection>
             <ProjectsContainer>
               <ProjectsHeader>
-                <h1>Projects</h1>
+                <h1>Scenes</h1>
               </ProjectsHeader>
               <ProjectGridContainer>
-                <ProjectGridHeader>
+                {/* <ProjectGridHeader>
                   <ProjectGridHeaderRow></ProjectGridHeaderRow>
                   <ProjectGridHeaderRow>
                     <Button as={Link} to="/projects/create">
                       New Project
                     </Button>
                   </ProjectGridHeaderRow>
-                </ProjectGridHeader>
+                </ProjectGridHeader> */}
                 <ProjectGridContent>
                   {error && <ErrorMessage>{error.message}</ErrorMessage>}
                   {!error && (
-                    <ProjectGrid
-                      loading={loading}
-                      projects={projects}
-                      scenes={scenes}
-                      newProjectPath="/projects/templates"
-                      contextMenuId={contextMenuId}
-                    />
+                    <>
+                      <ListGridItem>
+                        {scenes?.length === 0 ? (
+                          <ScenesFound>
+                            <p>No scenes found.</p>
+                          </ScenesFound>
+                        ) : (
+                          scenes?.map(scene => (
+                            <ProjectGridSceneItem
+                              key={scene.scene_id || scene.id}
+                              scene={scene}
+                              contextMenuId={contextMenuId}
+                            />
+                          ))
+                        )}
+                      </ListGridItem>
+                    </>
                   )}
                 </ProjectGridContent>
               </ProjectGridContainer>

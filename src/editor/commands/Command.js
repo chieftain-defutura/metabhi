@@ -5,14 +5,14 @@
 
 export default class Command {
   constructor(editor) {
-    this.editor = editor;
-    this.id = -1;
+    this.editor = editor
+    this.id = -1
   }
 
   execute(_redo) {}
 
   shouldUpdate(_newCommand) {
-    return false;
+    return false
   }
 
   update(_command) {}
@@ -20,6 +20,6 @@ export default class Command {
   undo() {}
 
   toString() {
-    return `${this.constructor.name} id: ${this.id}`;
+    return `${this.constructor.name} id: ${this.id}`
   }
 }

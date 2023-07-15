@@ -1,77 +1,77 @@
-import React, { useCallback, useRef, useEffect, useContext, memo } from "react";
-import PropTypes from "prop-types";
-import InfiniteScroll from "react-infinite-scroller";
-import styled from "styled-components";
-import { VerticalScrollContainer } from "../layout/Flex";
-import { MediaGrid, ImageMediaGridItem, VideoMediaGridItem, IconMediaGridItem } from "../layout/MediaGrid";
-import { unique } from "../utils";
-import { ContextMenuTrigger, ContextMenu, MenuItem } from "../layout/ContextMenu";
-import { useDrag } from "react-dnd";
-import { getEmptyImage } from "react-dnd-html5-backend";
-import AssetTooltip from "./AssetTooltip";
-import { EditorContext } from "../contexts/EditorContext";
-import { OnboardingContext } from "../contexts/OnboardingContext";
-import { ItemTypes } from "../dnd";
-import AudioPreview from "./AudioPreview";
-import Tooltip, { TooltipContainer } from "../layout/Tooltip";
+import React, { useCallback, useRef, useEffect, useContext, memo } from "react"
+import PropTypes from "prop-types"
+import InfiniteScroll from "react-infinite-scroller"
+import styled from "styled-components"
+import { VerticalScrollContainer } from "../layout/Flex"
+import { MediaGrid, ImageMediaGridItem, VideoMediaGridItem, IconMediaGridItem } from "../layout/MediaGrid"
+import { unique } from "../utils"
+import { ContextMenuTrigger, ContextMenu, MenuItem } from "../layout/ContextMenu"
+import { useDrag } from "react-dnd"
+import { getEmptyImage } from "react-dnd-html5-backend"
+import AssetTooltip from "./AssetTooltip"
+import { EditorContext } from "../contexts/EditorContext"
+import { OnboardingContext } from "../contexts/OnboardingContext"
+import { ItemTypes } from "../dnd"
+import AudioPreview from "./AudioPreview"
+import Tooltip, { TooltipContainer } from "../layout/Tooltip"
 
 const AssetGridTooltipContainer = styled(TooltipContainer)`
   max-width: initial;
   text-align: left;
-`;
+`
 
 function collectMenuProps({ item }) {
-  return { item };
+  return { item }
 }
 
 function AssetGridItem({ contextMenuId, tooltipComponent, disableTooltip, item, onClick, ...rest }) {
   const onClickItem = useCallback(
     e => {
       if (onClick) {
-        onClick(item, e);
+        onClick(item, e)
       }
     },
     [item, onClick]
-  );
+  )
 
-  let content;
+  let content
 
   if (item.thumbnailUrl) {
-    content = <ImageMediaGridItem src={item.thumbnailUrl} onClick={onClickItem} label={item.label} {...rest} />;
+    content = <ImageMediaGridItem src={item.thumbnailUrl} onClick={onClickItem} label={item.label} {...rest} />
   } else if (item.videoUrl) {
-    content = <VideoMediaGridItem src={item.videoUrl} onClick={onClickItem} label={item.label} {...rest} />;
+    content = <VideoMediaGridItem src={item.videoUrl} onClick={onClickItem} label={item.label} {...rest} />
   } else if (item.iconComponent) {
     content = (
       <IconMediaGridItem iconComponent={item.iconComponent} onClick={onClickItem} label={item.label} {...rest} />
-    );
+    )
   } else {
-    content = <ImageMediaGridItem onClick={onClickItem} label={item.label} {...rest} />;
+    content = <ImageMediaGridItem onClick={onClickItem} label={item.label} {...rest} />
   }
 
   if (item.type === ItemTypes.Audio) {
-    content = <AudioPreview src={item.url}>{content}</AudioPreview>;
+    content = <AudioPreview src={item.url}>{content}</AudioPreview>
   }
 
   const [_dragProps, drag, preview] = useDrag({
     item: { type: item.type },
     begin() {
-      return { type: item.type, multiple: false, value: item };
+      return { type: item.type, multiple: false, value: item }
     }
-  });
+  })
 
   const renderTooltip = useCallback(() => {
-    const TooltipComponent = tooltipComponent;
+    const TooltipComponent = tooltipComponent
     return (
       <AssetGridTooltipContainer>
         <TooltipComponent item={item} />
       </AssetGridTooltipContainer>
-    );
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item, tooltipComponent]);
+  }, [item, tooltipComponent])
 
   useEffect(() => {
-    preview(getEmptyImage(), { captureDraggingState: true });
-  }, [preview]);
+    preview(getEmptyImage(), { captureDraggingState: true })
+  }, [preview])
 
   return (
     <div ref={drag}>
@@ -81,7 +81,7 @@ function AssetGridItem({ contextMenuId, tooltipComponent, disableTooltip, item, 
         </Tooltip>
       </ContextMenuTrigger>
     </div>
-  );
+  )
 }
 
 const LoadingItem = styled.div`
@@ -95,7 +95,7 @@ const LoadingItem = styled.div`
   justify-content: center;
   align-items: center;
   user-select: none;
-`;
+`
 
 AssetGridItem.propTypes = {
   tooltipComponent: PropTypes.func,
@@ -111,69 +111,69 @@ AssetGridItem.propTypes = {
     iconComponent: PropTypes.object,
     url: PropTypes.string
   }).isRequired
-};
+}
 
-let lastId = 0;
+let lastId = 0
 
-const MemoAssetGridItem = memo(AssetGridItem);
+const MemoAssetGridItem = memo(AssetGridItem)
 
 export default function AssetGrid({ isLoading, selectedItems, items, onSelect, onLoadMore, hasMore, tooltip, source }) {
-  const editor = useContext(EditorContext);
-  const onboarding = useContext(OnboardingContext);
-  const uniqueId = useRef(`AssetGrid${lastId}`);
+  const editor = useContext(EditorContext)
+  const onboarding = useContext(OnboardingContext)
+  const uniqueId = useRef(`AssetGrid${lastId}`)
 
   useEffect(() => {
-    lastId++;
-  }, []);
+    lastId++
+  }, [])
 
   const placeObject = useCallback(
     (_, trigger) => {
-      const item = trigger.item;
+      const item = trigger.item
 
-      const node = new item.nodeClass(editor);
+      const node = new item.nodeClass(editor)
 
       if (item.initialProps) {
-        Object.assign(node, item.initialProps);
+        Object.assign(node, item.initialProps)
       }
 
-      editor.getSpawnPosition(node.position);
+      editor.getSpawnPosition(node.position)
 
-      editor.addObject(node);
+      editor.addObject(node)
     },
     [editor]
-  );
+  )
 
   const placeObjectAtOrigin = useCallback(
     (_, trigger) => {
-      const item = trigger.item;
+      const item = trigger.item
 
-      const node = new item.nodeClass(editor);
+      const node = new item.nodeClass(editor)
 
       if (item.initialProps) {
-        Object.assign(node, item.initialProps);
+        Object.assign(node, item.initialProps)
       }
 
-      editor.addObject(node);
+      editor.addObject(node)
     },
     [editor]
-  );
+  )
 
   const copyURL = useCallback((_, trigger) => {
     if (navigator.clipboard) {
-      navigator.clipboard.writeText(trigger.item.url);
+      navigator.clipboard.writeText(trigger.item.url)
     }
-  }, []);
+  }, [])
 
   const openURL = useCallback((_, trigger) => {
-    window.open(trigger.item.url);
-  }, []);
+    window.open(trigger.item.url)
+  }, [])
 
   const onDelete = useCallback(
     (_, trigger) => {
-      source.delete(trigger.item);
+      source.delete(trigger.item)
     },
     [source]
-  );
+  )
 
   return (
     <section>
@@ -203,7 +203,7 @@ export default function AssetGrid({ isLoading, selectedItems, items, onSelect, o
         {source.delete && <MenuItem onClick={onDelete}>Delete Asset</MenuItem>}
       </ContextMenu>
     </section>
-  );
+  )
 }
 
 AssetGrid.propTypes = {
@@ -227,11 +227,11 @@ AssetGrid.propTypes = {
       thumbnailUrl: PropTypes.string
     })
   ).isRequired
-};
+}
 
 AssetGrid.defaultProps = {
   onSelect: () => {},
   items: [],
   selectedItems: [],
   tooltip: AssetTooltip
-};
+}

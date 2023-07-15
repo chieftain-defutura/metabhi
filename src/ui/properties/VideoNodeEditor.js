@@ -1,29 +1,29 @@
-import React from "react";
-import PropTypes from "prop-types";
-import NodeEditor from "./NodeEditor";
-import InputGroup from "../inputs/InputGroup";
-import SelectInput from "../inputs/SelectInput";
-import BooleanInput from "../inputs/BooleanInput";
-import StringInput from "../inputs/StringInput";
-import { VideoProjection } from "../../editor/objects/Video";
-import VideoInput from "../inputs/VideoInput";
-import { Video } from "styled-icons/fa-solid/Video";
-import AudioParamsProperties from "./AudioParamsProperties";
-import useSetPropertySelected from "./useSetPropertySelected";
-import AttributionNodeEditor from "./AttributionNodeEditor";
-import { SourceType } from "../../editor/objects/AudioParams";
+import React from "react"
+import PropTypes from "prop-types"
+import NodeEditor from "./NodeEditor"
+import InputGroup from "../inputs/InputGroup"
+import SelectInput from "../inputs/SelectInput"
+import BooleanInput from "../inputs/BooleanInput"
+import StringInput from "../inputs/StringInput"
+import { VideoProjection } from "../../editor/objects/Video"
+import VideoInput from "../inputs/VideoInput"
+import { Video } from "styled-icons/fa-solid/Video"
+import AudioParamsProperties from "./AudioParamsProperties"
+import useSetPropertySelected from "./useSetPropertySelected"
+import AttributionNodeEditor from "./AttributionNodeEditor"
+import { SourceType } from "../../editor/objects/AudioParams"
 
-const videoProjectionOptions = Object.values(VideoProjection).map(v => ({ label: v, value: v }));
+const videoProjectionOptions = Object.values(VideoProjection).map(v => ({ label: v, value: v }))
 
 export default function VideoNodeEditor(props) {
-  const { editor, node } = props;
-  const onChangeSrc = useSetPropertySelected(editor, "src");
-  const onChangeProjection = useSetPropertySelected(editor, "projection");
-  const onChangeBillboard = useSetPropertySelected(editor, "billboard");
-  const onChangeHref = useSetPropertySelected(editor, "href");
-  const onChangeControls = useSetPropertySelected(editor, "controls");
-  const onChangeAutoPlay = useSetPropertySelected(editor, "autoPlay");
-  const onChangeLoop = useSetPropertySelected(editor, "loop");
+  const { editor, node } = props
+  const onChangeSrc = useSetPropertySelected(editor, "src")
+  const onChangeProjection = useSetPropertySelected(editor, "projection")
+  const onChangeBillboard = useSetPropertySelected(editor, "billboard")
+  const onChangeHref = useSetPropertySelected(editor, "href")
+  const onChangeControls = useSetPropertySelected(editor, "controls")
+  const onChangeAutoPlay = useSetPropertySelected(editor, "autoPlay")
+  const onChangeLoop = useSetPropertySelected(editor, "loop")
 
   return (
     <NodeEditor description={VideoNodeEditor.description} {...props}>
@@ -53,15 +53,15 @@ export default function VideoNodeEditor(props) {
       <AudioParamsProperties sourceType={SourceType.MEDIA_VIDEO} {...props} />
       <AttributionNodeEditor name="Attribution" {...props} />
     </NodeEditor>
-  );
+  )
 }
 
 VideoNodeEditor.propTypes = {
   editor: PropTypes.object,
   node: PropTypes.object,
   multiEdit: PropTypes.bool
-};
+}
 
-VideoNodeEditor.iconComponent = Video;
+VideoNodeEditor.iconComponent = Video
 
-VideoNodeEditor.description = "Dynamically loads a video.";
+VideoNodeEditor.description = "Dynamically loads a video."

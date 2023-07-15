@@ -1,12 +1,12 @@
-import React from "react";
-import { MediaGrid, ImageMediaGridItem } from "./MediaGrid";
-import defaultThumbnailUrl from "../../assets/default-thumbnail.png";
-import { VerticalScrollContainer } from "./Flex";
+import React from "react"
+import { MediaGrid, ImageMediaGridItem } from "./MediaGrid"
+import defaultThumbnailUrl from "../../assets/default-thumbnail.png"
+import { VerticalScrollContainer } from "./Flex"
 
 export default {
   title: "MediaGrid",
   component: MediaGrid
-};
+}
 
 export const mediaGrid = () => (
   <VerticalScrollContainer height={320}>
@@ -22,4 +22,4 @@ export const mediaGrid = () => (
       ))}
     </MediaGrid>
   </VerticalScrollContainer>
-);
+)

@@ -1,25 +1,24 @@
-import React from "react";
-import PropTypes from "prop-types";
-import NodeEditor from "./NodeEditor";
-import { Globe } from "styled-icons/fa-solid/Globe";
-import NumericInputGroup from "../inputs/NumericInputGroup";
-import CompoundNumericInput from "../inputs/CompoundNumericInput";
-import ColorInput from "../inputs/ColorInput";
-import InputGroup from "../inputs/InputGroup";
-import { FogType } from "../../editor/nodes/SceneNode";
-import SelectInput from "../inputs/SelectInput";
-import useSetPropertySelected from "./useSetPropertySelected";
-import BooleanInput from "../inputs/BooleanInput";
-import { Defaults, DistanceModelOptions, DistanceModelType, SourceType } from "../../editor/objects/AudioParams";
-import useOptionalParam from "./useOptionalParam";
-import styled from "styled-components";
+import React from "react"
+import PropTypes from "prop-types"
+import NodeEditor from "./NodeEditor"
+import { Globe } from "styled-icons/fa-solid/Globe"
+import NumericInputGroup from "../inputs/NumericInputGroup"
+import CompoundNumericInput from "../inputs/CompoundNumericInput"
+import ColorInput from "../inputs/ColorInput"
+import InputGroup from "../inputs/InputGroup"
+import { FogType } from "../../editor/nodes/SceneNode"
+import SelectInput from "../inputs/SelectInput"
+import useSetPropertySelected from "./useSetPropertySelected"
+import BooleanInput from "../inputs/BooleanInput"
+import { Defaults, DistanceModelOptions, DistanceModelType, SourceType } from "../../editor/objects/AudioParams"
+import useOptionalParam from "./useOptionalParam"
+import styled from "styled-components"
 
-
-const InputGroupSection =styled.div`
-display:flex;
-flex-direction:row;
-position:relative;
-left:-200px;
+const InputGroupSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  left: -200px;
 `
 
 const FogTypeOptions = [
@@ -35,19 +34,19 @@ const FogTypeOptions = [
     label: "Exponential",
     value: FogType.Exponential
   }
-];
+]
 
 export default function SceneNodeEditor(props) {
-  const { editor, node } = props;
+  const { editor, node } = props
 
-  const onChangeBackground = useSetPropertySelected(editor, "background");
-  const onChangeFogType = useSetPropertySelected(editor, "fogType");
-  const onChangeFogColor = useSetPropertySelected(editor, "fogColor");
-  const onChangeFogNearDistance = useSetPropertySelected(editor, "fogNearDistance");
-  const onChangeFogFarDistance = useSetPropertySelected(editor, "fogFarDistance");
-  const onChangeFogDensity = useSetPropertySelected(editor, "fogDensity");
+  const onChangeBackground = useSetPropertySelected(editor, "background")
+  const onChangeFogType = useSetPropertySelected(editor, "fogType")
+  const onChangeFogColor = useSetPropertySelected(editor, "fogColor")
+  const onChangeFogNearDistance = useSetPropertySelected(editor, "fogNearDistance")
+  const onChangeFogFarDistance = useSetPropertySelected(editor, "fogFarDistance")
+  const onChangeFogDensity = useSetPropertySelected(editor, "fogDensity")
 
-  const onChangeOverrideAudioSettings = useSetPropertySelected(editor, "overrideAudioSettings");
+  const onChangeOverrideAudioSettings = useSetPropertySelected(editor, "overrideAudioSettings")
   const mediaParamProps = {
     gain: useOptionalParam(node, editor, "scene", "mediaVolume", Defaults[SourceType.MEDIA_VIDEO]["gain"]),
     distanceModel: useOptionalParam(
@@ -99,7 +98,7 @@ export default function SceneNodeEditor(props) {
       "mediaConeOuterGain",
       Defaults[SourceType.MEDIA_VIDEO]["coneOuterGain"]
     )
-  };
+  }
   const avatarParamProps = {
     distanceModel: useOptionalParam(
       node,
@@ -129,7 +128,7 @@ export default function SceneNodeEditor(props) {
       "avatarMaxDistance",
       Defaults[SourceType.AVATAR_AUDIO_SOURCE]["maxDistance"]
     )
-  };
+  }
 
   return (
     <NodeEditor {...props} description={SceneNodeEditor.description}>
@@ -178,10 +177,9 @@ export default function SceneNodeEditor(props) {
         />
       )}
 
-    <InputGroupSection>
-      <InputGroup name="Override Audio Settings">
-      </InputGroup>
-      <BooleanInput value={node.overrideAudioSettings} onChange={onChangeOverrideAudioSettings} />
+      <InputGroupSection>
+        <InputGroup name="Override Audio Settings"></InputGroup>
+        <BooleanInput value={node.overrideAudioSettings} onChange={onChangeOverrideAudioSettings} />
       </InputGroupSection>
       {node.overrideAudioSettings && (
         <>
@@ -360,14 +358,14 @@ export default function SceneNodeEditor(props) {
         </>
       )}
     </NodeEditor>
-  );
+  )
 }
 
 SceneNodeEditor.propTypes = {
   editor: PropTypes.object,
   node: PropTypes.object
-};
+}
 
-SceneNodeEditor.iconComponent = Globe;
+SceneNodeEditor.iconComponent = Globe
 
-SceneNodeEditor.description = "The root object of the scene.";
+SceneNodeEditor.description = "The root object of the scene."

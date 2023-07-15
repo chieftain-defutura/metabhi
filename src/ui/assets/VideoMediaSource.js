@@ -1,13 +1,13 @@
-import { BaseSource } from "./sources/index";
-import { ItemTypes } from "../dnd";
-import VideoSourcePanel from "./VideoSourcePanel";
-import VideoNode from "../../editor/nodes/VideoNode";
+import { BaseSource } from "./sources/index"
+import { ItemTypes } from "../dnd"
+import VideoSourcePanel from "./VideoSourcePanel"
+import VideoNode from "../../editor/nodes/VideoNode"
 
 export default class VideoMediaSource extends BaseSource {
   constructor(api) {
-    super();
-    this.component = VideoSourcePanel;
-    this.api = api;
+    super()
+    this.component = VideoSourcePanel
+    this.api = api
   }
 
   async search(params, cursor, abortSignal) {
@@ -19,7 +19,7 @@ export default class VideoMediaSource extends BaseSource {
       },
       cursor,
       abortSignal
-    );
+    )
 
     return {
       results: results.map(result => ({
@@ -38,6 +38,6 @@ export default class VideoMediaSource extends BaseSource {
       suggestions,
       nextCursor,
       hasMore: !!nextCursor
-    };
+    }
   }
 }

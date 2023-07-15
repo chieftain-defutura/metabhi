@@ -1,12 +1,12 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 const Center = styled.div`
   display: flex;
   flex: 1;
   justify-content: center;
   align-items: center;
-`;
+`
 
-Center.displayName = "Center";
+Center.displayName = "Center"
 
-export default Center;
+export default Center
