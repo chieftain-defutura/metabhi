@@ -227,37 +227,38 @@ const NavBar = () => {
         )}
         <BsBell size={22} />
         <img alt="" src={Profile} />
+        {chain && (
+          <WalletChainDropDown>
+            <ChainDrop onClick={WalletToggle}>
+              {wrongNetwork ? (
+                <WrongButton>Wrong Network</WrongButton>
+              ) : curentChain ? (
+                <DropDwonTitle>
+                  <ChainName>
+                    <img src={curentChain.icon} alt="icon" />
+                    <p>{curentChain.chainName}</p>
+                  </ChainName>
+                  <IoMdArrowDropdown />
+                </DropDwonTitle>
+              ) : (
+                "Wrong Network"
+              )}
+            </ChainDrop>
 
-        <WalletChainDropDown>
-          <ChainDrop onClick={WalletToggle}>
-            {wrongNetwork ? (
-              <WrongButton>Wrong Network</WrongButton>
-            ) : curentChain ? (
-              <DropDwonTitle>
-                <ChainName>
-                  <img src={curentChain.icon} alt="icon" />
-                  <p>{curentChain.chainName}</p>
-                </ChainName>
-                <IoMdArrowDropdown />
-              </DropDwonTitle>
-            ) : (
-              "Wrong Network"
+            {walletOpen && (
+              <SelectDropDown>
+                {networks.map((key, index) => {
+                  return (
+                    <DropDownContent key={index} onClick={() => handleNetworkSwitch(key.chain)}>
+                      <img src={key.icon} alt="icon" />
+                      <DropDownOption>{key.chainName}</DropDownOption>
+                    </DropDownContent>
+                  )
+                })}
+              </SelectDropDown>
             )}
-          </ChainDrop>
-
-          {walletOpen && (
-            <SelectDropDown>
-              {networks.map((key, index) => {
-                return (
-                  <DropDownContent key={index} onClick={() => handleNetworkSwitch(key.chain)}>
-                    <img src={key.icon} alt="icon" />
-                    <DropDownOption>{key.chainName}</DropDownOption>
-                  </DropDownContent>
-                )
-              })}
-            </SelectDropDown>
-          )}
-        </WalletChainDropDown>
+          </WalletChainDropDown>
+        )}
 
         <div style={{ marginTop: "10px" }}>
           <ConnectWalletBtn />
