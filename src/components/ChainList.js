@@ -15,7 +15,7 @@ export const networks = [
   {
     chainId: `0x${Number(997).toString(16)}`,
     chain: 997,
-    chainName: "5ire",
+    chainName: "5ire Chain Thunder",
     icon:
       "https://media-thumbs.golden.com/AwujuORgz5P9AJbMBcTCK6ebcRc=/100x100/smart/golden-storage-production.s3.amazonaws.com%2Ftopic_images%2Fa07561454498480b973e413b0559c073.png",
     name: "chainThunder",
@@ -43,7 +43,7 @@ export const networks = [
   {
     chainId: `0x${Number(43113).toString(16)}`,
     chain: 43113,
-    chainName: "Avalanche",
+    chainName: "Avalanche testnet fuji",
     icon:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE3_9sai9W5S_c2b0t30aGgKNizHflWHCKr_XrDOYKph74Mllhuj2pYczBbabz41g21RU&usqp=CAU",
     name: "avalancheTestnetFuji",
@@ -57,7 +57,7 @@ export const networks = [
   {
     chainId: `0x${Number(41).toString(16)}`,
     chain: 41,
-    chainName: "telos",
+    chainName: "Telos EVM Testnet",
     icon:
       "https://raw.githubusercontent.com/elkfinance/tokens/main/logos/telos/0xD102cE6A4dB07D247fcc28F366A623Df0938CA9E/logo.png",
     name: "telosEVMTestnet",
@@ -67,6 +67,20 @@ export const networks = [
       symbol: "TLOS"
     },
     rpcUrls: ["https://telos-evm-testnet.rpc.thirdweb.com"]
+  },
+  {
+    chainId: `0x${Number(8082).toString(16)}`,
+    chain: 8082,
+    chainName: "Shardeum Validator Sphinx 1.X",
+    icon:
+      "https://raw.githubusercontent.com/elkfinance/tokens/main/logos/telos/0xD102cE6A4dB07D247fcc28F366A623Df0938CA9E/logo.png",
+    name: "shmSphinx",
+    nativeCurrency: {
+      name: "SHARDEUM",
+      decimals: 18,
+      symbol: "SHM"
+    },
+    rpcUrls: ["https://sphinx.shardeum.org"]
   }
 ]
 
@@ -88,7 +102,7 @@ export const gather = {
 
 export const telos = {
   id: 0x29,
-  name: "telos",
+  name: "Telos EVM Testnet",
   icon:
     "https://raw.githubusercontent.com/elkfinance/tokens/main/logos/telos/0xD102cE6A4dB07D247fcc28F366A623Df0938CA9E/logo.png",
   network: "telos",
@@ -121,7 +135,7 @@ export const moonbaseAlpha = {
 
 export const fiveIre = {
   id: 0x3e5,
-  name: "5ire",
+  name: "5ire Chain Thunder",
   icon:
     "https://media-thumbs.golden.com/AwujuORgz5P9AJbMBcTCK6ebcRc=/100x100/smart/golden-storage-production.s3.amazonaws.com%2Ftopic_images%2Fa07561454498480b973e413b0559c073.png",
   network: "5ire",
