@@ -78,7 +78,13 @@ module.exports = env => {
     entry: {
       entry: ["./src/index.js"]
     },
-
+    resolve: {
+      extensions: [".js"],
+      fallback: {
+        fs: false,
+        path: require.resolve("path-browserify")
+      }
+    },
     devtool: process.env.NODE_ENV === "production" ? "source-map" : "inline-source-map",
 
     devServer: {
@@ -218,7 +224,12 @@ module.exports = env => {
     },
 
     optimization: {
-      minimizer: [new TerserJSPlugin({ sourceMap: true, parallel: true, cache: path.join(__dirname, ".tersercache") })]
+      minimizer: [
+        new TerserJSPlugin({
+          terserOptions: { sourceMap: true },
+          parallel: true
+        })
+      ]
     },
 
     plugins: [
