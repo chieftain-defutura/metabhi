@@ -80,6 +80,19 @@ export const networks = [
       symbol: "SHM"
     },
     rpcUrls: ["https://sphinx.shardeum.org"]
+  },
+  {
+    chainId: `0x${Number(80001).toString(16)}`,
+    chain: 80001,
+    chainName: "Polygon Mumbai",
+    icon: "https://avatars.githubusercontent.com/u/30753617?s=200&v=4",
+    name: "maticmum",
+    nativeCurrency: {
+      name: "MATIC",
+      decimals: 18,
+      symbol: "MATIC"
+    },
+    rpcUrls: ["https://rpc-mumbai.matic.today"]
   }
 ]
 

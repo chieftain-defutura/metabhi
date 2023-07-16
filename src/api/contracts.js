@@ -24,4 +24,8 @@ export const CONTRACTS = {
     address: "0x933A21bc4F91Ad614302d7f5bbF3DfAbA004634f",
     name: "Shardeum Validator Sphinx 1.X"
   },
+  80001: {
+    address: "0x8c8A31E82C6Fa04b9E3f01766F9428848ae5B850",
+    name: "Polygon Mumbai"
+  },
 }

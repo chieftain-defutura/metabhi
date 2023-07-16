@@ -31,13 +31,13 @@ import { TransactionContextProvider } from "./contexts/TransactionContext"
 import { Web3Provider } from "@ethersproject/providers"
 import { w3mConnectors, w3mProvider } from "@web3modal/ethereum"
 import { configureChains, createClient } from "wagmi"
-import { avalancheFuji, shardeumSphinx } from "wagmi/chains"
+import { avalancheFuji, shardeumSphinx, polygonMumbai } from "wagmi/chains"
 import { Web3Modal } from "@web3modal/react"
 import { EthereumClient } from "@web3modal/ethereum"
 import { WagmiConfig } from "wagmi"
 import { fiveIre, gather, moonbaseAlpha, telos } from "../components/ChainList"
 
-export const chains = [avalancheFuji, gather, telos, moonbaseAlpha, fiveIre, shardeumSphinx]
+export const chains = [avalancheFuji, gather, telos, moonbaseAlpha, fiveIre, shardeumSphinx, polygonMumbai]
 
 export const projectId = "ae701bd4d326c38547d537ac81c3461b"
 
