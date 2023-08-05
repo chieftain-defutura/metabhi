@@ -5,10 +5,9 @@ export const UserContext = React.createContext()
 
 export function UserContextProvider({ children }) {
   const [user, setUser] = useState(null)
+  const [token, setToken] = useState(localStorage?.getItem("token") || null)
 
-  console.log("user", user)
-
-  return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>
+  return <UserContext.Provider value={{ user, setUser, token, setToken }}>{children}</UserContext.Provider>
 }
 
 UserContextProvider.propTypes = {

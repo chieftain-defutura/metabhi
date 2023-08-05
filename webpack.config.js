@@ -124,6 +124,10 @@ module.exports = env => {
           }
         },
         {
+          test: /\.css$/i,
+          use: ["style-loader", "css-loader"]
+        },
+        {
           test: /\.(woff|woff2|ttf|eot)(\?.*$|$)/,
           use: {
             loader: "file-loader",

@@ -1,7 +1,7 @@
 import React, { useCallback } from "react"
 import PropTypes from "prop-types"
 import { Button } from "../inputs/Button"
-import { useWeb3React } from "@web3-react/core"
+import { useAccount } from "wagmi"
 import styled from "styled-components"
 import ConnectWalletBtn from "../../components/ConnectWalletBtn"
 
@@ -105,7 +105,7 @@ export default function Dialog({
   children,
   ...rest
 }) {
-  const { account } = useWeb3React()
+  const { isConnected } = useAccount()
 
   const onSubmitForm = useCallback(
     async e => {
@@ -130,7 +130,7 @@ export default function Dialog({
                 {cancelLabel}
               </Button>
             )}
-            {!account ? (
+            {!isConnected ? (
               <ConnectWalletBtn />
             ) : (
               <>

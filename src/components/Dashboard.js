@@ -11,6 +11,8 @@ import { TbFileImport } from "react-icons/tb"
 import { Link } from "react-router-dom"
 import configs from "../configs"
 import axios from "axios"
+import { useAccount } from "wagmi"
+import { toast } from "react-toastify"
 
 const DashboardWrapper = styled.div`
   margin-top: 75px;
@@ -138,6 +140,7 @@ const Dashboard = () => {
   const queryParams = new URLSearchParams(location.search)
   const [mappedProjects, setMappedProjects] = useState([])
   const [hubsToken, setHubsToken] = useState(null)
+  const { isConnected } = useAccount()
 
   const [params, setParams] = useState({
     source: "scene_listings",
@@ -173,9 +176,8 @@ const Dashboard = () => {
       const email = data.data.email
       const abortController = new AbortController()
       await api.authenticate(email, abortController.signal)
-      alert("Magic link has been set to your email")
     } catch (err) {
-      console.error("Error while logging in", err)
+      toast.error(err?.message || "Something went wrong")
     }
   }, [api])
 
@@ -222,13 +224,15 @@ const Dashboard = () => {
 
       setMappedProjects(mappedData)
     } catch (error) {
-      console.error(error)
+      toast.error(error?.message || "Something went wrong")
     }
   }, [getToken])
 
   useEffect(() => {
-    dataGet()
-  }, [dataGet])
+    if (isConnected) {
+      dataGet()
+    }
+  }, [dataGet, isConnected])
 
   useCallback(() => {
     updateParams({
@@ -297,10 +301,14 @@ const Dashboard = () => {
         </RecentlyContent>
       </DashboardWrapper>
 
-      {!JSON.parse(localStorage.getItem("token")) ? (
+      {!isConnected ? (
         "Connect wallet to get the projects"
-      ) : JSON.parse(localStorage.getItem("token")) && hubsToken === false ? (
-        <button style={{ border: "none", outline: "none", padding: "8px 32px", background: "#0092ff" }} type="button">
+      ) : isConnected && hubsToken === false ? (
+        <button
+          style={{ border: "none", outline: "none", padding: "8px 32px", background: "#0092ff" }}
+          onClick={sendMagicLink}
+          type="button"
+        >
           Send Magic Link
         </button>
       ) : (
